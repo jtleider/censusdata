@@ -5,7 +5,7 @@ setup(
 	version='0.1',
 	description='Download data from U.S. Census API',
 	long_description=open('README.rst').read(),
-	url='',
+	url='https://github.com/jtleider/censusdata',
 	author='Julien Leider',
 	license='MIT',
 	classifiers=[
