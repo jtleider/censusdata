@@ -1,0 +1,102 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &#8212; CensusData 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Welcome to CensusData’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>CensusData 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>Introduction</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Welcome to CensusData’s documentation!</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="examples.html">Examples</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This package is designed to provide easy access to the U.S. Census Bureau’s API (<a class="reference external" href="https://www.census.gov/developers/">https://www.census.gov/developers/</a>)
+in Python. Currently, this package only supports data from the most recent
+(2015) American Community Survey (ACS) 1- and 5-year estimates. I plan to add
+support for other years of ACS data, as well as 3-year estimates (which were
+discontinued but were produced in the past). I also plan to add support
+for other Census data sources, starting with the decennial census.</p>
+<p>The American Community Survey (<a class="reference external" href="https://www.census.gov/programs-surveys/acs/">https://www.census.gov/programs-surveys/acs/</a>)
+started in 2005. It produces estimates
+based on survey samples, and replaces the old Census long form. It
+provides period estimates, e.g., the 2011-2015 5-year estimates provide
+estimates for community characteristics during that entire period. The
+5-year estimates are not averages of 1-year estimates. The 5-year estimates
+are more precise than the 1-year estimates, and are available for smaller
+communities than the 1-year estimates, because they are based on more
+data. The ACS provides data on a wide variety of demographic, economic,
+housing, commuting, income, and related variables for communities
+across the United States, down to the block group level and up
+to the national level.</p>
+<p>There are a number of facilities available for downloading Census
+data, including American FactFinder, the ACS summary files,
+and the Census DataFerrett. This package is designed to provide
+the following features not available elsewhere:</p>
+<ul class="simple">
+<li>Easy download of specific variables across a variety of tables, downloading only the variables you need for the geographies of interest to you. This bypasses data processing hassles associated with working with other sources like the ACS Summary Files.</li>
+<li>Access to the exact variables of interest, with variable names making it easy to look up further information on the source tables or to pull up other years of data. This facilitates work by more technical users.</li>
+<li>Download data for multiple geographies at once, such as all counties in the United States, or all block groups in Illinois.</li>
+<li>Work with the data as a Pandas data frame, or export to CSV for analysis in other data analysis packages.</li>
+</ul>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Welcome to CensusData’s documentation!</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="examples.html">Examples</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Julien Leider.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
+    </div>
+  </body>
+</html>
