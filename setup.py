@@ -7,6 +7,7 @@ setup(
 	long_description=open('README.rst').read(),
 	url='https://github.com/jtleider/censusdata',
 	author='Julien Leider',
+	author_email='jtleider@gmail.com',
 	license='MIT',
 	classifiers=[
 		'Development Status :: 4 - Beta',
@@ -21,9 +22,7 @@ setup(
 	install_requires=['pandas', 'requests',],
 	python_requires='>=3',
 	package_data={
-		'variables': ['acs1_2015_cprofile_variables.json', 'acs1_2015_detail_variables.json', 'acs1_2015_profile_variables.json',
-			'acs1_2015_subject_variables.json', 'acs5_2015_cprofile_variables.json', 'acs5_2015_detail_variables.json',
-			'acs5_2015_profile_variables.json', 'acs5_2015_subject_variables.json',]
+		'censusdata': ['variables/*.json',],
 	}
 )
 
