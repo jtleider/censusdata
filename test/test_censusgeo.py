@@ -2,6 +2,8 @@
 Test censusdata.censusgeo class for representing geographies.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import unittest
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -44,11 +46,11 @@ class TestCensusgeo(unittest.TestCase):
 		self.assertEqual(censusdata.censusgeo([('state', '17'), ('county', '*')]), censusdata.censusgeo([('state', '17'), ('county', '*')]))
 
 	def test_repr(self):
-		self.assertEqual(repr(self.countygeo), "censusgeo((('state', '17'), ('county', '031')))")
-		self.assertEqual(repr(self.placecountygeo), "censusgeo((('state', '17'), ('place', '55555'), ('county', '*')))")
-		self.assertEqual(repr(self.placegeo), "censusgeo((('state', '06'), ('place', '53000')), 'Oakland city, California')")
-		self.assertEqual(repr(self.blockg), "censusgeo((('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')))")
-		self.assertEqual(repr(self.msa), "censusgeo((('metropolitan statistical area/micropolitan statistical area', '16980'),))")
+		self.assertEqual(repr(self.countygeo), str("censusgeo((({0[0]}, {0[1]}), ({0[2]}, {0[3]})))".format([repr(s) for s in ['state', '17', 'county', '031']])))
+		self.assertEqual(repr(self.placecountygeo), str("censusgeo((({0[0]}, {0[1]}), ({0[2]}, {0[3]}), ({0[4]}, {0[5]})))".format([repr(s) for s in ['state', '17', 'place', '55555', 'county', '*']])))
+		self.assertEqual(repr(self.placegeo), str("censusgeo((({0[0]}, {0[1]}), ({0[2]}, {0[3]})), {0[4]})".format([repr(s) for s in ['state', '06', 'place', '53000', 'Oakland city, California']])))
+		self.assertEqual(repr(self.blockg), str("censusgeo((({0[0]}, {0[1]}), ({0[2]}, {0[3]}), ({0[4]}, {0[5]}), ({0[6]}, {0[7]})))".format([repr(s) for s in ['state', '17', 'county', '031', 'tract', '350100', 'block group', '2']])))
+		self.assertEqual(repr(self.msa), str("censusgeo((({0[0]}, {0[1]}),))".format([repr(s) for s in ['metropolitan statistical area/micropolitan statistical area', '16980']])))
 
 	def test_str(self):
 		self.assertEqual(str(self.countygeo), 'Summary level: 050, state:17> county:031')

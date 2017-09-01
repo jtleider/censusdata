@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 class censusgeo:
 	"""Class for representing American Community Survey geographies."""
 
@@ -105,9 +107,9 @@ class censusgeo:
 
 	def __repr__(self):
 		if self.name == '':
-			return 'censusgeo(' + repr(self.geo) + ')'
+			return'censusgeo({0})'.format(repr(self.geo))
 		else:
-			return 'censusgeo(' + repr(self.geo) + ", '" + self.name + "')"
+			return "censusgeo({0}, {1})".format(repr(self.geo), repr(self.name))
 
 	def __str__(self):
 		if self.name == '':

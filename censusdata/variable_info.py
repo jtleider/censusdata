@@ -1,5 +1,7 @@
 """Functions for showing information about Census variables."""
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import requests
 import os
 import re
@@ -19,27 +21,27 @@ def censusvar(src, year, var):
 		elif v[:2] == 'CP':
 			tabletype = 'cprofile/'
 		else:
-			print('Unknown table type for variable {0}!'.format(v))
+			print(u'Unknown table type for variable {0}!'.format(v))
 			raise ValueError
 		r = requests.get('http://api.census.gov/data/{1}/{0}/{3}variables/{2}.json'.format(src, year, v, tabletype))
 		try:
 			data = r.json()
 		except:
-			print('Unexpected response (URL: {0.url}): {0.text} '.format(r))
+			print(u'Unexpected response (URL: {0.url}): {0.text} '.format(r))
 			raise ValueError
 		try:
 			assert data['name'] == v
 		except AssertionError:
-			print('JSON variable information does not include key "name"', data)
+			print(u'JSON variable information does not include key "name"', data)
 			raise
 		try:
 			assert len(data.keys()) == 4
 		except AssertionError:
-			print('JSON variable information includes unexpected number of keys ({0}, instead of 4): '.format(len(data.keys())), data)
+			print(u'JSON variable information includes unexpected number of keys ({0}, instead of 4): '.format(len(data.keys())), data)
 		try: 
 			ret[v] = [data['concept'], data['label'], data['predicateType']]
 		except KeyError:
-			print('JSON variable information does not include expected keys: ', data)
+			print(u'JSON variable information does not include expected keys: ', data)
 			raise
 	return ret
 
@@ -54,7 +56,7 @@ def censustable(src, year, table):
 	elif table[:2] == 'CP':
 		tabletype = 'cprofile'
 	else:
-		print('Unknown table type for table {0}!'.format(table))
+		print(u'Unknown table type for table {0}!'.format(table))
 		raise ValueError
 	topdir, filename = os.path.split(__file__)
 	with open(os.path.join(topdir, 'variables', '{0}_{1}_{2}_variables.json'.format(src, year, tabletype))) as infile:
@@ -65,27 +67,27 @@ def censustable(src, year, table):
 		if '_'.join(k.split('_')[:-1]) == table:
 			ret[k] = allvars[k]
 	if len(ret) == 0:
-		print('Table not found!')
+		print(u'Table not found!')
 		raise ValueError
 	return ret
 
 def printtable(table, moe=False):
 	"""Pretty print information on a Census table (such as produced by censustable)."""
-	print('{0:20} | {1:40.40} | {2:160} | {3:10}'.format('Variable', 'Table', 'Label', 'Type'))
-	print('-'*239)
+	print(u'{0:20} | {1:40.40} | {2:160} | {3:10}'.format('Variable', 'Table', 'Label', 'Type'))
+	print(u'-'*239)
 	for k in table.keys():
 		if not moe and k[-1] == 'M': continue # don't clutter output with margins of error
 		label = table[k]['label']
 		label = '!! '*label.count('!!') + label.replace('!!', ' ')
-		print('{0:20} | {1:40.40} | {2:160.160} | {3:10}'.format(k, table[k]['concept'], label, table[k]['predicateType']))
-	print('-'*239)
+		print(u'{0:20} | {1:40.40} | {2:160.160} | {3:10}'.format(k, table[k]['concept'], label, table[k]['predicateType']))
+	print(u'-'*239)
 
 def search(src, year, field, criterion, tabletype='detail'):
 	"""Search Census variables."""
 	try:
 		assert tabletype == 'detail' or tabletype == 'subject' or tabletype == 'profile' or tabletype == 'cprofile'
 	except AssertionError:
-		print('Unknown table type {0}!'.format(tabletype))
+		print(u'Unknown table type {0}!'.format(tabletype))
 		raise ValueError
 	topdir, filename = os.path.split(__file__)
 	with open(os.path.join(topdir, 'variables', '{0}_{1}_{2}_variables.json'.format(src, year, tabletype))) as infile:

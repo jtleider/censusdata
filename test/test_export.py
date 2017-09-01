@@ -2,18 +2,26 @@
 Test downloading data from Census API.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import censusdata
 import unittest
-import io
+try:
+	import StringIO
+except ModuleNotFoundError:
+	import io
 import textwrap
 
 class TestExport(unittest.TestCase):
 
 	def test_export(self):
 		data = censusdata.download('acs5', '2015', censusdata.censusgeo([('state', '*')]), ['B01001_001E'])
-		csv = io.StringIO()
+		try:
+			csv = StringIO.StringIO()
+		except NameError:
+			csv = io.StringIO()
 		censusdata.exportcsv(csv, data)
 		self.assertEqual(csv.getvalue(), textwrap.dedent("""\
 		state,NAME,B01001_001E
