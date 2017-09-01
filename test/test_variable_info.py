@@ -2,6 +2,8 @@
 Test showing information on variables from Census API.
 """
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import censusdata
