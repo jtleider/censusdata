@@ -38,6 +38,7 @@ def censusvar(src, year, var):
 			assert len(data.keys()) == 7
 		except AssertionError:
 			print(u'JSON variable information includes unexpected number of keys ({0}, instead of 7): '.format(len(data.keys())), data)
+		if 'predicateType' not in data: data['predicateType'] = ''
 		try: 
 			ret[v] = [data['concept'], data['label'], data['predicateType']]
 		except KeyError:
@@ -65,7 +66,8 @@ def censustable(src, year, table):
 	ret = OrderedDict()
 	for k in sorted(allvars.keys()):
 		if '_'.join(k.split('_')[:-1]) == table:
-			ret[k] = allvars[k]
+			if 'predicateType' not in allvars[k]: allvars[k]['predicateType'] = ''
+			ret[k] = {'label': allvars[k]['label'], 'concept': allvars[k]['concept'], 'predicateType': allvars[k]['predicateType']}
 	if len(ret) == 0:
 		print(u'Table not found!')
 		raise ValueError
