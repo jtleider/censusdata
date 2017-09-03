@@ -14,12 +14,14 @@ import textwrap
 
 class TestVariableInfo(unittest.TestCase):
 
-	def test_censusvar(self):
+	def test_censusvar_acs5(self):
 		expected = {'B01001_001E': ['B01001.  Sex by Age', 'Total:', 'int'],
 			'B01002_001E': ['B01002.  Median Age by Sex', 'Median age --!!Total:', 'int'],
 			'B19013_001E': ['B19013. Median Household Income in the Past 12 Months (in 2015 Inflation-Adjusted Dollars)',
 				'Median household income in the past 12 months (in 2015 Inflation-adjusted dollars)', 'int']}
 		self.assertEqual(censusdata.censusvar('acs5', '2015', ['B01001_001E', 'B01002_001E', 'B19013_001E']), expected)
+
+	def test_censusvar_acs1(self):
 		expected = {'S0101_C02_001E': ['Age and Sex', 'Male!!Total population', 'string'],
 			'DP03_0021PE': ['SELECTED ECONOMIC CHARACTERISTICS', 'COMMUTING TO WORK!!Workers 16 years and over!!Public transportation (excluding taxicab)', 'int'],
 			'CP02_2011_030E': ['COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES', '2011 Estimate!!MARITAL STATUS!!Females 15 years and over', 'string']}
@@ -28,7 +30,25 @@ class TestVariableInfo(unittest.TestCase):
 	def test_unknownvar(self):
 		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', '2015', ['B19013_010E'])
 
-	def test_censustable(self):
+	def test_censustable_acs1_2015_detail(self):
+		expected = OrderedDict()
+		expected['B23025_001E'] = {'label': 'Total:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_001M'] = {'label': 'Margin of Error for!!Total:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_002E'] = {'label': 'In labor force:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_002M'] = { 'label': 'Margin of Error for!!In labor force:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_003E'] = {'label': 'In labor force:!!Civilian labor force:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_003M'] = {'label': 'Margin of Error for!!In labor force:!!Civilian labor force:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_004E'] = {'label': 'In labor force:!!Civilian labor force:!!Employed', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_004M'] = {'label': 'Margin of Error for!!In labor force:!!Civilian labor force:!!Employed', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_005E'] = {'label': 'In labor force:!!Civilian labor force:!!Unemployed', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_005M'] = {'label': 'Margin of Error for!!In labor force:!!Civilian labor force:!!Unemployed', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_006E'] = {'label': 'In labor force:!!Armed Forces', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_006M'] = { 'label': 'Margin of Error for!!In labor force:!!Armed Forces', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_007E'] = {'label': 'Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		expected['B23025_007M'] = {'label': 'Margin of Error for!!Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
+		self.assertEqual(censusdata.censustable('acs1', '2015', 'B23025'), expected)
+
+	def test_censustable_acs5_2015_detail(self):
 		expected = OrderedDict()
 		expected['B23025_001E'] = {'label': 'Total:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
 		expected['B23025_001M'] = {'label': 'Margin Of Error For!!Total:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
@@ -45,10 +65,8 @@ class TestVariableInfo(unittest.TestCase):
 		expected['B23025_007E'] = {'label': 'Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
 		expected['B23025_007M'] = {'label': 'Margin Of Error For!!Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
 		self.assertEqual(censusdata.censustable('acs5', '2015', 'B23025'), expected)
-		for k in expected.keys():
-			expected[k]['label'] = expected[k]['label'].replace(' For!', ' for!') 
-			expected[k]['label'] = expected[k]['label'].replace(' Of ', ' of ') 
-		self.assertEqual(censusdata.censustable('acs1', '2015', 'B23025'), expected)
+
+	def test_censustable_acs5_2015_subject(self):
 		expected = OrderedDict()
 		expected['S0101_C02_001E'] = {'label': 'Male!!Total population', 'concept': 'Age and Sex', 'predicateType': 'string'}
 		expected['S0101_C02_001EA'] = {'label': 'Male!!Total population', 'concept': 'Age and Sex', 'predicateType': 'string'}
@@ -195,8 +213,6 @@ class TestVariableInfo(unittest.TestCase):
 		expected['S0101_C02_036M'] = {'label': 'Male MOE!!PERCENT IMPUTED!!Age', 'concept': 'Age and Sex', 'predicateType': 'string'}
 		expected['S0101_C02_036MA'] = {'label': 'Male MOE!!PERCENT IMPUTED!!Age', 'concept': 'Age and Sex', 'predicateType': 'string'}
 		self.assertEqual(censusdata.censustable('acs5', '2015', 'S0101_C02'), expected)
-
-		
 
 	def test_unknowntable(self):
 		self.assertRaises(ValueError, censusdata.censustable, 'acs5', '2015', 'B24444')
