@@ -7,7 +7,7 @@ import pandas as pd
 from collections import OrderedDict
 import requests
 
-def _download(src, year, params, baseurl = 'http://api.census.gov/data/'):
+def _download(src, year, params, baseurl = 'https://api.census.gov/data/'):
 	"""Request data from Census API. Returns data in ordered dictionary. Called by geographies() and download()."""
 	url = baseurl + str(year) + '/' + src + '?' + '&'.join('='.join(param) for param in params.items())
 	r = requests.get(url)
