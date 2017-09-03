@@ -23,7 +23,7 @@ def censusvar(src, year, var):
 		else:
 			print(u'Unknown table type for variable {0}!'.format(v))
 			raise ValueError
-		r = requests.get('http://api.census.gov/data/{1}/{0}/{3}variables/{2}.json'.format(src, year, v, tabletype))
+		r = requests.get('https://api.census.gov/data/{1}/{0}/{3}variables/{2}.json'.format(src, year, v, tabletype))
 		try:
 			data = r.json()
 		except:
@@ -35,9 +35,9 @@ def censusvar(src, year, var):
 			print(u'JSON variable information does not include key "name"', data)
 			raise
 		try:
-			assert len(data.keys()) == 4
+			assert len(data.keys()) == 7
 		except AssertionError:
-			print(u'JSON variable information includes unexpected number of keys ({0}, instead of 4): '.format(len(data.keys())), data)
+			print(u'JSON variable information includes unexpected number of keys ({0}, instead of 7): '.format(len(data.keys())), data)
 		try: 
 			ret[v] = [data['concept'], data['label'], data['predicateType']]
 		except KeyError:
