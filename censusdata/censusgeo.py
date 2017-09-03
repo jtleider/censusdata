@@ -13,6 +13,7 @@ class censusgeo:
 		'state> county> county subdivision': '060',
 		'state> county> county subdivision> subminor civil division': '067',
 		'state> county> county subdivision> place remainder': '070',
+		'state> county> county subdivision> place > tract': '080',
 		'state> county> tract': '140',
 		'state> county> tract> block group': '150',
 		'state> place> county': '155',
