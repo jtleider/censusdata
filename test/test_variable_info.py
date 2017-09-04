@@ -36,6 +36,11 @@ class TestVariableInfo(unittest.TestCase):
 			'CP02_2011_030E': ['COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES', '2011 Estimate!!MARITAL STATUS!!Females 15 years and over', 'string']}
 		self.assertEqual(censusdata.censusvar('acs1', '2015', ['S0101_C02_001E', 'DP03_0021PE', 'CP02_2011_030E']), expected)
 
+	def test_censusvar_acsse(self):
+		expected = {'K202801_006E': ['K202801. Presence of A Computer and Type of Internet Subscription in Household', 'No computer', 'int']}
+		for year in range(2014, 2015+1):
+			self.assertEqual(censusdata.censusvar('acsse', year, ['K202801_006E']), expected)
+
 	def test_unknownvar(self):
 		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', '2015', ['B19013_010E'])
 
@@ -225,6 +230,50 @@ class TestVariableInfo(unittest.TestCase):
 		expected['S0101_C02_036M'] = {'label': 'Male MOE!!PERCENT IMPUTED!!Age', 'concept': 'Age and Sex', 'predicateType': 'string'}
 		expected['S0101_C02_036MA'] = {'label': 'Male MOE!!PERCENT IMPUTED!!Age', 'concept': 'Age and Sex', 'predicateType': 'string'}
 		self.assertEqual(censusdata.censustable('acs5', '2015', 'S0101_C02'), expected)
+
+	def test_censustable_acsse(self):
+		expected = OrderedDict()
+		expected['K201601_001E'] = {'label': 'Total:', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_001EA'] = {'label': 'Total:', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_001M'] = {'label': 'Margin of Error for!!Total:', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_001MA'] = {'label': 'Margin of Error for!!Total:', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_002E'] = {'label': 'English only', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_002EA'] = {'label': 'English only', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_002M'] = {'label': 'Margin of Error for!!English only', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_002MA'] = {'label': 'Margin of Error for!!English only', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_003E'] = {'label': 'Spanish:', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_003EA'] = {'label': 'Spanish:', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_003M'] = {'label': 'Margin of Error for!!Spanish:', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_003MA'] = {'label': 'Margin of Error for!!Spanish:', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_004E'] = {'label': 'Spanish:!!Limited English speaking household', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_004EA'] = {'label': 'Spanish:!!Limited English speaking household', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_004M'] = {'label': 'Margin of Error for!!Spanish:!!Limited English speaking household', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_004MA'] = {'label': 'Margin of Error for!!Spanish:!!Limited English speaking household', 'concept': 'K201601. Household Language', 
+			'predicateType': 'string'}
+		expected['K201601_005E'] = {'label': 'Spanish:!!Not a limited English speaking household', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_005EA'] = {'label': 'Spanish:!!Not a limited English speaking household', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_005M'] = {'label': 'Margin of Error for!!Spanish:!!Not a limited English speaking household', 'concept': 'K201601. Household Language', 
+			'predicateType': 'int'}
+		expected['K201601_005MA'] = {'label': 'Margin of Error for!!Spanish:!!Not a limited English speaking household', 'concept': 'K201601. Household Language', 
+			'predicateType': 'string'}
+		expected['K201601_006E'] = {'label': 'Other languages:', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_006EA'] = {'label': 'Other languages:', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_006M'] = {'label': 'Margin of Error for!!Other languages:', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_006MA'] = {'label': 'Margin of Error for!!Other languages:', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_007E'] = {'label': 'Other languages:!!Limited English speaking household', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_007EA'] = {'label': 'Other languages:!!Limited English speaking household', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_007M'] = {'label': 'Margin of Error for!!Other languages:!!Limited English speaking household', 'concept': 'K201601. Household Language', 
+			'predicateType': 'int'}
+		expected['K201601_007MA'] = {'label': 'Margin of Error for!!Other languages:!!Limited English speaking household', 'concept': 'K201601. Household Language', 
+			'predicateType': 'string'}
+		expected['K201601_008E'] = {'label': 'Other languages:!!Not a limited English speaking household', 'concept': 'K201601. Household Language', 'predicateType': 'int'}
+		expected['K201601_008EA'] = {'label': 'Other languages:!!Not a limited English speaking household', 'concept': 'K201601. Household Language', 'predicateType': 'string'}
+		expected['K201601_008M'] = {'label': 'Margin of Error for!!Other languages:!!Not a limited English speaking household', 'concept': 'K201601. Household Language', 
+			'predicateType': 'int'}
+		expected['K201601_008MA'] = {'label': 'Margin of Error for!!Other languages:!!Not a limited English speaking household', 'concept': 'K201601. Household Language', 
+			'predicateType': 'string'}
+		for year in range(2014, 2015+1):
+			self.assertEqual(censusdata.censustable('acsse', year, 'K201601'), expected)
 
 	def test_unknowntable(self):
 		self.assertRaises(ValueError, censusdata.censustable, 'acs5', '2015', 'B24444')
