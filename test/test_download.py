@@ -123,6 +123,12 @@ class TestDownload(unittest.TestCase):
 			assert_frame_equal(censusdata.download('acs1', year, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
 				pd.DataFrame({'B19013_001E': medhhinc[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
+	def test_download_acsse(self):
+		nocomputer = {2014: 731135, 2015: 658047}
+		for year in range(2014, 2015+1):
+			assert_frame_equal(censusdata.download('acsse', year, censusdata.censusgeo([('state', '17')]), ['K202801_006E']),
+				pd.DataFrame({'K202801_006E': nocomputer[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
+
 	def test_download_error_variable(self):
 		self.assertRaises(ValueError, censusdata.download, 'acs5', '2015', censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B19013_010E'])
 

@@ -10,9 +10,10 @@ from collections import OrderedDict
 
 def censusvar(src, year, var):
 	"""Download information on a list of variables from Census API."""
+	assert src == 'acs1' or src == 'acs5' or src == 'acsse'
 	ret = dict()
 	for v in var:
-		if v[0] == 'B':
+		if src == 'acsse' or v[0] == 'B':
 			tabletype = ''
 		elif v[0] == 'S':
 			tabletype = 'subject/'
@@ -48,19 +49,22 @@ def censusvar(src, year, var):
 
 def censustable(src, year, table):
 	"""Show information on all variables in a table."""
-	if table[0] == 'B':
-		tabletype = 'detail'
+	assert src == 'acs1' or src == 'acs5' or src == 'acsse'
+	if src == 'acsse':
+		tabletype = ''
+	elif table[0] == 'B':
+		tabletype = 'detail_'
 	elif table[0] == 'S':
-		tabletype = 'subject'
+		tabletype = 'subject_'
 	elif table[:2] == 'DP':
-		tabletype = 'profile'
+		tabletype = 'profile_'
 	elif table[:2] == 'CP':
-		tabletype = 'cprofile'
+		tabletype = 'cprofile_'
 	else:
 		print(u'Unknown table type for table {0}!'.format(table))
 		raise ValueError
 	topdir, filename = os.path.split(__file__)
-	with open(os.path.join(topdir, 'variables', '{0}_{1}_{2}_variables.json'.format(src, year, tabletype))) as infile:
+	with open(os.path.join(topdir, 'variables', '{0}_{1}_{2}variables.json'.format(src, year, tabletype))) as infile:
 		allvars = infile.read()
 	allvars = json.loads(allvars)['variables']
 	ret = OrderedDict()
