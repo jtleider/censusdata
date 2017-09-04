@@ -1,5 +1,4 @@
-""""
-Test showing information on variables from Census API.
+"""" Test showing information on variables from Census API.
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
@@ -40,6 +39,12 @@ class TestVariableInfo(unittest.TestCase):
 		expected = {'K202801_006E': ['K202801. Presence of A Computer and Type of Internet Subscription in Household', 'No computer', 'int']}
 		for year in range(2014, 2015+1):
 			self.assertEqual(censusdata.censusvar('acsse', year, ['K202801_006E']), expected)
+
+	def test_censusvar_acs3(self):
+		for year in range(2013, 2013+1):
+			expected = {'B19013_001E': ['B19013.  Median Household Income'.format(year),
+				'Median household income in the past 12 months (in {0} inflation-adjusted dollars)'.format(year), 'int']}
+			self.assertEqual(censusdata.censusvar('acs3', year, ['B19013_001E']), expected)
 
 	def test_unknownvar(self):
 		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', '2015', ['B19013_010E'])
@@ -274,6 +279,27 @@ class TestVariableInfo(unittest.TestCase):
 			'predicateType': 'string'}
 		for year in range(2014, 2015+1):
 			self.assertEqual(censusdata.censustable('acsse', year, 'K201601'), expected)
+
+	def test_censustable_acs3(self):
+		for year in range(2012, 2013+1):
+			predicateType = 'int'
+			if year == 2012: predicateType = ''
+			expected = OrderedDict()
+			expected['B23025_001E'] = {'label': 'Total:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_001M'] = {'label': 'Margin of Error for!!Total:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_002E'] = {'label': 'In labor force:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_002M'] = { 'label': 'Margin of Error for!!In labor force:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_003E'] = {'label': 'In labor force:!!Civilian labor force:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_003M'] = {'label': 'Margin of Error for!!In labor force:!!Civilian labor force:', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_004E'] = {'label': 'In labor force:!!Civilian labor force:!!Employed', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_004M'] = {'label': 'Margin of Error for!!In labor force:!!Civilian labor force:!!Employed', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_005E'] = {'label': 'In labor force:!!Civilian labor force:!!Unemployed', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_005M'] = {'label': 'Margin of Error for!!In labor force:!!Civilian labor force:!!Unemployed', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_006E'] = {'label': 'In labor force:!!Armed Forces', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_006M'] = { 'label': 'Margin of Error for!!In labor force:!!Armed Forces', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_007E'] = {'label': 'Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			expected['B23025_007M'] = {'label': 'Margin of Error for!!Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
+			self.assertEqual(censusdata.censustable('acs3', year, 'B23025'), expected)
 
 	def test_unknowntable(self):
 		self.assertRaises(ValueError, censusdata.censustable, 'acs5', '2015', 'B24444')

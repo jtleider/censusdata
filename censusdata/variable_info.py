@@ -10,7 +10,7 @@ from collections import OrderedDict
 
 def censusvar(src, year, var):
 	"""Download information on a list of variables from Census API."""
-	assert src == 'acs1' or src == 'acs5' or src == 'acsse'
+	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse'
 	ret = dict()
 	for v in var:
 		if src == 'acsse' or v[0] == 'B':
@@ -49,7 +49,7 @@ def censusvar(src, year, var):
 
 def censustable(src, year, table):
 	"""Show information on all variables in a table."""
-	assert src == 'acs1' or src == 'acs5' or src == 'acsse'
+	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse'
 	if src == 'acsse':
 		tabletype = ''
 	elif table[0] == 'B':
