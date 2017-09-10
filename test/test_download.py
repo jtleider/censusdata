@@ -141,6 +141,10 @@ class TestDownload(unittest.TestCase):
 			assert_frame_equal(censusdata.download('acs3', year, censusdata.censusgeo([('state', '17')]), ['DP03_0115PE'], tabletype='profile'),
 				pd.DataFrame({'DP03_0115PE': insured[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
+	def test_download_sf1_2010(self):
+		assert_frame_equal(censusdata.download('sf1', 2010, censusdata.censusgeo([('state', '17'), ('place', '14000')]), ['P0010001']),
+			pd.DataFrame({'P0010001': 2695598}, [censusdata.censusgeo([('state', '17'), ('place', '14000')])]))
+
 	def test_download_error_variable(self):
 		self.assertRaises(ValueError, censusdata.download, 'acs5', '2015', censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B19013_010E'])
 

@@ -46,6 +46,10 @@ class TestVariableInfo(unittest.TestCase):
 				'Median household income in the past 12 months (in {0} inflation-adjusted dollars)'.format(year), 'int']}
 			self.assertEqual(censusdata.censusvar('acs3', year, ['B19013_001E']), expected)
 
+	def test_censusvar_sf1(self):
+		self.assertEqual(censusdata.censusvar('sf1', 2010, ['P0010001']),
+			{'P0010001': ['P1. Total Population [1]', 'Total Population', '']})
+
 	def test_unknownvar(self):
 		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', '2015', ['B19013_010E'])
 
@@ -300,6 +304,16 @@ class TestVariableInfo(unittest.TestCase):
 			expected['B23025_007E'] = {'label': 'Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
 			expected['B23025_007M'] = {'label': 'Margin of Error for!!Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': predicateType}
 			self.assertEqual(censusdata.censustable('acs3', year, 'B23025'), expected)
+
+	def test_censustable_sf1(self):
+		expected = OrderedDict()
+		expected['P0020001'] = {'label': 'Total Population', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
+		expected['P0020002'] = {'label': 'Urban:', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
+		expected['P0020003'] = {'label': 'Urban: !! Inside urbanized areas', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
+		expected['P0020004'] = {'label': 'Urban: !! Inside urban clusters', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
+		expected['P0020005'] = {'label': 'Rural !! Inside urban clusters', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
+		expected['P0020006'] = {'label': 'Not defined for this file !! Inside urban clusters', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
+		self.assertEqual(censusdata.censustable('sf1', 2010, 'P002'), expected)
 
 	def test_unknowntable(self):
 		self.assertRaises(ValueError, censusdata.censustable, 'acs5', '2015', 'B24444')

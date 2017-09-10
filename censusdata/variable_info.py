@@ -10,10 +10,10 @@ from collections import OrderedDict
 
 def censusvar(src, year, var):
 	"""Download information on a list of variables from Census API."""
-	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse'
+	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse' or src == 'sf1'
 	ret = dict()
 	for v in var:
-		if src == 'acsse' or v[0] == 'B':
+		if src == 'acsse' or src == 'sf1' or v[0] == 'B':
 			tabletype = ''
 		elif v[0] == 'S':
 			tabletype = 'subject/'
@@ -49,8 +49,8 @@ def censusvar(src, year, var):
 
 def censustable(src, year, table):
 	"""Show information on all variables in a table."""
-	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse'
-	if src == 'acsse':
+	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse' or src == 'sf1'
+	if src == 'acsse' or src == 'sf1':
 		tabletype = ''
 	elif table[0] == 'B':
 		tabletype = 'detail_'
@@ -69,7 +69,8 @@ def censustable(src, year, table):
 	allvars = json.loads(allvars)['variables']
 	ret = OrderedDict()
 	for k in sorted(allvars.keys()):
-		if '_'.join(k.split('_')[:-1]) == table:
+		if ((src != 'sf1' and '_'.join(k.split('_')[:-1]) == table)
+			or (src == 'sf1' and k[:len(table)] == table)): # SF1 variables do not include underscores after table names
 			if 'predicateType' not in allvars[k]: allvars[k]['predicateType'] = ''
 			ret[k] = {'label': allvars[k]['label'], 'concept': allvars[k]['concept'], 'predicateType': allvars[k]['predicateType']}
 	if len(ret) == 0:
