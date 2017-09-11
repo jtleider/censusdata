@@ -1,473 +1,10338 @@
-============================================================
-Examples
-============================================================
 
-============================================================
+Examples
+========
+
 Example 1: Downloading Block Group Data and Exporting to CSV
 ============================================================
 
-As a first example, let's suppose we're interested in unemployment and high school dropout rates
-for block groups in Cook County, Illinois, which contains Chicago, IL.
+As a first example, let's suppose we're interested in unemployment and
+high school dropout rates for block groups in Cook County, Illinois,
+which contains Chicago, IL.
 
-We begin by importing the censusdata and pandas modules, and setting some display options in pandas for
-nicer output::
+We begin by importing the censusdata and pandas modules, and setting
+some display options in pandas for nicer output:
 
-	>>> import pandas as pd
-	>>> import censusdata
-	>>> pd.set_option('display.expand_frame_repr', False)
-	>>> pd.set_option('display.precision', 2)
+.. code:: ipython3
 
-To download data, we need to identify the relevant tables containing the variables of interest to us.
-One way to do this would be to refer to the ACS documentation, in particular the Table Shells
-(https://www.census.gov/programs-surveys/acs/technical-documentation/summary-file-documentation.html). Alternatively,
-it is possible to do this from within Python. `censusdata.search` will search for given text patterns. The
-downside to this is output can be voluminous, as in the following searches, as ACS frequently provides
-a large number of different tabulations related to a given topic area. ipython provides easier to read output
-in this case::
+    import pandas as pd
+    import censusdata
+    pd.set_option('display.expand_frame_repr', False)
+    pd.set_option('display.precision', 2)
 
-	>>> censusdata.search('acs5', '2015', 'label', 'unemploy')
-	[('B12006_006E', 'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION', 'Never married:!!Male:!!In labor force:!!Unemployed'), ('B12006_006M', 'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION', 'Margin Of Error For!!Never married:!!Male:!!In labor force:!!Unemployed'), ('B12006_011E', 'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION', 'Never married:!!Female:!!In labor force:!!Unemployed'), ('B12006_011M', 'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION', 'Margin Of Error For!!Never married:!!Female:!!In labor force:!!Unemployed'), ...]
-	>>> censusdata.search('acs5', '2015', 'concept', 'education')
-	[('B06009PR_001E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Total:'), ('B06009PR_001M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Total:'), ('B06009PR_002E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Less than high school graduate'), ('B06009PR_002M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Less than high school graduate'), ('B06009PR_003E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'High school graduate (includes equivalency)'), ('B06009PR_003M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!High school graduate (includes equivalency)'), ('B06009PR_004E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Some college or associate's degree"), ('B06009PR_004M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Margin Of Error For!!Some college or associate's degree"), ('B06009PR_005E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Bachelor's degree"), ('B06009PR_005M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Margin Of Error For!!Bachelor's degree"), ('B06009PR_006E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Graduate or professional degree'), ('B06009PR_006M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Graduate or professional degree'), ('B06009PR_007E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Born in Puerto Rico:'), ('B06009PR_007M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Born in Puerto Rico:'), ('B06009PR_008E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Born in Puerto Rico:!!Less than high school graduate'), ('B06009PR_008M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Born in Puerto Rico:!!Less than high school graduate'), ('B06009PR_009E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Born in Puerto Rico:!!High school graduate (includes equivalency)'), ('B06009PR_009M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Born in Puerto Rico:!!High school graduate (includes equivalency)'), ('B06009PR_010E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Born in Puerto Rico:!!Some college or associate's degree"), ('B06009PR_010M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Margin Of Error For!!Born in Puerto Rico:!!Some college or associate's degree"), ('B06009PR_011E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Born in Puerto Rico:!!Bachelor's degree"), ('B06009PR_011M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Margin Of Error For!!Born in Puerto Rico:!!Bachelor's degree"), ('B06009PR_012E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Born in Puerto Rico:!!Graduate or professional degree'), ('B06009PR_012M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Born in Puerto Rico:!!Graduate or professional degree'), ('B06009PR_013E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Born in the United States:'), ('B06009PR_013M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Born in the United States:'), ('B06009PR_014E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Born in the United States:!!Less than high school graduate'), ('B06009PR_014M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Born in the United States:!!Less than high school graduate'), ('B06009PR_015E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Born in the United States:!!High school graduate (includes equivalency)'), ('B06009PR_015M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Born in the United States:!!High school graduate (includes equivalency)'), ('B06009PR_016E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Born in the United States:!!Some college or associate's degree"), ('B06009PR_016M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Margin Of Error For!!Born in the United States:!!Some college or associate's degree"), ('B06009PR_017E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Born in the United States:!!Bachelor's degree"), ('B06009PR_017M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', "Margin Of Error For!!Born in the United States:!!Bachelor's degree"), ('B06009PR_018E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Born in the United States:!!Graduate or professional degree'), ('B06009PR_018M', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Margin Of Error For!!Born in the United States:!!Graduate or professional degree'), ('B06009PR_019E', 'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO', 'Native; born elsewhere:'), ...]
+To download data, we need to identify the relevant tables containing the
+variables of interest to us. One way to do this would be to refer to the
+ACS documentation, in particular the Table Shells
+(https://www.census.gov/programs-surveys/acs/technical-documentation/summary-file-documentation.html).
+Alternatively, it is possible to do this from within Python.
+``censusdata.search`` will search for given text patterns. The downside
+to this is output can be voluminous, as in the following searches, as
+ACS frequently provides a large number of different tabulations related
+to a given topic area. ipython provides easier to read output in this
+case:
 
-(Please note that searching Census variables and printing out a single table rely on previously downloaded information from the Census API, because otherwise every time we did this
-we would have to download data for all variables.) Once we have identified a table of interest, we can use `censusdata.printtable` to show all variables
-included in the table::
+.. code:: ipython3
 
-	>>> censusdata.printtable(censusdata.censustable('acs5', '2015', 'B23025'))
-	Variable             | Table                                    | Label                                                                                                                                                            | Type      
-	-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	B23025_001E          | B23025.  Employment Status for the Popul | Total:                                                                                                                                                           | int       
-	B23025_002E          | B23025.  Employment Status for the Popul | In labor force:                                                                                                                                                  | int       
-	B23025_003E          | B23025.  Employment Status for the Popul | !! In labor force: Civilian labor force:                                                                                                                         | int       
-	B23025_004E          | B23025.  Employment Status for the Popul | !! !! In labor force: Civilian labor force: Employed                                                                                                             | int       
-	B23025_005E          | B23025.  Employment Status for the Popul | !! !! In labor force: Civilian labor force: Unemployed                                                                                                           | int       
-	B23025_006E          | B23025.  Employment Status for the Popul | !! In labor force: Armed Forces                                                                                                                                  | int       
-	B23025_007E          | B23025.  Employment Status for the Popul | Not in labor force                                                                                                                                               | int       
-	-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	>>> censusdata.printtable(censusdata.censustable('acs5', '2015', 'B15003'))
-	Variable             | Table                                    | Label                                                                                                                                                            | Type      
-	-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	B15003_001E          | B15003.  Educational Attainment for the  | Total:                                                                                                                                                           | int       
-	B15003_002E          | B15003.  Educational Attainment for the  | No schooling completed                                                                                                                                           | int       
-	B15003_003E          | B15003.  Educational Attainment for the  | Nursery school                                                                                                                                                   | int       
-	B15003_004E          | B15003.  Educational Attainment for the  | Kindergarten                                                                                                                                                     | int       
-	B15003_005E          | B15003.  Educational Attainment for the  | 1st grade                                                                                                                                                        | int       
-	B15003_006E          | B15003.  Educational Attainment for the  | 2nd grade                                                                                                                                                        | int       
-	B15003_007E          | B15003.  Educational Attainment for the  | 3rd grade                                                                                                                                                        | int       
-	B15003_008E          | B15003.  Educational Attainment for the  | 4th grade                                                                                                                                                        | int       
-	B15003_009E          | B15003.  Educational Attainment for the  | 5th grade                                                                                                                                                        | int       
-	B15003_010E          | B15003.  Educational Attainment for the  | 6th grade                                                                                                                                                        | int       
-	B15003_011E          | B15003.  Educational Attainment for the  | 7th grade                                                                                                                                                        | int       
-	B15003_012E          | B15003.  Educational Attainment for the  | 8th grade                                                                                                                                                        | int       
-	B15003_013E          | B15003.  Educational Attainment for the  | 9th grade                                                                                                                                                        | int       
-	B15003_014E          | B15003.  Educational Attainment for the  | 10th grade                                                                                                                                                       | int       
-	B15003_015E          | B15003.  Educational Attainment for the  | 11th grade                                                                                                                                                       | int       
-	B15003_016E          | B15003.  Educational Attainment for the  | 12th grade, no diploma                                                                                                                                           | int       
-	B15003_017E          | B15003.  Educational Attainment for the  | Regular high school diploma                                                                                                                                      | int       
-	B15003_018E          | B15003.  Educational Attainment for the  | GED or alternative credential                                                                                                                                    | int       
-	B15003_019E          | B15003.  Educational Attainment for the  | Some college, less than 1 year                                                                                                                                   | int       
-	B15003_020E          | B15003.  Educational Attainment for the  | Some college, 1 or more years, no degree                                                                                                                         | int       
-	B15003_021E          | B15003.  Educational Attainment for the  | Associate's degree                                                                                                                                               | int       
-	B15003_022E          | B15003.  Educational Attainment for the  | Bachelor's degree                                                                                                                                                | int       
-	B15003_023E          | B15003.  Educational Attainment for the  | Master's degree                                                                                                                                                  | int       
-	B15003_024E          | B15003.  Educational Attainment for the  | Professional school degree                                                                                                                                       | int       
-	B15003_025E          | B15003.  Educational Attainment for the  | Doctorate degree                                                                                                                                                 | int       
-	-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-After identifying relevant variables, we then need to identify the geographies of interest. We are interested in block groups in Cook County, Illinois, so first we look for the geographic identifier (FIPS code)
-for Illinois, then the identifiers for all counties with Illinois to find Cook County::
-
-	>>> print(censusdata.geographies(censusdata.censusgeo([('state', '*')]), 'acs5', '2015'))
-	{'Alaska': censusgeo((('state', '02'),)), 'Alabama': censusgeo((('state', '01'),)), 'Arkansas': censusgeo((('state', '05'),)), 'Arizona': censusgeo((('state', '04'),)), 'California': censusgeo((('state', '06'),)), 'Colorado': censusgeo((('state', '08'),)), 'Connecticut': censusgeo((('state', '09'),)), 'District of Columbia': censusgeo((('state', '11'),)), 'Delaware': censusgeo((('state', '10'),)), 'Florida': censusgeo((('state', '12'),)), 'Georgia': censusgeo((('state', '13'),)), 'Hawaii': censusgeo((('state', '15'),)), 'Iowa': censusgeo((('state', '19'),)), 'Idaho': censusgeo((('state', '16'),)), 'Illinois': censusgeo((('state', '17'),)), 'Indiana': censusgeo((('state', '18'),)), 'Kansas': censusgeo((('state', '20'),)), 'Kentucky': censusgeo((('state', '21'),)), 'Louisiana': censusgeo((('state', '22'),)), 'Massachusetts': censusgeo((('state', '25'),)), 'Maryland': censusgeo((('state', '24'),)), 'Maine': censusgeo((('state', '23'),)), 'Michigan': censusgeo((('state', '26'),)), 'Minnesota': censusgeo((('state', '27'),)), 'Missouri': censusgeo((('state', '29'),)), 'Mississippi': censusgeo((('state', '28'),)), 'Montana': censusgeo((('state', '30'),)), 'North Carolina': censusgeo((('state', '37'),)), 'North Dakota': censusgeo((('state', '38'),)), 'Nebraska': censusgeo((('state', '31'),)), 'New Hampshire': censusgeo((('state', '33'),)), 'New Jersey': censusgeo((('state', '34'),)), 'New Mexico': censusgeo((('state', '35'),)), 'Nevada': censusgeo((('state', '32'),)), 'New York': censusgeo((('state', '36'),)), 'Ohio': censusgeo((('state', '39'),)), 'Oklahoma': censusgeo((('state', '40'),)), 'Oregon': censusgeo((('state', '41'),)), 'Pennsylvania': censusgeo((('state', '42'),)), 'Puerto Rico': censusgeo((('state', '72'),)), 'Rhode Island': censusgeo((('state', '44'),)), 'South Carolina': censusgeo((('state', '45'),)), 'South Dakota': censusgeo((('state', '46'),)), 'Tennessee': censusgeo((('state', '47'),)), 'Texas': censusgeo((('state', '48'),)), 'Utah': censusgeo((('state', '49'),)), 'Virginia': censusgeo((('state', '51'),)), 'Vermont': censusgeo((('state', '50'),)), 'Washington': censusgeo((('state', '53'),)), 'Wisconsin': censusgeo((('state', '55'),)), 'West Virginia': censusgeo((('state', '54'),)), 'Wyoming': censusgeo((('state', '56'),))}
-	>>> print(censusdata.geographies(censusdata.censusgeo([('state', '17'), ('county', '*')]), 'acs5', '2015'))
-	{'Adams County, Illinois': censusgeo((('state', '17'), ('county', '001'))), 'Alexander County, Illinois': censusgeo((('state', '17'), ('county', '003'))), 'Bond County, Illinois': censusgeo((('state', '17'), ('county', '005'))), 'Boone County, Illinois': censusgeo((('state', '17'), ('county', '007'))), 'Brown County, Illinois': censusgeo((('state', '17'), ('county', '009'))), 'Bureau County, Illinois': censusgeo((('state', '17'), ('county', '011'))), 'Calhoun County, Illinois': censusgeo((('state', '17'), ('county', '013'))), 'Carroll County, Illinois': censusgeo((('state', '17'), ('county', '015'))), 'Cass County, Illinois': censusgeo((('state', '17'), ('county', '017'))), 'Champaign County, Illinois': censusgeo((('state', '17'), ('county', '019'))), 'Christian County, Illinois': censusgeo((('state', '17'), ('county', '021'))), 'Clark County, Illinois': censusgeo((('state', '17'), ('county', '023'))), 'Clay County, Illinois': censusgeo((('state', '17'), ('county', '025'))), 'Clinton County, Illinois': censusgeo((('state', '17'), ('county', '027'))), 'Coles County, Illinois': censusgeo((('state', '17'), ('county', '029'))), 'Cook County, Illinois': censusgeo((('state', '17'), ('county', '031'))), 'Crawford County, Illinois': censusgeo((('state', '17'), ('county', '033'))), 'Cumberland County, Illinois': censusgeo((('state', '17'), ('county', '035'))), 'DeKalb County, Illinois': censusgeo((('state', '17'), ('county', '037'))), 'De Witt County, Illinois': censusgeo((('state', '17'), ('county', '039'))), 'Douglas County, Illinois': censusgeo((('state', '17'), ('county', '041'))), 'DuPage County, Illinois': censusgeo((('state', '17'), ('county', '043'))), 'Edgar County, Illinois': censusgeo((('state', '17'), ('county', '045'))), 'Edwards County, Illinois': censusgeo((('state', '17'), ('county', '047'))), 'Effingham County, Illinois': censusgeo((('state', '17'), ('county', '049'))), 'Fayette County, Illinois': censusgeo((('state', '17'), ('county', '051'))), 'Ford County, Illinois': censusgeo((('state', '17'), ('county', '053'))), 'Franklin County, Illinois': censusgeo((('state', '17'), ('county', '055'))), 'Fulton County, Illinois': censusgeo((('state', '17'), ('county', '057'))), 'Gallatin County, Illinois': censusgeo((('state', '17'), ('county', '059'))), 'Greene County, Illinois': censusgeo((('state', '17'), ('county', '061'))), 'Grundy County, Illinois': censusgeo((('state', '17'), ('county', '063'))), 'Hamilton County, Illinois': censusgeo((('state', '17'), ('county', '065'))), 'Hancock County, Illinois': censusgeo((('state', '17'), ('county', '067'))), 'Hardin County, Illinois': censusgeo((('state', '17'), ('county', '069'))), 'Henderson County, Illinois': censusgeo((('state', '17'), ('county', '071'))), 'Henry County, Illinois': censusgeo((('state', '17'), ('county', '073'))), 'Iroquois County, Illinois': censusgeo((('state', '17'), ('county', '075'))), 'Jackson County, Illinois': censusgeo((('state', '17'), ('county', '077'))), 'Jasper County, Illinois': censusgeo((('state', '17'), ('county', '079'))), 'Jefferson County, Illinois': censusgeo((('state', '17'), ('county', '081'))), 'Jersey County, Illinois': censusgeo((('state', '17'), ('county', '083'))), 'Jo Daviess County, Illinois': censusgeo((('state', '17'), ('county', '085'))), 'Johnson County, Illinois': censusgeo((('state', '17'), ('county', '087'))), 'Kane County, Illinois': censusgeo((('state', '17'), ('county', '089'))), 'Kankakee County, Illinois': censusgeo((('state', '17'), ('county', '091'))), 'Kendall County, Illinois': censusgeo((('state', '17'), ('county', '093'))), 'Knox County, Illinois': censusgeo((('state', '17'), ('county', '095'))), 'Lake County, Illinois': censusgeo((('state', '17'), ('county', '097'))), 'LaSalle County, Illinois': censusgeo((('state', '17'), ('county', '099'))), 'Lawrence County, Illinois': censusgeo((('state', '17'), ('county', '101'))), 'Lee County, Illinois': censusgeo((('state', '17'), ('county', '103'))), 'Livingston County, Illinois': censusgeo((('state', '17'), ('county', '105'))), 'Logan County, Illinois': censusgeo((('state', '17'), ('county', '107'))), 'McDonough County, Illinois': censusgeo((('state', '17'), ('county', '109'))), 'McHenry County, Illinois': censusgeo((('state', '17'), ('county', '111'))), 'McLean County, Illinois': censusgeo((('state', '17'), ('county', '113'))), 'Macon County, Illinois': censusgeo((('state', '17'), ('county', '115'))), 'Macoupin County, Illinois': censusgeo((('state', '17'), ('county', '117'))), 'Madison County, Illinois': censusgeo((('state', '17'), ('county', '119'))), 'Marion County, Illinois': censusgeo((('state', '17'), ('county', '121'))), 'Marshall County, Illinois': censusgeo((('state', '17'), ('county', '123'))), 'Mason County, Illinois': censusgeo((('state', '17'), ('county', '125'))), 'Massac County, Illinois': censusgeo((('state', '17'), ('county', '127'))), 'Menard County, Illinois': censusgeo((('state', '17'), ('county', '129'))), 'Mercer County, Illinois': censusgeo((('state', '17'), ('county', '131'))), 'Monroe County, Illinois': censusgeo((('state', '17'), ('county', '133'))), 'Montgomery County, Illinois': censusgeo((('state', '17'), ('county', '135'))), 'Morgan County, Illinois': censusgeo((('state', '17'), ('county', '137'))), 'Moultrie County, Illinois': censusgeo((('state', '17'), ('county', '139'))), 'Ogle County, Illinois': censusgeo((('state', '17'), ('county', '141'))), 'Peoria County, Illinois': censusgeo((('state', '17'), ('county', '143'))), 'Perry County, Illinois': censusgeo((('state', '17'), ('county', '145'))), 'Piatt County, Illinois': censusgeo((('state', '17'), ('county', '147'))), 'Pike County, Illinois': censusgeo((('state', '17'), ('county', '149'))), 'Pope County, Illinois': censusgeo((('state', '17'), ('county', '151'))), 'Pulaski County, Illinois': censusgeo((('state', '17'), ('county', '153'))), 'Putnam County, Illinois': censusgeo((('state', '17'), ('county', '155'))), 'Randolph County, Illinois': censusgeo((('state', '17'), ('county', '157'))), 'Richland County, Illinois': censusgeo((('state', '17'), ('county', '159'))), 'Rock Island County, Illinois': censusgeo((('state', '17'), ('county', '161'))), 'St. Clair County, Illinois': censusgeo((('state', '17'), ('county', '163'))), 'Saline County, Illinois': censusgeo((('state', '17'), ('county', '165'))), 'Sangamon County, Illinois': censusgeo((('state', '17'), ('county', '167'))), 'Schuyler County, Illinois': censusgeo((('state', '17'), ('county', '169'))), 'Scott County, Illinois': censusgeo((('state', '17'), ('county', '171'))), 'Shelby County, Illinois': censusgeo((('state', '17'), ('county', '173'))), 'Stark County, Illinois': censusgeo((('state', '17'), ('county', '175'))), 'Stephenson County, Illinois': censusgeo((('state', '17'), ('county', '177'))), 'Tazewell County, Illinois': censusgeo((('state', '17'), ('county', '179'))), 'Union County, Illinois': censusgeo((('state', '17'), ('county', '181'))), 'Vermilion County, Illinois': censusgeo((('state', '17'), ('county', '183'))), 'Wabash County, Illinois': censusgeo((('state', '17'), ('county', '185'))), 'Warren County, Illinois': censusgeo((('state', '17'), ('county', '187'))), 'Washington County, Illinois': censusgeo((('state', '17'), ('county', '189'))), 'Wayne County, Illinois': censusgeo((('state', '17'), ('county', '191'))), 'White County, Illinois': censusgeo((('state', '17'), ('county', '193'))), 'Whiteside County, Illinois': censusgeo((('state', '17'), ('county', '195'))), 'Will County, Illinois': censusgeo((('state', '17'), ('county', '197'))), 'Williamson County, Illinois': censusgeo((('state', '17'), ('county', '199'))), 'Winnebago County, Illinois': censusgeo((('state', '17'), ('county', '201'))), 'Woodford County, Illinois': censusgeo((('state', '17'), ('county', '203')))}
-
-Now that we have identified the variables and geographies of interest, we can download the data using `censusdata.download`::
-
-	>>> cookbg = censusdata.download('acs5', '2015', censusdata.censusgeo([('state', '17'), ('county', '031'), ('block group', '*')]),
-	...         ['B23025_003E', 'B23025_005E', 'B15003_001E', 'B15003_002E', 'B15003_003E', 'B15003_004E', 'B15003_005E', 'B15003_006E', 'B15003_007E', 'B15003_008E', 'B15003_009E', 'B15003_010E', 'B15003_011E', 'B15003_012E', 'B15003_013E', 'B15003_014E',
-	...         'B15003_015E', 'B15003_016E'])
-
-Now we compute variables for the percent unemployed and the percent with no high school degree. We then describe the data, and show the 30 block
-groups in Cook County with the highest rate of unemployment, and the percent with no high school degree in those block groups. Finally, we
-show the correlation between these two variables across all Cook County block groups::
-
-	>>> cookbg['percent_unemployed'] = cookbg.B23025_005E / cookbg.B23025_003E * 100
-	>>> cookbg['percent_nohs'] = (cookbg.B15003_002E + cookbg.B15003_003E + cookbg.B15003_004E + cookbg.B15003_005E + cookbg.B15003_006E + cookbg.B15003_007E + cookbg.B15003_008E + cookbg.B15003_009E
-	...         + cookbg.B15003_010E + cookbg.B15003_011E + cookbg.B15003_012E + cookbg.B15003_013E + cookbg.B15003_014E + cookbg.B15003_015E + cookbg.B15003_016E) / cookbg.B15003_001E * 100
-	>>> cookbg = cookbg[['percent_unemployed', 'percent_nohs']]
-	>>> print(cookbg.describe())
-	       percent_unemployed  percent_nohs
-	count             3983.00       3984.00
-	mean                12.00         15.19
-	std                 10.09         13.23
-	min                  0.00          0.00
-	25%                  4.86          4.75
-	50%                  9.24         11.66
-	75%                 16.28         22.46
-	max                 91.86         77.43
-	>>> print(cookbg.sort_values('percent_unemployed', ascending=False).head(30))
-							    percent_unemployed  percent_nohs
-	Block Group 1, Census Tract 8357, Cook County, ...               91.86          0.00
-	Block Group 2, Census Tract 6805, Cook County, ...               66.27         19.54
-	Block Group 3, Census Tract 5103, Cook County, ...               64.07         16.97
-	Block Group 2, Census Tract 6809, Cook County, ...               61.46         42.33
-	Block Group 1, Census Tract 4913, Cook County, ...               56.40         14.64
-	Block Group 5, Census Tract 2315, Cook County, ...               55.58         44.72
-	Block Group 3, Census Tract 8346, Cook County, ...               54.96         17.85
-	Block Group 2, Census Tract 6706, Cook County, ...               54.13          9.57
-	Block Group 2, Census Tract 8386, Cook County, ...               53.78         48.41
-	Block Group 5, Census Tract 4910, Cook County, ...               53.57         38.23
-	Block Group 1, Census Tract 5401.02, Cook Count...               52.90          6.67
-	Block Group 2, Census Tract 6712, Cook County, ...               52.84         26.98
-	Block Group 1, Census Tract 7109, Cook County, ...               52.68         19.08
-	Block Group 1, Census Tract 3406, Cook County, ...               51.76         42.59
-	Block Group 1, Census Tract 6712, Cook County, ...               51.53         37.70
-	Block Group 2, Census Tract 4910, Cook County, ...               51.47         26.50
-	Block Group 3, Census Tract 4303, Cook County, ...               51.41         14.85
-	Block Group 1, Census Tract 6810, Cook County, ...               51.10         24.38
-	Block Group 5, Census Tract 6811, Cook County, ...               50.00         31.95
-	Block Group 6, Census Tract 7104, Cook County, ...               50.00          9.34
-	Block Group 2, Census Tract 6812, Cook County, ...               49.82         20.29
-	Block Group 1, Census Tract 8290, Cook County, ...               49.57         28.97
-	Block Group 3, Census Tract 6813, Cook County, ...               49.51         22.92
-	Block Group 1, Census Tract 6811, Cook County, ...               49.32         33.73
-	Block Group 2, Census Tract 7107, Cook County, ...               49.00         17.18
-	Block Group 6, Census Tract 4804, Cook County, ...               48.68          8.32
-	Block Group 1, Census Tract 4207, Cook County, ...               48.63         14.08
-	Block Group 1, Census Tract 6715, Cook County, ...               48.28         30.24
-	Block Group 4, Census Tract 4603.02, Cook Count...               48.00         48.27
-	Block Group 3, Census Tract 8424, Cook County, ...               47.80          0.00
-	>>> print(cookbg.corr())
-			    percent_unemployed  percent_nohs
-	percent_unemployed                1.00          0.29
-	percent_nohs                      0.29          1.00
+    censusdata.search('acs5', '2015', 'label', 'unemploy')
 
 
-============================================================
+
+
+.. parsed-literal::
+
+    [('B12006_006E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Never married:!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_006M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Never married:!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_011E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Never married:!!Female:!!In labor force:!!Unemployed'),
+     ('B12006_011M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Never married:!!Female:!!In labor force:!!Unemployed'),
+     ('B12006_017E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Now married (except separated):!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_017M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Now married (except separated):!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_022E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Now married (except separated):!!Female:!!In labor force:!!Unemployed'),
+     ('B12006_022M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Now married (except separated):!!Female:!!In labor force:!!Unemployed'),
+     ('B12006_028E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Separated:!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_028M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Separated:!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_033E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Separated:!!Female:!!In labor force:!!Unemployed'),
+     ('B12006_033M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Separated:!!Female:!!In labor force:!!Unemployed'),
+     ('B12006_039E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Widowed:!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_039M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Widowed:!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_044E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Widowed:!!Female:!!In labor force:!!Unemployed'),
+     ('B12006_044M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Widowed:!!Female:!!In labor force:!!Unemployed'),
+     ('B12006_050E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Divorced:!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_050M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Divorced:!!Male:!!In labor force:!!Unemployed'),
+     ('B12006_055E',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Divorced:!!Female:!!In labor force:!!Unemployed'),
+     ('B12006_055M',
+      'B12006.  MARITAL STATUS BY SEX BY LABOR FORCE PARTICIPATION',
+      'Margin Of Error For!!Divorced:!!Female:!!In labor force:!!Unemployed'),
+     ('B14005_005E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Enrolled in school:!!Unemployed'),
+     ('B14005_005M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Enrolled in school:!!Unemployed'),
+     ('B14005_010E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_010M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_014E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_014M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_019E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Enrolled in school:!!Unemployed'),
+     ('B14005_019M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Enrolled in school:!!Unemployed'),
+     ('B14005_024E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_024M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_028E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_028M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B17005_006E',
+      'B17005.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EMPLOYMENT STATUS',
+      'Income in the past 12 months below poverty level:!!Male:!!In labor force:!!Unemployed'),
+     ('B17005_006M',
+      'B17005.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EMPLOYMENT STATUS',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:!!In labor force:!!Unemployed'),
+     ('B17005_011E',
+      'B17005.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EMPLOYMENT STATUS',
+      'Income in the past 12 months below poverty level:!!Female:!!In labor force:!!Unemployed'),
+     ('B17005_011M',
+      'B17005.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EMPLOYMENT STATUS',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:!!In labor force:!!Unemployed'),
+     ('B17005_017E',
+      'B17005.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EMPLOYMENT STATUS',
+      'Income in the past 12 months at or above poverty level:!!Male:!!In labor force:!!Unemployed'),
+     ('B17005_017M',
+      'B17005.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EMPLOYMENT STATUS',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:!!In labor force:!!Unemployed'),
+     ('B17005_022E',
+      'B17005.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EMPLOYMENT STATUS',
+      'Income in the past 12 months at or above poverty level:!!Female:!!In labor force:!!Unemployed'),
+     ('B17005_022M',
+      'B17005.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EMPLOYMENT STATUS',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:!!In labor force:!!Unemployed'),
+     ('B21005_006E',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      '18 to 34 years:!!Veteran:!!In labor force:!!Unemployed'),
+     ('B21005_006M',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      'Margin Of Error For!!18 to 34 years:!!Veteran:!!In labor force:!!Unemployed'),
+     ('B21005_011E',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      '18 to 34 years:!!Nonveteran:!!In labor force:!!Unemployed'),
+     ('B21005_011M',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      'Margin Of Error For!!18 to 34 years:!!Nonveteran:!!In labor force:!!Unemployed'),
+     ('B21005_017E',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      '35 to 54 years:!!Veteran:!!In labor force:!!Unemployed'),
+     ('B21005_017M',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      'Margin Of Error For!!35 to 54 years:!!Veteran:!!In labor force:!!Unemployed'),
+     ('B21005_022E',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      '35 to 54 years:!!Nonveteran:!!In labor force:!!Unemployed'),
+     ('B21005_022M',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      'Margin Of Error For!!35 to 54 years:!!Nonveteran:!!In labor force:!!Unemployed'),
+     ('B21005_028E',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      '55 to 64 years:!!Veteran:!!In labor force:!!Unemployed'),
+     ('B21005_028M',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      'Margin Of Error For!!55 to 64 years:!!Veteran:!!In labor force:!!Unemployed'),
+     ('B21005_033E',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      '55 to 64 years:!!Nonveteran:!!In labor force:!!Unemployed'),
+     ('B21005_033M',
+      'B21005.  AGE BY VETERAN STATUS BY EMPLOYMENT STATUS FOR THE CIVILIAN POPULATION 18 TO 64 YEARS',
+      'Margin Of Error For!!55 to 64 years:!!Nonveteran:!!In labor force:!!Unemployed'),
+     ('B23001_008E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!16 to 19 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_008M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!16 to 19 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_015E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!20 and 21 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_015M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!20 and 21 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_022E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!22 to 24 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_022M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!22 to 24 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_029E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!25 to 29 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_029M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!25 to 29 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_036E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!30 to 34 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_036M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!30 to 34 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_043E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!35 to 44 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_043M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!35 to 44 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_050E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!45 to 54 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_050M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!45 to 54 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_057E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!55 to 59 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_057M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!55 to 59 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_064E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!60 and 61 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_064M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!60 and 61 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_071E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!62 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_071M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!62 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_076E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!65 to 69 years:!!In labor force:!!Unemployed'),
+     ('B23001_076M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!65 to 69 years:!!In labor force:!!Unemployed'),
+     ('B23001_081E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!70 to 74 years:!!In labor force:!!Unemployed'),
+     ('B23001_081M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!70 to 74 years:!!In labor force:!!Unemployed'),
+     ('B23001_086E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Male:!!75 years and over:!!In labor force:!!Unemployed'),
+     ('B23001_086M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Male:!!75 years and over:!!In labor force:!!Unemployed'),
+     ('B23001_094E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!16 to 19 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_094M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!16 to 19 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_101E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!20 and 21 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_101M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!20 and 21 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_108E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!22 to 24 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_108M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!22 to 24 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_115E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!25 to 29 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_115M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!25 to 29 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_122E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!30 to 34 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_122M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!30 to 34 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_129E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!35 to 44 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_129M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!35 to 44 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_136E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!45 to 54 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_136M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!45 to 54 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_143E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!55 to 59 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_143M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!55 to 59 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_150E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!60 and 61 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_150M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!60 and 61 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_157E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!62 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_157M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!62 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23001_162E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!65 to 69 years:!!In labor force:!!Unemployed'),
+     ('B23001_162M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!65 to 69 years:!!In labor force:!!Unemployed'),
+     ('B23001_167E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!70 to 74 years:!!In labor force:!!Unemployed'),
+     ('B23001_167M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!70 to 74 years:!!In labor force:!!Unemployed'),
+     ('B23001_172E',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Female:!!75 years and over:!!In labor force:!!Unemployed'),
+     ('B23001_172M',
+      'B23001.  Sex by Age by Employment Status for the Population 16 Years and over',
+      'Margin Of Error For!!Female:!!75 years and over:!!In labor force:!!Unemployed'),
+     ('B23003_008E',
+      'B23003. Presence of Own Children Under 18 Years by Age of Own Children Under 18 Years by Employment Status for Females 20 to 64 Years',
+      'With own children of the householder under 18 years:!!Under 6 years only:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23003_008M',
+      'B23003. Presence of Own Children Under 18 Years by Age of Own Children Under 18 Years by Employment Status for Females 20 to 64 Years',
+      'Margin of Error for!!With own children of the householder under 18 years:!!Under 6 years only:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23003_015E',
+      'B23003. Presence of Own Children Under 18 Years by Age of Own Children Under 18 Years by Employment Status for Females 20 to 64 Years',
+      'With own children of the householder under 18 years:!!Under 6 years and 6 to 17 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23003_015M',
+      'B23003. Presence of Own Children Under 18 Years by Age of Own Children Under 18 Years by Employment Status for Females 20 to 64 Years',
+      'Margin of Error for!!With own children of the householder under 18 years:!!Under 6 years and 6 to 17 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23003_022E',
+      'B23003. Presence of Own Children Under 18 Years by Age of Own Children Under 18 Years by Employment Status for Females 20 to 64 Years',
+      'With own children of the householder under 18 years:!!6 to 17 years only:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23003_022M',
+      'B23003. Presence of Own Children Under 18 Years by Age of Own Children Under 18 Years by Employment Status for Females 20 to 64 Years',
+      'Margin of Error for!!With own children of the householder under 18 years:!!6 to 17 years only:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23003_029E',
+      'B23003. Presence of Own Children Under 18 Years by Age of Own Children Under 18 Years by Employment Status for Females 20 to 64 Years',
+      'No own children of the householder under 18 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23003_029M',
+      'B23003. Presence of Own Children Under 18 Years by Age of Own Children Under 18 Years by Employment Status for Females 20 to 64 Years',
+      'Margin of Error for!!No own children of the householder under 18 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23006_007E',
+      'B23006.  EDUCATIONAL ATTAINMENT BY EMPLOYMENT STATUS FOR THE POPULATION 25 TO 64 YEARS',
+      'Less than high school graduate:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23006_007M',
+      'B23006.  EDUCATIONAL ATTAINMENT BY EMPLOYMENT STATUS FOR THE POPULATION 25 TO 64 YEARS',
+      'Margin of Error for!!Less than high school graduate:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23006_014E',
+      'B23006.  EDUCATIONAL ATTAINMENT BY EMPLOYMENT STATUS FOR THE POPULATION 25 TO 64 YEARS',
+      'High school graduate (includes equivalency):!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23006_014M',
+      'B23006.  EDUCATIONAL ATTAINMENT BY EMPLOYMENT STATUS FOR THE POPULATION 25 TO 64 YEARS',
+      'Margin of Error for!!High school graduate (includes equivalency):!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23006_021E',
+      'B23006.  EDUCATIONAL ATTAINMENT BY EMPLOYMENT STATUS FOR THE POPULATION 25 TO 64 YEARS',
+      "Some college or associate's degree:!!In labor force:!!Civilian:!!Unemployed"),
+     ('B23006_021M',
+      'B23006.  EDUCATIONAL ATTAINMENT BY EMPLOYMENT STATUS FOR THE POPULATION 25 TO 64 YEARS',
+      "Margin of Error for!!Some college or associate's degree:!!In labor force:!!Civilian:!!Unemployed"),
+     ('B23006_028E',
+      'B23006.  EDUCATIONAL ATTAINMENT BY EMPLOYMENT STATUS FOR THE POPULATION 25 TO 64 YEARS',
+      "Bachelor's degree or higher:!!In labor force:!!Civilian:!!Unemployed"),
+     ('B23006_028M',
+      'B23006.  EDUCATIONAL ATTAINMENT BY EMPLOYMENT STATUS FOR THE POPULATION 25 TO 64 YEARS',
+      "Margin of Error for!!Bachelor's degree or higher:!!In labor force:!!Civilian:!!Unemployed"),
+     ('B23007_008E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Employed or in Armed Forces:!!Wife in labor force:!!Unemployed'),
+     ('B23007_008M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Employed or in Armed Forces:!!Wife in labor force:!!Unemployed'),
+     ('B23007_010E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:'),
+     ('B23007_010M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:'),
+     ('B23007_011E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:'),
+     ('B23007_011M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:'),
+     ('B23007_012E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:!!Employed or in Armed Forces'),
+     ('B23007_012M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:!!Employed or in Armed Forces'),
+     ('B23007_013E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:!!Unemployed'),
+     ('B23007_013M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:!!Unemployed'),
+     ('B23007_014E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife not in labor force'),
+     ('B23007_014M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!With own children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife not in labor force'),
+     ('B23007_018E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'With own children under 18 years:!!Married-couple family:!!Husband not in labor force:!!Wife in labor force:!!Unemployed'),
+     ('B23007_018M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!With own children under 18 years:!!Married-couple family:!!Husband not in labor force:!!Wife in labor force:!!Unemployed'),
+     ('B23007_024E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'With own children under 18 years:!!Other family:!!Male householder, no wife present:!!In labor force:!!Unemployed'),
+     ('B23007_024M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!With own children under 18 years:!!Other family:!!Male householder, no wife present:!!In labor force:!!Unemployed'),
+     ('B23007_029E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'With own children under 18 years:!!Other family:!!Female householder, no husband present:!!In labor force:!!Unemployed'),
+     ('B23007_029M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!With own children under 18 years:!!Other family:!!Female householder, no husband present:!!In labor force:!!Unemployed'),
+     ('B23007_037E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Employed or in Armed Forces:!!Wife in labor force:!!Unemployed'),
+     ('B23007_037M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Employed or in Armed Forces:!!Wife in labor force:!!Unemployed'),
+     ('B23007_039E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:'),
+     ('B23007_039M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:'),
+     ('B23007_040E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:'),
+     ('B23007_040M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:'),
+     ('B23007_041E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:!!Employed or in Armed Forces'),
+     ('B23007_041M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:!!Employed or in Armed Forces'),
+     ('B23007_042E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:!!Unemployed'),
+     ('B23007_042M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife in labor force:!!Unemployed'),
+     ('B23007_043E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife not in labor force'),
+     ('B23007_043M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!No children under 18 years:!!Married-couple family:!!Husband in labor force:!!Unemployed:!!Wife not in labor force'),
+     ('B23007_047E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'No children under 18 years:!!Married-couple family:!!Husband not in labor force:!!Wife in labor force:!!Unemployed'),
+     ('B23007_047M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!No children under 18 years:!!Married-couple family:!!Husband not in labor force:!!Wife in labor force:!!Unemployed'),
+     ('B23007_053E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'No children under 18 years:!!Other family:!!Male householder, no wife present:!!In labor force:!!Unemployed'),
+     ('B23007_053M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!No children under 18 years:!!Other family:!!Male householder, no wife present:!!In labor force:!!Unemployed'),
+     ('B23007_058E',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'No children under 18 years:!!Other family:!!Female householder, no husband present:!!In labor force:!!Unemployed'),
+     ('B23007_058M',
+      'B23007. Presence of Own Children Under 18 Years by Family Type by Employment Status',
+      'Margin of Error for!!No children under 18 years:!!Other family:!!Female householder, no husband present:!!In labor force:!!Unemployed'),
+     ('B23024_008E',
+      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
+      'Income in the past 12 months below poverty level:!!With a disability:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23024_008M',
+      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
+      'Margin of Error for!!Income in the past 12 months below poverty level:!!With a disability:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23024_015E',
+      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
+      'Income in the past 12 months below poverty level:!!No disability:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23024_015M',
+      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
+      'Margin of Error for!!Income in the past 12 months below poverty level:!!No disability:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23024_023E',
+      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
+      'Income in the past 12 months at or above poverty level:!!With a disability:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23024_023M',
+      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
+      'Margin of Error for!!Income in the past 12 months at or above poverty level:!!With a disability:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23024_030E',
+      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
+      'Income in the past 12 months at or above poverty level:!!No disability:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23024_030M',
+      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
+      'Margin of Error for!!Income in the past 12 months at or above poverty level:!!No disability:!!In labor force:!!Civilian:!!Unemployed'),
+     ('B23025_005E',
+      'B23025.  Employment Status for the Population 16 Years and Over',
+      'In labor force:!!Civilian labor force:!!Unemployed'),
+     ('B23025_005M',
+      'B23025.  Employment Status for the Population 16 Years and Over',
+      'Margin Of Error For!!In labor force:!!Civilian labor force:!!Unemployed'),
+     ('B27011_014E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:'),
+     ('B27011_014M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:'),
+     ('B27011_015E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!18 to 64 years:'),
+     ('B27011_015M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!18 to 64 years:'),
+     ('B27011_016E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!18 to 64 years:!!With health insurance coverage'),
+     ('B27011_016M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!18 to 64 years:!!With health insurance coverage'),
+     ('B27011_017E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!18 to 64 years:!!With health insurance coverage!!With private health insurance'),
+     ('B27011_017M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!18 to 64 years:!!With health insurance coverage!!With private health insurance'),
+     ('B27011_018E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!18 to 64 years:!!With health insurance coverage!!With public coverage'),
+     ('B27011_018M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!18 to 64 years:!!With health insurance coverage!!With public coverage'),
+     ('B27011_019E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!18 to 64 years:!!No health insurance coverage'),
+     ('B27011_019M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!18 to 64 years:!!No health insurance coverage'),
+     ('B27011_020E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!65 years and over:'),
+     ('B27011_020M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!65 years and over:'),
+     ('B27011_021E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!65 years and over:!!With health insurance coverage'),
+     ('B27011_021M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!65 years and over:!!With health insurance coverage'),
+     ('B27011_022E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!65 years and over:!!With health insurance coverage!!With private health insurance'),
+     ('B27011_022M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!65 years and over:!!With health insurance coverage!!With private health insurance'),
+     ('B27011_023E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!65 years and over:!!With health insurance coverage!!With public coverage'),
+     ('B27011_023M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!65 years and over:!!With health insurance coverage!!With public coverage'),
+     ('B27011_024E',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'In labor force:!!Unemployed:!!65 years and over:!!No health insurance coverage'),
+     ('B27011_024M',
+      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
+      'Margin of Error for!!In labor force:!!Unemployed:!!65 years and over:!!No health insurance coverage'),
+     ('C18120_006E',
+      'C18120.  Employment Status by Disability Status',
+      'In the labor force:!!Unemployed:'),
+     ('C18120_006M',
+      'C18120.  Employment Status by Disability Status',
+      'Margin of Error for!!In the labor force:!!Unemployed:'),
+     ('C18120_007E',
+      'C18120.  Employment Status by Disability Status',
+      'In the labor force:!!Unemployed:!!With a disability'),
+     ('C18120_007M',
+      'C18120.  Employment Status by Disability Status',
+      'Margin of Error for!!In the labor force:!!Unemployed:!!With a disability'),
+     ('C18120_008E',
+      'C18120.  Employment Status by Disability Status',
+      'In the labor force:!!Unemployed:!!No disability'),
+     ('C18120_008M',
+      'C18120.  Employment Status by Disability Status',
+      'Margin of Error for!!In the labor force:!!Unemployed:!!No disability'),
+     ('C23002A_008E',
+      'C23002A.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone)',
+      'Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002A_008M',
+      'C23002A.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone)',
+      'Margin Of Error For!!Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002A_013E',
+      'C23002A.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone)',
+      'Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002A_013M',
+      'C23002A.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone)',
+      'Margin Of Error For!!Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002A_021E',
+      'C23002A.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone)',
+      'Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002A_021M',
+      'C23002A.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone)',
+      'Margin Of Error For!!Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002A_026E',
+      'C23002A.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone)',
+      'Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002A_026M',
+      'C23002A.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone)',
+      'Margin Of Error For!!Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002B_008E',
+      'C23002B.  Sex by Age by Employment Status for the Population 16 Years and Over (Black or African American Alone)',
+      'Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002B_008M',
+      'C23002B.  Sex by Age by Employment Status for the Population 16 Years and Over (Black or African American Alone)',
+      'Margin Of Error For!!Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002B_013E',
+      'C23002B.  Sex by Age by Employment Status for the Population 16 Years and Over (Black or African American Alone)',
+      'Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002B_013M',
+      'C23002B.  Sex by Age by Employment Status for the Population 16 Years and Over (Black or African American Alone)',
+      'Margin Of Error For!!Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002B_021E',
+      'C23002B.  Sex by Age by Employment Status for the Population 16 Years and Over (Black or African American Alone)',
+      'Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002B_021M',
+      'C23002B.  Sex by Age by Employment Status for the Population 16 Years and Over (Black or African American Alone)',
+      'Margin Of Error For!!Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002B_026E',
+      'C23002B.  Sex by Age by Employment Status for the Population 16 Years and Over (Black or African American Alone)',
+      'Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002B_026M',
+      'C23002B.  Sex by Age by Employment Status for the Population 16 Years and Over (Black or African American Alone)',
+      'Margin Of Error For!!Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002C_008E',
+      'C23002C.  Sex by Age by Employment Status for the Population 16 Years and Over (American Indian and Alaska Native Alone)',
+      'Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002C_008M',
+      'C23002C.  Sex by Age by Employment Status for the Population 16 Years and Over (American Indian and Alaska Native Alone)',
+      'Margin Of Error For!!Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002C_013E',
+      'C23002C.  Sex by Age by Employment Status for the Population 16 Years and Over (American Indian and Alaska Native Alone)',
+      'Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002C_013M',
+      'C23002C.  Sex by Age by Employment Status for the Population 16 Years and Over (American Indian and Alaska Native Alone)',
+      'Margin Of Error For!!Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002C_021E',
+      'C23002C.  Sex by Age by Employment Status for the Population 16 Years and Over (American Indian and Alaska Native Alone)',
+      'Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002C_021M',
+      'C23002C.  Sex by Age by Employment Status for the Population 16 Years and Over (American Indian and Alaska Native Alone)',
+      'Margin Of Error For!!Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002C_026E',
+      'C23002C.  Sex by Age by Employment Status for the Population 16 Years and Over (American Indian and Alaska Native Alone)',
+      'Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002C_026M',
+      'C23002C.  Sex by Age by Employment Status for the Population 16 Years and Over (American Indian and Alaska Native Alone)',
+      'Margin Of Error For!!Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002D_008E',
+      'C23002D.  Sex by Age by Employment Status for the Population 16 Years and Over (Asian Alone)',
+      'Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002D_008M',
+      'C23002D.  Sex by Age by Employment Status for the Population 16 Years and Over (Asian Alone)',
+      'Margin Of Error For!!Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002D_013E',
+      'C23002D.  Sex by Age by Employment Status for the Population 16 Years and Over (Asian Alone)',
+      'Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002D_013M',
+      'C23002D.  Sex by Age by Employment Status for the Population 16 Years and Over (Asian Alone)',
+      'Margin Of Error For!!Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002D_021E',
+      'C23002D.  Sex by Age by Employment Status for the Population 16 Years and Over (Asian Alone)',
+      'Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002D_021M',
+      'C23002D.  Sex by Age by Employment Status for the Population 16 Years and Over (Asian Alone)',
+      'Margin Of Error For!!Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002D_026E',
+      'C23002D.  Sex by Age by Employment Status for the Population 16 Years and Over (Asian Alone)',
+      'Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002D_026M',
+      'C23002D.  Sex by Age by Employment Status for the Population 16 Years and Over (Asian Alone)',
+      'Margin Of Error For!!Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002E_008E',
+      'C23002E.  Sex by Age by Employment Status for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone)',
+      'Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002E_008M',
+      'C23002E.  Sex by Age by Employment Status for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone)',
+      'Margin Of Error For!!Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002E_013E',
+      'C23002E.  Sex by Age by Employment Status for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone)',
+      'Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002E_013M',
+      'C23002E.  Sex by Age by Employment Status for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone)',
+      'Margin Of Error For!!Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002E_021E',
+      'C23002E.  Sex by Age by Employment Status for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone)',
+      'Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002E_021M',
+      'C23002E.  Sex by Age by Employment Status for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone)',
+      'Margin Of Error For!!Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002E_026E',
+      'C23002E.  Sex by Age by Employment Status for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone)',
+      'Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002E_026M',
+      'C23002E.  Sex by Age by Employment Status for the Population 16 Years and Over (Native Hawaiian and Other Pacific Islander Alone)',
+      'Margin Of Error For!!Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002F_008E',
+      'C23002F.  Sex by Age by Employment Status for the Population 16 Years and Over (Some Other Race Alone)',
+      'Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002F_008M',
+      'C23002F.  Sex by Age by Employment Status for the Population 16 Years and Over (Some Other Race Alone)',
+      'Margin Of Error For!!Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002F_013E',
+      'C23002F.  Sex by Age by Employment Status for the Population 16 Years and Over (Some Other Race Alone)',
+      'Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002F_013M',
+      'C23002F.  Sex by Age by Employment Status for the Population 16 Years and Over (Some Other Race Alone)',
+      'Margin Of Error For!!Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002F_021E',
+      'C23002F.  Sex by Age by Employment Status for the Population 16 Years and Over (Some Other Race Alone)',
+      'Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002F_021M',
+      'C23002F.  Sex by Age by Employment Status for the Population 16 Years and Over (Some Other Race Alone)',
+      'Margin Of Error For!!Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002F_026E',
+      'C23002F.  Sex by Age by Employment Status for the Population 16 Years and Over (Some Other Race Alone)',
+      'Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002F_026M',
+      'C23002F.  Sex by Age by Employment Status for the Population 16 Years and Over (Some Other Race Alone)',
+      'Margin Of Error For!!Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002G_008E',
+      'C23002G.  Sex by Age by Employment Status for the Population 16 Years and Over (Two or More Races)',
+      'Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002G_008M',
+      'C23002G.  Sex by Age by Employment Status for the Population 16 Years and Over (Two or More Races)',
+      'Margin Of Error For!!Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002G_013E',
+      'C23002G.  Sex by Age by Employment Status for the Population 16 Years and Over (Two or More Races)',
+      'Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002G_013M',
+      'C23002G.  Sex by Age by Employment Status for the Population 16 Years and Over (Two or More Races)',
+      'Margin Of Error For!!Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002G_021E',
+      'C23002G.  Sex by Age by Employment Status for the Population 16 Years and Over (Two or More Races)',
+      'Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002G_021M',
+      'C23002G.  Sex by Age by Employment Status for the Population 16 Years and Over (Two or More Races)',
+      'Margin Of Error For!!Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002G_026E',
+      'C23002G.  Sex by Age by Employment Status for the Population 16 Years and Over (Two or More Races)',
+      'Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002G_026M',
+      'C23002G.  Sex by Age by Employment Status for the Population 16 Years and Over (Two or More Races)',
+      'Margin Of Error For!!Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002H_008E',
+      'C23002H.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)',
+      'Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002H_008M',
+      'C23002H.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)',
+      'Margin Of Error For!!Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002H_013E',
+      'C23002H.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)',
+      'Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002H_013M',
+      'C23002H.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)',
+      'Margin Of Error For!!Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002H_021E',
+      'C23002H.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)',
+      'Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002H_021M',
+      'C23002H.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)',
+      'Margin Of Error For!!Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002H_026E',
+      'C23002H.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)',
+      'Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002H_026M',
+      'C23002H.  Sex by Age by Employment Status for the Population 16 Years and Over (White Alone, Not Hispanic or Latino)',
+      'Margin Of Error For!!Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002I_008E',
+      'C23002I.  Sex by Age by Employment Status for the Population 16 Years and Over (Hispanic or Latino)',
+      'Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002I_008M',
+      'C23002I.  Sex by Age by Employment Status for the Population 16 Years and Over (Hispanic or Latino)',
+      'Margin Of Error For!!Male:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002I_013E',
+      'C23002I.  Sex by Age by Employment Status for the Population 16 Years and Over (Hispanic or Latino)',
+      'Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002I_013M',
+      'C23002I.  Sex by Age by Employment Status for the Population 16 Years and Over (Hispanic or Latino)',
+      'Margin Of Error For!!Male:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002I_021E',
+      'C23002I.  Sex by Age by Employment Status for the Population 16 Years and Over (Hispanic or Latino)',
+      'Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002I_021M',
+      'C23002I.  Sex by Age by Employment Status for the Population 16 Years and Over (Hispanic or Latino)',
+      'Margin Of Error For!!Female:!!16 to 64 years:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002I_026E',
+      'C23002I.  Sex by Age by Employment Status for the Population 16 Years and Over (Hispanic or Latino)',
+      'Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed'),
+     ('C23002I_026M',
+      'C23002I.  Sex by Age by Employment Status for the Population 16 Years and Over (Hispanic or Latino)',
+      'Margin Of Error For!!Female:!!65 years and over:!!In labor force:!!Civilian:!!Unemployed')]
+
+
+
+.. code:: ipython3
+
+    censusdata.search('acs5', '2015', 'concept', 'education')
+
+
+
+
+.. parsed-literal::
+
+    [('B06009PR_001E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Total:'),
+     ('B06009PR_001M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Total:'),
+     ('B06009PR_002E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Less than high school graduate'),
+     ('B06009PR_002M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B06009PR_003E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'High school graduate (includes equivalency)'),
+     ('B06009PR_003M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B06009PR_004E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Some college or associate's degree"),
+     ('B06009PR_004M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B06009PR_005E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Bachelor's degree"),
+     ('B06009PR_005M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B06009PR_006E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Graduate or professional degree'),
+     ('B06009PR_006M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B06009PR_007E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in Puerto Rico:'),
+     ('B06009PR_007M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in Puerto Rico:'),
+     ('B06009PR_008E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in Puerto Rico:!!Less than high school graduate'),
+     ('B06009PR_008M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in Puerto Rico:!!Less than high school graduate'),
+     ('B06009PR_009E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in Puerto Rico:!!High school graduate (includes equivalency)'),
+     ('B06009PR_009M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in Puerto Rico:!!High school graduate (includes equivalency)'),
+     ('B06009PR_010E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Born in Puerto Rico:!!Some college or associate's degree"),
+     ('B06009PR_010M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Born in Puerto Rico:!!Some college or associate's degree"),
+     ('B06009PR_011E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Born in Puerto Rico:!!Bachelor's degree"),
+     ('B06009PR_011M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Born in Puerto Rico:!!Bachelor's degree"),
+     ('B06009PR_012E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in Puerto Rico:!!Graduate or professional degree'),
+     ('B06009PR_012M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in Puerto Rico:!!Graduate or professional degree'),
+     ('B06009PR_013E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in the United States:'),
+     ('B06009PR_013M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in the United States:'),
+     ('B06009PR_014E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in the United States:!!Less than high school graduate'),
+     ('B06009PR_014M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in the United States:!!Less than high school graduate'),
+     ('B06009PR_015E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in the United States:!!High school graduate (includes equivalency)'),
+     ('B06009PR_015M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in the United States:!!High school graduate (includes equivalency)'),
+     ('B06009PR_016E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Born in the United States:!!Some college or associate's degree"),
+     ('B06009PR_016M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Born in the United States:!!Some college or associate's degree"),
+     ('B06009PR_017E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Born in the United States:!!Bachelor's degree"),
+     ('B06009PR_017M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Born in the United States:!!Bachelor's degree"),
+     ('B06009PR_018E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in the United States:!!Graduate or professional degree'),
+     ('B06009PR_018M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in the United States:!!Graduate or professional degree'),
+     ('B06009PR_019E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Native; born elsewhere:'),
+     ('B06009PR_019M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Native; born elsewhere:'),
+     ('B06009PR_020E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Native; born elsewhere:!!Less than high school graduate'),
+     ('B06009PR_020M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Native; born elsewhere:!!Less than high school graduate'),
+     ('B06009PR_021E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Native; born elsewhere:!!High school graduate (includes equivalency)'),
+     ('B06009PR_021M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Native; born elsewhere:!!High school graduate (includes equivalency)'),
+     ('B06009PR_022E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Native; born elsewhere:!!Some college or associate's degree"),
+     ('B06009PR_022M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Native; born elsewhere:!!Some college or associate's degree"),
+     ('B06009PR_023E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Native; born elsewhere:!!Bachelor's degree"),
+     ('B06009PR_023M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Native; born elsewhere:!!Bachelor's degree"),
+     ('B06009PR_024E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Native; born elsewhere:!!Graduate or professional degree'),
+     ('B06009PR_024M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Native; born elsewhere:!!Graduate or professional degree'),
+     ('B06009PR_025E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Foreign born:'),
+     ('B06009PR_025M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Foreign born:'),
+     ('B06009PR_026E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Foreign born:!!Less than high school graduate'),
+     ('B06009PR_026M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Foreign born:!!Less than high school graduate'),
+     ('B06009PR_027E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Foreign born:!!High school graduate (includes equivalency)'),
+     ('B06009PR_027M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Foreign born:!!High school graduate (includes equivalency)'),
+     ('B06009PR_028E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Foreign born:!!Some college or associate's degree"),
+     ('B06009PR_028M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Foreign born:!!Some college or associate's degree"),
+     ('B06009PR_029E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Foreign born:!!Bachelor's degree"),
+     ('B06009PR_029M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Foreign born:!!Bachelor's degree"),
+     ('B06009PR_030E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Foreign born:!!Graduate or professional degree'),
+     ('B06009PR_030M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Foreign born:!!Graduate or professional degree'),
+     ('B06009_001E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Total:'),
+     ('B06009_001M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Total:'),
+     ('B06009_002E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Less than high school graduate'),
+     ('B06009_002M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B06009_003E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'High school graduate (includes equivalency)'),
+     ('B06009_003M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B06009_004E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Some college or associate's degree"),
+     ('B06009_004M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B06009_005E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Bachelor's degree"),
+     ('B06009_005M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B06009_006E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Graduate or professional degree'),
+     ('B06009_006M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B06009_007E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in state of residence:'),
+     ('B06009_007M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in state of residence:'),
+     ('B06009_008E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in state of residence:!!Less than high school graduate'),
+     ('B06009_008M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in state of residence:!!Less than high school graduate'),
+     ('B06009_009E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in state of residence:!!High school graduate (includes equivalency)'),
+     ('B06009_009M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in state of residence:!!High school graduate (includes equivalency)'),
+     ('B06009_010E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Born in state of residence:!!Some college or associate's degree"),
+     ('B06009_010M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Born in state of residence:!!Some college or associate's degree"),
+     ('B06009_011E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Born in state of residence:!!Bachelor's degree"),
+     ('B06009_011M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Born in state of residence:!!Bachelor's degree"),
+     ('B06009_012E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in state of residence:!!Graduate or professional degree'),
+     ('B06009_012M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in state of residence:!!Graduate or professional degree'),
+     ('B06009_013E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in other state in the United States:'),
+     ('B06009_013M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in other state in the United States:'),
+     ('B06009_014E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in other state in the United States:!!Less than high school graduate'),
+     ('B06009_014M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in other state in the United States:!!Less than high school graduate'),
+     ('B06009_015E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in other state in the United States:!!High school graduate (includes equivalency)'),
+     ('B06009_015M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in other state in the United States:!!High school graduate (includes equivalency)'),
+     ('B06009_016E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Born in other state in the United States:!!Some college or associate's degree"),
+     ('B06009_016M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Born in other state in the United States:!!Some college or associate's degree"),
+     ('B06009_017E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Born in other state in the United States:!!Bachelor's degree"),
+     ('B06009_017M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Born in other state in the United States:!!Bachelor's degree"),
+     ('B06009_018E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in other state in the United States:!!Graduate or professional degree'),
+     ('B06009_018M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in other state in the United States:!!Graduate or professional degree'),
+     ('B06009_019E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Native; born outside the United States:'),
+     ('B06009_019M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Native; born outside the United States:'),
+     ('B06009_020E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Native; born outside the United States:!!Less than high school graduate'),
+     ('B06009_020M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Native; born outside the United States:!!Less than high school graduate'),
+     ('B06009_021E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Native; born outside the United States:!!High school graduate (includes equivalency)'),
+     ('B06009_021M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Native; born outside the United States:!!High school graduate (includes equivalency)'),
+     ('B06009_022E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Native; born outside the United States:!!Some college or associate's degree"),
+     ('B06009_022M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Native; born outside the United States:!!Some college or associate's degree"),
+     ('B06009_023E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Native; born outside the United States:!!Bachelor's degree"),
+     ('B06009_023M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Native; born outside the United States:!!Bachelor's degree"),
+     ('B06009_024E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Native; born outside the United States:!!Graduate or professional degree'),
+     ('B06009_024M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Native; born outside the United States:!!Graduate or professional degree'),
+     ('B06009_025E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Foreign born:'),
+     ('B06009_025M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Foreign born:'),
+     ('B06009_026E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Foreign born:!!Less than high school graduate'),
+     ('B06009_026M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Foreign born:!!Less than high school graduate'),
+     ('B06009_027E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Foreign born:!!High school graduate (includes equivalency)'),
+     ('B06009_027M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Foreign born:!!High school graduate (includes equivalency)'),
+     ('B06009_028E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Foreign born:!!Some college or associate's degree"),
+     ('B06009_028M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Foreign born:!!Some college or associate's degree"),
+     ('B06009_029E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Foreign born:!!Bachelor's degree"),
+     ('B06009_029M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Foreign born:!!Bachelor's degree"),
+     ('B06009_030E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Foreign born:!!Graduate or professional degree'),
+     ('B06009_030M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Foreign born:!!Graduate or professional degree'),
+     ('B07009PR_001E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Total:'),
+     ('B07009PR_001M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Total:'),
+     ('B07009PR_002E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Less than high school graduate'),
+     ('B07009PR_002M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B07009PR_003E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'High school graduate (includes equivalency)'),
+     ('B07009PR_003M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B07009PR_004E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Some college or associate's degree"),
+     ('B07009PR_004M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B07009PR_005E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Bachelor's degree"),
+     ('B07009PR_005M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B07009PR_006E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Graduate or professional degree'),
+     ('B07009PR_006M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B07009PR_007E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Same house 1 year ago:'),
+     ('B07009PR_007M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Same house 1 year ago:'),
+     ('B07009PR_008E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Same house 1 year ago:!!Less than high school graduate'),
+     ('B07009PR_008M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Same house 1 year ago:!!Less than high school graduate'),
+     ('B07009PR_009E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Same house 1 year ago:!!High school graduate (includes equivalency)'),
+     ('B07009PR_009M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Same house 1 year ago:!!High school graduate (includes equivalency)'),
+     ('B07009PR_010E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Same house 1 year ago:!!Some college or associate's degree"),
+     ('B07009PR_010M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Same house 1 year ago:!!Some college or associate's degree"),
+     ('B07009PR_011E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Same house 1 year ago:!!Bachelor's degree"),
+     ('B07009PR_011M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Same house 1 year ago:!!Bachelor's degree"),
+     ('B07009PR_012E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Same house 1 year ago:!!Graduate or professional degree'),
+     ('B07009PR_012M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Same house 1 year ago:!!Graduate or professional degree'),
+     ('B07009PR_013E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved within same municipio:'),
+     ('B07009PR_013M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:'),
+     ('B07009PR_014E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved within same municipio:!!Less than high school graduate'),
+     ('B07009PR_014M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!Less than high school graduate'),
+     ('B07009PR_015E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved within same municipio:!!High school graduate (includes equivalency)'),
+     ('B07009PR_015M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!High school graduate (includes equivalency)'),
+     ('B07009PR_016E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved within same municipio:!!Some college or associate's degree"),
+     ('B07009PR_016M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved within same municipio:!!Some college or associate's degree"),
+     ('B07009PR_017E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved within same municipio:!!Bachelor's degree"),
+     ('B07009PR_017M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved within same municipio:!!Bachelor's degree"),
+     ('B07009PR_018E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved within same municipio:!!Graduate or professional degree'),
+     ('B07009PR_018M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!Graduate or professional degree'),
+     ('B07009PR_019E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from different municipio:'),
+     ('B07009PR_019M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from different municipio:'),
+     ('B07009PR_020E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from different municipio:!!Less than high school graduate'),
+     ('B07009PR_020M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from different municipio:!!Less than high school graduate'),
+     ('B07009PR_021E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from different municipio:!!High school graduate (includes equivalency)'),
+     ('B07009PR_021M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from different municipio:!!High school graduate (includes equivalency)'),
+     ('B07009PR_022E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from different municipio:!!Some college or associate's degree"),
+     ('B07009PR_022M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from different municipio:!!Some college or associate's degree"),
+     ('B07009PR_023E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from different municipio:!!Bachelor's degree"),
+     ('B07009PR_023M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from different municipio:!!Bachelor's degree"),
+     ('B07009PR_024E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from different municipio:!!Graduate or professional degree'),
+     ('B07009PR_024M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from different municipio:!!Graduate or professional degree'),
+     ('B07009PR_025E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from the United States:'),
+     ('B07009PR_025M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from the United States:'),
+     ('B07009PR_026E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from the United States:!!Less than high school graduate'),
+     ('B07009PR_026M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from the United States:!!Less than high school graduate'),
+     ('B07009PR_027E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from the United States:!!High school graduate (includes equivalency)'),
+     ('B07009PR_027M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from the United States:!!High school graduate (includes equivalency)'),
+     ('B07009PR_028E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from the United States:!!Some college or associate's degree"),
+     ('B07009PR_028M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from the United States:!!Some college or associate's degree"),
+     ('B07009PR_029E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from the United States:!!Bachelor's degree"),
+     ('B07009PR_029M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from the United States:!!Bachelor's degree"),
+     ('B07009PR_030E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from the United States:!!Graduate or professional degree'),
+     ('B07009PR_030M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from the United States:!!Graduate or professional degree'),
+     ('B07009PR_031E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from elsewhere:'),
+     ('B07009PR_031M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from elsewhere:'),
+     ('B07009PR_032E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from elsewhere:!!Less than high school graduate'),
+     ('B07009PR_032M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from elsewhere:!!Less than high school graduate'),
+     ('B07009PR_033E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from elsewhere:!!High school graduate (includes equivalency)'),
+     ('B07009PR_033M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from elsewhere:!!High school graduate (includes equivalency)'),
+     ('B07009PR_034E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from elsewhere:!!Some college or associate's degree"),
+     ('B07009PR_034M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from elsewhere:!!Some college or associate's degree"),
+     ('B07009PR_035E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from elsewhere:!!Bachelor's degree"),
+     ('B07009PR_035M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from elsewhere:!!Bachelor's degree"),
+     ('B07009PR_036E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from elsewhere:!!Graduate or professional degree'),
+     ('B07009PR_036M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from elsewhere:!!Graduate or professional degree'),
+     ('B07009_001E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Total:'),
+     ('B07009_001M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Total:'),
+     ('B07009_002E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Less than high school graduate'),
+     ('B07009_002M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B07009_003E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'High school graduate (includes equivalency)'),
+     ('B07009_003M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B07009_004E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Some college or associate's degree"),
+     ('B07009_004M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B07009_005E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Bachelor's degree"),
+     ('B07009_005M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B07009_006E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Graduate or professional degree'),
+     ('B07009_006M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B07009_007E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Same house 1 year ago:'),
+     ('B07009_007M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Same house 1 year ago:'),
+     ('B07009_008E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Same house 1 year ago:!!Less than high school graduate'),
+     ('B07009_008M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Same house 1 year ago:!!Less than high school graduate'),
+     ('B07009_009E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Same house 1 year ago:!!High school graduate (includes equivalency)'),
+     ('B07009_009M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Same house 1 year ago:!!High school graduate (includes equivalency)'),
+     ('B07009_010E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Same house 1 year ago:!!Some college or associate's degree"),
+     ('B07009_010M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Same house 1 year ago:!!Some college or associate's degree"),
+     ('B07009_011E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Same house 1 year ago:!!Bachelor's degree"),
+     ('B07009_011M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Same house 1 year ago:!!Bachelor's degree"),
+     ('B07009_012E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Same house 1 year ago:!!Graduate or professional degree'),
+     ('B07009_012M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Same house 1 year ago:!!Graduate or professional degree'),
+     ('B07009_013E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved within same county:'),
+     ('B07009_013M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved within same county:'),
+     ('B07009_014E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved within same county:!!Less than high school graduate'),
+     ('B07009_014M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!Less than high school graduate'),
+     ('B07009_015E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved within same county:!!High school graduate (includes equivalency)'),
+     ('B07009_015M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!High school graduate (includes equivalency)'),
+     ('B07009_016E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved within same county:!!Some college or associate's degree"),
+     ('B07009_016M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved within same county:!!Some college or associate's degree"),
+     ('B07009_017E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved within same county:!!Bachelor's degree"),
+     ('B07009_017M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved within same county:!!Bachelor's degree"),
+     ('B07009_018E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved within same county:!!Graduate or professional degree'),
+     ('B07009_018M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!Graduate or professional degree'),
+     ('B07009_019E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different county within same state:'),
+     ('B07009_019M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different county within same state:'),
+     ('B07009_020E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different county within same state:!!Less than high school graduate'),
+     ('B07009_020M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different county within same state:!!Less than high school graduate'),
+     ('B07009_021E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different county within same state:!!High school graduate (includes equivalency)'),
+     ('B07009_021M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different county within same state:!!High school graduate (includes equivalency)'),
+     ('B07009_022E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from different county within same state:!!Some college or associate's degree"),
+     ('B07009_022M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from different county within same state:!!Some college or associate's degree"),
+     ('B07009_023E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from different county within same state:!!Bachelor's degree"),
+     ('B07009_023M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from different county within same state:!!Bachelor's degree"),
+     ('B07009_024E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different county within same state:!!Graduate or professional degree'),
+     ('B07009_024M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different county within same state:!!Graduate or professional degree'),
+     ('B07009_025E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different state:'),
+     ('B07009_025M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different state:'),
+     ('B07009_026E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different state:!!Less than high school graduate'),
+     ('B07009_026M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different state:!!Less than high school graduate'),
+     ('B07009_027E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different state:!!High school graduate (includes equivalency)'),
+     ('B07009_027M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different state:!!High school graduate (includes equivalency)'),
+     ('B07009_028E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from different state:!!Some college or associate's degree"),
+     ('B07009_028M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from different state:!!Some college or associate's degree"),
+     ('B07009_029E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from different state:!!Bachelor's degree"),
+     ('B07009_029M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from different state:!!Bachelor's degree"),
+     ('B07009_030E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different state:!!Graduate or professional degree'),
+     ('B07009_030M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different state:!!Graduate or professional degree'),
+     ('B07009_031E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from abroad:'),
+     ('B07009_031M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from abroad:'),
+     ('B07009_032E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from abroad:!!Less than high school graduate'),
+     ('B07009_032M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from abroad:!!Less than high school graduate'),
+     ('B07009_033E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from abroad:!!High school graduate (includes equivalency)'),
+     ('B07009_033M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from abroad:!!High school graduate (includes equivalency)'),
+     ('B07009_034E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from abroad:!!Some college or associate's degree"),
+     ('B07009_034M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from abroad:!!Some college or associate's degree"),
+     ('B07009_035E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from abroad:!!Bachelor's degree"),
+     ('B07009_035M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from abroad:!!Bachelor's degree"),
+     ('B07009_036E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from abroad:!!Graduate or professional degree'),
+     ('B07009_036M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from abroad:!!Graduate or professional degree'),
+     ('B07409PR_001E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Total living in area 1 year ago:'),
+     ('B07409PR_001M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Total living in area 1 year ago:'),
+     ('B07409PR_002E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Less than high school graduate'),
+     ('B07409PR_002M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B07409PR_003E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'High school graduate (includes equivalency)'),
+     ('B07409PR_003M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B07409PR_004E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Some college or associate's degree"),
+     ('B07409PR_004M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B07409PR_005E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Bachelor's degree"),
+     ('B07409PR_005M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B07409PR_006E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Graduate or professional degree'),
+     ('B07409PR_006M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B07409PR_007E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Same house:'),
+     ('B07409PR_007M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Same house:'),
+     ('B07409PR_008E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Same house:!!Less than high school graduate'),
+     ('B07409PR_008M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Same house:!!Less than high school graduate'),
+     ('B07409PR_009E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Same house:!!High school graduate (includes equivalency)'),
+     ('B07409PR_009M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Same house:!!High school graduate (includes equivalency)'),
+     ('B07409PR_010E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Same house:!!Some college or associate's degree"),
+     ('B07409PR_010M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Same house:!!Some college or associate's degree"),
+     ('B07409PR_011E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Same house:!!Bachelor's degree"),
+     ('B07409PR_011M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Same house:!!Bachelor's degree"),
+     ('B07409PR_012E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Same house:!!Graduate or professional degree'),
+     ('B07409PR_012M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Same house:!!Graduate or professional degree'),
+     ('B07409PR_013E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved within same municipio:'),
+     ('B07409PR_013M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:'),
+     ('B07409PR_014E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved within same municipio:!!Less than high school graduate'),
+     ('B07409PR_014M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!Less than high school graduate'),
+     ('B07409PR_015E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved within same municipio:!!High school graduate (includes equivalency)'),
+     ('B07409PR_015M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!High school graduate (includes equivalency)'),
+     ('B07409PR_016E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved within same municipio:!!Some college or associate's degree"),
+     ('B07409PR_016M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved within same municipio:!!Some college or associate's degree"),
+     ('B07409PR_017E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved within same municipio:!!Bachelor's degree"),
+     ('B07409PR_017M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved within same municipio:!!Bachelor's degree"),
+     ('B07409PR_018E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved within same municipio:!!Graduate or professional degree'),
+     ('B07409PR_018M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!Graduate or professional degree'),
+     ('B07409PR_019E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to different municipio:'),
+     ('B07409PR_019M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to different municipio:'),
+     ('B07409PR_020E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to different municipio:!!Less than high school graduate'),
+     ('B07409PR_020M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to different municipio:!!Less than high school graduate'),
+     ('B07409PR_021E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to different municipio:!!High school graduate (includes equivalency)'),
+     ('B07409PR_021M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to different municipio:!!High school graduate (includes equivalency)'),
+     ('B07409PR_022E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved to different municipio:!!Some college or associate's degree"),
+     ('B07409PR_022M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved to different municipio:!!Some college or associate's degree"),
+     ('B07409PR_023E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved to different municipio:!!Bachelor's degree"),
+     ('B07409PR_023M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved to different municipio:!!Bachelor's degree"),
+     ('B07409PR_024E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to different municipio:!!Graduate or professional degree'),
+     ('B07409PR_024M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to different municipio:!!Graduate or professional degree'),
+     ('B07409PR_025E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to the United States:'),
+     ('B07409PR_025M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to the United States:'),
+     ('B07409PR_026E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to the United States:!!Less than high school graduate'),
+     ('B07409PR_026M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to the United States:!!Less than high school graduate'),
+     ('B07409PR_027E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to the United States:!!High school graduate (includes equivalency)'),
+     ('B07409PR_027M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to the United States:!!High school graduate (includes equivalency)'),
+     ('B07409PR_028E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved to the United States:!!Some college or associate's degree"),
+     ('B07409PR_028M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved to the United States:!!Some college or associate's degree"),
+     ('B07409PR_029E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved to the United States:!!Bachelor's degree"),
+     ('B07409PR_029M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved to the United States:!!Bachelor's degree"),
+     ('B07409PR_030E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to the United States:!!Graduate or professional degree'),
+     ('B07409PR_030M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to the United States:!!Graduate or professional degree'),
+     ('B07409_001E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Total living in area 1 year ago:'),
+     ('B07409_001M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Total living in area 1 year ago:'),
+     ('B07409_002E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Less than high school graduate'),
+     ('B07409_002M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B07409_003E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'High school graduate (includes equivalency)'),
+     ('B07409_003M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B07409_004E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Some college or associate's degree"),
+     ('B07409_004M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B07409_005E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Bachelor's degree"),
+     ('B07409_005M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B07409_006E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Graduate or professional degree'),
+     ('B07409_006M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B07409_007E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Same house:'),
+     ('B07409_007M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Same house:'),
+     ('B07409_008E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Same house:!!Less than high school graduate'),
+     ('B07409_008M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Same house:!!Less than high school graduate'),
+     ('B07409_009E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Same house:!!High school graduate (includes equivalency)'),
+     ('B07409_009M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Same house:!!High school graduate (includes equivalency)'),
+     ('B07409_010E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Same house:!!Some college or associate's degree"),
+     ('B07409_010M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Same house:!!Some college or associate's degree"),
+     ('B07409_011E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Same house:!!Bachelor's degree"),
+     ('B07409_011M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Same house:!!Bachelor's degree"),
+     ('B07409_012E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Same house:!!Graduate or professional degree'),
+     ('B07409_012M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Same house:!!Graduate or professional degree'),
+     ('B07409_013E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved within same county:'),
+     ('B07409_013M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved within same county:'),
+     ('B07409_014E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved within same county:!!Less than high school graduate'),
+     ('B07409_014M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!Less than high school graduate'),
+     ('B07409_015E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved within same county:!!High school graduate (includes equivalency)'),
+     ('B07409_015M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!High school graduate (includes equivalency)'),
+     ('B07409_016E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved within same county:!!Some college or associate's degree"),
+     ('B07409_016M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved within same county:!!Some college or associate's degree"),
+     ('B07409_017E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved within same county:!!Bachelor's degree"),
+     ('B07409_017M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved within same county:!!Bachelor's degree"),
+     ('B07409_018E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved within same county:!!Graduate or professional degree'),
+     ('B07409_018M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!Graduate or professional degree'),
+     ('B07409_019E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different county within same state:'),
+     ('B07409_019M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different county within same state:'),
+     ('B07409_020E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different county within same state:!!Less than high school graduate'),
+     ('B07409_020M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different county within same state:!!Less than high school graduate'),
+     ('B07409_021E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different county within same state:!!High school graduate (includes equivalency)'),
+     ('B07409_021M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different county within same state:!!High school graduate (includes equivalency)'),
+     ('B07409_022E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved to different county within same state:!!Some college or associate's degree"),
+     ('B07409_022M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved to different county within same state:!!Some college or associate's degree"),
+     ('B07409_023E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved to different county within same state:!!Bachelor's degree"),
+     ('B07409_023M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved to different county within same state:!!Bachelor's degree"),
+     ('B07409_024E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different county within same state:!!Graduate or professional degree'),
+     ('B07409_024M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different county within same state:!!Graduate or professional degree'),
+     ('B07409_025E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different state:'),
+     ('B07409_025M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different state:'),
+     ('B07409_026E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different state:!!Less than high school graduate'),
+     ('B07409_026M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different state:!!Less than high school graduate'),
+     ('B07409_027E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different state:!!High school graduate (includes equivalency)'),
+     ('B07409_027M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different state:!!High school graduate (includes equivalency)'),
+     ('B07409_028E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved to different state:!!Some college or associate's degree"),
+     ('B07409_028M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved to different state:!!Some college or associate's degree"),
+     ('B07409_029E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved to different state:!!Bachelor's degree"),
+     ('B07409_029M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved to different state:!!Bachelor's degree"),
+     ('B07409_030E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different state:!!Graduate or professional degree'),
+     ('B07409_030M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different state:!!Graduate or professional degree'),
+     ('B13014_001E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Total:'),
+     ('B13014_001M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Total:'),
+     ('B13014_002E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:'),
+     ('B13014_002M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:'),
+     ('B13014_003E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):'),
+     ('B13014_003M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):'),
+     ('B13014_004E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Less than high school graduate'),
+     ('B13014_004M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Less than high school graduate'),
+     ('B13014_005E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!High school graduate (includes equivalency)'),
+     ('B13014_005M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!High school graduate (includes equivalency)'),
+     ('B13014_006E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Some college or associate's degree"),
+     ('B13014_006M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Some college or associate's degree"),
+     ('B13014_007E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Bachelor's degree"),
+     ('B13014_007M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Bachelor's degree"),
+     ('B13014_008E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Graduate or professional degree'),
+     ('B13014_008M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Graduate or professional degree'),
+     ('B13014_009E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):'),
+     ('B13014_009M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):'),
+     ('B13014_010E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Less than high school graduate'),
+     ('B13014_010M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Less than high school graduate'),
+     ('B13014_011E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!High school graduate (includes equivalency)'),
+     ('B13014_011M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!High school graduate (includes equivalency)'),
+     ('B13014_012E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Some college or associate's degree"),
+     ('B13014_012M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Some college or associate's degree"),
+     ('B13014_013E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Bachelor's degree"),
+     ('B13014_013M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Bachelor's degree"),
+     ('B13014_014E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Graduate or professional degree'),
+     ('B13014_014M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Graduate or professional degree'),
+     ('B13014_015E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:'),
+     ('B13014_015M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:'),
+     ('B13014_016E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):'),
+     ('B13014_016M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):'),
+     ('B13014_017E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Less than high school graduate'),
+     ('B13014_017M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Less than high school graduate'),
+     ('B13014_018E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!High school graduate (includes equivalency)'),
+     ('B13014_018M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!High school graduate (includes equivalency)'),
+     ('B13014_019E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Some college or associate's degree"),
+     ('B13014_019M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Some college or associate's degree"),
+     ('B13014_020E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Bachelor's degree"),
+     ('B13014_020M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Bachelor's degree"),
+     ('B13014_021E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Graduate or professional degree'),
+     ('B13014_021M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Graduate or professional degree'),
+     ('B13014_022E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):'),
+     ('B13014_022M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):'),
+     ('B13014_023E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Less than high school graduate'),
+     ('B13014_023M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Less than high school graduate'),
+     ('B13014_024E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!High school graduate (includes equivalency)'),
+     ('B13014_024M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!High school graduate (includes equivalency)'),
+     ('B13014_025E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Some college or associate's degree"),
+     ('B13014_025M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Some college or associate's degree"),
+     ('B13014_026E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Bachelor's degree"),
+     ('B13014_026M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Bachelor's degree"),
+     ('B13014_027E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Graduate or professional degree'),
+     ('B13014_027M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Graduate or professional degree'),
+     ('B14005_001E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Total:'),
+     ('B14005_001M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Total:'),
+     ('B14005_002E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:'),
+     ('B14005_002M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:'),
+     ('B14005_003E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Enrolled in school:'),
+     ('B14005_003M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Enrolled in school:'),
+     ('B14005_004E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Enrolled in school:!!Employed'),
+     ('B14005_004M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Enrolled in school:!!Employed'),
+     ('B14005_005E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Enrolled in school:!!Unemployed'),
+     ('B14005_005M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Enrolled in school:!!Unemployed'),
+     ('B14005_006E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Enrolled in school:!!Not in labor force'),
+     ('B14005_006M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Enrolled in school:!!Not in labor force'),
+     ('B14005_007E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:'),
+     ('B14005_007M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:'),
+     ('B14005_008E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!High school graduate (includes equivalency):'),
+     ('B14005_008M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!High school graduate (includes equivalency):'),
+     ('B14005_009E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Employed'),
+     ('B14005_009M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Employed'),
+     ('B14005_010E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_010M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_011E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Not in labor force'),
+     ('B14005_011M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Not in labor force'),
+     ('B14005_012E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!Not high school graduate:'),
+     ('B14005_012M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!Not high school graduate:'),
+     ('B14005_013E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!Not high school graduate:!!Employed'),
+     ('B14005_013M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!Not high school graduate:!!Employed'),
+     ('B14005_014E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_014M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_015E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!Not high school graduate:!!Not in labor force'),
+     ('B14005_015M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!Not high school graduate:!!Not in labor force'),
+     ('B14005_016E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:'),
+     ('B14005_016M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:'),
+     ('B14005_017E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Enrolled in school:'),
+     ('B14005_017M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Enrolled in school:'),
+     ('B14005_018E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Enrolled in school:!!Employed'),
+     ('B14005_018M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Enrolled in school:!!Employed'),
+     ('B14005_019E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Enrolled in school:!!Unemployed'),
+     ('B14005_019M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Enrolled in school:!!Unemployed'),
+     ('B14005_020E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Enrolled in school:!!Not in labor force'),
+     ('B14005_020M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Enrolled in school:!!Not in labor force'),
+     ('B14005_021E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:'),
+     ('B14005_021M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:'),
+     ('B14005_022E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!High school graduate (includes equivalency):'),
+     ('B14005_022M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!High school graduate (includes equivalency):'),
+     ('B14005_023E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Employed'),
+     ('B14005_023M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Employed'),
+     ('B14005_024E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_024M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_025E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Not in labor force'),
+     ('B14005_025M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Not in labor force'),
+     ('B14005_026E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!Not high school graduate:'),
+     ('B14005_026M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!Not high school graduate:'),
+     ('B14005_027E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!Not high school graduate:!!Employed'),
+     ('B14005_027M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!Not high school graduate:!!Employed'),
+     ('B14005_028E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_028M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_029E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!Not high school graduate:!!Not in labor force'),
+     ('B14005_029M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!Not high school graduate:!!Not in labor force'),
+     ('B15001_001E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Total:'),
+     ('B15001_001M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Total:'),
+     ('B15001_002E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:'),
+     ('B15001_002M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:'),
+     ('B15001_003E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:'),
+     ('B15001_003M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:'),
+     ('B15001_004E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!Less than 9th grade'),
+     ('B15001_004M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!Less than 9th grade'),
+     ('B15001_005E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!9th to 12th grade, no diploma'),
+     ('B15001_005M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!9th to 12th grade, no diploma'),
+     ('B15001_006E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!High school graduate (includes equivalency)'),
+     ('B15001_006M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!High school graduate (includes equivalency)'),
+     ('B15001_007E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!Some college, no degree'),
+     ('B15001_007M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!Some college, no degree'),
+     ('B15001_008E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!18 to 24 years:!!Associate's degree"),
+     ('B15001_008M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!18 to 24 years:!!Associate's degree"),
+     ('B15001_009E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!18 to 24 years:!!Bachelor's degree"),
+     ('B15001_009M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!18 to 24 years:!!Bachelor's degree"),
+     ('B15001_010E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!Graduate or professional degree'),
+     ('B15001_010M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!Graduate or professional degree'),
+     ('B15001_011E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:'),
+     ('B15001_011M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:'),
+     ('B15001_012E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!Less than 9th grade'),
+     ('B15001_012M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!Less than 9th grade'),
+     ('B15001_013E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!9th to 12th grade, no diploma'),
+     ('B15001_013M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!9th to 12th grade, no diploma'),
+     ('B15001_014E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!High school graduate (includes equivalency)'),
+     ('B15001_014M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!High school graduate (includes equivalency)'),
+     ('B15001_015E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!Some college, no degree'),
+     ('B15001_015M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!Some college, no degree'),
+     ('B15001_016E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!25 to 34 years:!!Associate's degree"),
+     ('B15001_016M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!25 to 34 years:!!Associate's degree"),
+     ('B15001_017E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!25 to 34 years:!!Bachelor's degree"),
+     ('B15001_017M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!25 to 34 years:!!Bachelor's degree"),
+     ('B15001_018E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!Graduate or professional degree'),
+     ('B15001_018M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!Graduate or professional degree'),
+     ('B15001_019E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:'),
+     ('B15001_019M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:'),
+     ('B15001_020E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!Less than 9th grade'),
+     ('B15001_020M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!Less than 9th grade'),
+     ('B15001_021E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!9th to 12th grade, no diploma'),
+     ('B15001_021M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!9th to 12th grade, no diploma'),
+     ('B15001_022E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!High school graduate (includes equivalency)'),
+     ('B15001_022M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!High school graduate (includes equivalency)'),
+     ('B15001_023E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!Some college, no degree'),
+     ('B15001_023M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!Some college, no degree'),
+     ('B15001_024E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!35 to 44 years:!!Associate's degree"),
+     ('B15001_024M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!35 to 44 years:!!Associate's degree"),
+     ('B15001_025E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!35 to 44 years:!!Bachelor's degree"),
+     ('B15001_025M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!35 to 44 years:!!Bachelor's degree"),
+     ('B15001_026E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!Graduate or professional degree'),
+     ('B15001_026M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!Graduate or professional degree'),
+     ('B15001_027E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:'),
+     ('B15001_027M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:'),
+     ('B15001_028E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!Less than 9th grade'),
+     ('B15001_028M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!Less than 9th grade'),
+     ('B15001_029E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!9th to 12th grade, no diploma'),
+     ('B15001_029M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!9th to 12th grade, no diploma'),
+     ('B15001_030E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!High school graduate (includes equivalency)'),
+     ('B15001_030M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!High school graduate (includes equivalency)'),
+     ('B15001_031E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!Some college, no degree'),
+     ('B15001_031M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!Some college, no degree'),
+     ('B15001_032E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!45 to 64 years:!!Associate's degree"),
+     ('B15001_032M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!45 to 64 years:!!Associate's degree"),
+     ('B15001_033E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!45 to 64 years:!!Bachelor's degree"),
+     ('B15001_033M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!45 to 64 years:!!Bachelor's degree"),
+     ('B15001_034E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!Graduate or professional degree'),
+     ('B15001_034M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!Graduate or professional degree'),
+     ('B15001_035E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:'),
+     ('B15001_035M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:'),
+     ('B15001_036E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!Less than 9th grade'),
+     ('B15001_036M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!Less than 9th grade'),
+     ('B15001_037E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!9th to 12th grade, no diploma'),
+     ('B15001_037M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!9th to 12th grade, no diploma'),
+     ('B15001_038E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!High school graduate (includes equivalency)'),
+     ('B15001_038M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!High school graduate (includes equivalency)'),
+     ('B15001_039E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!Some college, no degree'),
+     ('B15001_039M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!Some college, no degree'),
+     ('B15001_040E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!65 years and over:!!Associate's degree"),
+     ('B15001_040M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!65 years and over:!!Associate's degree"),
+     ('B15001_041E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!65 years and over:!!Bachelor's degree"),
+     ('B15001_041M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!65 years and over:!!Bachelor's degree"),
+     ('B15001_042E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!Graduate or professional degree'),
+     ('B15001_042M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!Graduate or professional degree'),
+     ('B15001_043E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:'),
+     ('B15001_043M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:'),
+     ('B15001_044E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:'),
+     ('B15001_044M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:'),
+     ('B15001_045E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!Less than 9th grade'),
+     ('B15001_045M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!Less than 9th grade'),
+     ('B15001_046E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!9th to 12th grade, no diploma'),
+     ('B15001_046M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!9th to 12th grade, no diploma'),
+     ('B15001_047E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!High school graduate (includes equivalency)'),
+     ('B15001_047M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!High school graduate (includes equivalency)'),
+     ('B15001_048E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!Some college, no degree'),
+     ('B15001_048M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!Some college, no degree'),
+     ('B15001_049E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!18 to 24 years:!!Associate's degree"),
+     ('B15001_049M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!18 to 24 years:!!Associate's degree"),
+     ('B15001_050E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!18 to 24 years:!!Bachelor's degree"),
+     ('B15001_050M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!18 to 24 years:!!Bachelor's degree"),
+     ('B15001_051E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!Graduate or professional degree'),
+     ('B15001_051M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!Graduate or professional degree'),
+     ('B15001_052E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:'),
+     ('B15001_052M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:'),
+     ('B15001_053E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!Less than 9th grade'),
+     ('B15001_053M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!Less than 9th grade'),
+     ('B15001_054E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!9th to 12th grade, no diploma'),
+     ('B15001_054M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!9th to 12th grade, no diploma'),
+     ('B15001_055E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!High school graduate (includes equivalency)'),
+     ('B15001_055M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!High school graduate (includes equivalency)'),
+     ('B15001_056E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!Some college, no degree'),
+     ('B15001_056M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!Some college, no degree'),
+     ('B15001_057E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!25 to 34 years:!!Associate's degree"),
+     ('B15001_057M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!25 to 34 years:!!Associate's degree"),
+     ('B15001_058E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!25 to 34 years:!!Bachelor's degree"),
+     ('B15001_058M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!25 to 34 years:!!Bachelor's degree"),
+     ('B15001_059E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!Graduate or professional degree'),
+     ('B15001_059M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!Graduate or professional degree'),
+     ('B15001_060E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:'),
+     ('B15001_060M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:'),
+     ('B15001_061E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!Less than 9th grade'),
+     ('B15001_061M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!Less than 9th grade'),
+     ('B15001_062E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!9th to 12th grade, no diploma'),
+     ('B15001_062M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!9th to 12th grade, no diploma'),
+     ('B15001_063E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!High school graduate (includes equivalency)'),
+     ('B15001_063M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!High school graduate (includes equivalency)'),
+     ('B15001_064E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!Some college, no degree'),
+     ('B15001_064M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!Some college, no degree'),
+     ('B15001_065E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!35 to 44 years:!!Associate's degree"),
+     ('B15001_065M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!35 to 44 years:!!Associate's degree"),
+     ('B15001_066E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!35 to 44 years:!!Bachelor's degree"),
+     ('B15001_066M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!35 to 44 years:!!Bachelor's degree"),
+     ('B15001_067E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!Graduate or professional degree'),
+     ('B15001_067M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!Graduate or professional degree'),
+     ('B15001_068E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:'),
+     ('B15001_068M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:'),
+     ('B15001_069E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!Less than 9th grade'),
+     ('B15001_069M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!Less than 9th grade'),
+     ('B15001_070E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!9th to 12th grade, no diploma'),
+     ('B15001_070M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!9th to 12th grade, no diploma'),
+     ('B15001_071E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!High school graduate (includes equivalency)'),
+     ('B15001_071M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!High school graduate (includes equivalency)'),
+     ('B15001_072E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!Some college, no degree'),
+     ('B15001_072M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!Some college, no degree'),
+     ('B15001_073E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!45 to 64 years:!!Associate's degree"),
+     ('B15001_073M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!45 to 64 years:!!Associate's degree"),
+     ('B15001_074E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!45 to 64 years:!!Bachelor's degree"),
+     ('B15001_074M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!45 to 64 years:!!Bachelor's degree"),
+     ('B15001_075E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!Graduate or professional degree'),
+     ('B15001_075M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!Graduate or professional degree'),
+     ('B15001_076E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:'),
+     ('B15001_076M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:'),
+     ('B15001_077E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!Less than 9th grade'),
+     ('B15001_077M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!Less than 9th grade'),
+     ('B15001_078E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!9th to 12th grade, no diploma'),
+     ('B15001_078M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!9th to 12th grade, no diploma'),
+     ('B15001_079E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!High school graduate (includes equivalency)'),
+     ('B15001_079M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!High school graduate (includes equivalency)'),
+     ('B15001_080E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!Some college, no degree'),
+     ('B15001_080M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!Some college, no degree'),
+     ('B15001_081E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!65 years and over:!!Associate's degree"),
+     ('B15001_081M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!65 years and over:!!Associate's degree"),
+     ('B15001_082E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!65 years and over:!!Bachelor's degree"),
+     ('B15001_082M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!65 years and over:!!Bachelor's degree"),
+     ('B15001_083E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!Graduate or professional degree'),
+     ('B15001_083M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!Graduate or professional degree'),
+     ('B15002_001E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Total:'),
+     ('B15002_001M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Total:'),
+     ('B15002_002E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:'),
+     ('B15002_002M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:'),
+     ('B15002_003E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!No schooling completed'),
+     ('B15002_003M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!No schooling completed'),
+     ('B15002_004E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Nursery to 4th grade'),
+     ('B15002_004M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Nursery to 4th grade'),
+     ('B15002_005E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!5th and 6th grade'),
+     ('B15002_005M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!5th and 6th grade'),
+     ('B15002_006E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!7th and 8th grade'),
+     ('B15002_006M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!7th and 8th grade'),
+     ('B15002_007E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!9th grade'),
+     ('B15002_007M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!9th grade'),
+     ('B15002_008E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!10th grade'),
+     ('B15002_008M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!10th grade'),
+     ('B15002_009E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!11th grade'),
+     ('B15002_009M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!11th grade'),
+     ('B15002_010E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!12th grade, no diploma'),
+     ('B15002_010M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!12th grade, no diploma'),
+     ('B15002_011E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!High school graduate (includes equivalency)'),
+     ('B15002_011M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!High school graduate (includes equivalency)'),
+     ('B15002_012E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Some college, less than 1 year'),
+     ('B15002_012M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Some college, less than 1 year'),
+     ('B15002_013E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Some college, 1 or more years, no degree'),
+     ('B15002_013M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Some college, 1 or more years, no degree'),
+     ('B15002_014E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Male:!!Associate's degree"),
+     ('B15002_014M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Male:!!Associate's degree"),
+     ('B15002_015E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Male:!!Bachelor's degree"),
+     ('B15002_015M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Male:!!Bachelor's degree"),
+     ('B15002_016E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Male:!!Master's degree"),
+     ('B15002_016M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Male:!!Master's degree"),
+     ('B15002_017E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Professional school degree'),
+     ('B15002_017M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Professional school degree'),
+     ('B15002_018E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Doctorate degree'),
+     ('B15002_018M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Doctorate degree'),
+     ('B15002_019E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:'),
+     ('B15002_019M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:'),
+     ('B15002_020E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!No schooling completed'),
+     ('B15002_020M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!No schooling completed'),
+     ('B15002_021E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Nursery to 4th grade'),
+     ('B15002_021M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Nursery to 4th grade'),
+     ('B15002_022E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!5th and 6th grade'),
+     ('B15002_022M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!5th and 6th grade'),
+     ('B15002_023E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!7th and 8th grade'),
+     ('B15002_023M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!7th and 8th grade'),
+     ('B15002_024E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!9th grade'),
+     ('B15002_024M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!9th grade'),
+     ('B15002_025E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!10th grade'),
+     ('B15002_025M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!10th grade'),
+     ('B15002_026E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!11th grade'),
+     ('B15002_026M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!11th grade'),
+     ('B15002_027E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!12th grade, no diploma'),
+     ('B15002_027M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!12th grade, no diploma'),
+     ('B15002_028E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!High school graduate (includes equivalency)'),
+     ('B15002_028M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!High school graduate (includes equivalency)'),
+     ('B15002_029E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Some college, less than 1 year'),
+     ('B15002_029M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Some college, less than 1 year'),
+     ('B15002_030E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Some college, 1 or more years, no degree'),
+     ('B15002_030M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Some college, 1 or more years, no degree'),
+     ('B15002_031E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Female:!!Associate's degree"),
+     ('B15002_031M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Female:!!Associate's degree"),
+     ('B15002_032E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Female:!!Bachelor's degree"),
+     ('B15002_032M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Female:!!Bachelor's degree"),
+     ('B15002_033E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Female:!!Master's degree"),
+     ('B15002_033M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Female:!!Master's degree"),
+     ('B15002_034E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Professional school degree'),
+     ('B15002_034M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Professional school degree'),
+     ('B15002_035E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Doctorate degree'),
+     ('B15002_035M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Doctorate degree'),
+     ('B15003_001E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Total:'),
+     ('B15003_001M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Total:'),
+     ('B15003_002E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'No schooling completed'),
+     ('B15003_002M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!No schooling completed'),
+     ('B15003_003E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Nursery school'),
+     ('B15003_003M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Nursery school'),
+     ('B15003_004E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Kindergarten'),
+     ('B15003_004M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Kindergarten'),
+     ('B15003_005E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '1st grade'),
+     ('B15003_005M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!1st grade'),
+     ('B15003_006E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '2nd grade'),
+     ('B15003_006M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!2nd grade'),
+     ('B15003_007E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '3rd grade'),
+     ('B15003_007M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!3rd grade'),
+     ('B15003_008E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '4th grade'),
+     ('B15003_008M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!4th grade'),
+     ('B15003_009E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '5th grade'),
+     ('B15003_009M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!5th grade'),
+     ('B15003_010E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '6th grade'),
+     ('B15003_010M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!6th grade'),
+     ('B15003_011E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '7th grade'),
+     ('B15003_011M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!7th grade'),
+     ('B15003_012E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '8th grade'),
+     ('B15003_012M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!8th grade'),
+     ('B15003_013E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '9th grade'),
+     ('B15003_013M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!9th grade'),
+     ('B15003_014E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '10th grade'),
+     ('B15003_014M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!10th grade'),
+     ('B15003_015E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '11th grade'),
+     ('B15003_015M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!11th grade'),
+     ('B15003_016E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '12th grade, no diploma'),
+     ('B15003_016M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!12th grade, no diploma'),
+     ('B15003_017E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Regular high school diploma'),
+     ('B15003_017M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Regular high school diploma'),
+     ('B15003_018E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'GED or alternative credential'),
+     ('B15003_018M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!GED or alternative credential'),
+     ('B15003_019E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Some college, less than 1 year'),
+     ('B15003_019M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Some college, less than 1 year'),
+     ('B15003_020E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Some college, 1 or more years, no degree'),
+     ('B15003_020M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Some college, 1 or more years, no degree'),
+     ('B15003_021E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Associate's degree"),
+     ('B15003_021M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Margin of Error for!!Associate's degree"),
+     ('B15003_022E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Bachelor's degree"),
+     ('B15003_022M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Margin of Error for!!Bachelor's degree"),
+     ('B15003_023E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Master's degree"),
+     ('B15003_023M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Margin of Error for!!Master's degree"),
+     ('B15003_024E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Professional school degree'),
+     ('B15003_024M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Professional school degree'),
+     ('B15003_025E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Doctorate degree'),
+     ('B15003_025M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Doctorate degree'),
+     ('B16010_001E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Total:'),
+     ('B16010_001M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Total:'),
+     ('B16010_002E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:'),
+     ('B16010_002M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:'),
+     ('B16010_003E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:'),
+     ('B16010_003M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:'),
+     ('B16010_004E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak only English'),
+     ('B16010_004M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak only English'),
+     ('B16010_005E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak Spanish'),
+     ('B16010_005M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak Spanish'),
+     ('B16010_006E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak other Indo-European languages'),
+     ('B16010_006M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak other Indo-European languages'),
+     ('B16010_007E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_007M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_008E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak other languages'),
+     ('B16010_008M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak other languages'),
+     ('B16010_009E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:'),
+     ('B16010_009M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:'),
+     ('B16010_010E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak only English'),
+     ('B16010_010M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak only English'),
+     ('B16010_011E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak Spanish'),
+     ('B16010_011M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak Spanish'),
+     ('B16010_012E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak other Indo-European languages'),
+     ('B16010_012M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak other Indo-European languages'),
+     ('B16010_013E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_013M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_014E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak other languages'),
+     ('B16010_014M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak other languages'),
+     ('B16010_015E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):'),
+     ('B16010_015M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):'),
+     ('B16010_016E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:'),
+     ('B16010_016M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:'),
+     ('B16010_017E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak only English'),
+     ('B16010_017M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak only English'),
+     ('B16010_018E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak Spanish'),
+     ('B16010_018M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak Spanish'),
+     ('B16010_019E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak other Indo-European languages'),
+     ('B16010_019M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak other Indo-European languages'),
+     ('B16010_020E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_020M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_021E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak other languages'),
+     ('B16010_021M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak other languages'),
+     ('B16010_022E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:'),
+     ('B16010_022M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:'),
+     ('B16010_023E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak only English'),
+     ('B16010_023M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak only English'),
+     ('B16010_024E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak Spanish'),
+     ('B16010_024M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak Spanish'),
+     ('B16010_025E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak other Indo-European languages'),
+     ('B16010_025M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak other Indo-European languages'),
+     ('B16010_026E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_026M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_027E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak other languages'),
+     ('B16010_027M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak other languages'),
+     ('B16010_028E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:"),
+     ('B16010_028M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:"),
+     ('B16010_029E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:"),
+     ('B16010_029M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:"),
+     ('B16010_030E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak only English"),
+     ('B16010_030M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak only English"),
+     ('B16010_031E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak Spanish"),
+     ('B16010_031M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak Spanish"),
+     ('B16010_032E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak other Indo-European languages"),
+     ('B16010_032M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak other Indo-European languages"),
+     ('B16010_033E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_033M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_034E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak other languages"),
+     ('B16010_034M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak other languages"),
+     ('B16010_035E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:"),
+     ('B16010_035M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:"),
+     ('B16010_036E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak only English"),
+     ('B16010_036M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak only English"),
+     ('B16010_037E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak Spanish"),
+     ('B16010_037M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak Spanish"),
+     ('B16010_038E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak other Indo-European languages"),
+     ('B16010_038M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak other Indo-European languages"),
+     ('B16010_039E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_039M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_040E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak other languages"),
+     ('B16010_040M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak other languages"),
+     ('B16010_041E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:"),
+     ('B16010_041M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:"),
+     ('B16010_042E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:"),
+     ('B16010_042M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:"),
+     ('B16010_043E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak only English"),
+     ('B16010_043M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak only English"),
+     ('B16010_044E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak Spanish"),
+     ('B16010_044M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak Spanish"),
+     ('B16010_045E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak other Indo-European languages"),
+     ('B16010_045M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak other Indo-European languages"),
+     ('B16010_046E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_046M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_047E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak other languages"),
+     ('B16010_047M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak other languages"),
+     ('B16010_048E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:"),
+     ('B16010_048M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:"),
+     ('B16010_049E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak only English"),
+     ('B16010_049M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak only English"),
+     ('B16010_050E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak Spanish"),
+     ('B16010_050M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak Spanish"),
+     ('B16010_051E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak other Indo-European languages"),
+     ('B16010_051M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak other Indo-European languages"),
+     ('B16010_052E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_052M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_053E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak other languages"),
+     ('B16010_053M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak other languages"),
+     ('B17003_001E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Total:'),
+     ('B17003_001M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Total:'),
+     ('B17003_002E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:'),
+     ('B17003_002M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:'),
+     ('B17003_003E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Male:'),
+     ('B17003_003M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:'),
+     ('B17003_004E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Male:!!Less than high school graduate'),
+     ('B17003_004M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:!!Less than high school graduate'),
+     ('B17003_005E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Male:!!High school graduate (includes equivalency)'),
+     ('B17003_005M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:!!High school graduate (includes equivalency)'),
+     ('B17003_006E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months below poverty level:!!Male:!!Some college, associate's degree"),
+     ('B17003_006M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:!!Some college, associate's degree"),
+     ('B17003_007E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months below poverty level:!!Male:!!Bachelor's degree or higher"),
+     ('B17003_007M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:!!Bachelor's degree or higher"),
+     ('B17003_008E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Female:'),
+     ('B17003_008M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:'),
+     ('B17003_009E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Female:!!Less than high school graduate'),
+     ('B17003_009M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:!!Less than high school graduate'),
+     ('B17003_010E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Female:!!High school graduate (includes equivalency)'),
+     ('B17003_010M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:!!High school graduate (includes equivalency)'),
+     ('B17003_011E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months below poverty level:!!Female:!!Some college, associate's degree"),
+     ('B17003_011M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:!!Some college, associate's degree"),
+     ('B17003_012E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months below poverty level:!!Female:!!Bachelor's degree or higher"),
+     ('B17003_012M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:!!Bachelor's degree or higher"),
+     ('B17003_013E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:'),
+     ('B17003_013M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:'),
+     ('B17003_014E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Male:'),
+     ('B17003_014M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:'),
+     ('B17003_015E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Male:!!Less than high school graduate'),
+     ('B17003_015M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:!!Less than high school graduate'),
+     ('B17003_016E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Male:!!High school graduate (includes equivalency)'),
+     ('B17003_016M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:!!High school graduate (includes equivalency)'),
+     ('B17003_017E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months at or above poverty level:!!Male:!!Some college, associate's degree"),
+     ('B17003_017M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:!!Some college, associate's degree"),
+     ('B17003_018E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months at or above poverty level:!!Male:!!Bachelor's degree or higher"),
+     ('B17003_018M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:!!Bachelor's degree or higher"),
+     ('B17003_019E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Female:'),
+     ('B17003_019M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:'),
+     ('B17003_020E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Female:!!Less than high school graduate'),
+     ('B17003_020M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:!!Less than high school graduate'),
+     ('B17003_021E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Female:!!High school graduate (includes equivalency)'),
+     ('B17003_021M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:!!High school graduate (includes equivalency)'),
+     ('B17003_022E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months at or above poverty level:!!Female:!!Some college, associate's degree"),
+     ('B17003_022M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:!!Some college, associate's degree"),
+     ('B17003_023E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months at or above poverty level:!!Female:!!Bachelor's degree or higher"),
+     ('B17003_023M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:!!Bachelor's degree or higher"),
+     ('B17018_001E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Total:'),
+     ('B17018_001M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Total:'),
+     ('B17018_002E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:'),
+     ('B17018_002M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:'),
+     ('B17018_003E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Married-couple family:'),
+     ('B17018_003M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:'),
+     ('B17018_004E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Married-couple family:!!Less than high school graduate'),
+     ('B17018_004M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:!!Less than high school graduate'),
+     ('B17018_005E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Married-couple family:!!High school graduate (includes equivalency)'),
+     ('B17018_005M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:!!High school graduate (includes equivalency)'),
+     ('B17018_006E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Married-couple family:!!Some college, associate's degree"),
+     ('B17018_006M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:!!Some college, associate's degree"),
+     ('B17018_007E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Married-couple family:!!Bachelor's degree or higher"),
+     ('B17018_007M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:!!Bachelor's degree or higher"),
+     ('B17018_008E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:'),
+     ('B17018_008M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:'),
+     ('B17018_009E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:'),
+     ('B17018_009M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:'),
+     ('B17018_010E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Less than high school graduate'),
+     ('B17018_010M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Less than high school graduate'),
+     ('B17018_011E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!High school graduate (includes equivalency)'),
+     ('B17018_011M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!High school graduate (includes equivalency)'),
+     ('B17018_012E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Some college, associate's degree"),
+     ('B17018_012M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Some college, associate's degree"),
+     ('B17018_013E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Bachelor's degree or higher"),
+     ('B17018_013M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Bachelor's degree or higher"),
+     ('B17018_014E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:'),
+     ('B17018_014M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:'),
+     ('B17018_015E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Less than high school graduate'),
+     ('B17018_015M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Less than high school graduate'),
+     ('B17018_016E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!High school graduate (includes equivalency)'),
+     ('B17018_016M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!High school graduate (includes equivalency)'),
+     ('B17018_017E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Some college, associate's degree"),
+     ('B17018_017M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Some college, associate's degree"),
+     ('B17018_018E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Bachelor's degree or higher"),
+     ('B17018_018M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Bachelor's degree or higher"),
+     ('B17018_019E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:'),
+     ('B17018_019M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:'),
+     ('B17018_020E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Married-couple family:'),
+     ('B17018_020M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:'),
+     ('B17018_021E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Married-couple family:!!Less than high school graduate'),
+     ('B17018_021M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:!!Less than high school graduate'),
+     ('B17018_022E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Married-couple family:!!High school graduate (includes equivalency)'),
+     ('B17018_022M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:!!High school graduate (includes equivalency)'),
+     ('B17018_023E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months at or above poverty level:!!Married-couple family:!!Some college, associate's degree"),
+     ('B17018_023M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:!!Some college, associate's degree"),
+     ('B17018_024E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months at or above poverty level:!!Married-couple family:!!Bachelor's degree or higher"),
+     ('B17018_024M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:!!Bachelor's degree or higher"),
+     ('B17018_025E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:'),
+     ('B17018_025M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:'),
+     ('B17018_026E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:'),
+     ('B17018_026M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:'),
+     ('B17018_027E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Less than high school graduate'),
+     ('B17018_027M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Less than high school graduate'),
+     ('B17018_028E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!High school graduate (includes equivalency)'),
+     ('B17018_028M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!High school graduate (includes equivalency)'),
+     ('B17018_029E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Some college, associate's degree"),
+     ('B17018_029M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Some college, associate's degree"),
+     ('B17018_030E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Bachelor's degree or higher"),
+     ('B17018_030M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Bachelor's degree or higher"),
+     ('B17018_031E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:'),
+     ('B17018_031M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:'),
+     ('B17018_032E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:!!Less than high school graduate'),
+     ('B17018_032M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:!!Less than high school graduate'),
+     ('B17018_033E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:!!High school graduate (includes equivalency)'),
+     ('B17018_033M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:!!High school graduate (includes equivalency)'),
+     ...]
+
+
+
+.. code:: ipython3
+
+    censusdata.search('acs5', '2015', 'concept', 'education')
+
+
+
+
+.. parsed-literal::
+
+    [('B06009PR_001E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Total:'),
+     ('B06009PR_001M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Total:'),
+     ('B06009PR_002E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Less than high school graduate'),
+     ('B06009PR_002M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B06009PR_003E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'High school graduate (includes equivalency)'),
+     ('B06009PR_003M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B06009PR_004E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Some college or associate's degree"),
+     ('B06009PR_004M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B06009PR_005E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Bachelor's degree"),
+     ('B06009PR_005M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B06009PR_006E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Graduate or professional degree'),
+     ('B06009PR_006M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B06009PR_007E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in Puerto Rico:'),
+     ('B06009PR_007M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in Puerto Rico:'),
+     ('B06009PR_008E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in Puerto Rico:!!Less than high school graduate'),
+     ('B06009PR_008M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in Puerto Rico:!!Less than high school graduate'),
+     ('B06009PR_009E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in Puerto Rico:!!High school graduate (includes equivalency)'),
+     ('B06009PR_009M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in Puerto Rico:!!High school graduate (includes equivalency)'),
+     ('B06009PR_010E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Born in Puerto Rico:!!Some college or associate's degree"),
+     ('B06009PR_010M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Born in Puerto Rico:!!Some college or associate's degree"),
+     ('B06009PR_011E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Born in Puerto Rico:!!Bachelor's degree"),
+     ('B06009PR_011M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Born in Puerto Rico:!!Bachelor's degree"),
+     ('B06009PR_012E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in Puerto Rico:!!Graduate or professional degree'),
+     ('B06009PR_012M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in Puerto Rico:!!Graduate or professional degree'),
+     ('B06009PR_013E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in the United States:'),
+     ('B06009PR_013M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in the United States:'),
+     ('B06009PR_014E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in the United States:!!Less than high school graduate'),
+     ('B06009PR_014M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in the United States:!!Less than high school graduate'),
+     ('B06009PR_015E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in the United States:!!High school graduate (includes equivalency)'),
+     ('B06009PR_015M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in the United States:!!High school graduate (includes equivalency)'),
+     ('B06009PR_016E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Born in the United States:!!Some college or associate's degree"),
+     ('B06009PR_016M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Born in the United States:!!Some college or associate's degree"),
+     ('B06009PR_017E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Born in the United States:!!Bachelor's degree"),
+     ('B06009PR_017M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Born in the United States:!!Bachelor's degree"),
+     ('B06009PR_018E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Born in the United States:!!Graduate or professional degree'),
+     ('B06009PR_018M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Born in the United States:!!Graduate or professional degree'),
+     ('B06009PR_019E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Native; born elsewhere:'),
+     ('B06009PR_019M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Native; born elsewhere:'),
+     ('B06009PR_020E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Native; born elsewhere:!!Less than high school graduate'),
+     ('B06009PR_020M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Native; born elsewhere:!!Less than high school graduate'),
+     ('B06009PR_021E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Native; born elsewhere:!!High school graduate (includes equivalency)'),
+     ('B06009PR_021M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Native; born elsewhere:!!High school graduate (includes equivalency)'),
+     ('B06009PR_022E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Native; born elsewhere:!!Some college or associate's degree"),
+     ('B06009PR_022M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Native; born elsewhere:!!Some college or associate's degree"),
+     ('B06009PR_023E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Native; born elsewhere:!!Bachelor's degree"),
+     ('B06009PR_023M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Native; born elsewhere:!!Bachelor's degree"),
+     ('B06009PR_024E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Native; born elsewhere:!!Graduate or professional degree'),
+     ('B06009PR_024M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Native; born elsewhere:!!Graduate or professional degree'),
+     ('B06009PR_025E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Foreign born:'),
+     ('B06009PR_025M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Foreign born:'),
+     ('B06009PR_026E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Foreign born:!!Less than high school graduate'),
+     ('B06009PR_026M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Foreign born:!!Less than high school graduate'),
+     ('B06009PR_027E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Foreign born:!!High school graduate (includes equivalency)'),
+     ('B06009PR_027M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Foreign born:!!High school graduate (includes equivalency)'),
+     ('B06009PR_028E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Foreign born:!!Some college or associate's degree"),
+     ('B06009PR_028M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Foreign born:!!Some college or associate's degree"),
+     ('B06009PR_029E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Foreign born:!!Bachelor's degree"),
+     ('B06009PR_029M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      "Margin Of Error For!!Foreign born:!!Bachelor's degree"),
+     ('B06009PR_030E',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Foreign born:!!Graduate or professional degree'),
+     ('B06009PR_030M',
+      'B06009PR.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN PUERTO RICO',
+      'Margin Of Error For!!Foreign born:!!Graduate or professional degree'),
+     ('B06009_001E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Total:'),
+     ('B06009_001M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Total:'),
+     ('B06009_002E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Less than high school graduate'),
+     ('B06009_002M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B06009_003E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'High school graduate (includes equivalency)'),
+     ('B06009_003M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B06009_004E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Some college or associate's degree"),
+     ('B06009_004M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B06009_005E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Bachelor's degree"),
+     ('B06009_005M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B06009_006E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Graduate or professional degree'),
+     ('B06009_006M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B06009_007E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in state of residence:'),
+     ('B06009_007M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in state of residence:'),
+     ('B06009_008E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in state of residence:!!Less than high school graduate'),
+     ('B06009_008M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in state of residence:!!Less than high school graduate'),
+     ('B06009_009E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in state of residence:!!High school graduate (includes equivalency)'),
+     ('B06009_009M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in state of residence:!!High school graduate (includes equivalency)'),
+     ('B06009_010E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Born in state of residence:!!Some college or associate's degree"),
+     ('B06009_010M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Born in state of residence:!!Some college or associate's degree"),
+     ('B06009_011E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Born in state of residence:!!Bachelor's degree"),
+     ('B06009_011M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Born in state of residence:!!Bachelor's degree"),
+     ('B06009_012E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in state of residence:!!Graduate or professional degree'),
+     ('B06009_012M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in state of residence:!!Graduate or professional degree'),
+     ('B06009_013E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in other state in the United States:'),
+     ('B06009_013M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in other state in the United States:'),
+     ('B06009_014E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in other state in the United States:!!Less than high school graduate'),
+     ('B06009_014M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in other state in the United States:!!Less than high school graduate'),
+     ('B06009_015E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in other state in the United States:!!High school graduate (includes equivalency)'),
+     ('B06009_015M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in other state in the United States:!!High school graduate (includes equivalency)'),
+     ('B06009_016E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Born in other state in the United States:!!Some college or associate's degree"),
+     ('B06009_016M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Born in other state in the United States:!!Some college or associate's degree"),
+     ('B06009_017E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Born in other state in the United States:!!Bachelor's degree"),
+     ('B06009_017M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Born in other state in the United States:!!Bachelor's degree"),
+     ('B06009_018E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Born in other state in the United States:!!Graduate or professional degree'),
+     ('B06009_018M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Born in other state in the United States:!!Graduate or professional degree'),
+     ('B06009_019E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Native; born outside the United States:'),
+     ('B06009_019M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Native; born outside the United States:'),
+     ('B06009_020E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Native; born outside the United States:!!Less than high school graduate'),
+     ('B06009_020M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Native; born outside the United States:!!Less than high school graduate'),
+     ('B06009_021E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Native; born outside the United States:!!High school graduate (includes equivalency)'),
+     ('B06009_021M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Native; born outside the United States:!!High school graduate (includes equivalency)'),
+     ('B06009_022E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Native; born outside the United States:!!Some college or associate's degree"),
+     ('B06009_022M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Native; born outside the United States:!!Some college or associate's degree"),
+     ('B06009_023E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Native; born outside the United States:!!Bachelor's degree"),
+     ('B06009_023M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Native; born outside the United States:!!Bachelor's degree"),
+     ('B06009_024E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Native; born outside the United States:!!Graduate or professional degree'),
+     ('B06009_024M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Native; born outside the United States:!!Graduate or professional degree'),
+     ('B06009_025E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Foreign born:'),
+     ('B06009_025M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Foreign born:'),
+     ('B06009_026E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Foreign born:!!Less than high school graduate'),
+     ('B06009_026M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Foreign born:!!Less than high school graduate'),
+     ('B06009_027E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Foreign born:!!High school graduate (includes equivalency)'),
+     ('B06009_027M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Foreign born:!!High school graduate (includes equivalency)'),
+     ('B06009_028E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Foreign born:!!Some college or associate's degree"),
+     ('B06009_028M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Foreign born:!!Some college or associate's degree"),
+     ('B06009_029E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Foreign born:!!Bachelor's degree"),
+     ('B06009_029M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      "Margin Of Error For!!Foreign born:!!Bachelor's degree"),
+     ('B06009_030E',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Foreign born:!!Graduate or professional degree'),
+     ('B06009_030M',
+      'B06009.  PLACE OF BIRTH BY EDUCATIONAL ATTAINMENT IN THE UNITED STATES',
+      'Margin Of Error For!!Foreign born:!!Graduate or professional degree'),
+     ('B07009PR_001E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Total:'),
+     ('B07009PR_001M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Total:'),
+     ('B07009PR_002E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Less than high school graduate'),
+     ('B07009PR_002M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B07009PR_003E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'High school graduate (includes equivalency)'),
+     ('B07009PR_003M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B07009PR_004E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Some college or associate's degree"),
+     ('B07009PR_004M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B07009PR_005E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Bachelor's degree"),
+     ('B07009PR_005M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B07009PR_006E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Graduate or professional degree'),
+     ('B07009PR_006M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B07009PR_007E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Same house 1 year ago:'),
+     ('B07009PR_007M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Same house 1 year ago:'),
+     ('B07009PR_008E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Same house 1 year ago:!!Less than high school graduate'),
+     ('B07009PR_008M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Same house 1 year ago:!!Less than high school graduate'),
+     ('B07009PR_009E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Same house 1 year ago:!!High school graduate (includes equivalency)'),
+     ('B07009PR_009M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Same house 1 year ago:!!High school graduate (includes equivalency)'),
+     ('B07009PR_010E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Same house 1 year ago:!!Some college or associate's degree"),
+     ('B07009PR_010M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Same house 1 year ago:!!Some college or associate's degree"),
+     ('B07009PR_011E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Same house 1 year ago:!!Bachelor's degree"),
+     ('B07009PR_011M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Same house 1 year ago:!!Bachelor's degree"),
+     ('B07009PR_012E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Same house 1 year ago:!!Graduate or professional degree'),
+     ('B07009PR_012M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Same house 1 year ago:!!Graduate or professional degree'),
+     ('B07009PR_013E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved within same municipio:'),
+     ('B07009PR_013M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:'),
+     ('B07009PR_014E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved within same municipio:!!Less than high school graduate'),
+     ('B07009PR_014M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!Less than high school graduate'),
+     ('B07009PR_015E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved within same municipio:!!High school graduate (includes equivalency)'),
+     ('B07009PR_015M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!High school graduate (includes equivalency)'),
+     ('B07009PR_016E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved within same municipio:!!Some college or associate's degree"),
+     ('B07009PR_016M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved within same municipio:!!Some college or associate's degree"),
+     ('B07009PR_017E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved within same municipio:!!Bachelor's degree"),
+     ('B07009PR_017M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved within same municipio:!!Bachelor's degree"),
+     ('B07009PR_018E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved within same municipio:!!Graduate or professional degree'),
+     ('B07009PR_018M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!Graduate or professional degree'),
+     ('B07009PR_019E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from different municipio:'),
+     ('B07009PR_019M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from different municipio:'),
+     ('B07009PR_020E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from different municipio:!!Less than high school graduate'),
+     ('B07009PR_020M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from different municipio:!!Less than high school graduate'),
+     ('B07009PR_021E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from different municipio:!!High school graduate (includes equivalency)'),
+     ('B07009PR_021M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from different municipio:!!High school graduate (includes equivalency)'),
+     ('B07009PR_022E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from different municipio:!!Some college or associate's degree"),
+     ('B07009PR_022M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from different municipio:!!Some college or associate's degree"),
+     ('B07009PR_023E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from different municipio:!!Bachelor's degree"),
+     ('B07009PR_023M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from different municipio:!!Bachelor's degree"),
+     ('B07009PR_024E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from different municipio:!!Graduate or professional degree'),
+     ('B07009PR_024M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from different municipio:!!Graduate or professional degree'),
+     ('B07009PR_025E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from the United States:'),
+     ('B07009PR_025M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from the United States:'),
+     ('B07009PR_026E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from the United States:!!Less than high school graduate'),
+     ('B07009PR_026M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from the United States:!!Less than high school graduate'),
+     ('B07009PR_027E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from the United States:!!High school graduate (includes equivalency)'),
+     ('B07009PR_027M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from the United States:!!High school graduate (includes equivalency)'),
+     ('B07009PR_028E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from the United States:!!Some college or associate's degree"),
+     ('B07009PR_028M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from the United States:!!Some college or associate's degree"),
+     ('B07009PR_029E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from the United States:!!Bachelor's degree"),
+     ('B07009PR_029M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from the United States:!!Bachelor's degree"),
+     ('B07009PR_030E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from the United States:!!Graduate or professional degree'),
+     ('B07009PR_030M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from the United States:!!Graduate or professional degree'),
+     ('B07009PR_031E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from elsewhere:'),
+     ('B07009PR_031M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from elsewhere:'),
+     ('B07009PR_032E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from elsewhere:!!Less than high school graduate'),
+     ('B07009PR_032M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from elsewhere:!!Less than high school graduate'),
+     ('B07009PR_033E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from elsewhere:!!High school graduate (includes equivalency)'),
+     ('B07009PR_033M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from elsewhere:!!High school graduate (includes equivalency)'),
+     ('B07009PR_034E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from elsewhere:!!Some college or associate's degree"),
+     ('B07009PR_034M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from elsewhere:!!Some college or associate's degree"),
+     ('B07009PR_035E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Moved from elsewhere:!!Bachelor's degree"),
+     ('B07009PR_035M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      "Margin Of Error For!!Moved from elsewhere:!!Bachelor's degree"),
+     ('B07009PR_036E',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Moved from elsewhere:!!Graduate or professional degree'),
+     ('B07009PR_036M',
+      'B07009PR.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in Puerto Rico',
+      'Margin Of Error For!!Moved from elsewhere:!!Graduate or professional degree'),
+     ('B07009_001E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Total:'),
+     ('B07009_001M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Total:'),
+     ('B07009_002E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Less than high school graduate'),
+     ('B07009_002M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B07009_003E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'High school graduate (includes equivalency)'),
+     ('B07009_003M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B07009_004E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Some college or associate's degree"),
+     ('B07009_004M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B07009_005E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Bachelor's degree"),
+     ('B07009_005M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B07009_006E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Graduate or professional degree'),
+     ('B07009_006M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B07009_007E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Same house 1 year ago:'),
+     ('B07009_007M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Same house 1 year ago:'),
+     ('B07009_008E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Same house 1 year ago:!!Less than high school graduate'),
+     ('B07009_008M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Same house 1 year ago:!!Less than high school graduate'),
+     ('B07009_009E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Same house 1 year ago:!!High school graduate (includes equivalency)'),
+     ('B07009_009M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Same house 1 year ago:!!High school graduate (includes equivalency)'),
+     ('B07009_010E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Same house 1 year ago:!!Some college or associate's degree"),
+     ('B07009_010M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Same house 1 year ago:!!Some college or associate's degree"),
+     ('B07009_011E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Same house 1 year ago:!!Bachelor's degree"),
+     ('B07009_011M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Same house 1 year ago:!!Bachelor's degree"),
+     ('B07009_012E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Same house 1 year ago:!!Graduate or professional degree'),
+     ('B07009_012M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Same house 1 year ago:!!Graduate or professional degree'),
+     ('B07009_013E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved within same county:'),
+     ('B07009_013M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved within same county:'),
+     ('B07009_014E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved within same county:!!Less than high school graduate'),
+     ('B07009_014M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!Less than high school graduate'),
+     ('B07009_015E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved within same county:!!High school graduate (includes equivalency)'),
+     ('B07009_015M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!High school graduate (includes equivalency)'),
+     ('B07009_016E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved within same county:!!Some college or associate's degree"),
+     ('B07009_016M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved within same county:!!Some college or associate's degree"),
+     ('B07009_017E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved within same county:!!Bachelor's degree"),
+     ('B07009_017M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved within same county:!!Bachelor's degree"),
+     ('B07009_018E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved within same county:!!Graduate or professional degree'),
+     ('B07009_018M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!Graduate or professional degree'),
+     ('B07009_019E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different county within same state:'),
+     ('B07009_019M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different county within same state:'),
+     ('B07009_020E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different county within same state:!!Less than high school graduate'),
+     ('B07009_020M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different county within same state:!!Less than high school graduate'),
+     ('B07009_021E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different county within same state:!!High school graduate (includes equivalency)'),
+     ('B07009_021M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different county within same state:!!High school graduate (includes equivalency)'),
+     ('B07009_022E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from different county within same state:!!Some college or associate's degree"),
+     ('B07009_022M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from different county within same state:!!Some college or associate's degree"),
+     ('B07009_023E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from different county within same state:!!Bachelor's degree"),
+     ('B07009_023M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from different county within same state:!!Bachelor's degree"),
+     ('B07009_024E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different county within same state:!!Graduate or professional degree'),
+     ('B07009_024M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different county within same state:!!Graduate or professional degree'),
+     ('B07009_025E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different state:'),
+     ('B07009_025M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different state:'),
+     ('B07009_026E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different state:!!Less than high school graduate'),
+     ('B07009_026M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different state:!!Less than high school graduate'),
+     ('B07009_027E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different state:!!High school graduate (includes equivalency)'),
+     ('B07009_027M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different state:!!High school graduate (includes equivalency)'),
+     ('B07009_028E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from different state:!!Some college or associate's degree"),
+     ('B07009_028M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from different state:!!Some college or associate's degree"),
+     ('B07009_029E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from different state:!!Bachelor's degree"),
+     ('B07009_029M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from different state:!!Bachelor's degree"),
+     ('B07009_030E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from different state:!!Graduate or professional degree'),
+     ('B07009_030M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from different state:!!Graduate or professional degree'),
+     ('B07009_031E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from abroad:'),
+     ('B07009_031M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from abroad:'),
+     ('B07009_032E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from abroad:!!Less than high school graduate'),
+     ('B07009_032M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from abroad:!!Less than high school graduate'),
+     ('B07009_033E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from abroad:!!High school graduate (includes equivalency)'),
+     ('B07009_033M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from abroad:!!High school graduate (includes equivalency)'),
+     ('B07009_034E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from abroad:!!Some college or associate's degree"),
+     ('B07009_034M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from abroad:!!Some college or associate's degree"),
+     ('B07009_035E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Moved from abroad:!!Bachelor's degree"),
+     ('B07009_035M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      "Margin Of Error For!!Moved from abroad:!!Bachelor's degree"),
+     ('B07009_036E',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Moved from abroad:!!Graduate or professional degree'),
+     ('B07009_036M',
+      'B07009.  Geographical Mobility in the Past Year by Educational Attainment for Current Residence in the U.S.',
+      'Margin Of Error For!!Moved from abroad:!!Graduate or professional degree'),
+     ('B07409PR_001E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Total living in area 1 year ago:'),
+     ('B07409PR_001M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Total living in area 1 year ago:'),
+     ('B07409PR_002E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Less than high school graduate'),
+     ('B07409PR_002M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B07409PR_003E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'High school graduate (includes equivalency)'),
+     ('B07409PR_003M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B07409PR_004E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Some college or associate's degree"),
+     ('B07409PR_004M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B07409PR_005E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Bachelor's degree"),
+     ('B07409PR_005M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B07409PR_006E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Graduate or professional degree'),
+     ('B07409PR_006M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B07409PR_007E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Same house:'),
+     ('B07409PR_007M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Same house:'),
+     ('B07409PR_008E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Same house:!!Less than high school graduate'),
+     ('B07409PR_008M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Same house:!!Less than high school graduate'),
+     ('B07409PR_009E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Same house:!!High school graduate (includes equivalency)'),
+     ('B07409PR_009M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Same house:!!High school graduate (includes equivalency)'),
+     ('B07409PR_010E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Same house:!!Some college or associate's degree"),
+     ('B07409PR_010M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Same house:!!Some college or associate's degree"),
+     ('B07409PR_011E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Same house:!!Bachelor's degree"),
+     ('B07409PR_011M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Same house:!!Bachelor's degree"),
+     ('B07409PR_012E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Same house:!!Graduate or professional degree'),
+     ('B07409PR_012M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Same house:!!Graduate or professional degree'),
+     ('B07409PR_013E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved within same municipio:'),
+     ('B07409PR_013M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:'),
+     ('B07409PR_014E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved within same municipio:!!Less than high school graduate'),
+     ('B07409PR_014M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!Less than high school graduate'),
+     ('B07409PR_015E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved within same municipio:!!High school graduate (includes equivalency)'),
+     ('B07409PR_015M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!High school graduate (includes equivalency)'),
+     ('B07409PR_016E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved within same municipio:!!Some college or associate's degree"),
+     ('B07409PR_016M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved within same municipio:!!Some college or associate's degree"),
+     ('B07409PR_017E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved within same municipio:!!Bachelor's degree"),
+     ('B07409PR_017M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved within same municipio:!!Bachelor's degree"),
+     ('B07409PR_018E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved within same municipio:!!Graduate or professional degree'),
+     ('B07409PR_018M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved within same municipio:!!Graduate or professional degree'),
+     ('B07409PR_019E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to different municipio:'),
+     ('B07409PR_019M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to different municipio:'),
+     ('B07409PR_020E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to different municipio:!!Less than high school graduate'),
+     ('B07409PR_020M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to different municipio:!!Less than high school graduate'),
+     ('B07409PR_021E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to different municipio:!!High school graduate (includes equivalency)'),
+     ('B07409PR_021M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to different municipio:!!High school graduate (includes equivalency)'),
+     ('B07409PR_022E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved to different municipio:!!Some college or associate's degree"),
+     ('B07409PR_022M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved to different municipio:!!Some college or associate's degree"),
+     ('B07409PR_023E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved to different municipio:!!Bachelor's degree"),
+     ('B07409PR_023M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved to different municipio:!!Bachelor's degree"),
+     ('B07409PR_024E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to different municipio:!!Graduate or professional degree'),
+     ('B07409PR_024M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to different municipio:!!Graduate or professional degree'),
+     ('B07409PR_025E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to the United States:'),
+     ('B07409PR_025M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to the United States:'),
+     ('B07409PR_026E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to the United States:!!Less than high school graduate'),
+     ('B07409PR_026M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to the United States:!!Less than high school graduate'),
+     ('B07409PR_027E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to the United States:!!High school graduate (includes equivalency)'),
+     ('B07409PR_027M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to the United States:!!High school graduate (includes equivalency)'),
+     ('B07409PR_028E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved to the United States:!!Some college or associate's degree"),
+     ('B07409PR_028M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved to the United States:!!Some college or associate's degree"),
+     ('B07409PR_029E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Moved to the United States:!!Bachelor's degree"),
+     ('B07409PR_029M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      "Margin Of Error For!!Moved to the United States:!!Bachelor's degree"),
+     ('B07409PR_030E',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Moved to the United States:!!Graduate or professional degree'),
+     ('B07409PR_030M',
+      'B07409PR.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in Puerto Rico',
+      'Margin Of Error For!!Moved to the United States:!!Graduate or professional degree'),
+     ('B07409_001E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Total living in area 1 year ago:'),
+     ('B07409_001M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Total living in area 1 year ago:'),
+     ('B07409_002E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Less than high school graduate'),
+     ('B07409_002M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Less than high school graduate'),
+     ('B07409_003E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'High school graduate (includes equivalency)'),
+     ('B07409_003M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!High school graduate (includes equivalency)'),
+     ('B07409_004E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Some college or associate's degree"),
+     ('B07409_004M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Some college or associate's degree"),
+     ('B07409_005E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Bachelor's degree"),
+     ('B07409_005M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Bachelor's degree"),
+     ('B07409_006E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Graduate or professional degree'),
+     ('B07409_006M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Graduate or professional degree'),
+     ('B07409_007E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Same house:'),
+     ('B07409_007M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Same house:'),
+     ('B07409_008E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Same house:!!Less than high school graduate'),
+     ('B07409_008M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Same house:!!Less than high school graduate'),
+     ('B07409_009E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Same house:!!High school graduate (includes equivalency)'),
+     ('B07409_009M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Same house:!!High school graduate (includes equivalency)'),
+     ('B07409_010E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Same house:!!Some college or associate's degree"),
+     ('B07409_010M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Same house:!!Some college or associate's degree"),
+     ('B07409_011E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Same house:!!Bachelor's degree"),
+     ('B07409_011M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Same house:!!Bachelor's degree"),
+     ('B07409_012E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Same house:!!Graduate or professional degree'),
+     ('B07409_012M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Same house:!!Graduate or professional degree'),
+     ('B07409_013E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved within same county:'),
+     ('B07409_013M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved within same county:'),
+     ('B07409_014E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved within same county:!!Less than high school graduate'),
+     ('B07409_014M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!Less than high school graduate'),
+     ('B07409_015E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved within same county:!!High school graduate (includes equivalency)'),
+     ('B07409_015M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!High school graduate (includes equivalency)'),
+     ('B07409_016E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved within same county:!!Some college or associate's degree"),
+     ('B07409_016M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved within same county:!!Some college or associate's degree"),
+     ('B07409_017E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved within same county:!!Bachelor's degree"),
+     ('B07409_017M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved within same county:!!Bachelor's degree"),
+     ('B07409_018E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved within same county:!!Graduate or professional degree'),
+     ('B07409_018M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved within same county:!!Graduate or professional degree'),
+     ('B07409_019E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different county within same state:'),
+     ('B07409_019M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different county within same state:'),
+     ('B07409_020E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different county within same state:!!Less than high school graduate'),
+     ('B07409_020M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different county within same state:!!Less than high school graduate'),
+     ('B07409_021E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different county within same state:!!High school graduate (includes equivalency)'),
+     ('B07409_021M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different county within same state:!!High school graduate (includes equivalency)'),
+     ('B07409_022E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved to different county within same state:!!Some college or associate's degree"),
+     ('B07409_022M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved to different county within same state:!!Some college or associate's degree"),
+     ('B07409_023E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved to different county within same state:!!Bachelor's degree"),
+     ('B07409_023M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved to different county within same state:!!Bachelor's degree"),
+     ('B07409_024E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different county within same state:!!Graduate or professional degree'),
+     ('B07409_024M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different county within same state:!!Graduate or professional degree'),
+     ('B07409_025E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different state:'),
+     ('B07409_025M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different state:'),
+     ('B07409_026E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different state:!!Less than high school graduate'),
+     ('B07409_026M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different state:!!Less than high school graduate'),
+     ('B07409_027E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different state:!!High school graduate (includes equivalency)'),
+     ('B07409_027M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different state:!!High school graduate (includes equivalency)'),
+     ('B07409_028E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved to different state:!!Some college or associate's degree"),
+     ('B07409_028M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved to different state:!!Some college or associate's degree"),
+     ('B07409_029E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Moved to different state:!!Bachelor's degree"),
+     ('B07409_029M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      "Margin Of Error For!!Moved to different state:!!Bachelor's degree"),
+     ('B07409_030E',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Moved to different state:!!Graduate or professional degree'),
+     ('B07409_030M',
+      'B07409.  Geographical Mobility in the Past Year by Educational Attainment for Residence 1 Year Ago in the U.S.',
+      'Margin Of Error For!!Moved to different state:!!Graduate or professional degree'),
+     ('B13014_001E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Total:'),
+     ('B13014_001M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Total:'),
+     ('B13014_002E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:'),
+     ('B13014_002M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:'),
+     ('B13014_003E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):'),
+     ('B13014_003M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):'),
+     ('B13014_004E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Less than high school graduate'),
+     ('B13014_004M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Less than high school graduate'),
+     ('B13014_005E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!High school graduate (includes equivalency)'),
+     ('B13014_005M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!High school graduate (includes equivalency)'),
+     ('B13014_006E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Some college or associate's degree"),
+     ('B13014_006M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Some college or associate's degree"),
+     ('B13014_007E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Bachelor's degree"),
+     ('B13014_007M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Bachelor's degree"),
+     ('B13014_008E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Graduate or professional degree'),
+     ('B13014_008M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Graduate or professional degree'),
+     ('B13014_009E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):'),
+     ('B13014_009M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):'),
+     ('B13014_010E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Less than high school graduate'),
+     ('B13014_010M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Less than high school graduate'),
+     ('B13014_011E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!High school graduate (includes equivalency)'),
+     ('B13014_011M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!High school graduate (includes equivalency)'),
+     ('B13014_012E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Some college or associate's degree"),
+     ('B13014_012M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Some college or associate's degree"),
+     ('B13014_013E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Bachelor's degree"),
+     ('B13014_013M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Bachelor's degree"),
+     ('B13014_014E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Graduate or professional degree'),
+     ('B13014_014M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who had a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Graduate or professional degree'),
+     ('B13014_015E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:'),
+     ('B13014_015M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:'),
+     ('B13014_016E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):'),
+     ('B13014_016M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):'),
+     ('B13014_017E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Less than high school graduate'),
+     ('B13014_017M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Less than high school graduate'),
+     ('B13014_018E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!High school graduate (includes equivalency)'),
+     ('B13014_018M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!High school graduate (includes equivalency)'),
+     ('B13014_019E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Some college or associate's degree"),
+     ('B13014_019M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Some college or associate's degree"),
+     ('B13014_020E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Bachelor's degree"),
+     ('B13014_020M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Bachelor's degree"),
+     ('B13014_021E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Graduate or professional degree'),
+     ('B13014_021M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Now married (including separated and spouse absent):!!Graduate or professional degree'),
+     ('B13014_022E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):'),
+     ('B13014_022M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):'),
+     ('B13014_023E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Less than high school graduate'),
+     ('B13014_023M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Less than high school graduate'),
+     ('B13014_024E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!High school graduate (includes equivalency)'),
+     ('B13014_024M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!High school graduate (includes equivalency)'),
+     ('B13014_025E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Some college or associate's degree"),
+     ('B13014_025M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Some college or associate's degree"),
+     ('B13014_026E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Bachelor's degree"),
+     ('B13014_026M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Bachelor's degree"),
+     ('B13014_027E',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Graduate or professional degree'),
+     ('B13014_027M',
+      'B13014.  WOMEN 15 TO 50 YEARS WHO HAD A BIRTH IN THE PAST 12 MONTHS BY MARITAL STATUS AND EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Women who did not have a birth in the past 12 months:!!Unmarried (never married, widowed and divorced):!!Graduate or professional degree'),
+     ('B14005_001E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Total:'),
+     ('B14005_001M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Total:'),
+     ('B14005_002E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:'),
+     ('B14005_002M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:'),
+     ('B14005_003E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Enrolled in school:'),
+     ('B14005_003M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Enrolled in school:'),
+     ('B14005_004E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Enrolled in school:!!Employed'),
+     ('B14005_004M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Enrolled in school:!!Employed'),
+     ('B14005_005E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Enrolled in school:!!Unemployed'),
+     ('B14005_005M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Enrolled in school:!!Unemployed'),
+     ('B14005_006E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Enrolled in school:!!Not in labor force'),
+     ('B14005_006M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Enrolled in school:!!Not in labor force'),
+     ('B14005_007E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:'),
+     ('B14005_007M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:'),
+     ('B14005_008E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!High school graduate (includes equivalency):'),
+     ('B14005_008M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!High school graduate (includes equivalency):'),
+     ('B14005_009E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Employed'),
+     ('B14005_009M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Employed'),
+     ('B14005_010E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_010M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_011E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Not in labor force'),
+     ('B14005_011M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Not in labor force'),
+     ('B14005_012E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!Not high school graduate:'),
+     ('B14005_012M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!Not high school graduate:'),
+     ('B14005_013E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!Not high school graduate:!!Employed'),
+     ('B14005_013M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!Not high school graduate:!!Employed'),
+     ('B14005_014E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_014M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_015E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Male:!!Not enrolled in school:!!Not high school graduate:!!Not in labor force'),
+     ('B14005_015M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Male:!!Not enrolled in school:!!Not high school graduate:!!Not in labor force'),
+     ('B14005_016E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:'),
+     ('B14005_016M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:'),
+     ('B14005_017E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Enrolled in school:'),
+     ('B14005_017M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Enrolled in school:'),
+     ('B14005_018E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Enrolled in school:!!Employed'),
+     ('B14005_018M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Enrolled in school:!!Employed'),
+     ('B14005_019E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Enrolled in school:!!Unemployed'),
+     ('B14005_019M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Enrolled in school:!!Unemployed'),
+     ('B14005_020E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Enrolled in school:!!Not in labor force'),
+     ('B14005_020M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Enrolled in school:!!Not in labor force'),
+     ('B14005_021E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:'),
+     ('B14005_021M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:'),
+     ('B14005_022E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!High school graduate (includes equivalency):'),
+     ('B14005_022M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!High school graduate (includes equivalency):'),
+     ('B14005_023E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Employed'),
+     ('B14005_023M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Employed'),
+     ('B14005_024E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_024M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Unemployed'),
+     ('B14005_025E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Not in labor force'),
+     ('B14005_025M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!High school graduate (includes equivalency):!!Not in labor force'),
+     ('B14005_026E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!Not high school graduate:'),
+     ('B14005_026M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!Not high school graduate:'),
+     ('B14005_027E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!Not high school graduate:!!Employed'),
+     ('B14005_027M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!Not high school graduate:!!Employed'),
+     ('B14005_028E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_028M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!Not high school graduate:!!Unemployed'),
+     ('B14005_029E',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Female:!!Not enrolled in school:!!Not high school graduate:!!Not in labor force'),
+     ('B14005_029M',
+      'B14005.  Sex By School Enrollment By Educational Attainment By Employment Status For The Population 16 To 19 Years',
+      'Margin of Error for!!Female:!!Not enrolled in school:!!Not high school graduate:!!Not in labor force'),
+     ('B15001_001E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Total:'),
+     ('B15001_001M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Total:'),
+     ('B15001_002E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:'),
+     ('B15001_002M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:'),
+     ('B15001_003E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:'),
+     ('B15001_003M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:'),
+     ('B15001_004E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!Less than 9th grade'),
+     ('B15001_004M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!Less than 9th grade'),
+     ('B15001_005E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!9th to 12th grade, no diploma'),
+     ('B15001_005M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!9th to 12th grade, no diploma'),
+     ('B15001_006E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!High school graduate (includes equivalency)'),
+     ('B15001_006M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!High school graduate (includes equivalency)'),
+     ('B15001_007E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!Some college, no degree'),
+     ('B15001_007M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!Some college, no degree'),
+     ('B15001_008E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!18 to 24 years:!!Associate's degree"),
+     ('B15001_008M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!18 to 24 years:!!Associate's degree"),
+     ('B15001_009E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!18 to 24 years:!!Bachelor's degree"),
+     ('B15001_009M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!18 to 24 years:!!Bachelor's degree"),
+     ('B15001_010E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!18 to 24 years:!!Graduate or professional degree'),
+     ('B15001_010M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!18 to 24 years:!!Graduate or professional degree'),
+     ('B15001_011E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:'),
+     ('B15001_011M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:'),
+     ('B15001_012E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!Less than 9th grade'),
+     ('B15001_012M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!Less than 9th grade'),
+     ('B15001_013E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!9th to 12th grade, no diploma'),
+     ('B15001_013M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!9th to 12th grade, no diploma'),
+     ('B15001_014E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!High school graduate (includes equivalency)'),
+     ('B15001_014M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!High school graduate (includes equivalency)'),
+     ('B15001_015E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!Some college, no degree'),
+     ('B15001_015M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!Some college, no degree'),
+     ('B15001_016E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!25 to 34 years:!!Associate's degree"),
+     ('B15001_016M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!25 to 34 years:!!Associate's degree"),
+     ('B15001_017E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!25 to 34 years:!!Bachelor's degree"),
+     ('B15001_017M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!25 to 34 years:!!Bachelor's degree"),
+     ('B15001_018E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!25 to 34 years:!!Graduate or professional degree'),
+     ('B15001_018M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!25 to 34 years:!!Graduate or professional degree'),
+     ('B15001_019E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:'),
+     ('B15001_019M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:'),
+     ('B15001_020E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!Less than 9th grade'),
+     ('B15001_020M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!Less than 9th grade'),
+     ('B15001_021E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!9th to 12th grade, no diploma'),
+     ('B15001_021M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!9th to 12th grade, no diploma'),
+     ('B15001_022E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!High school graduate (includes equivalency)'),
+     ('B15001_022M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!High school graduate (includes equivalency)'),
+     ('B15001_023E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!Some college, no degree'),
+     ('B15001_023M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!Some college, no degree'),
+     ('B15001_024E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!35 to 44 years:!!Associate's degree"),
+     ('B15001_024M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!35 to 44 years:!!Associate's degree"),
+     ('B15001_025E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!35 to 44 years:!!Bachelor's degree"),
+     ('B15001_025M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!35 to 44 years:!!Bachelor's degree"),
+     ('B15001_026E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!35 to 44 years:!!Graduate or professional degree'),
+     ('B15001_026M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!35 to 44 years:!!Graduate or professional degree'),
+     ('B15001_027E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:'),
+     ('B15001_027M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:'),
+     ('B15001_028E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!Less than 9th grade'),
+     ('B15001_028M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!Less than 9th grade'),
+     ('B15001_029E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!9th to 12th grade, no diploma'),
+     ('B15001_029M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!9th to 12th grade, no diploma'),
+     ('B15001_030E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!High school graduate (includes equivalency)'),
+     ('B15001_030M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!High school graduate (includes equivalency)'),
+     ('B15001_031E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!Some college, no degree'),
+     ('B15001_031M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!Some college, no degree'),
+     ('B15001_032E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!45 to 64 years:!!Associate's degree"),
+     ('B15001_032M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!45 to 64 years:!!Associate's degree"),
+     ('B15001_033E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!45 to 64 years:!!Bachelor's degree"),
+     ('B15001_033M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!45 to 64 years:!!Bachelor's degree"),
+     ('B15001_034E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!45 to 64 years:!!Graduate or professional degree'),
+     ('B15001_034M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!45 to 64 years:!!Graduate or professional degree'),
+     ('B15001_035E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:'),
+     ('B15001_035M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:'),
+     ('B15001_036E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!Less than 9th grade'),
+     ('B15001_036M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!Less than 9th grade'),
+     ('B15001_037E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!9th to 12th grade, no diploma'),
+     ('B15001_037M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!9th to 12th grade, no diploma'),
+     ('B15001_038E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!High school graduate (includes equivalency)'),
+     ('B15001_038M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!High school graduate (includes equivalency)'),
+     ('B15001_039E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!Some college, no degree'),
+     ('B15001_039M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!Some college, no degree'),
+     ('B15001_040E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!65 years and over:!!Associate's degree"),
+     ('B15001_040M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!65 years and over:!!Associate's degree"),
+     ('B15001_041E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Male:!!65 years and over:!!Bachelor's degree"),
+     ('B15001_041M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Male:!!65 years and over:!!Bachelor's degree"),
+     ('B15001_042E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Male:!!65 years and over:!!Graduate or professional degree'),
+     ('B15001_042M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Male:!!65 years and over:!!Graduate or professional degree'),
+     ('B15001_043E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:'),
+     ('B15001_043M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:'),
+     ('B15001_044E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:'),
+     ('B15001_044M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:'),
+     ('B15001_045E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!Less than 9th grade'),
+     ('B15001_045M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!Less than 9th grade'),
+     ('B15001_046E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!9th to 12th grade, no diploma'),
+     ('B15001_046M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!9th to 12th grade, no diploma'),
+     ('B15001_047E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!High school graduate (includes equivalency)'),
+     ('B15001_047M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!High school graduate (includes equivalency)'),
+     ('B15001_048E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!Some college, no degree'),
+     ('B15001_048M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!Some college, no degree'),
+     ('B15001_049E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!18 to 24 years:!!Associate's degree"),
+     ('B15001_049M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!18 to 24 years:!!Associate's degree"),
+     ('B15001_050E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!18 to 24 years:!!Bachelor's degree"),
+     ('B15001_050M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!18 to 24 years:!!Bachelor's degree"),
+     ('B15001_051E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!18 to 24 years:!!Graduate or professional degree'),
+     ('B15001_051M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!18 to 24 years:!!Graduate or professional degree'),
+     ('B15001_052E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:'),
+     ('B15001_052M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:'),
+     ('B15001_053E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!Less than 9th grade'),
+     ('B15001_053M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!Less than 9th grade'),
+     ('B15001_054E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!9th to 12th grade, no diploma'),
+     ('B15001_054M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!9th to 12th grade, no diploma'),
+     ('B15001_055E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!High school graduate (includes equivalency)'),
+     ('B15001_055M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!High school graduate (includes equivalency)'),
+     ('B15001_056E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!Some college, no degree'),
+     ('B15001_056M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!Some college, no degree'),
+     ('B15001_057E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!25 to 34 years:!!Associate's degree"),
+     ('B15001_057M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!25 to 34 years:!!Associate's degree"),
+     ('B15001_058E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!25 to 34 years:!!Bachelor's degree"),
+     ('B15001_058M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!25 to 34 years:!!Bachelor's degree"),
+     ('B15001_059E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!25 to 34 years:!!Graduate or professional degree'),
+     ('B15001_059M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!25 to 34 years:!!Graduate or professional degree'),
+     ('B15001_060E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:'),
+     ('B15001_060M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:'),
+     ('B15001_061E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!Less than 9th grade'),
+     ('B15001_061M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!Less than 9th grade'),
+     ('B15001_062E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!9th to 12th grade, no diploma'),
+     ('B15001_062M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!9th to 12th grade, no diploma'),
+     ('B15001_063E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!High school graduate (includes equivalency)'),
+     ('B15001_063M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!High school graduate (includes equivalency)'),
+     ('B15001_064E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!Some college, no degree'),
+     ('B15001_064M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!Some college, no degree'),
+     ('B15001_065E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!35 to 44 years:!!Associate's degree"),
+     ('B15001_065M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!35 to 44 years:!!Associate's degree"),
+     ('B15001_066E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!35 to 44 years:!!Bachelor's degree"),
+     ('B15001_066M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!35 to 44 years:!!Bachelor's degree"),
+     ('B15001_067E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!35 to 44 years:!!Graduate or professional degree'),
+     ('B15001_067M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!35 to 44 years:!!Graduate or professional degree'),
+     ('B15001_068E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:'),
+     ('B15001_068M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:'),
+     ('B15001_069E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!Less than 9th grade'),
+     ('B15001_069M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!Less than 9th grade'),
+     ('B15001_070E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!9th to 12th grade, no diploma'),
+     ('B15001_070M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!9th to 12th grade, no diploma'),
+     ('B15001_071E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!High school graduate (includes equivalency)'),
+     ('B15001_071M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!High school graduate (includes equivalency)'),
+     ('B15001_072E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!Some college, no degree'),
+     ('B15001_072M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!Some college, no degree'),
+     ('B15001_073E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!45 to 64 years:!!Associate's degree"),
+     ('B15001_073M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!45 to 64 years:!!Associate's degree"),
+     ('B15001_074E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!45 to 64 years:!!Bachelor's degree"),
+     ('B15001_074M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!45 to 64 years:!!Bachelor's degree"),
+     ('B15001_075E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!45 to 64 years:!!Graduate or professional degree'),
+     ('B15001_075M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!45 to 64 years:!!Graduate or professional degree'),
+     ('B15001_076E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:'),
+     ('B15001_076M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:'),
+     ('B15001_077E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!Less than 9th grade'),
+     ('B15001_077M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!Less than 9th grade'),
+     ('B15001_078E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!9th to 12th grade, no diploma'),
+     ('B15001_078M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!9th to 12th grade, no diploma'),
+     ('B15001_079E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!High school graduate (includes equivalency)'),
+     ('B15001_079M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!High school graduate (includes equivalency)'),
+     ('B15001_080E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!Some college, no degree'),
+     ('B15001_080M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!Some college, no degree'),
+     ('B15001_081E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!65 years and over:!!Associate's degree"),
+     ('B15001_081M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!65 years and over:!!Associate's degree"),
+     ('B15001_082E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Female:!!65 years and over:!!Bachelor's degree"),
+     ('B15001_082M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      "Margin of Error for!!Female:!!65 years and over:!!Bachelor's degree"),
+     ('B15001_083E',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Female:!!65 years and over:!!Graduate or professional degree'),
+     ('B15001_083M',
+      'B15001.  SEX BY AGE BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 18 YEARS AND OVER',
+      'Margin of Error for!!Female:!!65 years and over:!!Graduate or professional degree'),
+     ('B15002_001E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Total:'),
+     ('B15002_001M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Total:'),
+     ('B15002_002E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:'),
+     ('B15002_002M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:'),
+     ('B15002_003E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!No schooling completed'),
+     ('B15002_003M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!No schooling completed'),
+     ('B15002_004E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Nursery to 4th grade'),
+     ('B15002_004M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Nursery to 4th grade'),
+     ('B15002_005E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!5th and 6th grade'),
+     ('B15002_005M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!5th and 6th grade'),
+     ('B15002_006E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!7th and 8th grade'),
+     ('B15002_006M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!7th and 8th grade'),
+     ('B15002_007E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!9th grade'),
+     ('B15002_007M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!9th grade'),
+     ('B15002_008E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!10th grade'),
+     ('B15002_008M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!10th grade'),
+     ('B15002_009E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!11th grade'),
+     ('B15002_009M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!11th grade'),
+     ('B15002_010E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!12th grade, no diploma'),
+     ('B15002_010M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!12th grade, no diploma'),
+     ('B15002_011E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!High school graduate (includes equivalency)'),
+     ('B15002_011M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!High school graduate (includes equivalency)'),
+     ('B15002_012E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Some college, less than 1 year'),
+     ('B15002_012M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Some college, less than 1 year'),
+     ('B15002_013E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Some college, 1 or more years, no degree'),
+     ('B15002_013M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Some college, 1 or more years, no degree'),
+     ('B15002_014E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Male:!!Associate's degree"),
+     ('B15002_014M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Male:!!Associate's degree"),
+     ('B15002_015E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Male:!!Bachelor's degree"),
+     ('B15002_015M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Male:!!Bachelor's degree"),
+     ('B15002_016E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Male:!!Master's degree"),
+     ('B15002_016M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Male:!!Master's degree"),
+     ('B15002_017E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Professional school degree'),
+     ('B15002_017M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Professional school degree'),
+     ('B15002_018E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Male:!!Doctorate degree'),
+     ('B15002_018M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Male:!!Doctorate degree'),
+     ('B15002_019E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:'),
+     ('B15002_019M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:'),
+     ('B15002_020E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!No schooling completed'),
+     ('B15002_020M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!No schooling completed'),
+     ('B15002_021E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Nursery to 4th grade'),
+     ('B15002_021M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Nursery to 4th grade'),
+     ('B15002_022E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!5th and 6th grade'),
+     ('B15002_022M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!5th and 6th grade'),
+     ('B15002_023E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!7th and 8th grade'),
+     ('B15002_023M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!7th and 8th grade'),
+     ('B15002_024E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!9th grade'),
+     ('B15002_024M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!9th grade'),
+     ('B15002_025E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!10th grade'),
+     ('B15002_025M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!10th grade'),
+     ('B15002_026E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!11th grade'),
+     ('B15002_026M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!11th grade'),
+     ('B15002_027E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!12th grade, no diploma'),
+     ('B15002_027M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!12th grade, no diploma'),
+     ('B15002_028E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!High school graduate (includes equivalency)'),
+     ('B15002_028M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!High school graduate (includes equivalency)'),
+     ('B15002_029E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Some college, less than 1 year'),
+     ('B15002_029M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Some college, less than 1 year'),
+     ('B15002_030E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Some college, 1 or more years, no degree'),
+     ('B15002_030M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Some college, 1 or more years, no degree'),
+     ('B15002_031E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Female:!!Associate's degree"),
+     ('B15002_031M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Female:!!Associate's degree"),
+     ('B15002_032E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Female:!!Bachelor's degree"),
+     ('B15002_032M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Female:!!Bachelor's degree"),
+     ('B15002_033E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Female:!!Master's degree"),
+     ('B15002_033M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      "Margin of Error for!!Female:!!Master's degree"),
+     ('B15002_034E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Professional school degree'),
+     ('B15002_034M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Professional school degree'),
+     ('B15002_035E',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Female:!!Doctorate degree'),
+     ('B15002_035M',
+      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
+      'Margin of Error for!!Female:!!Doctorate degree'),
+     ('B15003_001E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Total:'),
+     ('B15003_001M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Total:'),
+     ('B15003_002E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'No schooling completed'),
+     ('B15003_002M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!No schooling completed'),
+     ('B15003_003E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Nursery school'),
+     ('B15003_003M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Nursery school'),
+     ('B15003_004E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Kindergarten'),
+     ('B15003_004M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Kindergarten'),
+     ('B15003_005E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '1st grade'),
+     ('B15003_005M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!1st grade'),
+     ('B15003_006E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '2nd grade'),
+     ('B15003_006M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!2nd grade'),
+     ('B15003_007E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '3rd grade'),
+     ('B15003_007M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!3rd grade'),
+     ('B15003_008E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '4th grade'),
+     ('B15003_008M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!4th grade'),
+     ('B15003_009E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '5th grade'),
+     ('B15003_009M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!5th grade'),
+     ('B15003_010E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '6th grade'),
+     ('B15003_010M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!6th grade'),
+     ('B15003_011E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '7th grade'),
+     ('B15003_011M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!7th grade'),
+     ('B15003_012E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '8th grade'),
+     ('B15003_012M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!8th grade'),
+     ('B15003_013E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '9th grade'),
+     ('B15003_013M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!9th grade'),
+     ('B15003_014E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '10th grade'),
+     ('B15003_014M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!10th grade'),
+     ('B15003_015E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '11th grade'),
+     ('B15003_015M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!11th grade'),
+     ('B15003_016E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      '12th grade, no diploma'),
+     ('B15003_016M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!12th grade, no diploma'),
+     ('B15003_017E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Regular high school diploma'),
+     ('B15003_017M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Regular high school diploma'),
+     ('B15003_018E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'GED or alternative credential'),
+     ('B15003_018M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!GED or alternative credential'),
+     ('B15003_019E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Some college, less than 1 year'),
+     ('B15003_019M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Some college, less than 1 year'),
+     ('B15003_020E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Some college, 1 or more years, no degree'),
+     ('B15003_020M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Some college, 1 or more years, no degree'),
+     ('B15003_021E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Associate's degree"),
+     ('B15003_021M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Margin of Error for!!Associate's degree"),
+     ('B15003_022E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Bachelor's degree"),
+     ('B15003_022M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Margin of Error for!!Bachelor's degree"),
+     ('B15003_023E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Master's degree"),
+     ('B15003_023M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      "Margin of Error for!!Master's degree"),
+     ('B15003_024E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Professional school degree'),
+     ('B15003_024M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Professional school degree'),
+     ('B15003_025E',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Doctorate degree'),
+     ('B15003_025M',
+      'B15003.  Educational Attainment for the Population 25 Years and Over',
+      'Margin of Error for!!Doctorate degree'),
+     ('B16010_001E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Total:'),
+     ('B16010_001M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Total:'),
+     ('B16010_002E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:'),
+     ('B16010_002M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:'),
+     ('B16010_003E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:'),
+     ('B16010_003M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:'),
+     ('B16010_004E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak only English'),
+     ('B16010_004M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak only English'),
+     ('B16010_005E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak Spanish'),
+     ('B16010_005M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak Spanish'),
+     ('B16010_006E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak other Indo-European languages'),
+     ('B16010_006M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak other Indo-European languages'),
+     ('B16010_007E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_007M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_008E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!In labor force:!!Speak other languages'),
+     ('B16010_008M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak other languages'),
+     ('B16010_009E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:'),
+     ('B16010_009M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:'),
+     ('B16010_010E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak only English'),
+     ('B16010_010M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak only English'),
+     ('B16010_011E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak Spanish'),
+     ('B16010_011M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak Spanish'),
+     ('B16010_012E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak other Indo-European languages'),
+     ('B16010_012M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak other Indo-European languages'),
+     ('B16010_013E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_013M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_014E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Less than high school graduate:!!Not in labor force:!!Speak other languages'),
+     ('B16010_014M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!Less than high school graduate:!!Not in labor force:!!Speak other languages'),
+     ('B16010_015E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):'),
+     ('B16010_015M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):'),
+     ('B16010_016E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:'),
+     ('B16010_016M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:'),
+     ('B16010_017E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak only English'),
+     ('B16010_017M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak only English'),
+     ('B16010_018E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak Spanish'),
+     ('B16010_018M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak Spanish'),
+     ('B16010_019E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak other Indo-European languages'),
+     ('B16010_019M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak other Indo-European languages'),
+     ('B16010_020E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_020M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_021E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!In labor force:!!Speak other languages'),
+     ('B16010_021M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!In labor force:!!Speak other languages'),
+     ('B16010_022E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:'),
+     ('B16010_022M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:'),
+     ('B16010_023E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak only English'),
+     ('B16010_023M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak only English'),
+     ('B16010_024E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak Spanish'),
+     ('B16010_024M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak Spanish'),
+     ('B16010_025E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak other Indo-European languages'),
+     ('B16010_025M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak other Indo-European languages'),
+     ('B16010_026E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_026M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak Asian and Pacific Island languages'),
+     ('B16010_027E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'High school graduate (includes equivalency):!!Not in labor force:!!Speak other languages'),
+     ('B16010_027M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Margin Of Error For!!High school graduate (includes equivalency):!!Not in labor force:!!Speak other languages'),
+     ('B16010_028E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:"),
+     ('B16010_028M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:"),
+     ('B16010_029E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:"),
+     ('B16010_029M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:"),
+     ('B16010_030E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak only English"),
+     ('B16010_030M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak only English"),
+     ('B16010_031E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak Spanish"),
+     ('B16010_031M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak Spanish"),
+     ('B16010_032E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak other Indo-European languages"),
+     ('B16010_032M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak other Indo-European languages"),
+     ('B16010_033E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_033M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_034E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!In labor force:!!Speak other languages"),
+     ('B16010_034M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!In labor force:!!Speak other languages"),
+     ('B16010_035E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:"),
+     ('B16010_035M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:"),
+     ('B16010_036E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak only English"),
+     ('B16010_036M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak only English"),
+     ('B16010_037E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak Spanish"),
+     ('B16010_037M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak Spanish"),
+     ('B16010_038E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak other Indo-European languages"),
+     ('B16010_038M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak other Indo-European languages"),
+     ('B16010_039E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_039M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_040E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Some college or associate's degree:!!Not in labor force:!!Speak other languages"),
+     ('B16010_040M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Some college or associate's degree:!!Not in labor force:!!Speak other languages"),
+     ('B16010_041E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:"),
+     ('B16010_041M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:"),
+     ('B16010_042E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:"),
+     ('B16010_042M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:"),
+     ('B16010_043E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak only English"),
+     ('B16010_043M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak only English"),
+     ('B16010_044E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak Spanish"),
+     ('B16010_044M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak Spanish"),
+     ('B16010_045E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak other Indo-European languages"),
+     ('B16010_045M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak other Indo-European languages"),
+     ('B16010_046E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_046M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_047E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!In labor force:!!Speak other languages"),
+     ('B16010_047M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!In labor force:!!Speak other languages"),
+     ('B16010_048E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:"),
+     ('B16010_048M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:"),
+     ('B16010_049E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak only English"),
+     ('B16010_049M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak only English"),
+     ('B16010_050E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak Spanish"),
+     ('B16010_050M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak Spanish"),
+     ('B16010_051E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak other Indo-European languages"),
+     ('B16010_051M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak other Indo-European languages"),
+     ('B16010_052E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_052M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak Asian and Pacific Island languages"),
+     ('B16010_053E',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Bachelor's degree or higher:!!Not in labor force:!!Speak other languages"),
+     ('B16010_053M',
+      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      "Margin Of Error For!!Bachelor's degree or higher:!!Not in labor force:!!Speak other languages"),
+     ('B17003_001E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Total:'),
+     ('B17003_001M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Total:'),
+     ('B17003_002E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:'),
+     ('B17003_002M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:'),
+     ('B17003_003E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Male:'),
+     ('B17003_003M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:'),
+     ('B17003_004E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Male:!!Less than high school graduate'),
+     ('B17003_004M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:!!Less than high school graduate'),
+     ('B17003_005E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Male:!!High school graduate (includes equivalency)'),
+     ('B17003_005M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:!!High school graduate (includes equivalency)'),
+     ('B17003_006E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months below poverty level:!!Male:!!Some college, associate's degree"),
+     ('B17003_006M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:!!Some college, associate's degree"),
+     ('B17003_007E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months below poverty level:!!Male:!!Bachelor's degree or higher"),
+     ('B17003_007M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Male:!!Bachelor's degree or higher"),
+     ('B17003_008E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Female:'),
+     ('B17003_008M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:'),
+     ('B17003_009E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Female:!!Less than high school graduate'),
+     ('B17003_009M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:!!Less than high school graduate'),
+     ('B17003_010E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months below poverty level:!!Female:!!High school graduate (includes equivalency)'),
+     ('B17003_010M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:!!High school graduate (includes equivalency)'),
+     ('B17003_011E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months below poverty level:!!Female:!!Some college, associate's degree"),
+     ('B17003_011M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:!!Some college, associate's degree"),
+     ('B17003_012E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months below poverty level:!!Female:!!Bachelor's degree or higher"),
+     ('B17003_012M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Female:!!Bachelor's degree or higher"),
+     ('B17003_013E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:'),
+     ('B17003_013M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:'),
+     ('B17003_014E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Male:'),
+     ('B17003_014M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:'),
+     ('B17003_015E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Male:!!Less than high school graduate'),
+     ('B17003_015M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:!!Less than high school graduate'),
+     ('B17003_016E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Male:!!High school graduate (includes equivalency)'),
+     ('B17003_016M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:!!High school graduate (includes equivalency)'),
+     ('B17003_017E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months at or above poverty level:!!Male:!!Some college, associate's degree"),
+     ('B17003_017M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:!!Some college, associate's degree"),
+     ('B17003_018E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months at or above poverty level:!!Male:!!Bachelor's degree or higher"),
+     ('B17003_018M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Male:!!Bachelor's degree or higher"),
+     ('B17003_019E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Female:'),
+     ('B17003_019M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:'),
+     ('B17003_020E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Female:!!Less than high school graduate'),
+     ('B17003_020M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:!!Less than high school graduate'),
+     ('B17003_021E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Income in the past 12 months at or above poverty level:!!Female:!!High school graduate (includes equivalency)'),
+     ('B17003_021M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:!!High school graduate (includes equivalency)'),
+     ('B17003_022E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months at or above poverty level:!!Female:!!Some college, associate's degree"),
+     ('B17003_022M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:!!Some college, associate's degree"),
+     ('B17003_023E',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Income in the past 12 months at or above poverty level:!!Female:!!Bachelor's degree or higher"),
+     ('B17003_023M',
+      'B17003.  POVERTY STATUS IN THE PAST 12 MONTHS OF INDIVIDUALS BY SEX BY EDUCATIONAL ATTAINMENT',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Female:!!Bachelor's degree or higher"),
+     ('B17018_001E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Total:'),
+     ('B17018_001M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Total:'),
+     ('B17018_002E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:'),
+     ('B17018_002M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:'),
+     ('B17018_003E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Married-couple family:'),
+     ('B17018_003M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:'),
+     ('B17018_004E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Married-couple family:!!Less than high school graduate'),
+     ('B17018_004M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:!!Less than high school graduate'),
+     ('B17018_005E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Married-couple family:!!High school graduate (includes equivalency)'),
+     ('B17018_005M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:!!High school graduate (includes equivalency)'),
+     ('B17018_006E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Married-couple family:!!Some college, associate's degree"),
+     ('B17018_006M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:!!Some college, associate's degree"),
+     ('B17018_007E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Married-couple family:!!Bachelor's degree or higher"),
+     ('B17018_007M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Married-couple family:!!Bachelor's degree or higher"),
+     ('B17018_008E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:'),
+     ('B17018_008M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:'),
+     ('B17018_009E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:'),
+     ('B17018_009M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:'),
+     ('B17018_010E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Less than high school graduate'),
+     ('B17018_010M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Less than high school graduate'),
+     ('B17018_011E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!High school graduate (includes equivalency)'),
+     ('B17018_011M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!High school graduate (includes equivalency)'),
+     ('B17018_012E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Some college, associate's degree"),
+     ('B17018_012M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Some college, associate's degree"),
+     ('B17018_013E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Bachelor's degree or higher"),
+     ('B17018_013M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Male householder, no wife present:!!Bachelor's degree or higher"),
+     ('B17018_014E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:'),
+     ('B17018_014M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:'),
+     ('B17018_015E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Less than high school graduate'),
+     ('B17018_015M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Less than high school graduate'),
+     ('B17018_016E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!High school graduate (includes equivalency)'),
+     ('B17018_016M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!High school graduate (includes equivalency)'),
+     ('B17018_017E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Some college, associate's degree"),
+     ('B17018_017M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Some college, associate's degree"),
+     ('B17018_018E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Bachelor's degree or higher"),
+     ('B17018_018M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months below poverty level:!!Other families:!!Female householder, no husband present:!!Bachelor's degree or higher"),
+     ('B17018_019E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:'),
+     ('B17018_019M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:'),
+     ('B17018_020E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Married-couple family:'),
+     ('B17018_020M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:'),
+     ('B17018_021E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Married-couple family:!!Less than high school graduate'),
+     ('B17018_021M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:!!Less than high school graduate'),
+     ('B17018_022E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Married-couple family:!!High school graduate (includes equivalency)'),
+     ('B17018_022M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:!!High school graduate (includes equivalency)'),
+     ('B17018_023E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months at or above poverty level:!!Married-couple family:!!Some college, associate's degree"),
+     ('B17018_023M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:!!Some college, associate's degree"),
+     ('B17018_024E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months at or above poverty level:!!Married-couple family:!!Bachelor's degree or higher"),
+     ('B17018_024M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Married-couple family:!!Bachelor's degree or higher"),
+     ('B17018_025E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:'),
+     ('B17018_025M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:'),
+     ('B17018_026E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:'),
+     ('B17018_026M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:'),
+     ('B17018_027E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Less than high school graduate'),
+     ('B17018_027M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Less than high school graduate'),
+     ('B17018_028E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!High school graduate (includes equivalency)'),
+     ('B17018_028M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!High school graduate (includes equivalency)'),
+     ('B17018_029E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Some college, associate's degree"),
+     ('B17018_029M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Some college, associate's degree"),
+     ('B17018_030E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Bachelor's degree or higher"),
+     ('B17018_030M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      "Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Male householder, no wife present:!!Bachelor's degree or higher"),
+     ('B17018_031E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:'),
+     ('B17018_031M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:'),
+     ('B17018_032E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:!!Less than high school graduate'),
+     ('B17018_032M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:!!Less than high school graduate'),
+     ('B17018_033E',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:!!High school graduate (includes equivalency)'),
+     ('B17018_033M',
+      'B17018.  POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE BY EDUCATIONAL ATTAINMENT OF HOUSEHOLDER',
+      'Margin Of Error For!!Income in the past 12 months at or above poverty level:!!Other families:!!Female householder, no husband present:!!High school graduate (includes equivalency)'),
+     ...]
+
+
+
+(Please note that searching Census variables and printing out a single
+table rely on previously downloaded information from the Census API,
+because otherwise every time we did this we would have to download data
+for all variables.) Once we have identified a table of interest, we can
+use ``censusdata.printtable`` to show all variables included in the
+table:
+
+.. code:: ipython3
+
+    censusdata.printtable(censusdata.censustable('acs5', '2015', 'B23025'))
+
+
+.. parsed-literal::
+
+    Variable             | Table                                    | Label                                                                                                                                                            | Type      
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    B23025_001E          | B23025.  Employment Status for the Popul | Total:                                                                                                                                                           | int       
+    B23025_002E          | B23025.  Employment Status for the Popul | In labor force:                                                                                                                                                  | int       
+    B23025_003E          | B23025.  Employment Status for the Popul | !! In labor force: Civilian labor force:                                                                                                                         | int       
+    B23025_004E          | B23025.  Employment Status for the Popul | !! !! In labor force: Civilian labor force: Employed                                                                                                             | int       
+    B23025_005E          | B23025.  Employment Status for the Popul | !! !! In labor force: Civilian labor force: Unemployed                                                                                                           | int       
+    B23025_006E          | B23025.  Employment Status for the Popul | !! In labor force: Armed Forces                                                                                                                                  | int       
+    B23025_007E          | B23025.  Employment Status for the Popul | Not in labor force                                                                                                                                               | int       
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+.. code:: ipython3
+
+    censusdata.printtable(censusdata.censustable('acs5', '2015', 'B15003'))
+
+
+.. parsed-literal::
+
+    Variable             | Table                                    | Label                                                                                                                                                            | Type      
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    B15003_001E          | B15003.  Educational Attainment for the  | Total:                                                                                                                                                           | int       
+    B15003_002E          | B15003.  Educational Attainment for the  | No schooling completed                                                                                                                                           | int       
+    B15003_003E          | B15003.  Educational Attainment for the  | Nursery school                                                                                                                                                   | int       
+    B15003_004E          | B15003.  Educational Attainment for the  | Kindergarten                                                                                                                                                     | int       
+    B15003_005E          | B15003.  Educational Attainment for the  | 1st grade                                                                                                                                                        | int       
+    B15003_006E          | B15003.  Educational Attainment for the  | 2nd grade                                                                                                                                                        | int       
+    B15003_007E          | B15003.  Educational Attainment for the  | 3rd grade                                                                                                                                                        | int       
+    B15003_008E          | B15003.  Educational Attainment for the  | 4th grade                                                                                                                                                        | int       
+    B15003_009E          | B15003.  Educational Attainment for the  | 5th grade                                                                                                                                                        | int       
+    B15003_010E          | B15003.  Educational Attainment for the  | 6th grade                                                                                                                                                        | int       
+    B15003_011E          | B15003.  Educational Attainment for the  | 7th grade                                                                                                                                                        | int       
+    B15003_012E          | B15003.  Educational Attainment for the  | 8th grade                                                                                                                                                        | int       
+    B15003_013E          | B15003.  Educational Attainment for the  | 9th grade                                                                                                                                                        | int       
+    B15003_014E          | B15003.  Educational Attainment for the  | 10th grade                                                                                                                                                       | int       
+    B15003_015E          | B15003.  Educational Attainment for the  | 11th grade                                                                                                                                                       | int       
+    B15003_016E          | B15003.  Educational Attainment for the  | 12th grade, no diploma                                                                                                                                           | int       
+    B15003_017E          | B15003.  Educational Attainment for the  | Regular high school diploma                                                                                                                                      | int       
+    B15003_018E          | B15003.  Educational Attainment for the  | GED or alternative credential                                                                                                                                    | int       
+    B15003_019E          | B15003.  Educational Attainment for the  | Some college, less than 1 year                                                                                                                                   | int       
+    B15003_020E          | B15003.  Educational Attainment for the  | Some college, 1 or more years, no degree                                                                                                                         | int       
+    B15003_021E          | B15003.  Educational Attainment for the  | Associate's degree                                                                                                                                               | int       
+    B15003_022E          | B15003.  Educational Attainment for the  | Bachelor's degree                                                                                                                                                | int       
+    B15003_023E          | B15003.  Educational Attainment for the  | Master's degree                                                                                                                                                  | int       
+    B15003_024E          | B15003.  Educational Attainment for the  | Professional school degree                                                                                                                                       | int       
+    B15003_025E          | B15003.  Educational Attainment for the  | Doctorate degree                                                                                                                                                 | int       
+    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+After identifying relevant variables, we then need to identify the
+geographies of interest. We are interested in block groups in Cook
+County, Illinois, so first we look for the geographic identifier (FIPS
+code) for Illinois, then the identifiers for all counties with Illinois
+to find Cook County:
+
+.. code:: ipython3
+
+    censusdata.geographies(censusdata.censusgeo([('state', '*')]), 'acs5', '2015')
+
+
+
+
+.. parsed-literal::
+
+    {'Alabama': censusgeo((('state', '01'),)),
+     'Alaska': censusgeo((('state', '02'),)),
+     'Arizona': censusgeo((('state', '04'),)),
+     'Arkansas': censusgeo((('state', '05'),)),
+     'California': censusgeo((('state', '06'),)),
+     'Colorado': censusgeo((('state', '08'),)),
+     'Connecticut': censusgeo((('state', '09'),)),
+     'Delaware': censusgeo((('state', '10'),)),
+     'District of Columbia': censusgeo((('state', '11'),)),
+     'Florida': censusgeo((('state', '12'),)),
+     'Georgia': censusgeo((('state', '13'),)),
+     'Hawaii': censusgeo((('state', '15'),)),
+     'Idaho': censusgeo((('state', '16'),)),
+     'Illinois': censusgeo((('state', '17'),)),
+     'Indiana': censusgeo((('state', '18'),)),
+     'Iowa': censusgeo((('state', '19'),)),
+     'Kansas': censusgeo((('state', '20'),)),
+     'Kentucky': censusgeo((('state', '21'),)),
+     'Louisiana': censusgeo((('state', '22'),)),
+     'Maine': censusgeo((('state', '23'),)),
+     'Maryland': censusgeo((('state', '24'),)),
+     'Massachusetts': censusgeo((('state', '25'),)),
+     'Michigan': censusgeo((('state', '26'),)),
+     'Minnesota': censusgeo((('state', '27'),)),
+     'Mississippi': censusgeo((('state', '28'),)),
+     'Missouri': censusgeo((('state', '29'),)),
+     'Montana': censusgeo((('state', '30'),)),
+     'Nebraska': censusgeo((('state', '31'),)),
+     'Nevada': censusgeo((('state', '32'),)),
+     'New Hampshire': censusgeo((('state', '33'),)),
+     'New Jersey': censusgeo((('state', '34'),)),
+     'New Mexico': censusgeo((('state', '35'),)),
+     'New York': censusgeo((('state', '36'),)),
+     'North Carolina': censusgeo((('state', '37'),)),
+     'North Dakota': censusgeo((('state', '38'),)),
+     'Ohio': censusgeo((('state', '39'),)),
+     'Oklahoma': censusgeo((('state', '40'),)),
+     'Oregon': censusgeo((('state', '41'),)),
+     'Pennsylvania': censusgeo((('state', '42'),)),
+     'Puerto Rico': censusgeo((('state', '72'),)),
+     'Rhode Island': censusgeo((('state', '44'),)),
+     'South Carolina': censusgeo((('state', '45'),)),
+     'South Dakota': censusgeo((('state', '46'),)),
+     'Tennessee': censusgeo((('state', '47'),)),
+     'Texas': censusgeo((('state', '48'),)),
+     'Utah': censusgeo((('state', '49'),)),
+     'Vermont': censusgeo((('state', '50'),)),
+     'Virginia': censusgeo((('state', '51'),)),
+     'Washington': censusgeo((('state', '53'),)),
+     'West Virginia': censusgeo((('state', '54'),)),
+     'Wisconsin': censusgeo((('state', '55'),)),
+     'Wyoming': censusgeo((('state', '56'),))}
+
+
+
+.. code:: ipython3
+
+    censusdata.geographies(censusdata.censusgeo([('state', '17'), ('county', '*')]), 'acs5', '2015')
+
+
+
+
+.. parsed-literal::
+
+    {'Adams County, Illinois': censusgeo((('state', '17'), ('county', '001'))),
+     'Alexander County, Illinois': censusgeo((('state', '17'), ('county', '003'))),
+     'Bond County, Illinois': censusgeo((('state', '17'), ('county', '005'))),
+     'Boone County, Illinois': censusgeo((('state', '17'), ('county', '007'))),
+     'Brown County, Illinois': censusgeo((('state', '17'), ('county', '009'))),
+     'Bureau County, Illinois': censusgeo((('state', '17'), ('county', '011'))),
+     'Calhoun County, Illinois': censusgeo((('state', '17'), ('county', '013'))),
+     'Carroll County, Illinois': censusgeo((('state', '17'), ('county', '015'))),
+     'Cass County, Illinois': censusgeo((('state', '17'), ('county', '017'))),
+     'Champaign County, Illinois': censusgeo((('state', '17'), ('county', '019'))),
+     'Christian County, Illinois': censusgeo((('state', '17'), ('county', '021'))),
+     'Clark County, Illinois': censusgeo((('state', '17'), ('county', '023'))),
+     'Clay County, Illinois': censusgeo((('state', '17'), ('county', '025'))),
+     'Clinton County, Illinois': censusgeo((('state', '17'), ('county', '027'))),
+     'Coles County, Illinois': censusgeo((('state', '17'), ('county', '029'))),
+     'Cook County, Illinois': censusgeo((('state', '17'), ('county', '031'))),
+     'Crawford County, Illinois': censusgeo((('state', '17'), ('county', '033'))),
+     'Cumberland County, Illinois': censusgeo((('state', '17'), ('county', '035'))),
+     'De Witt County, Illinois': censusgeo((('state', '17'), ('county', '039'))),
+     'DeKalb County, Illinois': censusgeo((('state', '17'), ('county', '037'))),
+     'Douglas County, Illinois': censusgeo((('state', '17'), ('county', '041'))),
+     'DuPage County, Illinois': censusgeo((('state', '17'), ('county', '043'))),
+     'Edgar County, Illinois': censusgeo((('state', '17'), ('county', '045'))),
+     'Edwards County, Illinois': censusgeo((('state', '17'), ('county', '047'))),
+     'Effingham County, Illinois': censusgeo((('state', '17'), ('county', '049'))),
+     'Fayette County, Illinois': censusgeo((('state', '17'), ('county', '051'))),
+     'Ford County, Illinois': censusgeo((('state', '17'), ('county', '053'))),
+     'Franklin County, Illinois': censusgeo((('state', '17'), ('county', '055'))),
+     'Fulton County, Illinois': censusgeo((('state', '17'), ('county', '057'))),
+     'Gallatin County, Illinois': censusgeo((('state', '17'), ('county', '059'))),
+     'Greene County, Illinois': censusgeo((('state', '17'), ('county', '061'))),
+     'Grundy County, Illinois': censusgeo((('state', '17'), ('county', '063'))),
+     'Hamilton County, Illinois': censusgeo((('state', '17'), ('county', '065'))),
+     'Hancock County, Illinois': censusgeo((('state', '17'), ('county', '067'))),
+     'Hardin County, Illinois': censusgeo((('state', '17'), ('county', '069'))),
+     'Henderson County, Illinois': censusgeo((('state', '17'), ('county', '071'))),
+     'Henry County, Illinois': censusgeo((('state', '17'), ('county', '073'))),
+     'Iroquois County, Illinois': censusgeo((('state', '17'), ('county', '075'))),
+     'Jackson County, Illinois': censusgeo((('state', '17'), ('county', '077'))),
+     'Jasper County, Illinois': censusgeo((('state', '17'), ('county', '079'))),
+     'Jefferson County, Illinois': censusgeo((('state', '17'), ('county', '081'))),
+     'Jersey County, Illinois': censusgeo((('state', '17'), ('county', '083'))),
+     'Jo Daviess County, Illinois': censusgeo((('state', '17'), ('county', '085'))),
+     'Johnson County, Illinois': censusgeo((('state', '17'), ('county', '087'))),
+     'Kane County, Illinois': censusgeo((('state', '17'), ('county', '089'))),
+     'Kankakee County, Illinois': censusgeo((('state', '17'), ('county', '091'))),
+     'Kendall County, Illinois': censusgeo((('state', '17'), ('county', '093'))),
+     'Knox County, Illinois': censusgeo((('state', '17'), ('county', '095'))),
+     'LaSalle County, Illinois': censusgeo((('state', '17'), ('county', '099'))),
+     'Lake County, Illinois': censusgeo((('state', '17'), ('county', '097'))),
+     'Lawrence County, Illinois': censusgeo((('state', '17'), ('county', '101'))),
+     'Lee County, Illinois': censusgeo((('state', '17'), ('county', '103'))),
+     'Livingston County, Illinois': censusgeo((('state', '17'), ('county', '105'))),
+     'Logan County, Illinois': censusgeo((('state', '17'), ('county', '107'))),
+     'Macon County, Illinois': censusgeo((('state', '17'), ('county', '115'))),
+     'Macoupin County, Illinois': censusgeo((('state', '17'), ('county', '117'))),
+     'Madison County, Illinois': censusgeo((('state', '17'), ('county', '119'))),
+     'Marion County, Illinois': censusgeo((('state', '17'), ('county', '121'))),
+     'Marshall County, Illinois': censusgeo((('state', '17'), ('county', '123'))),
+     'Mason County, Illinois': censusgeo((('state', '17'), ('county', '125'))),
+     'Massac County, Illinois': censusgeo((('state', '17'), ('county', '127'))),
+     'McDonough County, Illinois': censusgeo((('state', '17'), ('county', '109'))),
+     'McHenry County, Illinois': censusgeo((('state', '17'), ('county', '111'))),
+     'McLean County, Illinois': censusgeo((('state', '17'), ('county', '113'))),
+     'Menard County, Illinois': censusgeo((('state', '17'), ('county', '129'))),
+     'Mercer County, Illinois': censusgeo((('state', '17'), ('county', '131'))),
+     'Monroe County, Illinois': censusgeo((('state', '17'), ('county', '133'))),
+     'Montgomery County, Illinois': censusgeo((('state', '17'), ('county', '135'))),
+     'Morgan County, Illinois': censusgeo((('state', '17'), ('county', '137'))),
+     'Moultrie County, Illinois': censusgeo((('state', '17'), ('county', '139'))),
+     'Ogle County, Illinois': censusgeo((('state', '17'), ('county', '141'))),
+     'Peoria County, Illinois': censusgeo((('state', '17'), ('county', '143'))),
+     'Perry County, Illinois': censusgeo((('state', '17'), ('county', '145'))),
+     'Piatt County, Illinois': censusgeo((('state', '17'), ('county', '147'))),
+     'Pike County, Illinois': censusgeo((('state', '17'), ('county', '149'))),
+     'Pope County, Illinois': censusgeo((('state', '17'), ('county', '151'))),
+     'Pulaski County, Illinois': censusgeo((('state', '17'), ('county', '153'))),
+     'Putnam County, Illinois': censusgeo((('state', '17'), ('county', '155'))),
+     'Randolph County, Illinois': censusgeo((('state', '17'), ('county', '157'))),
+     'Richland County, Illinois': censusgeo((('state', '17'), ('county', '159'))),
+     'Rock Island County, Illinois': censusgeo((('state', '17'), ('county', '161'))),
+     'Saline County, Illinois': censusgeo((('state', '17'), ('county', '165'))),
+     'Sangamon County, Illinois': censusgeo((('state', '17'), ('county', '167'))),
+     'Schuyler County, Illinois': censusgeo((('state', '17'), ('county', '169'))),
+     'Scott County, Illinois': censusgeo((('state', '17'), ('county', '171'))),
+     'Shelby County, Illinois': censusgeo((('state', '17'), ('county', '173'))),
+     'St. Clair County, Illinois': censusgeo((('state', '17'), ('county', '163'))),
+     'Stark County, Illinois': censusgeo((('state', '17'), ('county', '175'))),
+     'Stephenson County, Illinois': censusgeo((('state', '17'), ('county', '177'))),
+     'Tazewell County, Illinois': censusgeo((('state', '17'), ('county', '179'))),
+     'Union County, Illinois': censusgeo((('state', '17'), ('county', '181'))),
+     'Vermilion County, Illinois': censusgeo((('state', '17'), ('county', '183'))),
+     'Wabash County, Illinois': censusgeo((('state', '17'), ('county', '185'))),
+     'Warren County, Illinois': censusgeo((('state', '17'), ('county', '187'))),
+     'Washington County, Illinois': censusgeo((('state', '17'), ('county', '189'))),
+     'Wayne County, Illinois': censusgeo((('state', '17'), ('county', '191'))),
+     'White County, Illinois': censusgeo((('state', '17'), ('county', '193'))),
+     'Whiteside County, Illinois': censusgeo((('state', '17'), ('county', '195'))),
+     'Will County, Illinois': censusgeo((('state', '17'), ('county', '197'))),
+     'Williamson County, Illinois': censusgeo((('state', '17'), ('county', '199'))),
+     'Winnebago County, Illinois': censusgeo((('state', '17'), ('county', '201'))),
+     'Woodford County, Illinois': censusgeo((('state', '17'), ('county', '203')))}
+
+
+
+Now that we have identified the variables and geographies of interest,
+we can download the data using ``censusdata.download`` and compute
+variables for the percent unemployed and the percent with no high school
+degree:
+
+.. code:: ipython3
+
+    cookbg = censusdata.download('acs5', '2015',
+                                 censusdata.censusgeo([('state', '17'), ('county', '031'), ('block group', '*')]),
+                                 ['B23025_003E', 'B23025_005E', 'B15003_001E', 'B15003_002E', 'B15003_003E',
+                                  'B15003_004E', 'B15003_005E', 'B15003_006E', 'B15003_007E', 'B15003_008E',
+                                  'B15003_009E', 'B15003_010E', 'B15003_011E', 'B15003_012E', 'B15003_013E',
+                                  'B15003_014E', 'B15003_015E', 'B15003_016E'])
+    cookbg['percent_unemployed'] = cookbg.B23025_005E / cookbg.B23025_003E * 100
+    cookbg['percent_nohs'] = (cookbg.B15003_002E + cookbg.B15003_003E + cookbg.B15003_004E
+                              + cookbg.B15003_005E + cookbg.B15003_006E + cookbg.B15003_007E + cookbg.B15003_008E
+                              + cookbg.B15003_009E + cookbg.B15003_010E + cookbg.B15003_011E + cookbg.B15003_012E
+                              + cookbg.B15003_013E + cookbg.B15003_014E +
+                              cookbg.B15003_015E + cookbg.B15003_016E) / cookbg.B15003_001E * 100
+    cookbg = cookbg[['percent_unemployed', 'percent_nohs']]
+    cookbg.describe()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>percent_unemployed</th>
+          <th>percent_nohs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>count</th>
+          <td>3983.00</td>
+          <td>3984.00</td>
+        </tr>
+        <tr>
+          <th>mean</th>
+          <td>12.00</td>
+          <td>15.19</td>
+        </tr>
+        <tr>
+          <th>std</th>
+          <td>10.09</td>
+          <td>13.23</td>
+        </tr>
+        <tr>
+          <th>min</th>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <th>25%</th>
+          <td>4.86</td>
+          <td>4.75</td>
+        </tr>
+        <tr>
+          <th>50%</th>
+          <td>9.24</td>
+          <td>11.66</td>
+        </tr>
+        <tr>
+          <th>75%</th>
+          <td>16.28</td>
+          <td>22.46</td>
+        </tr>
+        <tr>
+          <th>max</th>
+          <td>91.86</td>
+          <td>77.43</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Next, we show the 30 block groups in Cook County with the highest rate
+of unemployment, and the percent with no high school degree in those
+block groups.
+
+.. code:: ipython3
+
+    cookbg.sort_values('percent_unemployed', ascending=False).head(30)
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>percent_unemployed</th>
+          <th>percent_nohs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Block Group 1, Census Tract 8357, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:835700&gt; block group:1</th>
+          <td>91.86</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <th>Block Group 2, Census Tract 6805, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:680500&gt; block group:2</th>
+          <td>66.27</td>
+          <td>19.54</td>
+        </tr>
+        <tr>
+          <th>Block Group 3, Census Tract 5103, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:510300&gt; block group:3</th>
+          <td>64.07</td>
+          <td>16.97</td>
+        </tr>
+        <tr>
+          <th>Block Group 2, Census Tract 6809, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:680900&gt; block group:2</th>
+          <td>61.46</td>
+          <td>42.33</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 4913, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:491300&gt; block group:1</th>
+          <td>56.40</td>
+          <td>14.64</td>
+        </tr>
+        <tr>
+          <th>Block Group 5, Census Tract 2315, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:231500&gt; block group:5</th>
+          <td>55.58</td>
+          <td>44.72</td>
+        </tr>
+        <tr>
+          <th>Block Group 3, Census Tract 8346, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:834600&gt; block group:3</th>
+          <td>54.96</td>
+          <td>17.85</td>
+        </tr>
+        <tr>
+          <th>Block Group 2, Census Tract 6706, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:670600&gt; block group:2</th>
+          <td>54.13</td>
+          <td>9.57</td>
+        </tr>
+        <tr>
+          <th>Block Group 2, Census Tract 8386, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:838600&gt; block group:2</th>
+          <td>53.78</td>
+          <td>48.41</td>
+        </tr>
+        <tr>
+          <th>Block Group 5, Census Tract 4910, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:491000&gt; block group:5</th>
+          <td>53.57</td>
+          <td>38.23</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 5401.02, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:540102&gt; block group:1</th>
+          <td>52.90</td>
+          <td>6.67</td>
+        </tr>
+        <tr>
+          <th>Block Group 2, Census Tract 6712, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:671200&gt; block group:2</th>
+          <td>52.84</td>
+          <td>26.98</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 7109, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:710900&gt; block group:1</th>
+          <td>52.68</td>
+          <td>19.08</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 3406, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:340600&gt; block group:1</th>
+          <td>51.76</td>
+          <td>42.59</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 6712, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:671200&gt; block group:1</th>
+          <td>51.53</td>
+          <td>37.70</td>
+        </tr>
+        <tr>
+          <th>Block Group 2, Census Tract 4910, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:491000&gt; block group:2</th>
+          <td>51.47</td>
+          <td>26.50</td>
+        </tr>
+        <tr>
+          <th>Block Group 3, Census Tract 4303, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:430300&gt; block group:3</th>
+          <td>51.41</td>
+          <td>14.85</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 6810, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:681000&gt; block group:1</th>
+          <td>51.10</td>
+          <td>24.38</td>
+        </tr>
+        <tr>
+          <th>Block Group 5, Census Tract 6811, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:681100&gt; block group:5</th>
+          <td>50.00</td>
+          <td>31.95</td>
+        </tr>
+        <tr>
+          <th>Block Group 6, Census Tract 7104, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:710400&gt; block group:6</th>
+          <td>50.00</td>
+          <td>9.34</td>
+        </tr>
+        <tr>
+          <th>Block Group 2, Census Tract 6812, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:681200&gt; block group:2</th>
+          <td>49.82</td>
+          <td>20.29</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 8290, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:829000&gt; block group:1</th>
+          <td>49.57</td>
+          <td>28.97</td>
+        </tr>
+        <tr>
+          <th>Block Group 3, Census Tract 6813, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:681300&gt; block group:3</th>
+          <td>49.51</td>
+          <td>22.92</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 6811, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:681100&gt; block group:1</th>
+          <td>49.32</td>
+          <td>33.73</td>
+        </tr>
+        <tr>
+          <th>Block Group 2, Census Tract 7107, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:710700&gt; block group:2</th>
+          <td>49.00</td>
+          <td>17.18</td>
+        </tr>
+        <tr>
+          <th>Block Group 6, Census Tract 4804, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:480400&gt; block group:6</th>
+          <td>48.68</td>
+          <td>8.32</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 4207, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:420700&gt; block group:1</th>
+          <td>48.63</td>
+          <td>14.08</td>
+        </tr>
+        <tr>
+          <th>Block Group 1, Census Tract 6715, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:671500&gt; block group:1</th>
+          <td>48.28</td>
+          <td>30.24</td>
+        </tr>
+        <tr>
+          <th>Block Group 4, Census Tract 4603.02, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:460302&gt; block group:4</th>
+          <td>48.00</td>
+          <td>48.27</td>
+        </tr>
+        <tr>
+          <th>Block Group 3, Census Tract 8424, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:842400&gt; block group:3</th>
+          <td>47.80</td>
+          <td>0.00</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Finally, we show the correlation between these two variables across all
+Cook County block groups:
+
+.. code:: ipython3
+
+    cookbg.corr()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>percent_unemployed</th>
+          <th>percent_nohs</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>percent_unemployed</th>
+          <td>1.00</td>
+          <td>0.29</td>
+        </tr>
+        <tr>
+          <th>percent_nohs</th>
+          <td>0.29</td>
+          <td>1.00</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 Example 2: Downloading Data for All U.S. Counties
-============================================================
+=================================================
 
-------------------------------------------------------------
 Using the Detail Tables
-------------------------------------------------------------
+-----------------------
 
-For this example, let's suppose we have looked up the variables we need by referring
-to the Table Shells. We begin by downloading the data and checking the data we have received::
+For this example, let's suppose we have looked up the variables we need
+by referring to the Table Shells. We begin by downloading the data and
+checking the data we have received:
 
-	>>> county65plus = censusdata.download('acs5', '2015', censusdata.censusgeo([('county', '*')]),
-	['B01001_001E', 'B01001_020E', 'B01001_021E', 'B01001_022E', 'B01001_023E', 'B01001_024E', 'B01001_025E', 'B01001_044E', 'B01001_045E', 'B01001_046E', 'B01001_047E', 'B01001_048E', 'B01001_049E'])
-	>>> print(county65plus.describe())
-	B01001_001E  B01001_020E  B01001_021E  B01001_022E  B01001_023E  B01001_024E  B01001_025E  B01001_044E  B01001_045E  B01001_046E  B01001_047E  B01001_048E  B01001_049E
-	count     3.22e+03      3220.00      3220.00      3220.00      3220.00      3220.00      3220.00      3220.00      3220.00      3220.00      3220.00      3220.00      3220.00
-	mean      9.94e+04       961.47      1201.25      1532.44      1075.61       748.45       629.46      1064.89      1350.16      1802.07      1358.99      1079.33      1236.80
-	std       3.19e+05      2669.50      3306.09      4193.15      2994.94      2184.18      1945.32      3085.53      3860.28      5149.07      3920.19      3183.31      3741.48
-	min       8.50e+01         0.00         0.00         2.00         0.00         0.00         0.00         0.00         0.00         0.00         0.00         0.00         0.00
-	25%       1.12e+04       134.00       173.00       234.00       165.00       106.00        80.00       136.00       178.00       252.00       196.00       143.00       157.75
-	50%       2.60e+04       308.00       391.50       513.00       353.00       231.00       180.50       322.00       413.00       560.00       429.00       318.00       350.50
-	75%       6.64e+04       750.75       949.25      1242.75       850.00       550.25       430.00       790.75      1040.75      1362.75      1012.00       789.00       847.00
-	max       1.00e+07     79196.00     96638.00    122804.00     88018.00     65118.00     59251.00     91381.00    114778.00    152378.00    116736.00     93446.00    110015.00
+.. code:: ipython3
 
-Next, we compute the percentage of the population 65 and older::
+    county65plus = censusdata.download('acs5', '2015', censusdata.censusgeo([('county', '*')]),
+                                       ['B01001_001E', 'B01001_020E', 'B01001_021E', 'B01001_022E', 'B01001_023E',
+                                        'B01001_024E', 'B01001_025E', 'B01001_044E', 'B01001_045E', 'B01001_046E',
+                                        'B01001_047E', 'B01001_048E', 'B01001_049E'])
+    county65plus.describe()
 
-	>>> county65plus['percent_65plus'] = (county65plus.B01001_020E + county65plus.B01001_021E + county65plus.B01001_022E + county65plus.B01001_023E + county65plus.B01001_024E + county65plus.B01001_025E
-	...	+ county65plus.B01001_044E + county65plus.B01001_045E + county65plus.B01001_046E + county65plus.B01001_047E + county65plus.B01001_048E + county65plus.B01001_049E) / county65plus.B01001_001E * 100
 
-Then we keep the variables of interest, rename, and print descriptives::
 
-	>>> county65plus = county65plus[['B01001_001E', 'percent_65plus']]
-	>>> county65plus = county65plus.rename(columns={'B01001_001E': 'population_size'})
-	>>> print(county65plus.describe())
-	       population_size  percent_65plus
-	count         3.22e+03         3220.00
-	mean          9.94e+04           17.10
-	std           3.19e+05            4.39
-	min           8.50e+01            3.30
-	25%           1.12e+04           14.32
-	50%           2.60e+04           16.78
-	75%           6.64e+04           19.45
-	max           1.00e+07           50.89
 
-Finally, we show the 30 U.S. counties with the highest percentage aged 65+::
+.. raw:: html
 
-	>>> county65plus.sort_values('percent_65plus', ascending=False, inplace=True)
-	>>> print(county65plus.head(30))
-							    population_size  percent_65plus
-	Sumter County, Florida: Summary level: 050, sta...           108501           50.89
-	Charlotte County, Florida: Summary level: 050, ...           165783           36.86
-	Mineral County, Colorado: Summary level: 050, s...              733           36.56
-	Hooker County, Nebraska: Summary level: 050, st...              681           35.83
-	La Paz County, Arizona: Summary level: 050, sta...            20335           35.17
-	Citrus County, Florida: Summary level: 050, sta...           139654           34.43
-	Wheeler County, Oregon: Summary level: 050, sta...             1348           34.35
-	Highland County, Virginia: Summary level: 050, ...             2244           34.00
-	Real County, Texas: Summary level: 050, state:4...             3356           33.97
-	Sierra County, New Mexico: Summary level: 050, ...            11615           33.95
-	Alcona County, Michigan: Summary level: 050, st...            10550           33.93
-	Lancaster County, Virginia: Summary level: 050,...            11129           33.91
-	Llano County, Texas: Summary level: 050, state:...            19323           33.63
-	Highlands County, Florida: Summary level: 050, ...            98328           33.35
-	Sarasota County, Florida: Summary level: 050, s...           392038           33.20
-	McIntosh County, North Dakota: Summary level: 0...             2759           33.09
-	Northumberland County, Virginia: Summary level:...            12304           33.07
-	Catron County, New Mexico: Summary level: 050, ...             3583           32.71
-	Towns County, Georgia: Summary level: 050, stat...            10800           31.82
-	Hickory County, Missouri: Summary level: 050, s...             9335           31.49
-	Ontonagon County, Michigan: Summary level: 050,...             6298           30.61
-	Curry County, Oregon: Summary level: 050, state...            22338           30.48
-	Union County, Georgia: Summary level: 050, stat...            21725           30.43
-	Hinsdale County, Colorado: Summary level: 050, ...              874           30.09
-	Jefferson County, Washington: Summary level: 05...            30083           30.06
-	McPherson County, South Dakota: Summary level: ...             2263           29.74
-	McMullen County, Texas: Summary level: 050, sta...              778           29.69
-	Keweenaw County, Michigan: Summary level: 050, ...             2198           29.66
-	Baxter County, Arkansas: Summary level: 050, st...            41040           29.57
-	Indian River County, Florida: Summary level: 05...           142866           29.51
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>B01001_001E</th>
+          <th>B01001_020E</th>
+          <th>B01001_021E</th>
+          <th>B01001_022E</th>
+          <th>B01001_023E</th>
+          <th>B01001_024E</th>
+          <th>B01001_025E</th>
+          <th>B01001_044E</th>
+          <th>B01001_045E</th>
+          <th>B01001_046E</th>
+          <th>B01001_047E</th>
+          <th>B01001_048E</th>
+          <th>B01001_049E</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>count</th>
+          <td>3.22e+03</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+        </tr>
+        <tr>
+          <th>mean</th>
+          <td>9.94e+04</td>
+          <td>961.47</td>
+          <td>1201.25</td>
+          <td>1532.44</td>
+          <td>1075.61</td>
+          <td>748.45</td>
+          <td>629.46</td>
+          <td>1064.89</td>
+          <td>1350.16</td>
+          <td>1802.07</td>
+          <td>1358.99</td>
+          <td>1079.33</td>
+          <td>1236.80</td>
+        </tr>
+        <tr>
+          <th>std</th>
+          <td>3.19e+05</td>
+          <td>2669.50</td>
+          <td>3306.09</td>
+          <td>4193.15</td>
+          <td>2994.94</td>
+          <td>2184.18</td>
+          <td>1945.32</td>
+          <td>3085.53</td>
+          <td>3860.28</td>
+          <td>5149.07</td>
+          <td>3920.19</td>
+          <td>3183.31</td>
+          <td>3741.48</td>
+        </tr>
+        <tr>
+          <th>min</th>
+          <td>8.50e+01</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>2.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <th>25%</th>
+          <td>1.12e+04</td>
+          <td>134.00</td>
+          <td>173.00</td>
+          <td>234.00</td>
+          <td>165.00</td>
+          <td>106.00</td>
+          <td>80.00</td>
+          <td>136.00</td>
+          <td>178.00</td>
+          <td>252.00</td>
+          <td>196.00</td>
+          <td>143.00</td>
+          <td>157.75</td>
+        </tr>
+        <tr>
+          <th>50%</th>
+          <td>2.60e+04</td>
+          <td>308.00</td>
+          <td>391.50</td>
+          <td>513.00</td>
+          <td>353.00</td>
+          <td>231.00</td>
+          <td>180.50</td>
+          <td>322.00</td>
+          <td>413.00</td>
+          <td>560.00</td>
+          <td>429.00</td>
+          <td>318.00</td>
+          <td>350.50</td>
+        </tr>
+        <tr>
+          <th>75%</th>
+          <td>6.64e+04</td>
+          <td>750.75</td>
+          <td>949.25</td>
+          <td>1242.75</td>
+          <td>850.00</td>
+          <td>550.25</td>
+          <td>430.00</td>
+          <td>790.75</td>
+          <td>1040.75</td>
+          <td>1362.75</td>
+          <td>1012.00</td>
+          <td>789.00</td>
+          <td>847.00</td>
+        </tr>
+        <tr>
+          <th>max</th>
+          <td>1.00e+07</td>
+          <td>79196.00</td>
+          <td>96638.00</td>
+          <td>122804.00</td>
+          <td>88018.00</td>
+          <td>65118.00</td>
+          <td>59251.00</td>
+          <td>91381.00</td>
+          <td>114778.00</td>
+          <td>152378.00</td>
+          <td>116736.00</td>
+          <td>93446.00</td>
+          <td>110015.00</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
 
-------------------------------------------------------------
+
+
+Then we keep the variables of interest, rename, and print descriptives:
+
+.. code:: ipython3
+
+    county65plus['percent_65plus'] = (county65plus.B01001_020E + county65plus.B01001_021E + county65plus.B01001_022E
+                                      + county65plus.B01001_023E + county65plus.B01001_024E + county65plus.B01001_025E
+                                      + county65plus.B01001_044E + county65plus.B01001_045E + county65plus.B01001_046E
+                                      + county65plus.B01001_047E + county65plus.B01001_048E
+                                      + county65plus.B01001_049E) / county65plus.B01001_001E * 100
+    county65plus = county65plus[['B01001_001E', 'percent_65plus']]
+    county65plus = county65plus.rename(columns={'B01001_001E': 'population_size'})
+    county65plus.describe()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>population_size</th>
+          <th>percent_65plus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>count</th>
+          <td>3.22e+03</td>
+          <td>3220.00</td>
+        </tr>
+        <tr>
+          <th>mean</th>
+          <td>9.94e+04</td>
+          <td>17.10</td>
+        </tr>
+        <tr>
+          <th>std</th>
+          <td>3.19e+05</td>
+          <td>4.39</td>
+        </tr>
+        <tr>
+          <th>min</th>
+          <td>8.50e+01</td>
+          <td>3.30</td>
+        </tr>
+        <tr>
+          <th>25%</th>
+          <td>1.12e+04</td>
+          <td>14.32</td>
+        </tr>
+        <tr>
+          <th>50%</th>
+          <td>2.60e+04</td>
+          <td>16.78</td>
+        </tr>
+        <tr>
+          <th>75%</th>
+          <td>6.64e+04</td>
+          <td>19.45</td>
+        </tr>
+        <tr>
+          <th>max</th>
+          <td>1.00e+07</td>
+          <td>50.89</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Finally, we show the 30 U.S. counties with the highest percentage aged
+65+:
+
+.. code:: ipython3
+
+    county65plus.sort_values('percent_65plus', ascending=False, inplace=True)
+    county65plus.head(30)
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>population_size</th>
+          <th>percent_65plus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Sumter County, Florida: Summary level: 050, state:12&gt; county:119</th>
+          <td>108501</td>
+          <td>50.89</td>
+        </tr>
+        <tr>
+          <th>Charlotte County, Florida: Summary level: 050, state:12&gt; county:015</th>
+          <td>165783</td>
+          <td>36.86</td>
+        </tr>
+        <tr>
+          <th>Mineral County, Colorado: Summary level: 050, state:08&gt; county:079</th>
+          <td>733</td>
+          <td>36.56</td>
+        </tr>
+        <tr>
+          <th>Hooker County, Nebraska: Summary level: 050, state:31&gt; county:091</th>
+          <td>681</td>
+          <td>35.83</td>
+        </tr>
+        <tr>
+          <th>La Paz County, Arizona: Summary level: 050, state:04&gt; county:012</th>
+          <td>20335</td>
+          <td>35.17</td>
+        </tr>
+        <tr>
+          <th>Citrus County, Florida: Summary level: 050, state:12&gt; county:017</th>
+          <td>139654</td>
+          <td>34.43</td>
+        </tr>
+        <tr>
+          <th>Wheeler County, Oregon: Summary level: 050, state:41&gt; county:069</th>
+          <td>1348</td>
+          <td>34.35</td>
+        </tr>
+        <tr>
+          <th>Highland County, Virginia: Summary level: 050, state:51&gt; county:091</th>
+          <td>2244</td>
+          <td>34.00</td>
+        </tr>
+        <tr>
+          <th>Real County, Texas: Summary level: 050, state:48&gt; county:385</th>
+          <td>3356</td>
+          <td>33.97</td>
+        </tr>
+        <tr>
+          <th>Sierra County, New Mexico: Summary level: 050, state:35&gt; county:051</th>
+          <td>11615</td>
+          <td>33.95</td>
+        </tr>
+        <tr>
+          <th>Alcona County, Michigan: Summary level: 050, state:26&gt; county:001</th>
+          <td>10550</td>
+          <td>33.93</td>
+        </tr>
+        <tr>
+          <th>Lancaster County, Virginia: Summary level: 050, state:51&gt; county:103</th>
+          <td>11129</td>
+          <td>33.91</td>
+        </tr>
+        <tr>
+          <th>Llano County, Texas: Summary level: 050, state:48&gt; county:299</th>
+          <td>19323</td>
+          <td>33.63</td>
+        </tr>
+        <tr>
+          <th>Highlands County, Florida: Summary level: 050, state:12&gt; county:055</th>
+          <td>98328</td>
+          <td>33.35</td>
+        </tr>
+        <tr>
+          <th>Sarasota County, Florida: Summary level: 050, state:12&gt; county:115</th>
+          <td>392038</td>
+          <td>33.20</td>
+        </tr>
+        <tr>
+          <th>McIntosh County, North Dakota: Summary level: 050, state:38&gt; county:051</th>
+          <td>2759</td>
+          <td>33.09</td>
+        </tr>
+        <tr>
+          <th>Northumberland County, Virginia: Summary level: 050, state:51&gt; county:133</th>
+          <td>12304</td>
+          <td>33.07</td>
+        </tr>
+        <tr>
+          <th>Catron County, New Mexico: Summary level: 050, state:35&gt; county:003</th>
+          <td>3583</td>
+          <td>32.71</td>
+        </tr>
+        <tr>
+          <th>Towns County, Georgia: Summary level: 050, state:13&gt; county:281</th>
+          <td>10800</td>
+          <td>31.82</td>
+        </tr>
+        <tr>
+          <th>Hickory County, Missouri: Summary level: 050, state:29&gt; county:085</th>
+          <td>9335</td>
+          <td>31.49</td>
+        </tr>
+        <tr>
+          <th>Ontonagon County, Michigan: Summary level: 050, state:26&gt; county:131</th>
+          <td>6298</td>
+          <td>30.61</td>
+        </tr>
+        <tr>
+          <th>Curry County, Oregon: Summary level: 050, state:41&gt; county:015</th>
+          <td>22338</td>
+          <td>30.48</td>
+        </tr>
+        <tr>
+          <th>Union County, Georgia: Summary level: 050, state:13&gt; county:291</th>
+          <td>21725</td>
+          <td>30.43</td>
+        </tr>
+        <tr>
+          <th>Hinsdale County, Colorado: Summary level: 050, state:08&gt; county:053</th>
+          <td>874</td>
+          <td>30.09</td>
+        </tr>
+        <tr>
+          <th>Jefferson County, Washington: Summary level: 050, state:53&gt; county:031</th>
+          <td>30083</td>
+          <td>30.06</td>
+        </tr>
+        <tr>
+          <th>McPherson County, South Dakota: Summary level: 050, state:46&gt; county:089</th>
+          <td>2263</td>
+          <td>29.74</td>
+        </tr>
+        <tr>
+          <th>McMullen County, Texas: Summary level: 050, state:48&gt; county:311</th>
+          <td>778</td>
+          <td>29.69</td>
+        </tr>
+        <tr>
+          <th>Keweenaw County, Michigan: Summary level: 050, state:26&gt; county:083</th>
+          <td>2198</td>
+          <td>29.66</td>
+        </tr>
+        <tr>
+          <th>Baxter County, Arkansas: Summary level: 050, state:05&gt; county:005</th>
+          <td>41040</td>
+          <td>29.57</td>
+        </tr>
+        <tr>
+          <th>Indian River County, Florida: Summary level: 050, state:12&gt; county:061</th>
+          <td>142866</td>
+          <td>29.51</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 Using the Data Profile Tables
-------------------------------------------------------------
+=============================
 
-There is more than one way to approach this problem. Let's
-see how to use the data profile tables for the same purpose. First,
-we identify the appropriate table::
+There is more than one way to approach this problem. Let's see how to
+use the data profile tables for the same purpose. First, we identify the
+appropriate table:
 
-	>>> print(censusdata.search('acs5', '2015', 'label', '65', tabletype='profile'))
-	[('DP02PR_0012E', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'), ('DP02PR_0012M', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'), ('DP02PR_0012PE', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'), ('DP02PR_0012PM', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'), ('DP02PR_0014E', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'), ('DP02PR_0014M', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'), ('DP02PR_0014PE', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'), ('DP02PR_0014PM', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'), ('DP02PR_0076E', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'), ('DP02PR_0076M', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'), ('DP02PR_0076PE', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'), ('DP02PR_0076PM', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'), ('DP02PR_0077E', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'), ('DP02PR_0077M', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'), ('DP02PR_0077PE', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'), ('DP02PR_0077PM', 'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'), ('DP02_0012E', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'), ('DP02_0012M', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'), ('DP02_0012PE', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'), ('DP02_0012PM', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'), ('DP02_0014E', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'), ('DP02_0014M', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'), ('DP02_0014PE', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'), ('DP02_0014PM', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'), ('DP02_0076E', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'), ('DP02_0076M', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'), ('DP02_0076PE', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'), ('DP02_0076PM', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'), ('DP02_0077E', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'), ('DP02_0077M', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'), ('DP02_0077PE', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'), ('DP02_0077PM', 'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES', 'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'), ('DP03_0135E', 'SELECTED ECONOMIC CHARACTERISTICS', 'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'), ('DP03_0135M', 'SELECTED ECONOMIC CHARACTERISTICS', 'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'), ('DP03_0135PE', 'SELECTED ECONOMIC CHARACTERISTICS', 'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'), ('DP03_0135PM', 'SELECTED ECONOMIC CHARACTERISTICS', 'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'), ('DP03_0136E', 'SELECTED ECONOMIC CHARACTERISTICS', 'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!People in families'), ('DP03_0136M', 'SELECTED ECONOMIC CHARACTERISTICS', 'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!People in families'), ('DP03_0137E', 'SELECTED ECONOMIC CHARACTERISTICS', 'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!Unrelated individuals 15 years and over'), ('DP03_0137M', 'SELECTED ECONOMIC CHARACTERISTICS', 'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!Unrelated individuals 15 years and over'), ('DP05_0014E', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 to 74 years'), ('DP05_0014M', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 to 74 years'), ('DP05_0014PE', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 to 74 years'), ('DP05_0014PM', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 to 74 years'), ('DP05_0021E', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over'), ('DP05_0021M', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over'), ('DP05_0021PE', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over'), ('DP05_0021PM', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over'), ('DP05_0025E', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over'), ('DP05_0025M', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over'), ('DP05_0025PE', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over'), ('DP05_0025PM', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over'), ('DP05_0026E', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over!!Male'), ('DP05_0026M', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over!!Male'), ('DP05_0026PE', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over!!Male'), ('DP05_0026PM', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over!!Male'), ('DP05_0027E', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over!!Female'), ('DP05_0027M', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over!!Female'), ('DP05_0027PE', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over!!Female'), ('DP05_0027PM', 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 years and over!!Female')]
-	>>> print(censusdata.censustable('acs5', '2015', 'DP05'))
-	OrderedDict([('DP05_0001E', {'label': 'SEX AND AGE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0001M', {'label': 'SEX AND AGE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0001PE', {'label': 'SEX AND AGE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0001PM', {'label': 'SEX AND AGE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0002E', {'label': 'SEX AND AGE!!Total population!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0002M', {'label': 'SEX AND AGE!!Total population!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0002PE', {'label': 'SEX AND AGE!!Total population!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0002PM', {'label': 'SEX AND AGE!!Total population!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0003E', {'label': 'SEX AND AGE!!Total population!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0003M', {'label': 'SEX AND AGE!!Total population!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0003PE', {'label': 'SEX AND AGE!!Total population!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0003PM', {'label': 'SEX AND AGE!!Total population!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0004E', {'label': 'SEX AND AGE!!Total population!!Under 5 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0004M', {'label': 'SEX AND AGE!!Total population!!Under 5 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0004PE', {'label': 'SEX AND AGE!!Total population!!Under 5 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0004PM', {'label': 'SEX AND AGE!!Total population!!Under 5 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0005E', {'label': 'SEX AND AGE!!Total population!!5 to 9 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0005M', {'label': 'SEX AND AGE!!Total population!!5 to 9 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0005PE', {'label': 'SEX AND AGE!!Total population!!5 to 9 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0005PM', {'label': 'SEX AND AGE!!Total population!!5 to 9 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0006E', {'label': 'SEX AND AGE!!Total population!!10 to 14 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0006M', {'label': 'SEX AND AGE!!Total population!!10 to 14 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0006PE', {'label': 'SEX AND AGE!!Total population!!10 to 14 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0006PM', {'label': 'SEX AND AGE!!Total population!!10 to 14 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0007E', {'label': 'SEX AND AGE!!Total population!!15 to 19 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0007M', {'label': 'SEX AND AGE!!Total population!!15 to 19 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0007PE', {'label': 'SEX AND AGE!!Total population!!15 to 19 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0007PM', {'label': 'SEX AND AGE!!Total population!!15 to 19 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0008E', {'label': 'SEX AND AGE!!Total population!!20 to 24 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0008M', {'label': 'SEX AND AGE!!Total population!!20 to 24 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0008PE', {'label': 'SEX AND AGE!!Total population!!20 to 24 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0008PM', {'label': 'SEX AND AGE!!Total population!!20 to 24 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0009E', {'label': 'SEX AND AGE!!Total population!!25 to 34 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0009M', {'label': 'SEX AND AGE!!Total population!!25 to 34 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0009PE', {'label': 'SEX AND AGE!!Total population!!25 to 34 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0009PM', {'label': 'SEX AND AGE!!Total population!!25 to 34 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0010E', {'label': 'SEX AND AGE!!Total population!!35 to 44 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0010M', {'label': 'SEX AND AGE!!Total population!!35 to 44 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0010PE', {'label': 'SEX AND AGE!!Total population!!35 to 44 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0010PM', {'label': 'SEX AND AGE!!Total population!!35 to 44 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0011E', {'label': 'SEX AND AGE!!Total population!!45 to 54 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0011M', {'label': 'SEX AND AGE!!Total population!!45 to 54 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0011PE', {'label': 'SEX AND AGE!!Total population!!45 to 54 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0011PM', {'label': 'SEX AND AGE!!Total population!!45 to 54 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0012E', {'label': 'SEX AND AGE!!Total population!!55 to 59 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0012M', {'label': 'SEX AND AGE!!Total population!!55 to 59 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0012PE', {'label': 'SEX AND AGE!!Total population!!55 to 59 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0012PM', {'label': 'SEX AND AGE!!Total population!!55 to 59 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0013E', {'label': 'SEX AND AGE!!Total population!!60 to 64 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0013M', {'label': 'SEX AND AGE!!Total population!!60 to 64 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0013PE', {'label': 'SEX AND AGE!!Total population!!60 to 64 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0013PM', {'label': 'SEX AND AGE!!Total population!!60 to 64 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0014E', {'label': 'SEX AND AGE!!Total population!!65 to 74 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0014M', {'label': 'SEX AND AGE!!Total population!!65 to 74 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0014PE', {'label': 'SEX AND AGE!!Total population!!65 to 74 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0014PM', {'label': 'SEX AND AGE!!Total population!!65 to 74 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0015E', {'label': 'SEX AND AGE!!Total population!!75 to 84 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0015M', {'label': 'SEX AND AGE!!Total population!!75 to 84 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0015PE', {'label': 'SEX AND AGE!!Total population!!75 to 84 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0015PM', {'label': 'SEX AND AGE!!Total population!!75 to 84 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0016E', {'label': 'SEX AND AGE!!Total population!!85 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0016M', {'label': 'SEX AND AGE!!Total population!!85 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0016PE', {'label': 'SEX AND AGE!!Total population!!85 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0016PM', {'label': 'SEX AND AGE!!Total population!!85 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0017E', {'label': 'SEX AND AGE!!Total population!!Median age (years)', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0017M', {'label': 'SEX AND AGE!!Total population!!Median age (years)', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0017PE', {'label': 'SEX AND AGE!!Total population!!Median age (years)', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0017PM', {'label': 'SEX AND AGE!!Total population!!Median age (years)', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0018E', {'label': 'SEX AND AGE!!Total population!!18 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0018M', {'label': 'SEX AND AGE!!Total population!!18 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0018PE', {'label': 'SEX AND AGE!!Total population!!18 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0018PM', {'label': 'SEX AND AGE!!Total population!!18 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0019E', {'label': 'SEX AND AGE!!Total population!!21 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0019M', {'label': 'SEX AND AGE!!Total population!!21 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0019PE', {'label': 'SEX AND AGE!!Total population!!21 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0019PM', {'label': 'SEX AND AGE!!Total population!!21 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0020E', {'label': 'SEX AND AGE!!Total population!!62 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0020M', {'label': 'SEX AND AGE!!Total population!!62 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0020PE', {'label': 'SEX AND AGE!!Total population!!62 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0020PM', {'label': 'SEX AND AGE!!Total population!!62 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0021E', {'label': 'SEX AND AGE!!Total population!!65 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0021M', {'label': 'SEX AND AGE!!Total population!!65 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0021PE', {'label': 'SEX AND AGE!!Total population!!65 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0021PM', {'label': 'SEX AND AGE!!Total population!!65 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0022E', {'label': 'SEX AND AGE!!Total population!!18 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0022M', {'label': 'SEX AND AGE!!Total population!!18 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0022PE', {'label': 'SEX AND AGE!!Total population!!18 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0022PM', {'label': 'SEX AND AGE!!Total population!!18 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0023E', {'label': 'SEX AND AGE!!Total population!!18 years and over!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0023M', {'label': 'SEX AND AGE!!Total population!!18 years and over!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0023PE', {'label': 'SEX AND AGE!!Total population!!18 years and over!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0023PM', {'label': 'SEX AND AGE!!Total population!!18 years and over!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0024E', {'label': 'SEX AND AGE!!Total population!!18 years and over!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0024M', {'label': 'SEX AND AGE!!Total population!!18 years and over!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0024PE', {'label': 'SEX AND AGE!!Total population!!18 years and over!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0024PM', {'label': 'SEX AND AGE!!Total population!!18 years and over!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0025E', {'label': 'SEX AND AGE!!Total population!!65 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0025M', {'label': 'SEX AND AGE!!Total population!!65 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0025PE', {'label': 'SEX AND AGE!!Total population!!65 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0025PM', {'label': 'SEX AND AGE!!Total population!!65 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0026E', {'label': 'SEX AND AGE!!Total population!!65 years and over!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0026M', {'label': 'SEX AND AGE!!Total population!!65 years and over!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0026PE', {'label': 'SEX AND AGE!!Total population!!65 years and over!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0026PM', {'label': 'SEX AND AGE!!Total population!!65 years and over!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0027E', {'label': 'SEX AND AGE!!Total population!!65 years and over!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0027M', {'label': 'SEX AND AGE!!Total population!!65 years and over!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0027PE', {'label': 'SEX AND AGE!!Total population!!65 years and over!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0027PM', {'label': 'SEX AND AGE!!Total population!!65 years and over!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0028E', {'label': 'RACE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0028M', {'label': 'RACE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0028PE', {'label': 'RACE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0028PM', {'label': 'RACE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0029E', {'label': 'RACE!!Total population!!One race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0029M', {'label': 'RACE!!Total population!!One race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0029PE', {'label': 'RACE!!Total population!!One race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0029PM', {'label': 'RACE!!Total population!!One race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0030E', {'label': 'RACE!!Total population!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0030M', {'label': 'RACE!!Total population!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0030PE', {'label': 'RACE!!Total population!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0030PM', {'label': 'RACE!!Total population!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0031E', {'label': 'RACE!!One race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0031M', {'label': 'RACE!!One race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0031PE', {'label': 'RACE!!One race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0031PM', {'label': 'RACE!!One race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0032E', {'label': 'RACE!!One race!!White', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0032M', {'label': 'RACE!!One race!!White', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0032PE', {'label': 'RACE!!One race!!White', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0032PM', {'label': 'RACE!!One race!!White', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0033E', {'label': 'RACE!!One race!!Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0033M', {'label': 'RACE!!One race!!Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0033PE', {'label': 'RACE!!One race!!Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0033PM', {'label': 'RACE!!One race!!Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0034E', {'label': 'RACE!!One race!!American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0034M', {'label': 'RACE!!One race!!American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0034PE', {'label': 'RACE!!One race!!American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0034PM', {'label': 'RACE!!One race!!American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0035E', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0035M', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0035PE', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0035PM', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0036E', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Chippewa tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0036M', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Chippewa tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0036PE', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Chippewa tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0036PM', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Chippewa tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0037E', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Navajo tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0037M', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Navajo tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0037PE', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Navajo tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0037PM', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Navajo tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0038E', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Sioux tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0038M', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Sioux tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0038PE', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Sioux tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0038PM', {'label': 'RACE!!One race!!American Indian and Alaska Native!!Sioux tribal grouping', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0039E', {'label': 'RACE!!One race!!Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0039M', {'label': 'RACE!!One race!!Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0039PE', {'label': 'RACE!!One race!!Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0039PM', {'label': 'RACE!!One race!!Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0040E', {'label': 'RACE!!One race!!Asian!!Asian Indian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0040M', {'label': 'RACE!!One race!!Asian!!Asian Indian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0040PE', {'label': 'RACE!!One race!!Asian!!Asian Indian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0040PM', {'label': 'RACE!!One race!!Asian!!Asian Indian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0041E', {'label': 'RACE!!One race!!Asian!!Chinese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0041M', {'label': 'RACE!!One race!!Asian!!Chinese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0041PE', {'label': 'RACE!!One race!!Asian!!Chinese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0041PM', {'label': 'RACE!!One race!!Asian!!Chinese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0042E', {'label': 'RACE!!One race!!Asian!!Filipino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0042M', {'label': 'RACE!!One race!!Asian!!Filipino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0042PE', {'label': 'RACE!!One race!!Asian!!Filipino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0042PM', {'label': 'RACE!!One race!!Asian!!Filipino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0043E', {'label': 'RACE!!One race!!Asian!!Japanese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0043M', {'label': 'RACE!!One race!!Asian!!Japanese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0043PE', {'label': 'RACE!!One race!!Asian!!Japanese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0043PM', {'label': 'RACE!!One race!!Asian!!Japanese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0044E', {'label': 'RACE!!One race!!Asian!!Korean', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0044M', {'label': 'RACE!!One race!!Asian!!Korean', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0044PE', {'label': 'RACE!!One race!!Asian!!Korean', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0044PM', {'label': 'RACE!!One race!!Asian!!Korean', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0045E', {'label': 'RACE!!One race!!Asian!!Vietnamese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0045M', {'label': 'RACE!!One race!!Asian!!Vietnamese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0045PE', {'label': 'RACE!!One race!!Asian!!Vietnamese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0045PM', {'label': 'RACE!!One race!!Asian!!Vietnamese', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0046E', {'label': 'RACE!!One race!!Asian!!Other Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0046M', {'label': 'RACE!!One race!!Asian!!Other Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0046PE', {'label': 'RACE!!One race!!Asian!!Other Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0046PM', {'label': 'RACE!!One race!!Asian!!Other Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0047E', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0047M', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0047PE', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0047PM', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0048E', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Native Hawaiian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0048M', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Native Hawaiian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0048PE', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Native Hawaiian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0048PM', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Native Hawaiian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0049E', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Guamanian or Chamorro', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0049M', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Guamanian or Chamorro', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0049PE', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Guamanian or Chamorro', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0049PM', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Guamanian or Chamorro', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0050E', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Samoan', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0050M', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Samoan', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0050PE', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Samoan', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0050PM', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Samoan', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0051E', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0051M', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0051PE', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0051PM', {'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0052E', {'label': 'RACE!!One race!!Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0052M', {'label': 'RACE!!One race!!Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0052PE', {'label': 'RACE!!One race!!Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0052PM', {'label': 'RACE!!One race!!Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0053E', {'label': 'RACE!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0053M', {'label': 'RACE!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0053PE', {'label': 'RACE!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0053PM', {'label': 'RACE!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0054E', {'label': 'RACE!!Two or more races!!White and Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0054M', {'label': 'RACE!!Two or more races!!White and Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0054PE', {'label': 'RACE!!Two or more races!!White and Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0054PM', {'label': 'RACE!!Two or more races!!White and Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0055E', {'label': 'RACE!!Two or more races!!White and American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0055M', {'label': 'RACE!!Two or more races!!White and American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0055PE', {'label': 'RACE!!Two or more races!!White and American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0055PM', {'label': 'RACE!!Two or more races!!White and American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0056E', {'label': 'RACE!!Two or more races!!White and Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0056M', {'label': 'RACE!!Two or more races!!White and Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0056PE', {'label': 'RACE!!Two or more races!!White and Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0056PM', {'label': 'RACE!!Two or more races!!White and Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0057E', {'label': 'RACE!!Two or more races!!Black or African American and American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0057M', {'label': 'RACE!!Two or more races!!Black or African American and American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0057PE', {'label': 'RACE!!Two or more races!!Black or African American and American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0057PM', {'label': 'RACE!!Two or more races!!Black or African American and American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0058E', {'label': 'Race alone or in combination with one or more other races!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0058M', {'label': 'Race alone or in combination with one or more other races!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0058PE', {'label': 'Race alone or in combination with one or more other races!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0058PM', {'label': 'Race alone or in combination with one or more other races!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0059E', {'label': 'Race alone or in combination with one or more other races!!Total population!!White', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0059M', {'label': 'Race alone or in combination with one or more other races!!Total population!!White', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0059PE', {'label': 'Race alone or in combination with one or more other races!!Total population!!White', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0059PM', {'label': 'Race alone or in combination with one or more other races!!Total population!!White', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0060E', {'label': 'Race alone or in combination with one or more other races!!Total population!!Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0060M', {'label': 'Race alone or in combination with one or more other races!!Total population!!Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0060PE', {'label': 'Race alone or in combination with one or more other races!!Total population!!Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0060PM', {'label': 'Race alone or in combination with one or more other races!!Total population!!Black or African American', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0061E', {'label': 'Race alone or in combination with one or more other races!!Total population!!American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0061M', {'label': 'Race alone or in combination with one or more other races!!Total population!!American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0061PE', {'label': 'Race alone or in combination with one or more other races!!Total population!!American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0061PM', {'label': 'Race alone or in combination with one or more other races!!Total population!!American Indian and Alaska Native', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0062E', {'label': 'Race alone or in combination with one or more other races!!Total population!!Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0062M', {'label': 'Race alone or in combination with one or more other races!!Total population!!Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0062PE', {'label': 'Race alone or in combination with one or more other races!!Total population!!Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0062PM', {'label': 'Race alone or in combination with one or more other races!!Total population!!Asian', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0063E', {'label': 'Race alone or in combination with one or more other races!!Total population!!Native Hawaiian and Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0063M', {'label': 'Race alone or in combination with one or more other races!!Total population!!Native Hawaiian and Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0063PE', {'label': 'Race alone or in combination with one or more other races!!Total population!!Native Hawaiian and Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0063PM', {'label': 'Race alone or in combination with one or more other races!!Total population!!Native Hawaiian and Other Pacific Islander', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0064E', {'label': 'Race alone or in combination with one or more other races!!Total population!!Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0064M', {'label': 'Race alone or in combination with one or more other races!!Total population!!Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0064PE', {'label': 'Race alone or in combination with one or more other races!!Total population!!Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0064PM', {'label': 'Race alone or in combination with one or more other races!!Total population!!Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0065E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0065M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0065PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0065PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0066E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0066M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0066PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0066PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0067E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Mexican', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0067M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Mexican', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0067PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Mexican', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0067PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Mexican', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0068E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Puerto Rican', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0068M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Puerto Rican', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0068PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Puerto Rican', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0068PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Puerto Rican', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0069E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0069M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0069PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0069PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0070E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Other Hispanic or Latino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0070M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Other Hispanic or Latino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0070PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Other Hispanic or Latino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0070PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Other Hispanic or Latino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0071E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0071M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0071PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0071PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0072E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!White alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0072M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!White alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0072PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!White alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0072PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!White alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0073E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Black or African American alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0073M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Black or African American alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0073PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Black or African American alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0073PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Black or African American alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0074E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!American Indian and Alaska Native alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0074M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!American Indian and Alaska Native alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0074PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!American Indian and Alaska Native alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0074PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!American Indian and Alaska Native alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0075E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Asian alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0075M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Asian alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0075PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Asian alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0075PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Asian alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0076E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Native Hawaiian and Other Pacific Islander alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0076M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Native Hawaiian and Other Pacific Islander alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0076PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Native Hawaiian and Other Pacific Islander alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0076PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Native Hawaiian and Other Pacific Islander alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0077E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Some other race alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0077M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Some other race alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0077PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Some other race alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0077PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Some other race alone', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0078E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0078M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0078PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0078PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0079E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races including Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0079M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races including Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0079PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races including Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0079PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races including Some other race', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0080E', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races excluding Some other race, and Three or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0080M', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races excluding Some other race, and Three or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0080PE', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races excluding Some other race, and Three or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0080PM', {'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races excluding Some other race, and Three or more races', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0081E', {'label': 'Total housing units', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0081M', {'label': 'Total housing units', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0081PE', {'label': 'Total housing units', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0081PM', {'label': 'Total housing units', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0082E', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0082M', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0082PE', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0082PM', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0083E', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0083M', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0083PE', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0083PM', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Male', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0084E', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0084M', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0084PE', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'}), ('DP05_0084PM', {'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Female', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int'})])
-	>>> print(censusdata.censusvar('acs5', '2015', ['DP05_0001E', 'DP05_0014PE', 'DP05_0015PE', 'DP05_0016PE']))
-	JSON variable information includes unexpected number of keys (7, instead of 4):  {'name': 'DP05_0001E', 'label': 'SEX AND AGE!!Total population', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int', 'group': 'N/A', 'limit': 0, 'validValues': []}
-	JSON variable information includes unexpected number of keys (7, instead of 4):  {'name': 'DP05_0014PE', 'label': 'SEX AND AGE!!Total population!!65 to 74 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int', 'group': 'N/A', 'limit': 0, 'validValues': []}
-	JSON variable information includes unexpected number of keys (7, instead of 4):  {'name': 'DP05_0015PE', 'label': 'SEX AND AGE!!Total population!!75 to 84 years', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int', 'group': 'N/A', 'limit': 0, 'validValues': []}
-	JSON variable information includes unexpected number of keys (7, instead of 4):  {'name': 'DP05_0016PE', 'label': 'SEX AND AGE!!Total population!!85 years and over', 'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'predicateType': 'int', 'group': 'N/A', 'limit': 0, 'validValues': []}
-	{'DP05_0001E': ['ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population', 'int'], 'DP05_0014PE': ['ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!65 to 74 years', 'int'], 'DP05_0015PE': ['ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!75 to 84 years', 'int'], 'DP05_0016PE': ['ACS DEMOGRAPHIC AND HOUSING ESTIMATES', 'SEX AND AGE!!Total population!!85 years and over', 'int']}
+.. code:: ipython3
 
-After identifying the relevant variables, we download and describe the data, and compute the percent 65+ similarly to how we did so before,
-except now the computation is somewhat simpler::
+    censusdata.search('acs5', '2015', 'label', '65', tabletype='profile')
 
-	>>> county65plus = censusdata.download('acs5', '2015', censusdata.censusgeo([('county', '*')]), ['DP05_0001E', 'DP05_0014PE', 'DP05_0015PE', 'DP05_0016PE',], tabletype='profile')
-	>>> print(county65plus.describe())
-		 DP05_0001E  DP05_0014PE  DP05_0015PE  DP05_0016PE
-	count  3.220000e+03  3220.000000  3220.000000  3220.000000
-	mean   9.940935e+04     9.605932     5.303882     2.193261
-	std    3.193055e+05     2.431750     1.625876     0.929203
-	min    8.500000e+01     2.100000     0.000000     0.000000
-	25%    1.121800e+04     8.100000     4.200000     1.600000
-	50%    2.603500e+04     9.400000     5.100000     2.000000
-	75%    6.643050e+04    10.800000     6.200000     2.600000
-	max    1.003839e+07    32.500000    14.900000     9.100000
-	>>> county65plus['percent_65plus'] = county65plus['DP05_0014PE'] + county65plus['DP05_0015PE'] + county65plus['DP05_0016PE']
-	>>> county65plus = county65plus[['DP05_0001E', 'percent_65plus']]
-	>>> county65plus = county65plus.rename(columns={'DP05_0001E': 'population_size'})
-	>>> print(county65plus.describe())
-	       population_size  percent_65plus
-	count     3.220000e+03     3220.000000
-	mean      9.940935e+04       17.103075
-	std       3.193055e+05        4.391266
-	min       8.500000e+01        3.300000
-	25%       1.121800e+04       14.300000
-	50%       2.603500e+04       16.800000
-	75%       6.643050e+04       19.400000
-	max       1.003839e+07       50.900000
 
-Finally, we identify the top 30 counties for population aged 65+, and export data for all counties to CSV::
 
-	>>> county65plus.sort_values('percent_65plus', ascending=False, inplace=True)
-	>>> print(county65plus.head(30))
-							    population_size  percent_65plus
-	Sumter County, Florida: Summary level: 050, sta...           108501            50.9
-	Charlotte County, Florida: Summary level: 050, ...           165783            36.8
-	Mineral County, Colorado: Summary level: 050, s...              733            36.6
-	Hooker County, Nebraska: Summary level: 050, st...              681            35.8
-	La Paz County, Arizona: Summary level: 050, sta...            20335            35.2
-	Citrus County, Florida: Summary level: 050, sta...           139654            34.4
-	Wheeler County, Oregon: Summary level: 050, sta...             1348            34.3
-	Highland County, Virginia: Summary level: 050, ...             2244            34.0
-	Alcona County, Michigan: Summary level: 050, st...            10550            34.0
-	Real County, Texas: Summary level: 050, state:4...             3356            34.0
-	Lancaster County, Virginia: Summary level: 050,...            11129            33.9
-	Sierra County, New Mexico: Summary level: 050, ...            11615            33.9
-	Llano County, Texas: Summary level: 050, state:...            19323            33.6
-	Highlands County, Florida: Summary level: 050, ...            98328            33.3
-	Sarasota County, Florida: Summary level: 050, s...           392038            33.1
-	Northumberland County, Virginia: Summary level:...            12304            33.1
-	McIntosh County, North Dakota: Summary level: 0...             2759            33.1
-	Catron County, New Mexico: Summary level: 050, ...             3583            32.7
-	Towns County, Georgia: Summary level: 050, stat...            10800            31.9
-	Hickory County, Missouri: Summary level: 050, s...             9335            31.5
-	Ontonagon County, Michigan: Summary level: 050,...             6298            30.6
-	Union County, Georgia: Summary level: 050, stat...            21725            30.5
-	Curry County, Oregon: Summary level: 050, state...            22338            30.4
-	Hinsdale County, Colorado: Summary level: 050, ...              874            30.1
-	Jefferson County, Washington: Summary level: 05...            30083            30.1
-	McMullen County, Texas: Summary level: 050, sta...              778            29.7
-	Keweenaw County, Michigan: Summary level: 050, ...             2198            29.7
-	McPherson County, South Dakota: Summary level: ...             2263            29.7
-	Indian River County, Florida: Summary level: 05...           142866            29.6
-	Baxter County, Arkansas: Summary level: 050, st...            41040            29.5
-	>>> censusdata.exportcsv('county65plus.csv', county65plus)
 
-============================================================
+.. parsed-literal::
+
+    [('DP02PR_0012E',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02PR_0012M',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02PR_0012PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02PR_0012PM',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02PR_0014E',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'),
+     ('DP02PR_0014M',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'),
+     ('DP02PR_0014PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'),
+     ('DP02PR_0014PM',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'),
+     ('DP02PR_0076E',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02PR_0076M',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02PR_0076PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02PR_0076PM',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02PR_0077E',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP02PR_0077M',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP02PR_0077PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP02PR_0077PM',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP02_0012E',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02_0012M',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02_0012PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02_0012PM',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02_0014E',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'),
+     ('DP02_0014M',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'),
+     ('DP02_0014PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'),
+     ('DP02_0014PM',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over'),
+     ('DP02_0076E',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02_0076M',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02_0076PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02_0076PM',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02_0077E',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP02_0077M',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP02_0077PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP02_0077PM',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP03_0135E',
+      'SELECTED ECONOMIC CHARACTERISTICS',
+      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'),
+     ('DP03_0135M',
+      'SELECTED ECONOMIC CHARACTERISTICS',
+      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'),
+     ('DP03_0135PE',
+      'SELECTED ECONOMIC CHARACTERISTICS',
+      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'),
+     ('DP03_0135PM',
+      'SELECTED ECONOMIC CHARACTERISTICS',
+      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'),
+     ('DP03_0136E',
+      'SELECTED ECONOMIC CHARACTERISTICS',
+      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!People in families'),
+     ('DP03_0136M',
+      'SELECTED ECONOMIC CHARACTERISTICS',
+      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!People in families'),
+     ('DP03_0137E',
+      'SELECTED ECONOMIC CHARACTERISTICS',
+      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!Unrelated individuals 15 years and over'),
+     ('DP03_0137M',
+      'SELECTED ECONOMIC CHARACTERISTICS',
+      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!Unrelated individuals 15 years and over'),
+     ('DP05_0014E',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 to 74 years'),
+     ('DP05_0014M',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 to 74 years'),
+     ('DP05_0014PE',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 to 74 years'),
+     ('DP05_0014PM',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 to 74 years'),
+     ('DP05_0021E',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over'),
+     ('DP05_0021M',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over'),
+     ('DP05_0021PE',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over'),
+     ('DP05_0021PM',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over'),
+     ('DP05_0025E',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over'),
+     ('DP05_0025M',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over'),
+     ('DP05_0025PE',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over'),
+     ('DP05_0025PM',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over'),
+     ('DP05_0026E',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over!!Male'),
+     ('DP05_0026M',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over!!Male'),
+     ('DP05_0026PE',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over!!Male'),
+     ('DP05_0026PM',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over!!Male'),
+     ('DP05_0027E',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over!!Female'),
+     ('DP05_0027M',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over!!Female'),
+     ('DP05_0027PE',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over!!Female'),
+     ('DP05_0027PM',
+      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+      'SEX AND AGE!!Total population!!65 years and over!!Female')]
+
+
+
+.. code:: ipython3
+
+    censusdata.censustable('acs5', '2015', 'DP05')
+
+
+
+
+.. parsed-literal::
+
+    OrderedDict([('DP05_0001E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0001M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0001PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0001PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0002E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0002M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0002PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0002PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0003E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0003M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0003PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0003PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0004E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Under 5 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0004M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Under 5 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0004PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Under 5 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0004PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Under 5 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0005E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!5 to 9 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0005M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!5 to 9 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0005PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!5 to 9 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0005PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!5 to 9 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0006E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!10 to 14 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0006M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!10 to 14 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0006PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!10 to 14 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0006PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!10 to 14 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0007E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!15 to 19 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0007M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!15 to 19 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0007PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!15 to 19 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0007PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!15 to 19 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0008E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!20 to 24 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0008M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!20 to 24 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0008PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!20 to 24 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0008PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!20 to 24 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0009E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!25 to 34 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0009M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!25 to 34 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0009PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!25 to 34 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0009PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!25 to 34 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0010E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!35 to 44 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0010M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!35 to 44 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0010PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!35 to 44 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0010PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!35 to 44 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0011E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!45 to 54 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0011M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!45 to 54 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0011PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!45 to 54 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0011PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!45 to 54 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0012E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!55 to 59 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0012M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!55 to 59 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0012PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!55 to 59 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0012PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!55 to 59 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0013E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!60 to 64 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0013M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!60 to 64 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0013PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!60 to 64 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0013PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!60 to 64 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0014E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 to 74 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0014M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 to 74 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0014PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 to 74 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0014PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 to 74 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0015E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!75 to 84 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0015M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!75 to 84 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0015PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!75 to 84 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0015PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!75 to 84 years',
+                   'predicateType': 'int'}),
+                 ('DP05_0016E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!85 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0016M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!85 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0016PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!85 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0016PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!85 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0017E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Median age (years)',
+                   'predicateType': 'int'}),
+                 ('DP05_0017M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Median age (years)',
+                   'predicateType': 'int'}),
+                 ('DP05_0017PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Median age (years)',
+                   'predicateType': 'int'}),
+                 ('DP05_0017PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!Median age (years)',
+                   'predicateType': 'int'}),
+                 ('DP05_0018E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0018M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0018PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0018PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0019E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!21 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0019M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!21 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0019PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!21 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0019PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!21 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0020E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!62 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0020M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!62 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0020PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!62 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0020PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!62 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0021E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0021M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0021PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0021PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0022E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0022M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0022PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0022PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0023E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0023M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0023PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0023PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0024E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0024M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0024PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0024PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!18 years and over!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0025E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0025M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0025PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0025PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over',
+                   'predicateType': 'int'}),
+                 ('DP05_0026E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0026M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0026PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0026PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0027E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0027M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0027PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0027PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'SEX AND AGE!!Total population!!65 years and over!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0028E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0028M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0028PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0028PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0029E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population!!One race',
+                   'predicateType': 'int'}),
+                 ('DP05_0029M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population!!One race',
+                   'predicateType': 'int'}),
+                 ('DP05_0029PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population!!One race',
+                   'predicateType': 'int'}),
+                 ('DP05_0029PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population!!One race',
+                   'predicateType': 'int'}),
+                 ('DP05_0030E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0030M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0030PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0030PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Total population!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0031E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race',
+                   'predicateType': 'int'}),
+                 ('DP05_0031M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race',
+                   'predicateType': 'int'}),
+                 ('DP05_0031PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race',
+                   'predicateType': 'int'}),
+                 ('DP05_0031PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race',
+                   'predicateType': 'int'}),
+                 ('DP05_0032E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!White',
+                   'predicateType': 'int'}),
+                 ('DP05_0032M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!White',
+                   'predicateType': 'int'}),
+                 ('DP05_0032PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!White',
+                   'predicateType': 'int'}),
+                 ('DP05_0032PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!White',
+                   'predicateType': 'int'}),
+                 ('DP05_0033E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0033M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0033PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0033PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0034E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0034M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0034PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0034PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0035E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0035M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0035PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0035PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0036E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Chippewa tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0036M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Chippewa tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0036PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Chippewa tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0036PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Chippewa tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0037E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Navajo tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0037M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Navajo tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0037PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Navajo tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0037PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Navajo tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0038E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Sioux tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0038M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Sioux tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0038PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Sioux tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0038PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!American Indian and Alaska Native!!Sioux tribal grouping',
+                   'predicateType': 'int'}),
+                 ('DP05_0039E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0039M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0039PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0039PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0040E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Asian Indian',
+                   'predicateType': 'int'}),
+                 ('DP05_0040M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Asian Indian',
+                   'predicateType': 'int'}),
+                 ('DP05_0040PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Asian Indian',
+                   'predicateType': 'int'}),
+                 ('DP05_0040PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Asian Indian',
+                   'predicateType': 'int'}),
+                 ('DP05_0041E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Chinese',
+                   'predicateType': 'int'}),
+                 ('DP05_0041M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Chinese',
+                   'predicateType': 'int'}),
+                 ('DP05_0041PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Chinese',
+                   'predicateType': 'int'}),
+                 ('DP05_0041PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Chinese',
+                   'predicateType': 'int'}),
+                 ('DP05_0042E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Filipino',
+                   'predicateType': 'int'}),
+                 ('DP05_0042M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Filipino',
+                   'predicateType': 'int'}),
+                 ('DP05_0042PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Filipino',
+                   'predicateType': 'int'}),
+                 ('DP05_0042PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Filipino',
+                   'predicateType': 'int'}),
+                 ('DP05_0043E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Japanese',
+                   'predicateType': 'int'}),
+                 ('DP05_0043M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Japanese',
+                   'predicateType': 'int'}),
+                 ('DP05_0043PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Japanese',
+                   'predicateType': 'int'}),
+                 ('DP05_0043PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Japanese',
+                   'predicateType': 'int'}),
+                 ('DP05_0044E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Korean',
+                   'predicateType': 'int'}),
+                 ('DP05_0044M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Korean',
+                   'predicateType': 'int'}),
+                 ('DP05_0044PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Korean',
+                   'predicateType': 'int'}),
+                 ('DP05_0044PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Korean',
+                   'predicateType': 'int'}),
+                 ('DP05_0045E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Vietnamese',
+                   'predicateType': 'int'}),
+                 ('DP05_0045M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Vietnamese',
+                   'predicateType': 'int'}),
+                 ('DP05_0045PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Vietnamese',
+                   'predicateType': 'int'}),
+                 ('DP05_0045PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Vietnamese',
+                   'predicateType': 'int'}),
+                 ('DP05_0046E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Other Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0046M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Other Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0046PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Other Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0046PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Asian!!Other Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0047E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0047M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0047PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0047PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0048E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Native Hawaiian',
+                   'predicateType': 'int'}),
+                 ('DP05_0048M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Native Hawaiian',
+                   'predicateType': 'int'}),
+                 ('DP05_0048PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Native Hawaiian',
+                   'predicateType': 'int'}),
+                 ('DP05_0048PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Native Hawaiian',
+                   'predicateType': 'int'}),
+                 ('DP05_0049E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Guamanian or Chamorro',
+                   'predicateType': 'int'}),
+                 ('DP05_0049M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Guamanian or Chamorro',
+                   'predicateType': 'int'}),
+                 ('DP05_0049PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Guamanian or Chamorro',
+                   'predicateType': 'int'}),
+                 ('DP05_0049PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Guamanian or Chamorro',
+                   'predicateType': 'int'}),
+                 ('DP05_0050E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Samoan',
+                   'predicateType': 'int'}),
+                 ('DP05_0050M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Samoan',
+                   'predicateType': 'int'}),
+                 ('DP05_0050PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Samoan',
+                   'predicateType': 'int'}),
+                 ('DP05_0050PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Samoan',
+                   'predicateType': 'int'}),
+                 ('DP05_0051E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0051M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0051PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0051PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Native Hawaiian and Other Pacific Islander!!Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0052E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0052M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0052PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0052PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!One race!!Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0053E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0053M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0053PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0053PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0054E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0054M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0054PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0054PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0055E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0055M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0055PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0055PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0056E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0056M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0056PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0056PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!White and Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0057E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!Black or African American and American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0057M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!Black or African American and American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0057PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!Black or African American and American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0057PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'RACE!!Two or more races!!Black or African American and American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0058E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0058M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0058PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0058PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0059E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!White',
+                   'predicateType': 'int'}),
+                 ('DP05_0059M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!White',
+                   'predicateType': 'int'}),
+                 ('DP05_0059PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!White',
+                   'predicateType': 'int'}),
+                 ('DP05_0059PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!White',
+                   'predicateType': 'int'}),
+                 ('DP05_0060E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0060M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0060PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0060PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Black or African American',
+                   'predicateType': 'int'}),
+                 ('DP05_0061E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0061M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0061PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0061PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!American Indian and Alaska Native',
+                   'predicateType': 'int'}),
+                 ('DP05_0062E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0062M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0062PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0062PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Asian',
+                   'predicateType': 'int'}),
+                 ('DP05_0063E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Native Hawaiian and Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0063M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Native Hawaiian and Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0063PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Native Hawaiian and Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0063PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Native Hawaiian and Other Pacific Islander',
+                   'predicateType': 'int'}),
+                 ('DP05_0064E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0064M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0064PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0064PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Race alone or in combination with one or more other races!!Total population!!Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0065E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0065M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0065PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0065PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population',
+                   'predicateType': 'int'}),
+                 ('DP05_0066E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)',
+                   'predicateType': 'int'}),
+                 ('DP05_0066M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)',
+                   'predicateType': 'int'}),
+                 ('DP05_0066PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)',
+                   'predicateType': 'int'}),
+                 ('DP05_0066PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)',
+                   'predicateType': 'int'}),
+                 ('DP05_0067E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Mexican',
+                   'predicateType': 'int'}),
+                 ('DP05_0067M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Mexican',
+                   'predicateType': 'int'}),
+                 ('DP05_0067PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Mexican',
+                   'predicateType': 'int'}),
+                 ('DP05_0067PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Mexican',
+                   'predicateType': 'int'}),
+                 ('DP05_0068E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Puerto Rican',
+                   'predicateType': 'int'}),
+                 ('DP05_0068M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Puerto Rican',
+                   'predicateType': 'int'}),
+                 ('DP05_0068PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Puerto Rican',
+                   'predicateType': 'int'}),
+                 ('DP05_0068PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Puerto Rican',
+                   'predicateType': 'int'}),
+                 ('DP05_0069E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban',
+                   'predicateType': 'int'}),
+                 ('DP05_0069M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban',
+                   'predicateType': 'int'}),
+                 ('DP05_0069PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban',
+                   'predicateType': 'int'}),
+                 ('DP05_0069PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban',
+                   'predicateType': 'int'}),
+                 ('DP05_0070E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Other Hispanic or Latino',
+                   'predicateType': 'int'}),
+                 ('DP05_0070M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Other Hispanic or Latino',
+                   'predicateType': 'int'}),
+                 ('DP05_0070PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Other Hispanic or Latino',
+                   'predicateType': 'int'}),
+                 ('DP05_0070PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Other Hispanic or Latino',
+                   'predicateType': 'int'}),
+                 ('DP05_0071E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino',
+                   'predicateType': 'int'}),
+                 ('DP05_0071M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino',
+                   'predicateType': 'int'}),
+                 ('DP05_0071PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino',
+                   'predicateType': 'int'}),
+                 ('DP05_0071PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino',
+                   'predicateType': 'int'}),
+                 ('DP05_0072E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!White alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0072M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!White alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0072PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!White alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0072PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!White alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0073E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Black or African American alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0073M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Black or African American alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0073PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Black or African American alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0073PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Black or African American alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0074E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!American Indian and Alaska Native alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0074M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!American Indian and Alaska Native alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0074PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!American Indian and Alaska Native alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0074PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!American Indian and Alaska Native alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0075E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Asian alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0075M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Asian alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0075PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Asian alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0075PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Asian alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0076E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Native Hawaiian and Other Pacific Islander alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0076M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Native Hawaiian and Other Pacific Islander alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0076PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Native Hawaiian and Other Pacific Islander alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0076PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Native Hawaiian and Other Pacific Islander alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0077E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Some other race alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0077M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Some other race alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0077PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Some other race alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0077PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Some other race alone',
+                   'predicateType': 'int'}),
+                 ('DP05_0078E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0078M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0078PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0078PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0079E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races including Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0079M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races including Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0079PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races including Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0079PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races including Some other race',
+                   'predicateType': 'int'}),
+                 ('DP05_0080E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races excluding Some other race, and Three or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0080M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races excluding Some other race, and Three or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0080PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races excluding Some other race, and Three or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0080PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races!!Two races excluding Some other race, and Three or more races',
+                   'predicateType': 'int'}),
+                 ('DP05_0081E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Total housing units',
+                   'predicateType': 'int'}),
+                 ('DP05_0081M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Total housing units',
+                   'predicateType': 'int'}),
+                 ('DP05_0081PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Total housing units',
+                   'predicateType': 'int'}),
+                 ('DP05_0081PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'Total housing units',
+                   'predicateType': 'int'}),
+                 ('DP05_0082E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population',
+                   'predicateType': 'int'}),
+                 ('DP05_0082M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population',
+                   'predicateType': 'int'}),
+                 ('DP05_0082PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population',
+                   'predicateType': 'int'}),
+                 ('DP05_0082PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population',
+                   'predicateType': 'int'}),
+                 ('DP05_0083E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0083M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0083PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0083PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Male',
+                   'predicateType': 'int'}),
+                 ('DP05_0084E',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0084M',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0084PE',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Female',
+                   'predicateType': 'int'}),
+                 ('DP05_0084PM',
+                  {'concept': 'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
+                   'label': 'CITIZEN, VOTING AGE POPULATION!!Citizen, 18 and over population!!Female',
+                   'predicateType': 'int'})])
+
+
+
+After identifying the relevant variables, we download and describe the
+data, and compute the percent 65+ similarly to how we did so before,
+except now the computation is somewhat simpler:
+
+.. code:: ipython3
+
+    county65plus = censusdata.download('acs5', '2015', censusdata.censusgeo([('county', '*')]),
+                                       ['DP05_0001E', 'DP05_0014PE', 'DP05_0015PE', 'DP05_0016PE',],
+                                       tabletype='profile')
+    county65plus.describe()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>DP05_0001E</th>
+          <th>DP05_0014PE</th>
+          <th>DP05_0015PE</th>
+          <th>DP05_0016PE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>count</th>
+          <td>3.22e+03</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+          <td>3220.00</td>
+        </tr>
+        <tr>
+          <th>mean</th>
+          <td>9.94e+04</td>
+          <td>9.61</td>
+          <td>5.30</td>
+          <td>2.19</td>
+        </tr>
+        <tr>
+          <th>std</th>
+          <td>3.19e+05</td>
+          <td>2.43</td>
+          <td>1.63</td>
+          <td>0.93</td>
+        </tr>
+        <tr>
+          <th>min</th>
+          <td>8.50e+01</td>
+          <td>2.10</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <th>25%</th>
+          <td>1.12e+04</td>
+          <td>8.10</td>
+          <td>4.20</td>
+          <td>1.60</td>
+        </tr>
+        <tr>
+          <th>50%</th>
+          <td>2.60e+04</td>
+          <td>9.40</td>
+          <td>5.10</td>
+          <td>2.00</td>
+        </tr>
+        <tr>
+          <th>75%</th>
+          <td>6.64e+04</td>
+          <td>10.80</td>
+          <td>6.20</td>
+          <td>2.60</td>
+        </tr>
+        <tr>
+          <th>max</th>
+          <td>1.00e+07</td>
+          <td>32.50</td>
+          <td>14.90</td>
+          <td>9.10</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: ipython3
+
+    county65plus['percent_65plus'] = (county65plus['DP05_0014PE'] + county65plus['DP05_0015PE']
+                                      + county65plus['DP05_0016PE'])
+    county65plus = county65plus[['DP05_0001E', 'percent_65plus']]
+    county65plus = county65plus.rename(columns={'DP05_0001E': 'population_size'})
+    county65plus.describe()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>population_size</th>
+          <th>percent_65plus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>count</th>
+          <td>3.22e+03</td>
+          <td>3220.00</td>
+        </tr>
+        <tr>
+          <th>mean</th>
+          <td>9.94e+04</td>
+          <td>17.10</td>
+        </tr>
+        <tr>
+          <th>std</th>
+          <td>3.19e+05</td>
+          <td>4.39</td>
+        </tr>
+        <tr>
+          <th>min</th>
+          <td>8.50e+01</td>
+          <td>3.30</td>
+        </tr>
+        <tr>
+          <th>25%</th>
+          <td>1.12e+04</td>
+          <td>14.30</td>
+        </tr>
+        <tr>
+          <th>50%</th>
+          <td>2.60e+04</td>
+          <td>16.80</td>
+        </tr>
+        <tr>
+          <th>75%</th>
+          <td>6.64e+04</td>
+          <td>19.40</td>
+        </tr>
+        <tr>
+          <th>max</th>
+          <td>1.00e+07</td>
+          <td>50.90</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Finally, we identify the top 30 counties for population aged 65+, and
+export data for all counties to CSV:
+
+.. code:: ipython3
+
+    county65plus.sort_values('percent_65plus', ascending=False, inplace=True)
+    county65plus.head(30)
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>population_size</th>
+          <th>percent_65plus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Sumter County, Florida: Summary level: 050, state:12&gt; county:119</th>
+          <td>108501</td>
+          <td>50.9</td>
+        </tr>
+        <tr>
+          <th>Charlotte County, Florida: Summary level: 050, state:12&gt; county:015</th>
+          <td>165783</td>
+          <td>36.8</td>
+        </tr>
+        <tr>
+          <th>Mineral County, Colorado: Summary level: 050, state:08&gt; county:079</th>
+          <td>733</td>
+          <td>36.6</td>
+        </tr>
+        <tr>
+          <th>Hooker County, Nebraska: Summary level: 050, state:31&gt; county:091</th>
+          <td>681</td>
+          <td>35.8</td>
+        </tr>
+        <tr>
+          <th>La Paz County, Arizona: Summary level: 050, state:04&gt; county:012</th>
+          <td>20335</td>
+          <td>35.2</td>
+        </tr>
+        <tr>
+          <th>Citrus County, Florida: Summary level: 050, state:12&gt; county:017</th>
+          <td>139654</td>
+          <td>34.4</td>
+        </tr>
+        <tr>
+          <th>Wheeler County, Oregon: Summary level: 050, state:41&gt; county:069</th>
+          <td>1348</td>
+          <td>34.3</td>
+        </tr>
+        <tr>
+          <th>Highland County, Virginia: Summary level: 050, state:51&gt; county:091</th>
+          <td>2244</td>
+          <td>34.0</td>
+        </tr>
+        <tr>
+          <th>Alcona County, Michigan: Summary level: 050, state:26&gt; county:001</th>
+          <td>10550</td>
+          <td>34.0</td>
+        </tr>
+        <tr>
+          <th>Real County, Texas: Summary level: 050, state:48&gt; county:385</th>
+          <td>3356</td>
+          <td>34.0</td>
+        </tr>
+        <tr>
+          <th>Lancaster County, Virginia: Summary level: 050, state:51&gt; county:103</th>
+          <td>11129</td>
+          <td>33.9</td>
+        </tr>
+        <tr>
+          <th>Sierra County, New Mexico: Summary level: 050, state:35&gt; county:051</th>
+          <td>11615</td>
+          <td>33.9</td>
+        </tr>
+        <tr>
+          <th>Llano County, Texas: Summary level: 050, state:48&gt; county:299</th>
+          <td>19323</td>
+          <td>33.6</td>
+        </tr>
+        <tr>
+          <th>Highlands County, Florida: Summary level: 050, state:12&gt; county:055</th>
+          <td>98328</td>
+          <td>33.3</td>
+        </tr>
+        <tr>
+          <th>Sarasota County, Florida: Summary level: 050, state:12&gt; county:115</th>
+          <td>392038</td>
+          <td>33.1</td>
+        </tr>
+        <tr>
+          <th>Northumberland County, Virginia: Summary level: 050, state:51&gt; county:133</th>
+          <td>12304</td>
+          <td>33.1</td>
+        </tr>
+        <tr>
+          <th>McIntosh County, North Dakota: Summary level: 050, state:38&gt; county:051</th>
+          <td>2759</td>
+          <td>33.1</td>
+        </tr>
+        <tr>
+          <th>Catron County, New Mexico: Summary level: 050, state:35&gt; county:003</th>
+          <td>3583</td>
+          <td>32.7</td>
+        </tr>
+        <tr>
+          <th>Towns County, Georgia: Summary level: 050, state:13&gt; county:281</th>
+          <td>10800</td>
+          <td>31.9</td>
+        </tr>
+        <tr>
+          <th>Hickory County, Missouri: Summary level: 050, state:29&gt; county:085</th>
+          <td>9335</td>
+          <td>31.5</td>
+        </tr>
+        <tr>
+          <th>Ontonagon County, Michigan: Summary level: 050, state:26&gt; county:131</th>
+          <td>6298</td>
+          <td>30.6</td>
+        </tr>
+        <tr>
+          <th>Union County, Georgia: Summary level: 050, state:13&gt; county:291</th>
+          <td>21725</td>
+          <td>30.5</td>
+        </tr>
+        <tr>
+          <th>Curry County, Oregon: Summary level: 050, state:41&gt; county:015</th>
+          <td>22338</td>
+          <td>30.4</td>
+        </tr>
+        <tr>
+          <th>Hinsdale County, Colorado: Summary level: 050, state:08&gt; county:053</th>
+          <td>874</td>
+          <td>30.1</td>
+        </tr>
+        <tr>
+          <th>Jefferson County, Washington: Summary level: 050, state:53&gt; county:031</th>
+          <td>30083</td>
+          <td>30.1</td>
+        </tr>
+        <tr>
+          <th>McMullen County, Texas: Summary level: 050, state:48&gt; county:311</th>
+          <td>778</td>
+          <td>29.7</td>
+        </tr>
+        <tr>
+          <th>Keweenaw County, Michigan: Summary level: 050, state:26&gt; county:083</th>
+          <td>2198</td>
+          <td>29.7</td>
+        </tr>
+        <tr>
+          <th>McPherson County, South Dakota: Summary level: 050, state:46&gt; county:089</th>
+          <td>2263</td>
+          <td>29.7</td>
+        </tr>
+        <tr>
+          <th>Indian River County, Florida: Summary level: 050, state:12&gt; county:061</th>
+          <td>142866</td>
+          <td>29.6</td>
+        </tr>
+        <tr>
+          <th>Baxter County, Arkansas: Summary level: 050, state:05&gt; county:005</th>
+          <td>41040</td>
+          <td>29.5</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: ipython3
+
+    censusdata.exportcsv('county65plus.csv', county65plus)
+
 Example 3: Downloading State Data
-============================================================
+=================================
 
 For this example, we will be running a simple linear regression model,
-so we need an additional import::
+so we need an additional import:
 
-	>>> import statsmodels.formula.api as sm
+.. code:: ipython3
 
-We begin by downloading data on some basic socioeconomic characteristics for all U.S. states::
+    import statsmodels.formula.api as sm
 
-	>>> statedata = censusdata.download('acs5', '2015', censusdata.censusgeo([('state', '*')]), ['B01001_001E', 'B19013_001E', 'B19083_001E', 'C17002_001E', 'C17002_002E', 'C17002_003E', 'C17002_004E', 'B03002_001E', 'B03002_003E', 'B03002_004E', 'B03002_012E',])
+We begin by downloading data on some basic socioeconomic characteristics
+for all U.S. states:
 
-We then link data on the percent of voters in each state voting Democratic in the 2016 U.S. presidential election::
+.. code:: ipython3
 
-	>>> voting2016 = {
-	...         censusdata.censusgeo((('state', '01'),)): 34.6,
-	...         censusdata.censusgeo((('state', '02'),)): 37.7,
-	...         censusdata.censusgeo((('state', '04'),)): 45.4,
-	...         censusdata.censusgeo((('state', '05'),)): 33.8,
-	...         censusdata.censusgeo((('state', '06'),)): 61.6,
-	...         censusdata.censusgeo((('state', '08'),)): 47.2,
-	...         censusdata.censusgeo((('state', '09'),)): 54.5,
-	...         censusdata.censusgeo((('state', '10'),)): 53.4,
-	...         censusdata.censusgeo((('state', '11'),)): 92.8,
-	...         censusdata.censusgeo((('state', '12'),)): 47.8,
-	...         censusdata.censusgeo((('state', '13'),)): 45.6,
-	...         censusdata.censusgeo((('state', '15'),)): 62.3,
-	...         censusdata.censusgeo((('state', '16'),)): 27.6,
-	...         censusdata.censusgeo((('state', '17'),)): 55.4,
-	...         censusdata.censusgeo((('state', '18'),)): 37.9,
-	...         censusdata.censusgeo((('state', '19'),)): 42.2,
-	...         censusdata.censusgeo((('state', '20'),)): 36.2,
-	...         censusdata.censusgeo((('state', '21'),)): 32.7,
-	...         censusdata.censusgeo((('state', '22'),)): 38.4,
-	...         censusdata.censusgeo((('state', '23'),)): 47.9,
-	...         censusdata.censusgeo((('state', '24'),)): 60.5,
-	...         censusdata.censusgeo((('state', '25'),)): 60.8,
-	...         censusdata.censusgeo((('state', '26'),)): 47.3,
-	...         censusdata.censusgeo((('state', '27'),)): 46.9,
-	...         censusdata.censusgeo((('state', '28'),)): 39.7,
-	...         censusdata.censusgeo((('state', '29'),)): 38,
-	...         censusdata.censusgeo((('state', '30'),)): 36,
-	...         censusdata.censusgeo((('state', '31'),)): 34,
-	...         censusdata.censusgeo((('state', '32'),)): 47.9,
-	...         censusdata.censusgeo((('state', '33'),)): 47.6,
-	...         censusdata.censusgeo((('state', '34'),)): 55,
-	...         censusdata.censusgeo((('state', '35'),)): 48.3,
-	...         censusdata.censusgeo((('state', '36'),)): 58.8,
-	...         censusdata.censusgeo((('state', '37'),)): 46.7,
-	...         censusdata.censusgeo((('state', '38'),)): 27.8,
-	...         censusdata.censusgeo((('state', '39'),)): 43.5,
-	...         censusdata.censusgeo((('state', '40'),)): 28.9,
-	...         censusdata.censusgeo((('state', '41'),)): 51.7,
-	...         censusdata.censusgeo((('state', '42'),)): 47.6,
-	...         censusdata.censusgeo((('state', '44'),)): 55.4,
-	...         censusdata.censusgeo((('state', '45'),)): 40.8,
-	...         censusdata.censusgeo((('state', '46'),)): 31.7,
-	...         censusdata.censusgeo((('state', '47'),)): 34.9,
-	...         censusdata.censusgeo((('state', '48'),)): 43.4,
-	...         censusdata.censusgeo((('state', '49'),)): 27.8,
-	...         censusdata.censusgeo((('state', '50'),)): 61.1,
-	...         censusdata.censusgeo((('state', '51'),)): 49.9,
-	...         censusdata.censusgeo((('state', '53'),)): 54.4,
-	...         censusdata.censusgeo((('state', '54'),)): 26.5,
-	...         censusdata.censusgeo((('state', '55'),)): 46.9,
-	...         censusdata.censusgeo((('state', '56'),)): 22.5,
-	... }
-	>>> voting2016 = pd.DataFrame.from_dict(voting2016, orient='index')
-	>>> statedata['percent_democratic_pres_2016'] = voting2016
+    statedata = censusdata.download('acs5', '2015', censusdata.censusgeo([('state', '*')]),
+                                    ['B01001_001E', 'B19013_001E', 'B19083_001E',
+                                     'C17002_001E', 'C17002_002E', 'C17002_003E', 'C17002_004E',
+                                     'B03002_001E', 'B03002_003E', 'B03002_004E', 'B03002_012E',])
 
-We then rename columns, compute some additional variables, and rescale some variables to make regression coefficients more easily
-interpretable::
+We then link data on the percent of voters in each state voting
+Democratic in the 2016 U.S. presidential election:
 
-	>>> statedata = statedata.rename(columns={'B01001_001E': 'population_size'})
-	>>> statedata.population_size = statedata.population_size / 100000
-	>>> statedata = statedata.rename(columns={'B19013_001E': 'median_HH_income'})
-	>>> statedata['median_HH_income'] = statedata['median_HH_income'] / 1000
-	>>> statedata = statedata.rename(columns={'B19083_001E': 'gini_index'})
-	>>> statedata.gini_index = statedata.gini_index * 100
-	>>> statedata['percent_below_125_poverty'] = (statedata['C17002_002E'] + statedata['C17002_003E'] + statedata['C17002_004E']) / statedata['C17002_001E'] * 100
-	>>> statedata['percent_nonhisp_white'] = statedata['B03002_003E'] / statedata['B03002_001E'] * 100
-	>>> statedata['percent_nonhisp_black'] = statedata['B03002_004E'] / statedata['B03002_001E'] * 100
-	>>> statedata['percent_hispanic'] = statedata['B03002_012E'] / statedata['B03002_001E'] * 100
+.. code:: ipython3
 
-We run a quick check on the data and then delete variables we no longer need::
+    voting2016 = {
+        censusdata.censusgeo((('state', '01'),)): 34.6,
+        censusdata.censusgeo((('state', '02'),)): 37.7,
+        censusdata.censusgeo((('state', '04'),)): 45.4,
+        censusdata.censusgeo((('state', '05'),)): 33.8,
+        censusdata.censusgeo((('state', '06'),)): 61.6,
+        censusdata.censusgeo((('state', '08'),)): 47.2,
+        censusdata.censusgeo((('state', '09'),)): 54.5,
+        censusdata.censusgeo((('state', '10'),)): 53.4,
+        censusdata.censusgeo((('state', '11'),)): 92.8,
+        censusdata.censusgeo((('state', '12'),)): 47.8,
+        censusdata.censusgeo((('state', '13'),)): 45.6,
+        censusdata.censusgeo((('state', '15'),)): 62.3,
+        censusdata.censusgeo((('state', '16'),)): 27.6,
+        censusdata.censusgeo((('state', '17'),)): 55.4,
+        censusdata.censusgeo((('state', '18'),)): 37.9,
+        censusdata.censusgeo((('state', '19'),)): 42.2,
+        censusdata.censusgeo((('state', '20'),)): 36.2,
+        censusdata.censusgeo((('state', '21'),)): 32.7,
+        censusdata.censusgeo((('state', '22'),)): 38.4,
+        censusdata.censusgeo((('state', '23'),)): 47.9,
+        censusdata.censusgeo((('state', '24'),)): 60.5,
+        censusdata.censusgeo((('state', '25'),)): 60.8,
+        censusdata.censusgeo((('state', '26'),)): 47.3,
+        censusdata.censusgeo((('state', '27'),)): 46.9,
+        censusdata.censusgeo((('state', '28'),)): 39.7,
+        censusdata.censusgeo((('state', '29'),)): 38,
+        censusdata.censusgeo((('state', '30'),)): 36,
+        censusdata.censusgeo((('state', '31'),)): 34,
+        censusdata.censusgeo((('state', '32'),)): 47.9,
+        censusdata.censusgeo((('state', '33'),)): 47.6,
+        censusdata.censusgeo((('state', '34'),)): 55,
+        censusdata.censusgeo((('state', '35'),)): 48.3,
+        censusdata.censusgeo((('state', '36'),)): 58.8,
+        censusdata.censusgeo((('state', '37'),)): 46.7,
+        censusdata.censusgeo((('state', '38'),)): 27.8,
+        censusdata.censusgeo((('state', '39'),)): 43.5,
+        censusdata.censusgeo((('state', '40'),)): 28.9,
+        censusdata.censusgeo((('state', '41'),)): 51.7,
+        censusdata.censusgeo((('state', '42'),)): 47.6,
+        censusdata.censusgeo((('state', '44'),)): 55.4,
+        censusdata.censusgeo((('state', '45'),)): 40.8,
+        censusdata.censusgeo((('state', '46'),)): 31.7,
+        censusdata.censusgeo((('state', '47'),)): 34.9,
+        censusdata.censusgeo((('state', '48'),)): 43.4,
+        censusdata.censusgeo((('state', '49'),)): 27.8,
+        censusdata.censusgeo((('state', '50'),)): 61.1,
+        censusdata.censusgeo((('state', '51'),)): 49.9,
+        censusdata.censusgeo((('state', '53'),)): 54.4,
+        censusdata.censusgeo((('state', '54'),)): 26.5,
+        censusdata.censusgeo((('state', '55'),)): 46.9,
+        censusdata.censusgeo((('state', '56'),)): 22.5,
+    }
+    voting2016 = pd.DataFrame.from_dict(voting2016, orient='index')
+    statedata['percent_democratic_pres_2016'] = voting2016
 
-	>>> assert (statedata['population_size'] == statedata['B03002_001E'] / 100000).all()
-	>>> for column in ['C17002_001E', 'C17002_002E', 'C17002_003E', 'C17002_004E', 'B03002_001E', 'B03002_003E', 'B03002_004E', 'B03002_012E',]:
-	...         del statedata[column]
-	... 
+We then rename columns, compute some additional variables, and rescale
+some variables to make regression coefficients more easily
+interpretable:
 
-We are only interested in the 50 states + DC, so we drop Puerto Rico::
+.. code:: ipython3
 
-	>>> statedata = statedata.drop([censusdata.censusgeo([('state', '72')])])
+    statedata = statedata.rename(columns={'B01001_001E': 'population_size'})
+    statedata.population_size = statedata.population_size / 100000
+    statedata = statedata.rename(columns={'B19013_001E': 'median_HH_income'})
+    statedata['median_HH_income'] = statedata['median_HH_income'] / 1000
+    statedata = statedata.rename(columns={'B19083_001E': 'gini_index'})
+    statedata.gini_index = statedata.gini_index * 100
+    statedata['percent_below_125_poverty'] = (statedata['C17002_002E'] + statedata['C17002_003E'] + statedata['C17002_004E']) / statedata['C17002_001E'] * 100
+    statedata['percent_nonhisp_white'] = statedata['B03002_003E'] / statedata['B03002_001E'] * 100
+    statedata['percent_nonhisp_black'] = statedata['B03002_004E'] / statedata['B03002_001E'] * 100
+    statedata['percent_hispanic'] = statedata['B03002_012E'] / statedata['B03002_001E'] * 100
 
-Finally, we reorder the variables and run simple descriptives::
+We run a quick check on the data and then delete variables we no longer
+need:
 
-	>>> statedata = statedata.reindex(columns=['percent_democratic_pres_2016', 'population_size', 'median_HH_income', 'percent_below_125_poverty', 'gini_index', 'percent_nonhisp_white', 'percent_nonhisp_black', 'percent_hispanic'])
-	>>> print(statedata.describe())
-	       percent_democratic_pres_2016  population_size  median_HH_income  percent_below_125_poverty  gini_index  percent_nonhisp_white  percent_nonhisp_black  percent_hispanic
-	count                         51.00            51.00             51.00                      51.00       51.00                  51.00                  51.00             51.00
-	mean                          45.05            62.06             54.64                      19.44       46.22                  69.53                  10.91             11.20
-	std                           12.41            70.53              9.16                       3.94        2.14                  16.12                  10.77             10.06
-	min                           22.50             5.80             39.66                      11.84       41.81                  22.89                   0.44              1.37
-	25%                           36.10            17.34             47.55                      16.25       44.81                  58.43                   3.17              4.72
-	50%                           46.70            43.97             53.00                      20.08       46.26                  73.60                   7.12              8.84
-	75%                           52.55            68.46             60.68                      22.45       47.59                  81.23                  14.92             12.88
-	max                           92.80           384.21             74.55                      28.96       53.17                  93.88                  47.98             47.36
+.. code:: ipython3
 
-Then we examine bivariate correlations prior to running a linear regression model::
+    assert (statedata['population_size'] == statedata['B03002_001E'] / 100000).all()
+    for column in ['C17002_001E', 'C17002_002E', 'C17002_003E', 'C17002_004E',
+                   'B03002_001E', 'B03002_003E', 'B03002_004E', 'B03002_012E',]:
+        del statedata[column]
 
-	>>> print(statedata.corr())
-				      percent_democratic_pres_2016  population_size  median_HH_income  percent_below_125_poverty  gini_index  percent_nonhisp_white  percent_nonhisp_black  percent_hispanic
-	percent_democratic_pres_2016                          1.00             0.24              0.57                      -0.21        0.47                  -0.53                   0.34              0.26
-	population_size                                       0.24             1.00              0.03                       0.18        0.43                  -0.40                   0.11              0.53
-	median_HH_income                                      0.57             0.03              1.00                      -0.81       -0.09                  -0.27                  -0.06              0.11
-	percent_below_125_poverty                            -0.21             0.18             -0.81                       1.00        0.48                  -0.23                   0.39              0.19
-	gini_index                                            0.47             0.43             -0.09                       0.48        1.00                  -0.45                   0.61              0.28
-	percent_nonhisp_white                                -0.53            -0.40             -0.27                      -0.23       -0.45                   1.00                  -0.46             -0.63
-	percent_nonhisp_black                                 0.34             0.11             -0.06                       0.39        0.61                  -0.46                   1.00             -0.13
-	percent_hispanic                                      0.26             0.53              0.11                       0.19        0.28                  -0.63                  -0.13              1.00
-	>>> result = sm.ols(formula="percent_democratic_pres_2016 ~ population_size + median_HH_income + percent_nonhisp_black + percent_hispanic", data=statedata).fit()
-	>>> print(result.summary())
-					 OLS Regression Results                                 
-	========================================================================================
-	Dep. Variable:     percent_democratic_pres_2016   R-squared:                       0.532
-	Model:                                      OLS   Adj. R-squared:                  0.492
-	Method:                           Least Squares   F-statistic:                     13.08
-	Date:                          Sat, 22 Jul 2017   Prob (F-statistic):           3.42e-07
-	Time:                                  11:22:54   Log-Likelihood:                -180.94
-	No. Observations:                            51   AIC:                             371.9
-	Df Residuals:                                46   BIC:                             381.5
-	Df Model:                                     4                                         
-	Covariance Type:                      nonrobust                                         
-	=========================================================================================
-				    coef    std err          t      P>|t|      [0.025      0.975]
-	-----------------------------------------------------------------------------------------
-	Intercept                -5.7076      7.801     -0.732      0.468     -21.409       9.994
-	population_size           0.0121      0.021      0.563      0.576      -0.031       0.055
-	median_HH_income          0.7715      0.138      5.603      0.000       0.494       1.049
-	percent_nonhisp_black     0.4551      0.120      3.790      0.000       0.213       0.697
-	percent_hispanic          0.2578      0.151      1.704      0.095      -0.047       0.562
-	==============================================================================
-	Omnibus:                        2.104   Durbin-Watson:                   1.637
-	Prob(Omnibus):                  0.349   Jarque-Bera (JB):                1.237
-	Skew:                           0.208   Prob(JB):                        0.539
-	Kurtosis:                       3.640   Cond. No.                         647.
-	==============================================================================
-	Warnings:
-	[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+We are only interested in the 50 states + DC, so we drop Puerto Rico:
 
-In this simple model, the percentage voting Democratic is not significantly associated with population size
-or % Hispanic, at the p<.05 level. It is significantly associated with median household income and the %
-non-Hispanic black. Every $1,000 increase in median household income is associated with an increase of just
-under 1 percentage point in the Democratic vote. Every one percentage point increase in the % non-Hispanic
-black is associated with about a half a percentage point increase in the Democratic vote. Of course,
+.. code:: ipython3
 
-1. The outcome variable is not continuous, due to its bounded range, and this model does not account for this (it is essentially a linear probability model);
-2. The choice of covariates is simplistic and just designed to demonstrate fitting a model;
+    statedata = statedata.drop([censusdata.censusgeo([('state', '72')])])
+
+Finally, we reorder the variables and run simple descriptives:
+
+.. code:: ipython3
+
+    statedata = statedata.reindex(columns=['percent_democratic_pres_2016', 'population_size', 'median_HH_income', 'percent_below_125_poverty', 'gini_index', 'percent_nonhisp_white', 'percent_nonhisp_black', 'percent_hispanic'])
+    statedata.describe()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>percent_democratic_pres_2016</th>
+          <th>population_size</th>
+          <th>median_HH_income</th>
+          <th>percent_below_125_poverty</th>
+          <th>gini_index</th>
+          <th>percent_nonhisp_white</th>
+          <th>percent_nonhisp_black</th>
+          <th>percent_hispanic</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>count</th>
+          <td>51.00</td>
+          <td>51.00</td>
+          <td>51.00</td>
+          <td>51.00</td>
+          <td>51.00</td>
+          <td>51.00</td>
+          <td>51.00</td>
+          <td>51.00</td>
+        </tr>
+        <tr>
+          <th>mean</th>
+          <td>45.05</td>
+          <td>62.06</td>
+          <td>54.64</td>
+          <td>19.44</td>
+          <td>46.22</td>
+          <td>69.53</td>
+          <td>10.91</td>
+          <td>11.20</td>
+        </tr>
+        <tr>
+          <th>std</th>
+          <td>12.41</td>
+          <td>70.53</td>
+          <td>9.16</td>
+          <td>3.94</td>
+          <td>2.14</td>
+          <td>16.12</td>
+          <td>10.77</td>
+          <td>10.06</td>
+        </tr>
+        <tr>
+          <th>min</th>
+          <td>22.50</td>
+          <td>5.80</td>
+          <td>39.66</td>
+          <td>11.84</td>
+          <td>41.81</td>
+          <td>22.89</td>
+          <td>0.44</td>
+          <td>1.37</td>
+        </tr>
+        <tr>
+          <th>25%</th>
+          <td>36.10</td>
+          <td>17.34</td>
+          <td>47.55</td>
+          <td>16.25</td>
+          <td>44.81</td>
+          <td>58.43</td>
+          <td>3.17</td>
+          <td>4.72</td>
+        </tr>
+        <tr>
+          <th>50%</th>
+          <td>46.70</td>
+          <td>43.97</td>
+          <td>53.00</td>
+          <td>20.08</td>
+          <td>46.26</td>
+          <td>73.60</td>
+          <td>7.12</td>
+          <td>8.84</td>
+        </tr>
+        <tr>
+          <th>75%</th>
+          <td>52.55</td>
+          <td>68.46</td>
+          <td>60.68</td>
+          <td>22.45</td>
+          <td>47.59</td>
+          <td>81.23</td>
+          <td>14.92</td>
+          <td>12.88</td>
+        </tr>
+        <tr>
+          <th>max</th>
+          <td>92.80</td>
+          <td>384.21</td>
+          <td>74.55</td>
+          <td>28.96</td>
+          <td>53.17</td>
+          <td>93.88</td>
+          <td>47.98</td>
+          <td>47.36</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Then we examine bivariate correlations prior to running a linear
+regression model:
+
+.. code:: ipython3
+
+    statedata.corr()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style>
+        .dataframe thead tr:only-child th {
+            text-align: right;
+        }
+    
+        .dataframe thead th {
+            text-align: left;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>percent_democratic_pres_2016</th>
+          <th>population_size</th>
+          <th>median_HH_income</th>
+          <th>percent_below_125_poverty</th>
+          <th>gini_index</th>
+          <th>percent_nonhisp_white</th>
+          <th>percent_nonhisp_black</th>
+          <th>percent_hispanic</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>percent_democratic_pres_2016</th>
+          <td>1.00</td>
+          <td>0.24</td>
+          <td>0.57</td>
+          <td>-0.21</td>
+          <td>0.47</td>
+          <td>-0.53</td>
+          <td>0.34</td>
+          <td>0.26</td>
+        </tr>
+        <tr>
+          <th>population_size</th>
+          <td>0.24</td>
+          <td>1.00</td>
+          <td>0.03</td>
+          <td>0.18</td>
+          <td>0.43</td>
+          <td>-0.40</td>
+          <td>0.11</td>
+          <td>0.53</td>
+        </tr>
+        <tr>
+          <th>median_HH_income</th>
+          <td>0.57</td>
+          <td>0.03</td>
+          <td>1.00</td>
+          <td>-0.81</td>
+          <td>-0.09</td>
+          <td>-0.27</td>
+          <td>-0.06</td>
+          <td>0.11</td>
+        </tr>
+        <tr>
+          <th>percent_below_125_poverty</th>
+          <td>-0.21</td>
+          <td>0.18</td>
+          <td>-0.81</td>
+          <td>1.00</td>
+          <td>0.48</td>
+          <td>-0.23</td>
+          <td>0.39</td>
+          <td>0.19</td>
+        </tr>
+        <tr>
+          <th>gini_index</th>
+          <td>0.47</td>
+          <td>0.43</td>
+          <td>-0.09</td>
+          <td>0.48</td>
+          <td>1.00</td>
+          <td>-0.45</td>
+          <td>0.61</td>
+          <td>0.28</td>
+        </tr>
+        <tr>
+          <th>percent_nonhisp_white</th>
+          <td>-0.53</td>
+          <td>-0.40</td>
+          <td>-0.27</td>
+          <td>-0.23</td>
+          <td>-0.45</td>
+          <td>1.00</td>
+          <td>-0.46</td>
+          <td>-0.63</td>
+        </tr>
+        <tr>
+          <th>percent_nonhisp_black</th>
+          <td>0.34</td>
+          <td>0.11</td>
+          <td>-0.06</td>
+          <td>0.39</td>
+          <td>0.61</td>
+          <td>-0.46</td>
+          <td>1.00</td>
+          <td>-0.13</td>
+        </tr>
+        <tr>
+          <th>percent_hispanic</th>
+          <td>0.26</td>
+          <td>0.53</td>
+          <td>0.11</td>
+          <td>0.19</td>
+          <td>0.28</td>
+          <td>-0.63</td>
+          <td>-0.13</td>
+          <td>1.00</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: ipython3
+
+    result = sm.ols(formula=("percent_democratic_pres_2016 ~ population_size + median_HH_income"
+                             "+ percent_nonhisp_black + percent_hispanic"), data=statedata).fit()
+    result.summary()
+
+
+
+
+.. raw:: html
+
+    <table class="simpletable">
+    <caption>OLS Regression Results</caption>
+    <tr>
+      <th>Dep. Variable:</th>    <td>percent_democratic_pres_2016</td> <th>  R-squared:         </th> <td>   0.532</td>
+    </tr>
+    <tr>
+      <th>Model:</th>                         <td>OLS</td>             <th>  Adj. R-squared:    </th> <td>   0.492</td>
+    </tr>
+    <tr>
+      <th>Method:</th>                   <td>Least Squares</td>        <th>  F-statistic:       </th> <td>   13.08</td>
+    </tr>
+    <tr>
+      <th>Date:</th>                   <td>Sun, 10 Sep 2017</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
+    </tr>
+    <tr>
+      <th>Time:</th>                       <td>18:54:19</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
+    </tr>
+    <tr>
+      <th>No. Observations:</th>            <td>    51</td>            <th>  AIC:               </th> <td>   371.9</td>
+    </tr>
+    <tr>
+      <th>Df Residuals:</th>                <td>    46</td>            <th>  BIC:               </th> <td>   381.5</td>
+    </tr>
+    <tr>
+      <th>Df Model:</th>                    <td>     4</td>            <th>                     </th>     <td> </td>   
+    </tr>
+    <tr>
+      <th>Covariance Type:</th>            <td>nonrobust</td>          <th>                     </th>     <td> </td>   
+    </tr>
+    </table>
+    <table class="simpletable">
+    <tr>
+                <td></td>               <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+    </tr>
+    <tr>
+      <th>Intercept</th>             <td>   -5.7076</td> <td>    7.801</td> <td>   -0.732</td> <td> 0.468</td> <td>  -21.409</td> <td>    9.994</td>
+    </tr>
+    <tr>
+      <th>population_size</th>       <td>    0.0121</td> <td>    0.021</td> <td>    0.563</td> <td> 0.576</td> <td>   -0.031</td> <td>    0.055</td>
+    </tr>
+    <tr>
+      <th>median_HH_income</th>      <td>    0.7715</td> <td>    0.138</td> <td>    5.603</td> <td> 0.000</td> <td>    0.494</td> <td>    1.049</td>
+    </tr>
+    <tr>
+      <th>percent_nonhisp_black</th> <td>    0.4551</td> <td>    0.120</td> <td>    3.790</td> <td> 0.000</td> <td>    0.213</td> <td>    0.697</td>
+    </tr>
+    <tr>
+      <th>percent_hispanic</th>      <td>    0.2578</td> <td>    0.151</td> <td>    1.704</td> <td> 0.095</td> <td>   -0.047</td> <td>    0.562</td>
+    </tr>
+    </table>
+    <table class="simpletable">
+    <tr>
+      <th>Omnibus:</th>       <td> 2.104</td> <th>  Durbin-Watson:     </th> <td>   1.637</td>
+    </tr>
+    <tr>
+      <th>Prob(Omnibus):</th> <td> 0.349</td> <th>  Jarque-Bera (JB):  </th> <td>   1.237</td>
+    </tr>
+    <tr>
+      <th>Skew:</th>          <td> 0.208</td> <th>  Prob(JB):          </th> <td>   0.539</td>
+    </tr>
+    <tr>
+      <th>Kurtosis:</th>      <td> 3.640</td> <th>  Cond. No.          </th> <td>    647.</td>
+    </tr>
+    </table>
+
+
+
+In this simple model, the percentage voting Democratic is not
+significantly associated with population size or % Hispanic, at the
+p<.05 level. It is significantly associated with median household income
+and the % non-Hispanic black. Every $1,000 increase in median household
+income is associated with an increase of just under 1 percentage point
+in the Democratic vote. Every one percentage point increase in the %
+non-Hispanic black is associated with about a half a percentage point
+increase in the Democratic vote. Of course,
+
+1. The outcome variable is not continuous, due to its bounded range, and
+   this model does not account for this (it is essentially a linear
+   probability model);
+2. The choice of covariates is simplistic and just designed to
+   demonstrate fitting a model;
 3. We might consider robust standard errors for this model.
 
