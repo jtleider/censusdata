@@ -11,7 +11,9 @@ Welcome to CensusData's documentation!
    :caption: Contents:
 
    intro
+   geographies
    examples
+   modules
 
 
 Indices and tables
