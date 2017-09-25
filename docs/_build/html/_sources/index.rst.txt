@@ -13,7 +13,9 @@ Welcome to CensusData's documentation!
    intro
    geographies
    variables
-   examples
+   example1
+   example2
+   example3
    modules
 
 
