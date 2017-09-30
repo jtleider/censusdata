@@ -1,0 +1,368 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Census Geographies &#8212; CensusData 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Variables" href="variables.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+  </head>
+  <body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>CensusData 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>Census Geographies</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="intro.html">Introduction</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="variables.html">Variables</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="census-geographies">
+<h1>Census Geographies<a class="headerlink" href="#census-geographies" title="Permalink to this headline">¶</a></h1>
+<p>Census geographies exist within a hierarchy. Each level in this hierarchy
+has a three-digit summary level code associated with it. For instance,
+counties nest within states, and are assigned the summary level code 050.
+Following is a table showing all the summary levels recognized by this package:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="90%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Summary Level</th>
+<th class="head">Summary Level Code</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>us</td>
+<td>010</td>
+</tr>
+<tr class="row-odd"><td>region</td>
+<td>020</td>
+</tr>
+<tr class="row-even"><td>division</td>
+<td>030</td>
+</tr>
+<tr class="row-odd"><td>state</td>
+<td>040</td>
+</tr>
+<tr class="row-even"><td>state&gt; county</td>
+<td>050</td>
+</tr>
+<tr class="row-odd"><td>state&gt; county&gt; county subdivision</td>
+<td>060</td>
+</tr>
+<tr class="row-even"><td>state&gt; county&gt; county subdivision&gt; subminor civil division</td>
+<td>067</td>
+</tr>
+<tr class="row-odd"><td>state&gt; county&gt; county subdivision&gt; place remainder</td>
+<td>070</td>
+</tr>
+<tr class="row-even"><td>state&gt; county&gt; county subdivision&gt; place &gt; tract</td>
+<td>080</td>
+</tr>
+<tr class="row-odd"><td>state&gt; county&gt; tract&gt; block</td>
+<td>101</td>
+</tr>
+<tr class="row-even"><td>state&gt; county&gt; tract</td>
+<td>140</td>
+</tr>
+<tr class="row-odd"><td>state&gt; county&gt; tract&gt; block group</td>
+<td>150</td>
+</tr>
+<tr class="row-even"><td>state&gt; place&gt; county</td>
+<td>155</td>
+</tr>
+<tr class="row-odd"><td>state&gt; place</td>
+<td>160</td>
+</tr>
+<tr class="row-even"><td>state&gt; consolidated city</td>
+<td>170</td>
+</tr>
+<tr class="row-odd"><td>state&gt; consolidated city&gt; place</td>
+<td>172</td>
+</tr>
+<tr class="row-even"><td>state&gt; alaska native regional corporation</td>
+<td>230</td>
+</tr>
+<tr class="row-odd"><td>american indian area/alaska native area/hawaiian home land</td>
+<td>250</td>
+</tr>
+<tr class="row-even"><td>american indian area/alaska native area/hawaiian home land&gt; tribal subdivision/remainder</td>
+<td>251</td>
+</tr>
+<tr class="row-odd"><td>american indian area/alaska native area (reservation or statistical entity only)</td>
+<td>252</td>
+</tr>
+<tr class="row-even"><td>american indian area (off-reservation trust land only)/hawaiian home land</td>
+<td>254</td>
+</tr>
+<tr class="row-odd"><td>american indian area/alaska native area/hawaiian home land&gt; tribal census tract</td>
+<td>256</td>
+</tr>
+<tr class="row-even"><td>american indian area/alaska native area/hawaiian home land&gt; tribal census tract&gt; tribal block group</td>
+<td>258</td>
+</tr>
+<tr class="row-odd"><td>american indian area/alaska native area/hawaiian home land&gt; state</td>
+<td>260</td>
+</tr>
+<tr class="row-even"><td>american indian area/alaska native area/hawaiian home land&gt; state&gt; place/remainder</td>
+<td>269</td>
+</tr>
+<tr class="row-odd"><td>american indian area/alaska native area/hawaiian home land&gt; state&gt; county</td>
+<td>270</td>
+</tr>
+<tr class="row-even"><td>state&gt; american indian area/alaska native area/hawaiian home land</td>
+<td>280</td>
+</tr>
+<tr class="row-odd"><td>state&gt; american indian area&gt; tribal subdivision</td>
+<td>281</td>
+</tr>
+<tr class="row-even"><td>state&gt; american indian area/alaska native area (reservation or statistical entity only)</td>
+<td>283</td>
+</tr>
+<tr class="row-odd"><td>state&gt; american indian area (off-reservation trust land only)/hawaiian home land</td>
+<td>286</td>
+</tr>
+<tr class="row-even"><td>american indian area/alaska native area/hawaiian home land&gt; tribal subdivision/remainder&gt; state</td>
+<td>290</td>
+</tr>
+<tr class="row-odd"><td>american indian area/alaska native area/hawaiian home land&gt; tribal census tract (or part) within aia (reservation only)</td>
+<td>291</td>
+</tr>
+<tr class="row-even"><td>american indian area/alaska native area/hawaiian home land&gt; tribal census tract (or part) within aia (trust land only)</td>
+<td>292</td>
+</tr>
+<tr class="row-odd"><td>american indian area/alaska native area/hawaiian home land&gt; tribal census tract&gt; tribal block group (or part) within tribal census tract within aia (reservation only)</td>
+<td>293</td>
+</tr>
+<tr class="row-even"><td>american indian area/alaska native area/hawaiian home land&gt; tribal census tract&gt; tribal block group (or part) within tribal census tract within aia (trust land only)</td>
+<td>294</td>
+</tr>
+<tr class="row-odd"><td>metropolitan statistical area/micropolitan statistical area</td>
+<td>310</td>
+</tr>
+<tr class="row-even"><td>metropolitan statistical area/micropolitan statistical area&gt; state</td>
+<td>311</td>
+</tr>
+<tr class="row-odd"><td>metropolitan statistical area/micropolitan statistical area&gt; state&gt; principal city</td>
+<td>312</td>
+</tr>
+<tr class="row-even"><td>metropolitan statistical area/micropolitan statistical area&gt; metropolitan division</td>
+<td>314</td>
+</tr>
+<tr class="row-odd"><td>metropolitan statistical area&gt; metropolitan division&gt; state</td>
+<td>315</td>
+</tr>
+<tr class="row-even"><td>state&gt; metropolitan statistical area/micropolitan statistical area</td>
+<td>320</td>
+</tr>
+<tr class="row-odd"><td>state&gt; metropolitan statistical area/micropolitan statistical area&gt; principal city (or part)</td>
+<td>321</td>
+</tr>
+<tr class="row-even"><td>state&gt; metropolitan statistical area/micropolitan statistical area&gt; county</td>
+<td>322</td>
+</tr>
+<tr class="row-odd"><td>state&gt; metropolitan statistical area/micropolitan statistical area&gt; metropolitan division</td>
+<td>323</td>
+</tr>
+<tr class="row-even"><td>state&gt; metropolitan statistical area/micropolitan statistical area&gt; metropolitan division&gt; county</td>
+<td>324</td>
+</tr>
+<tr class="row-odd"><td>combined statistical area</td>
+<td>330</td>
+</tr>
+<tr class="row-even"><td>combined statistical area&gt; state</td>
+<td>331</td>
+</tr>
+<tr class="row-odd"><td>combined statistical area&gt; micropolitan statistical area</td>
+<td>332</td>
+</tr>
+<tr class="row-even"><td>combined statistical area&gt; metropolitan statistical area/micropolitan statistical area&gt; state</td>
+<td>333</td>
+</tr>
+<tr class="row-odd"><td>combined new england city and town area</td>
+<td>335</td>
+</tr>
+<tr class="row-even"><td>combined new england city and town area&gt; state</td>
+<td>336</td>
+</tr>
+<tr class="row-odd"><td>combined new england city and town area&gt; new england city and town area</td>
+<td>337</td>
+</tr>
+<tr class="row-even"><td>combined new england city and town area&gt; new england city and town area&gt; state</td>
+<td>338</td>
+</tr>
+<tr class="row-odd"><td>state&gt; combined statistical area</td>
+<td>340</td>
+</tr>
+<tr class="row-even"><td>state&gt; combined statistical area&gt; metropolitan statistical area/micropolitan statistical area</td>
+<td>341</td>
+</tr>
+<tr class="row-odd"><td>state&gt; combined new england city and town area</td>
+<td>345</td>
+</tr>
+<tr class="row-even"><td>state&gt; combined new england city and town area&gt; new england city and town area</td>
+<td>346</td>
+</tr>
+<tr class="row-odd"><td>new england city and town area</td>
+<td>350</td>
+</tr>
+<tr class="row-even"><td>new england city and town area&gt; state</td>
+<td>351</td>
+</tr>
+<tr class="row-odd"><td>new england city and town area&gt; state&gt; principal city</td>
+<td>352</td>
+</tr>
+<tr class="row-even"><td>new england city and town area&gt; necta division</td>
+<td>355</td>
+</tr>
+<tr class="row-odd"><td>new england city and town area&gt; necta division&gt; state</td>
+<td>356</td>
+</tr>
+<tr class="row-even"><td>state&gt; new england city and town area</td>
+<td>360</td>
+</tr>
+<tr class="row-odd"><td>state&gt; new england city and town area&gt; place</td>
+<td>361</td>
+</tr>
+<tr class="row-even"><td>state&gt; new england city and town area&gt; county</td>
+<td>362</td>
+</tr>
+<tr class="row-odd"><td>state&gt; new england city and town area&gt; county&gt; county subdivision</td>
+<td>363</td>
+</tr>
+<tr class="row-even"><td>state&gt; new england city and town area&gt; necta division</td>
+<td>364</td>
+</tr>
+<tr class="row-odd"><td>state&gt; new england city and town area&gt; necta division&gt; county</td>
+<td>365</td>
+</tr>
+<tr class="row-even"><td>state&gt; new england city and town area&gt; necta division&gt; county&gt; county subdivision</td>
+<td>366</td>
+</tr>
+<tr class="row-odd"><td>urban area</td>
+<td>400</td>
+</tr>
+<tr class="row-even"><td>urban area&gt; state</td>
+<td>410</td>
+</tr>
+<tr class="row-odd"><td>urban area&gt; state&gt; county</td>
+<td>430</td>
+</tr>
+<tr class="row-even"><td>state&gt; congressional district</td>
+<td>500</td>
+</tr>
+<tr class="row-odd"><td>state&gt; congressional district&gt; county</td>
+<td>510</td>
+</tr>
+<tr class="row-even"><td>state&gt; congressional district&gt; county&gt; tract</td>
+<td>511</td>
+</tr>
+<tr class="row-odd"><td>state&gt; congressional district&gt; county&gt; county subdivision</td>
+<td>521</td>
+</tr>
+<tr class="row-even"><td>state&gt; congressional district&gt; place</td>
+<td>531</td>
+</tr>
+<tr class="row-odd"><td>state&gt; congressional district&gt; american indian area/alaska native area/hawaiian home land</td>
+<td>550</td>
+</tr>
+<tr class="row-even"><td>state&gt; congressional district&gt; alaska native regional corporation</td>
+<td>560</td>
+</tr>
+<tr class="row-odd"><td>state&gt; state legislative district (upper chamber)</td>
+<td>610</td>
+</tr>
+<tr class="row-even"><td>state&gt; state legislative district (upper chamber)&gt; county</td>
+<td>612</td>
+</tr>
+<tr class="row-odd"><td>state&gt; state legislative district (lower chamber)</td>
+<td>620</td>
+</tr>
+<tr class="row-even"><td>state&gt; state legislative district (lower chamber)&gt; county</td>
+<td>622</td>
+</tr>
+<tr class="row-odd"><td>state&gt; public use microdata area</td>
+<td>795</td>
+</tr>
+<tr class="row-even"><td>zip code tabulation area</td>
+<td>860</td>
+</tr>
+<tr class="row-odd"><td>state&gt; zip code tabulation area</td>
+<td>871</td>
+</tr>
+<tr class="row-even"><td>state&gt; school district (elementary)</td>
+<td>950</td>
+</tr>
+<tr class="row-odd"><td>state&gt; school district (secondary)</td>
+<td>960</td>
+</tr>
+<tr class="row-even"><td>state&gt; school district (unified)</td>
+<td>970</td>
+</tr>
+</tbody>
+</table>
+<p>Individual geographies are identified by Federal Information Processing
+Standards (FIPS) codes. Each level of geography has its own set of FIPS codes.
+For instance, each county is identified by the 2-digit FIPS code for the
+state in which the county is located, together with a 3-digit FIPS code
+identifying the county within the state. As an example, Cook County,
+Illinois would be identified by state FIPS code 17 and
+county FIPS code 031.</p>
+<p>This package includes the <cite>censusgeo</cite> class for representing Census
+geographies. It also provides the <cite>geographies</cite> function to look
+up Census geographies.</p>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="intro.html">Introduction</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="variables.html">Variables</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Julien Leider.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
+    </div>
+  </body>
+</html>

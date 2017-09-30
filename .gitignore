@@ -1,5 +1,0 @@
-*.pyc
-MANIFEST
-dist/
-CensusData.egg-info/
-.ipynb_checkpoints/

@@ -1,0 +1,161 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Variables &#8212; CensusData 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example 1: Downloading Block Group Data and Exporting to CSV" href="example1.html" />
+    <link rel="prev" title="Census Geographies" href="geographies.html" /> 
+  </head>
+  <body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>CensusData 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>Variables</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="geographies.html">Census Geographies</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="example1.html">Example 1: Downloading Block Group Data and Exporting to CSV</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="variables">
+<h1>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="american-community-survey-1-3-and-5-year-estimates">
+<h2>American Community Survey 1-, 3-, and 5-Year Estimates<a class="headerlink" href="#american-community-survey-1-3-and-5-year-estimates" title="Permalink to this headline">¶</a></h2>
+<p>The American Community Survey (ACS) provides four different sets of data
+tables:</p>
+<ul>
+<li><p class="first"><strong>Detailed tables.</strong> These provide the most detailed set of variables. Table
+names begin with B followed by a numeric code.</p>
+</li>
+<li><p class="first"><strong>Data profile tables.</strong> These tables are designed to provide information
+on a broad array of characteristics for a given geography. There are data profile tables on:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Social Characteristics (DP02),</li>
+<li>Economic Characteristics (DP03),</li>
+<li>Housing Characteristics (DP04), and</li>
+<li>Demographic Characteristics (DP05).</li>
+</ul>
+</div></blockquote>
+<p>Table names (beginning in DP) are shown in parentheses above.</p>
+</li>
+<li><p class="first"><strong>Subject tables.</strong> These tables are designed to provide information on
+narrower topics for a broader range of geographies. Table names
+begin with S.</p>
+</li>
+<li><p class="first"><strong>Comparison profile tables.</strong> These tables provide information on changes
+in characteristics in particular geographies over time, including statistical
+significance testing. Table names begin with CP.</p>
+</li>
+</ul>
+<p>The detailed tables are documented in the Summary File Table Shells, available
+from the ACS Summary File Documentation:
+<a class="reference external" href="https://www.census.gov/programs-surveys/acs/technical-documentation/summary-file-documentation.html">https://www.census.gov/programs-surveys/acs/technical-documentation/summary-file-documentation.html</a>
+This provides data on available variables on a table-by-table basis, and
+specifies which data releases (1-, 3-, or 5-year estimates) the variable is
+available for. Each table specifies the universe for which it provides
+estimates, and includes a total value (denominator) in addition to specific
+estimates out of that total (numerators). For instance, in the ACS 2015 5-year
+estimates, table B01001 provides estimates of population by sex and age. The
+universe for this table is the total population, and variable B01001_001
+provides the estimated total. By contrast, a variable like B01001_010 provides
+the estimated male population aged 22 to 24.  To compute the percentage of the
+population that is male aged 22 to 24, we would divide B01001_010 by B01001_001.
+It is important to use the denominator from the specific table you are using
+when performing such computations. While estimates should of the same total
+should generally be the same across tables, in practice they sometimes differ
+slightly, so it is important to use consistent values.</p>
+<p>Information on the data profile and subject tables is available from
+<a class="reference external" href="https://www.census.gov/acs/www/data/data-tables-and-tools/">https://www.census.gov/acs/www/data/data-tables-and-tools/</a>. Table shells
+for selected years for the data profile, subject, and comparison profile
+tables are available from American FactFinder
+(<a class="reference external" href="https://www.census.gov/acs/www/data/data-tables-and-tools/american-factfinder/">https://www.census.gov/acs/www/data/data-tables-and-tools/american-factfinder/</a>).
+Unfortunately, these do not include variable names, unlike the detailed table
+shells.</p>
+</div>
+<div class="section" id="american-community-survey-1-year-supplemental-estimates">
+<h2>American Community Survey 1-Year Supplemental Estimates<a class="headerlink" href="#american-community-survey-1-year-supplemental-estimates" title="Permalink to this headline">¶</a></h2>
+<p>The ACS 1-year supplemental estimates supplement the 1-year estimates by
+providing estimates for all geographies with a population of 20,000+,
+as opposed to 65,000+ for the regular 1-year estimates. There are
+separate tables for the 1-year supplemental estimates. Table names begin
+with K20. Table shells are available for 2015 under
+<a class="reference external" href="https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/2015/Supplemental_Estimates/">https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/2015/Supplemental_Estimates/</a>
+and for 2014 under
+<a class="reference external" href="https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/2014/Supplemental_Estimates/">https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/2014/Supplemental_Estimates/</a>
+Unfortunately, unlike the detailed tables for the regular 1-year estimates,
+there is no single spreadsheet containing all the table shells.</p>
+</div>
+<div class="section" id="census-2010-summary-file-1">
+<h2>Census 2010 Summary File 1<a class="headerlink" href="#census-2010-summary-file-1" title="Permalink to this headline">¶</a></h2>
+<p>Extensive information on the Summary File 1 data is available under
+<a class="reference external" href="https://www.census.gov/2010census/news/press-kits/summary-file-1.html">https://www.census.gov/2010census/news/press-kits/summary-file-1.html</a>
+In particular, the technical documentation, currently available under
+<a class="reference external" href="https://www.census.gov/prod/cen2010/doc/sf1.pdf">https://www.census.gov/prod/cen2010/doc/sf1.pdf</a>,
+provides detailed information on the tables and variables that are available.</p>
+</div>
+<div class="section" id="obtaining-information-on-variables-through-the-censusdata-package">
+<h2>Obtaining Information on Variables Through the <cite>censusdata</cite> package<a class="headerlink" href="#obtaining-information-on-variables-through-the-censusdata-package" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>censusdata</cite> package provides several functions for finding information
+on tables and variables for these data sets:</p>
+<ul class="simple">
+<li><cite>censustable</cite> provides information on entire tables. <cite>printtable</cite> is also
+provided to format this information.</li>
+<li><cite>censusvar</cite> provides information on individual variables.</li>
+<li><cite>search</cite> can be used to search for variables based on regular
+expression matching.</li>
+</ul>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="geographies.html">Census Geographies</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="example1.html">Example 1: Downloading Block Group Data and Exporting to CSV</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Julien Leider.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &#8212; CensusData 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Census Geographies" href="geographies.html" />
+    <link rel="prev" title="Welcome to CensusData’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+      <div class="header" role="banner"><h1 class="heading"><a href="index.html">
+          <span>CensusData 0.1 documentation</span></a></h1>
+        <h2 class="heading"><span>Introduction</span></h2>
+      </div>
+      <div class="topnav" role="navigation" aria-label="top navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Welcome to CensusData’s documentation!</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="geographies.html">Census Geographies</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This package is designed to provide easy access to the U.S. Census Bureau’s
+API (<a class="reference external" href="https://www.census.gov/developers/">https://www.census.gov/developers/</a>) in Python. It supports pulling data
+from the American Community Survey (ACS) and the Census Summary File,
+specifically:</p>
+<ul class="simple">
+<li>ACS 5-year estimates (2005-2009 to 2011-2015),</li>
+<li>ACS 1-year estimates (2012-2015),</li>
+<li>ACS 3-year estimates (2010-2012 to 2011-2013),</li>
+<li>ACS 1-year supplemental estimates (2014-2015),</li>
+<li>Census 2010 Summary File 1.</li>
+</ul>
+<p>This package handles the details of interacting with the Census API for you,
+so that you can focus on working with the data. It provides a class for
+representing Census geographies. It also provides functions
+for gaining further information about specific variables and tables and
+for searching for variables.</p>
+<p>The ACS (<a class="reference external" href="https://www.census.gov/programs-surveys/acs/">https://www.census.gov/programs-surveys/acs/</a>)
+started in 2005. It provides information on a wide range of social, economic,
+demographic, and housing characteristics. Topics covered include
+income, employment, health insurance, the age distribution, education, among
+many others. The ACS replaces the old Census long form, which used to be
+distributed to a subset of households responding to the decennial Census.
+The ACS produces survey-based period estimates. For instance, the
+5-year 2011-2015 estimates are based on data collected during all 5 years.
+They are not simply an aggregate of 1-year estimates, and overlapping
+5-year estimates (e.g., 2008-2012 and 2011-2015) should <em>not</em> be compared.
+The ACS provides margins of error to accompany all estimates. Margins of
+error are smaller for estimates based on more years of data.</p>
+<p>ACS 5-year estimates are the least current but provide the greatest precision
+and are available for geographies of all sizes
+(<a class="reference external" href="https://www.census.gov/programs-surveys/acs/guidance/estimates.html">https://www.census.gov/programs-surveys/acs/guidance/estimates.html</a>). By
+contrast, 1-year estimates are the most current but the least precise and are
+only available for geographies with populations of 65,000+.
+In between are the 1-year supplemental estimates or, in past years, the
+3-year estimates, both of which are for geographies with populations of
+20,000+. The choice of which ACS estimates to use will depend on your needs
+for current data vs. data for a variety of geographies with greater
+precision.</p>
+<p>The decennial Census counts every resident of the United States. The 2010
+Census Summary File 1 provides information about each community’s population,
+including age, sex, and race distributions, as well as information
+on households and families. (Summary File 2 provides additional data
+for specific racial/ethnic groups.)</p>
+<p>There are a number of facilities available for downloading Census
+data, including American FactFinder, the ACS summary files,
+and the Census DataFerrett. This package is designed to provide
+the following features not available elsewhere:</p>
+<ul class="simple">
+<li>Easy download of specific variables across a variety of tables, downloading only the variables you need for the geographies of interest to you. This bypasses data processing hassles associated with working with other sources like the ACS Summary Files.</li>
+<li>Access to the exact variables of interest, with variable names making it easy to look up further information on the source tables or to pull up other years of data. This facilitates work by more technical users.</li>
+<li>Download data for multiple geographies at once, such as all counties in the United States, or all block groups in Illinois.</li>
+<li>Work with the data as a Pandas data frame, or export to CSV for analysis in other data analysis packages.</li>
+</ul>
+</div>
+
+
+      </div>
+      <div class="bottomnav" role="navigation" aria-label="bottom navigation">
+      
+        <p>
+        «&#160;&#160;<a href="index.html">Welcome to CensusData’s documentation!</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="geographies.html">Census Geographies</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Julien Leider.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.2.
+    </div>
+  </body>
+</html>
