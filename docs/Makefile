@@ -6,7 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
 SPHINXPROJ    = CensusData
 SOURCEDIR     = rst
-BUILDDIR      = _build
+BUILDDIR      = ../../censusdata-docs
 
 # Put it first so that "make" without argument is like "make help".
 help:
