@@ -1,0 +1,8 @@
+censusdata Module Documentation
+===============================
+
+.. automodule:: censusdata
+	:members:
+	:undoc-members:
+	:show-inheritance:
+

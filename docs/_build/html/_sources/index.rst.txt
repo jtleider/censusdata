@@ -16,8 +16,7 @@ Welcome to CensusData's documentation!
    example1
    example2
    example3
-   modules
-
+   api
 
 Indices and tables
 ==================
