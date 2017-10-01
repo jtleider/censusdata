@@ -80,14 +80,14 @@ def censustable(src, year, table):
 
 def printtable(table, moe=False):
 	"""Pretty print information on a Census table (such as produced by censustable)."""
-	print(u'{0:20} | {1:40.40} | {2:160} | {3:10}'.format('Variable', 'Table', 'Label', 'Type'))
-	print(u'-'*239)
+	print(u'{0:12} | {1:30.30} | {2:56} | {3:5}'.format('Variable', 'Table', 'Label', 'Type'))
+	print(u'-'*115)
 	for k in table.keys():
 		if not moe and k[-1] == 'M': continue # don't clutter output with margins of error
 		label = table[k]['label']
 		label = '!! '*label.count('!!') + label.replace('!!', ' ')
-		print(u'{0:20} | {1:40.40} | {2:160.160} | {3:10}'.format(k, table[k]['concept'], label, table[k]['predicateType']))
-	print(u'-'*239)
+		print(u'{0:12} | {1:30.30} | {2:56.56} | {3:5}'.format(k, table[k]['concept'], label, table[k]['predicateType']))
+	print(u'-'*115)
 
 def search(src, year, field, criterion, tabletype='detail'):
 	"""Search Census variables."""
