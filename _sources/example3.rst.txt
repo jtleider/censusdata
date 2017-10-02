@@ -7,6 +7,10 @@ so we need an additional import:
 
 .. code:: ipython3
 
+    import pandas as pd
+    import censusdata
+    pd.set_option('display.expand_frame_repr', False)
+    pd.set_option('display.precision', 2)
     import statsmodels.formula.api as sm
 
 We begin by downloading data on some basic socioeconomic characteristics

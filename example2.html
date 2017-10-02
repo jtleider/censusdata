@@ -8,7 +8,7 @@
     
     <title>Example 2: Downloading Data for All U.S. Counties &#8212; CensusData 0.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -55,7 +55,12 @@
 <p>For this example, let’s suppose we have looked up the variables we need
 by referring to the Table Shells. We begin by downloading the data and
 checking the data we have received:</p>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">county65plus</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">censusdata</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.expand_frame_repr&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.precision&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">county65plus</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span>
                                    <span class="p">[</span><span class="s1">&#39;B01001_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_020E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_021E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_022E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_023E&#39;</span><span class="p">,</span>
                                     <span class="s1">&#39;B01001_024E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_025E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_044E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_045E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_046E&#39;</span><span class="p">,</span>
                                     <span class="s1">&#39;B01001_047E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_048E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_049E&#39;</span><span class="p">])</span>
@@ -489,115 +494,10 @@ checking the data we have received:</p>
 <p>There is more than one way to approach this problem. Let’s see how to
 use the data profile tables for the same purpose. First, we identify the
 appropriate table:</p>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;65&#39;</span><span class="p">,</span> <span class="n">tabletype</span><span class="o">=</span><span class="s1">&#39;profile&#39;</span><span class="p">)</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;65&#39;</span><span class="p">,</span> <span class="n">tabletype</span><span class="o">=</span><span class="s1">&#39;profile&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">25</span><span class="p">:]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="s1">&#39;DP02PR_0012E&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0012M&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0012PE&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0012PM&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0014E&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0014M&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0014PE&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0014PM&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0076E&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0076M&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0076PE&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0076PM&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0077E&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0077M&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0077PE&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02PR_0077PM&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0012E&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0012M&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0012PE&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0012PM&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0014E&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0014M&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0014PE&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0014PM&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0076E&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0076M&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0076PE&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0076PM&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0077E&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0077M&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0077PE&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP02_0077PM&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP03_0135E&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED ECONOMIC CHARACTERISTICS&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP03_0135M&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED ECONOMIC CHARACTERISTICS&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP03_0135PE&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;SELECTED ECONOMIC CHARACTERISTICS&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over&#39;</span><span class="p">),</span>
- <span class="p">(</span><span class="s1">&#39;DP03_0135PM&#39;</span><span class="p">,</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="s1">&#39;DP03_0135PM&#39;</span><span class="p">,</span>
   <span class="s1">&#39;SELECTED ECONOMIC CHARACTERISTICS&#39;</span><span class="p">,</span>
   <span class="s1">&#39;PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over&#39;</span><span class="p">),</span>
  <span class="p">(</span><span class="s1">&#39;DP03_0136E&#39;</span><span class="p">,</span>
