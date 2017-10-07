@@ -63,6 +63,7 @@ def download(src, year, geo, var, key=None, tabletype='detail'):
 		src (str): Census data source: 'acs1' for ACS 1-year estimates, 'acs5' for ACS 5-year estimates, 'acs3' for
 			ACS 3-year estimates, 'acsse' for ACS 1-year supplemental estimates, 'sf1' for SF1 data.
 		year (int): Year of data.
+		geo (censusgeo): Geographies for which to download data.
 		var (list of str): Census variables to download.
 		key (str, optional): Census API key.
 		tabletype (str, optional): Type of table from which variables are drawn (only applicable to ACS data). Options are 'detail' (detail tables),
