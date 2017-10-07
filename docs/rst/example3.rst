@@ -410,10 +410,10 @@ regression model:
       <th>Method:</th>                   <td>Least Squares</td>        <th>  F-statistic:       </th> <td>   13.08</td>
     </tr>
     <tr>
-      <th>Date:</th>                   <td>Sun, 10 Sep 2017</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
+      <th>Date:</th>                   <td>Sat, 07 Oct 2017</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
     </tr>
     <tr>
-      <th>Time:</th>                       <td>18:54:19</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
+      <th>Time:</th>                       <td>17:26:40</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
     </tr>
     <tr>
       <th>No. Observations:</th>            <td>    51</td>            <th>  AIC:               </th> <td>   371.9</td>
@@ -480,4 +480,3 @@ increase in the Democratic vote. Of course,
 2. The choice of covariates is simplistic and just designed to
    demonstrate fitting a model;
 3. We might consider robust standard errors for this model.
-

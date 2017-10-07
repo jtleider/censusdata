@@ -1,11 +1,11 @@
 """Functions to faciliate exporting data downloaded from Census API."""
 
 def exportcsv(file, data):
-	"""Export Pandas DataFrame where index is composed of censusgeo objects. Can be used with return value from download().
+	"""Export Pandas DataFrame where index is composed of `censusgeo` objects. Can be used with return value from `download()`.
 
 	Args:
 		file: String or file handler for exporting data.
-		data: Data to export.
+		data (pandas.DataFrame): Data to export.
 
 	Returns:
 		None.
@@ -30,4 +30,5 @@ def exportcsv(file, data):
 		for gc in geocomponent:
 			del data[gc]
 		del data['NAME']
+		return None
 

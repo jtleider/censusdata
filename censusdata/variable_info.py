@@ -9,7 +9,22 @@ import json
 from collections import OrderedDict
 
 def censusvar(src, year, var):
-	"""Download information on a list of variables from Census API."""
+	"""Download information on a list of variables from Census API.
+
+	Args:
+		src (str): Census data source: 'acs1' for ACS 1-year estimates, 'acs5' for ACS 5-year estimates, 'acs3' for
+			ACS 3-year estimates, 'acsse' for ACS 1-year supplemental estimates, 'sf1' for SF1 data.
+		year (int): Year of data.
+		var (list of str): Names of Census variable.
+
+	Returns:
+		dict: Dictionary with keys 'concept' (overall concept the variable falls under), 'label' (variable label),
+			and 'predicateType' (variable type).
+
+	Examples::
+
+		censusvar('sf1', 2010, ['P0010001']) # Returns information on the variable P0010001 from the 2010 Census SF1.
+	"""
 	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse' or src == 'sf1'
 	ret = dict()
 	for v in var:
@@ -48,7 +63,22 @@ def censusvar(src, year, var):
 	return ret
 
 def censustable(src, year, table):
-	"""Show information on all variables in a table."""
+	"""Look up information on all variables in a table.
+
+	Args:
+		src (str): Census data source: 'acs1' for ACS 1-year estimates, 'acs5' for ACS 5-year estimates, 'acs3' for
+			ACS 3-year estimates, 'acsse' for ACS 1-year supplemental estimates, 'sf1' for SF1 data.
+		year (int): Year of data.
+		table (str): Table name.
+
+	Returns:
+		OrderedDict: Dictionary of variables in table, with keys 'concept' (overall concept the variable falls under), 'label' (variable label),
+			and 'predicateType' (variable type).
+
+	Examples::
+
+		censustable('acs1', 2015, 'B23025') # Returns information on table B23025 (Employment Status for Population 16+ Years) from the ACS 2015 1-year estimates.
+	"""
 	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse' or src == 'sf1'
 	if src == 'acsse' or src == 'sf1':
 		tabletype = ''
@@ -79,7 +109,19 @@ def censustable(src, year, table):
 	return ret
 
 def printtable(table, moe=False):
-	"""Pretty print information on a Census table (such as produced by censustable)."""
+	"""Pretty print information on a Census table (such as produced by `censustable`).
+
+	Args:
+		table (OrderedDict): Table information from censustable.
+		moe (bool, optional): Display margins of error.
+
+	Returns:
+		None.
+
+	Examples::
+
+		censusdata.printtable(censusdata.censustable('acs5', '2015', 'B19013'))
+	"""
 	print(u'{0:12} | {1:30.30} | {2:56} | {3:5}'.format('Variable', 'Table', 'Label', 'Type'))
 	print(u'-'*115)
 	for k in table.keys():
@@ -88,9 +130,30 @@ def printtable(table, moe=False):
 		label = '!! '*label.count('!!') + label.replace('!!', ' ')
 		print(u'{0:12} | {1:30.30} | {2:56.56} | {3:5}'.format(k, table[k]['concept'], label, table[k]['predicateType']))
 	print(u'-'*115)
+	return None
 
 def search(src, year, field, criterion, tabletype='detail'):
-	"""Search Census variables."""
+	"""Search Census variables.
+
+	Args:
+		src (str): Census data source: 'acs1' for ACS 1-year estimates, 'acs5' for ACS 5-year estimates, 'acs3' for
+			ACS 3-year estimates, 'acsse' for ACS 1-year supplemental estimates, 'sf1' for SF1 data.
+		year (int): Year of data.
+		field (str): Field in which to search.
+		criterion (str): Search criterion.
+		tabletype (str, optional): Type of table from which variables are drawn (only applicable to ACS data). Options are 'detail' (detail tables),
+			'subject' (subject tables), 'profile' (data profile tables), 'cprofile' (comparison profile tables).
+
+	Returns:
+		list: List of 3-tuples containing variable names, concepts, and labels matching the search criterion.
+
+	Examples::
+
+		# Search for ACS 2011-2015 5-year estimate variables where the concept includes the text 'unweighted sample'.
+		search('acs5', '2015', 'concept', 'unweighted sample') 
+		# Search for ACS 2011-2015 5-year estimate variables where the specific variable label includes the text 'unemploy'.
+		search('acs5', '2015', 'label', 'unemploy') 
+	"""
 	try:
 		assert tabletype == 'detail' or tabletype == 'subject' or tabletype == 'profile' or tabletype == 'cprofile'
 	except AssertionError:

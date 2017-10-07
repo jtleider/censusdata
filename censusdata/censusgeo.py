@@ -1,7 +1,18 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 class censusgeo:
-	"""Class for representing American Community Survey geographies."""
+	"""Class for representing Census geographies.
+
+	Args:
+		geo (tuple of 2-tuples of strings): Tuple of 2-tuples of the form (geographic component, identifier), where geographic component is a string (e.g., 'state') and
+			identifier is either a numeric code (e.g., '01') or a wildcard ('*'). These identify the geography in question.
+		name (str, optional): Name of geography (e.g., 'Alabama').
+
+	Examples::
+
+		censusgeo([('state', '06'), ('place', '53000')], 'Oakland city, California') # Represents the Census geography for Oakland city, California.
+		censusgeo([('state', '17'), ('county', '031')]) # Represents the Census geography for Cook County, Illinois.
+	"""
 
 	#: dict: Census summary level codes for different types of geography
 	sumleveldict = {
@@ -97,13 +108,6 @@ class censusgeo:
 	}
 
 	def __init__(self, geo, name=''):
-		"""Initialize Census geography.
-
-		Args:
-			geo (tuple of 2-tuples of strings): Tuple of 2-tuples of the form (geographic component, identifier), where geographic component is a string (e.g., 'state') and
-				identifier is either a numeric code (e.g., '01') or a wildcard ('*'). These identify the geography in question.
-			name (str, optional): Name of geography (e.g., 'Alabama').
-		"""
 		self.geo = tuple(geo)
 		self.name = name
 
@@ -129,21 +133,21 @@ class censusgeo:
 		"""Geography hierarchy for the geographic level of this object.
 
 		Returns:
-			String representing the geography hierarchy (e.g., 'state> county')."""
+			str: String representing the geography hierarchy (e.g., 'state> county')."""
 		return '> '.join([geo[0] for geo in self.geo])
 
 	def sumlevel(self):
 		"""Summary level code for the geographic level of this object.
 
 		Returns:
-			String representing the summary level code for this object's geographic level, e.g., '050' for 'state> county'."""
+			str: String representing the summary level code for this object's geographic level, e.g., '050' for 'state> county'."""
 		return self.sumleveldict[self.hierarchy()]
 
 	def request(self):
 		"""Generate geographic parameters for Census API request.
 
 		Returns:
-			Dictionary with appropriate 'for' and, if needed, 'in' parameters for Census API request."""
+			dict: Dictionary with appropriate 'for' and, if needed, 'in' parameters for Census API request."""
 		nospacegeo = [(geo[0].replace(' ', '+'), geo[1]) for geo in self.geo]
 		if len(nospacegeo) > 1:
 			result = {'for': ':'.join(nospacegeo[-1]),
