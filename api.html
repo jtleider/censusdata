@@ -52,35 +52,71 @@
 <dl class="class">
 <dt id="censusdata.censusgeo.censusgeo">
 <em class="property">class </em><code class="descclassname">censusdata.censusgeo.</code><code class="descname">censusgeo</code><span class="sig-paren">(</span><em>geo</em>, <em>name=”</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.censusgeo.censusgeo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class for representing American Community Survey geographies.</p>
+<dd><p>Class for representing Census geographies.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>geo</strong> (<em>tuple of 2-tuples of strings</em>) – Tuple of 2-tuples of the form (geographic component, identifier), where geographic component is a string (e.g., ‘state’) and
+identifier is either a numeric code (e.g., ‘01’) or a wildcard (‘*’). These identify the geography in question.</li>
+<li><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of geography (e.g., ‘Alabama’).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;06&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;place&#39;</span><span class="p">,</span> <span class="s1">&#39;53000&#39;</span><span class="p">)],</span> <span class="s1">&#39;Oakland city, California&#39;</span><span class="p">)</span> <span class="c1"># Represents the Census geography for Oakland city, California.</span>
+<span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;031&#39;</span><span class="p">)])</span> <span class="c1"># Represents the Census geography for Cook County, Illinois.</span>
+</pre></div>
+</div>
 <dl class="method">
 <dt id="censusdata.censusgeo.censusgeo.hierarchy">
 <code class="descname">hierarchy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.censusgeo.censusgeo.hierarchy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Geography hierarchy for the geographic level of this object.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>String representing the geography hierarchy (e.g., ‘state&gt; county’).</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String representing the geography hierarchy (e.g., ‘state&gt; county’).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="censusdata.censusgeo.censusgeo.request">
 <code class="descname">request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.censusgeo.censusgeo.request" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate geographic parameters for Census API request.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>Dictionary with appropriate ‘for’ and, if needed, ‘in’ parameters for Census API request.</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary with appropriate ‘for’ and, if needed, ‘in’ parameters for Census API request.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="censusdata.censusgeo.censusgeo.sumlevel">
 <code class="descname">sumlevel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.censusgeo.censusgeo.sumlevel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Summary level code for the geographic level of this object.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd>String representing the summary level code for this object’s geographic level, e.g., ‘050’ for ‘state&gt; county’.</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String representing the summary level code for this object’s geographic level, e.g., ‘050’ for ‘state&gt; county’.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -92,25 +128,132 @@
 <dl class="function">
 <dt id="censusdata.variable_info.censustable">
 <code class="descclassname">censusdata.variable_info.</code><code class="descname">censustable</code><span class="sig-paren">(</span><em>src</em>, <em>year</em>, <em>table</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.variable_info.censustable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show information on all variables in a table.</p>
+<dd><p>Look up information on all variables in a table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>str</em>) – Census data source: ‘acs1’ for ACS 1-year estimates, ‘acs5’ for ACS 5-year estimates, ‘acs3’ for
+ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1’ for SF1 data.</li>
+<li><strong>year</strong> (<em>int</em>) – Year of data.</li>
+<li><strong>table</strong> (<em>str</em>) – Table name.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>Dictionary of variables in table, with keys ‘concept’ (overall concept the variable falls under), ‘label’ (variable label),</dt>
+<dd><p class="first last">and ‘predicateType’ (variable type).</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">OrderedDict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs1&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;B23025&#39;</span><span class="p">)</span> <span class="c1"># Returns information on table B23025 (Employment Status for Population 16+ Years) from the ACS 2015 1-year estimates.</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="censusdata.variable_info.censusvar">
 <code class="descclassname">censusdata.variable_info.</code><code class="descname">censusvar</code><span class="sig-paren">(</span><em>src</em>, <em>year</em>, <em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.variable_info.censusvar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download information on a list of variables from Census API.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>str</em>) – Census data source: ‘acs1’ for ACS 1-year estimates, ‘acs5’ for ACS 5-year estimates, ‘acs3’ for
+ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1’ for SF1 data.</li>
+<li><strong>year</strong> (<em>int</em>) – Year of data.</li>
+<li><strong>var</strong> (<em>list of str</em>) – Names of Census variable.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>Dictionary with keys ‘concept’ (overall concept the variable falls under), ‘label’ (variable label),</dt>
+<dd><p class="first last">and ‘predicateType’ (variable type).</p>
+</dd>
+</dl>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censusvar</span><span class="p">(</span><span class="s1">&#39;sf1&#39;</span><span class="p">,</span> <span class="mi">2010</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;P0010001&#39;</span><span class="p">])</span> <span class="c1"># Returns information on the variable P0010001 from the 2010 Census SF1.</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="censusdata.variable_info.printtable">
 <code class="descclassname">censusdata.variable_info.</code><code class="descname">printtable</code><span class="sig-paren">(</span><em>table</em>, <em>moe=False</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.variable_info.printtable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pretty print information on a Census table (such as produced by censustable).</p>
+<dd><p>Pretty print information on a Census table (such as produced by <cite>censustable</cite>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>table</strong> (<em>OrderedDict</em>) – Table information from censustable.</li>
+<li><strong>moe</strong> (<em>bool</em><em>, </em><em>optional</em>) – Display margins of error.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">printtable</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;B19013&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="censusdata.variable_info.search">
 <code class="descclassname">censusdata.variable_info.</code><code class="descname">search</code><span class="sig-paren">(</span><em>src</em>, <em>year</em>, <em>field</em>, <em>criterion</em>, <em>tabletype=’detail’</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.variable_info.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search Census variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>str</em>) – Census data source: ‘acs1’ for ACS 1-year estimates, ‘acs5’ for ACS 5-year estimates, ‘acs3’ for
+ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1’ for SF1 data.</li>
+<li><strong>year</strong> (<em>int</em>) – Year of data.</li>
+<li><strong>field</strong> (<em>str</em>) – Field in which to search.</li>
+<li><strong>criterion</strong> (<em>str</em>) – Search criterion.</li>
+<li><strong>tabletype</strong> (<em>str</em><em>, </em><em>optional</em>) – Type of table from which variables are drawn (only applicable to ACS data). Options are ‘detail’ (detail tables),
+‘subject’ (subject tables), ‘profile’ (data profile tables), ‘cprofile’ (comparison profile tables).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of 3-tuples containing variable names, concepts, and labels matching the search criterion.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Search for ACS 2011-2015 5-year estimate variables where the concept includes the text &#39;unweighted sample&#39;.</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;unweighted sample&#39;</span><span class="p">)</span>
+<span class="c1"># Search for ACS 2011-2015 5-year estimate variables where the specific variable label includes the text &#39;unemploy&#39;.</span>
+<span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;unemploy&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -121,35 +264,69 @@
 <dt id="censusdata.download.download">
 <code class="descclassname">censusdata.download.</code><code class="descname">download</code><span class="sig-paren">(</span><em>src</em>, <em>year</em>, <em>geo</em>, <em>var</em>, <em>key=None</em>, <em>tabletype=’detail’</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.download.download" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download data from Census API.</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>src (str): Census data source.
-year (str): Year of data.
-var (list of str): Census variables to download.
-key (str, optional): Census API key.
-tabletype (str, optional): Type of table from which variables are drawn. Options are ‘detail’ (detail tables), ‘subject’ (subject tables), ‘profile’ (data profile tables), ‘cprofile’ (comparison profile tables).</dd>
-<dt>Returns:</dt>
-<dd>pandas.DataFrame with columns corresponding to designated variables, and row index of censusgeo objects representing Census geographies.</dd>
-<dt>Raises:</dt>
-<dd>ValueError: If unknown tabletype is specified.</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>str</em>) – Census data source: ‘acs1’ for ACS 1-year estimates, ‘acs5’ for ACS 5-year estimates, ‘acs3’ for
+ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1’ for SF1 data.</li>
+<li><strong>year</strong> (<em>int</em>) – Year of data.</li>
+<li><strong>var</strong> (<em>list of str</em>) – Census variables to download.</li>
+<li><strong>key</strong> (<em>str</em><em>, </em><em>optional</em>) – Census API key.</li>
+<li><strong>tabletype</strong> (<em>str</em><em>, </em><em>optional</em>) – Type of table from which variables are drawn (only applicable to ACS data). Options are ‘detail’ (detail tables),
+‘subject’ (subject tables), ‘profile’ (data profile tables), ‘cprofile’ (comparison profile tables).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Data frame with columns corresponding to designated variables, and row index of censusgeo objects representing Census geographies.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">pandas.DataFrame</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If unknown tabletype is specified.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Download ACS 2011-2015 5-year estimates for Oakland city, California on population size, median age, and median household income.</span>
+<span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;06&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;place&#39;</span><span class="p">,</span> <span class="s1">&#39;53000&#39;</span><span class="p">)]),</span> <span class="p">[</span><span class="s1">&#39;B01001_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01002_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B19013_001E&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="censusdata.download.geographies">
 <code class="descclassname">censusdata.download.</code><code class="descname">geographies</code><span class="sig-paren">(</span><em>within</em>, <em>src</em>, <em>year</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.download.geographies" title="Permalink to this definition">¶</a></dt>
 <dd><p>List geographies within a given geography, e.g., counties within a state.</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>within (censusgeo): Geography within which to list geographies.
-src (str): Census data source.
-year (str): Year of data.
-key (str, optional): Census API key.</dd>
-<dt>Returns:</dt>
-<dd>Dictionary with names as keys and censusgeo objects as values.</dd>
-</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>within</strong> (<a class="reference internal" href="#module-censusdata.censusgeo" title="censusdata.censusgeo"><em>censusgeo</em></a>) – Geography within which to list geographies.</li>
+<li><strong>src</strong> (<em>str</em>) – Census data source: ‘acs1’ for ACS 1-year estimates, ‘acs5’ for ACS 5-year estimates, ‘acs3’ for
+ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1’ for SF1 data.</li>
+<li><strong>year</strong> (<em>int</em>) – Year of data.</li>
+<li><strong>key</strong> (<em>str</em><em>, </em><em>optional</em>) – Census API key.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Dictionary with names as keys and <cite>censusgeo</cite> objects as values.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Pull data on all state geographies from the ACS 2011-2015 5-year estimates.</span>
+<span class="n">censusdata</span><span class="o">.</span><span class="n">geographies</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -159,14 +336,22 @@ key (str, optional): Census API key.</dd>
 <dl class="function">
 <dt id="censusdata.export.exportcsv">
 <code class="descclassname">censusdata.export.</code><code class="descname">exportcsv</code><span class="sig-paren">(</span><em>file</em>, <em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.export.exportcsv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Export Pandas DataFrame where index is composed of censusgeo objects. Can be used with return value from download().</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd>file: String or file handler for exporting data.
-data: Data to export.</dd>
-<dt>Returns:</dt>
-<dd>None.</dd>
-</dl>
+<dd><p>Export Pandas DataFrame where index is composed of <cite>censusgeo</cite> objects. Can be used with return value from <cite>download()</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file</strong> – String or file handler for exporting data.</li>
+<li><strong>data</strong> (<em>pandas.DataFrame</em>) – Data to export.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
