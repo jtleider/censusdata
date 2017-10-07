@@ -17,7 +17,7 @@ import textwrap
 class TestExport(unittest.TestCase):
 
 	def test_export(self):
-		data = censusdata.download('acs5', '2015', censusdata.censusgeo([('state', '*')]), ['B01001_001E'])
+		data = censusdata.download('acs5', 2015, censusdata.censusgeo([('state', '*')]), ['B01001_001E'])
 		try:
 			csv = StringIO.StringIO()
 		except NameError:

@@ -33,7 +33,7 @@ class TestVariableInfo(unittest.TestCase):
 		expected = {'S0101_C02_001E': ['Age and Sex', 'Male!!Total population', 'string'],
 			'DP03_0021PE': ['SELECTED ECONOMIC CHARACTERISTICS', 'COMMUTING TO WORK!!Workers 16 years and over!!Public transportation (excluding taxicab)', 'int'],
 			'CP02_2011_030E': ['COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES', '2011 Estimate!!MARITAL STATUS!!Females 15 years and over', 'string']}
-		self.assertEqual(censusdata.censusvar('acs1', '2015', ['S0101_C02_001E', 'DP03_0021PE', 'CP02_2011_030E']), expected)
+		self.assertEqual(censusdata.censusvar('acs1', 2015, ['S0101_C02_001E', 'DP03_0021PE', 'CP02_2011_030E']), expected)
 
 	def test_censusvar_acsse(self):
 		expected = {'K202801_006E': ['K202801. Presence of A Computer and Type of Internet Subscription in Household', 'No computer', 'int']}
@@ -51,7 +51,7 @@ class TestVariableInfo(unittest.TestCase):
 			{'P0010001': ['P1. Total Population [1]', 'Total Population', '']})
 
 	def test_unknownvar(self):
-		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', '2015', ['B19013_010E'])
+		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', 2015, ['B19013_010E'])
 
 	def test_censustable_acs1_201215_detail(self):
 		for year in range(2012, 2015+1):
@@ -90,7 +90,7 @@ class TestVariableInfo(unittest.TestCase):
 		expected['B23025_006M'] = { 'label': 'Margin Of Error For!!In labor force:!!Armed Forces', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
 		expected['B23025_007E'] = {'label': 'Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
 		expected['B23025_007M'] = {'label': 'Margin Of Error For!!Not in labor force', 'concept': 'B23025.  Employment Status for the Population 16 Years and Over', 'predicateType': 'int'}
-		self.assertEqual(censusdata.censustable('acs5', '2015', 'B23025'), expected)
+		self.assertEqual(censusdata.censustable('acs5', 2015, 'B23025'), expected)
 
 	def test_censustable_acs5_2015_subject(self):
 		expected = OrderedDict()
@@ -238,7 +238,7 @@ class TestVariableInfo(unittest.TestCase):
 		expected['S0101_C02_036EA'] = {'label': 'Male!!PERCENT IMPUTED!!Age', 'concept': 'Age and Sex', 'predicateType': 'string'}
 		expected['S0101_C02_036M'] = {'label': 'Male MOE!!PERCENT IMPUTED!!Age', 'concept': 'Age and Sex', 'predicateType': 'string'}
 		expected['S0101_C02_036MA'] = {'label': 'Male MOE!!PERCENT IMPUTED!!Age', 'concept': 'Age and Sex', 'predicateType': 'string'}
-		self.assertEqual(censusdata.censustable('acs5', '2015', 'S0101_C02'), expected)
+		self.assertEqual(censusdata.censustable('acs5', 2015, 'S0101_C02'), expected)
 
 	def test_censustable_acsse(self):
 		expected = OrderedDict()
@@ -316,10 +316,10 @@ class TestVariableInfo(unittest.TestCase):
 		self.assertEqual(censusdata.censustable('sf1', 2010, 'P002'), expected)
 
 	def test_unknowntable(self):
-		self.assertRaises(ValueError, censusdata.censustable, 'acs5', '2015', 'B24444')
+		self.assertRaises(ValueError, censusdata.censustable, 'acs5', 2015, 'B24444')
 
 	def test_search(self):
-		self.assertEqual(censusdata.search('acs5', '2015', 'concept', 'unweighted sample'), [
+		self.assertEqual(censusdata.search('acs5', 2015, 'concept', 'unweighted sample'), [
 		('B00001_001E', 'B00001.  Unweighted Sample Count of the Population', 'Total'),
 		('B00001_001M', 'B00001.  Unweighted Sample Count of the Population', 'Margin Of Error For!!Total'),
 		('B00002_001E', 'B00002.  Unweighted Sample Housing Units', 'Total'),
@@ -327,17 +327,17 @@ class TestVariableInfo(unittest.TestCase):
 		])
 
 	def test_printtable(self):
-		testtable = censusdata.censustable('acs5', '2015', 'B19013')
+		testtable = censusdata.censustable('acs5', 2015, 'B19013')
 		printedtable = io.StringIO()
 		sys.stdout = printedtable
 		censusdata.printtable(testtable)
 		sys.stdout = sys.__stdout__
 		self.assertEqual(printedtable.getvalue(), textwrap.dedent(
 			'''\
-			Variable             | Table                                    | Label                                                                                                                                                            | Type      
-			-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-			B19013_001E          | B19013. Median Household Income in the P | Median household income in the past 12 months (in 2015 Inflation-adjusted dollars)                                                                               | int       
-			-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			Variable     | Table                          | Label                                                    | Type 
+			-------------------------------------------------------------------------------------------------------------------
+			B19013_001E  | B19013. Median Household Incom | Median household income in the past 12 months (in 2015 I | int  
+			-------------------------------------------------------------------------------------------------------------------
 			'''))
 		printedtable.close()
 		printedtable = io.StringIO()
@@ -346,19 +346,19 @@ class TestVariableInfo(unittest.TestCase):
 		sys.stdout = sys.__stdout__
 		self.assertEqual(printedtable.getvalue(), textwrap.dedent(
 			'''\
-			Variable             | Table                                    | Label                                                                                                                                                            | Type      
-			-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-			B19013_001E          | B19013. Median Household Income in the P | Median household income in the past 12 months (in 2015 Inflation-adjusted dollars)                                                                               | int       
-			B19013_001M          | B19013. Median Household Income in the P | !! Margin of Error for Median household income in the past 12 months (in 2015 Inflation-adjusted dollars)                                                        | int       
-			-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			Variable     | Table                          | Label                                                    | Type 
+			-------------------------------------------------------------------------------------------------------------------
+			B19013_001E  | B19013. Median Household Incom | Median household income in the past 12 months (in 2015 I | int  
+			B19013_001M  | B19013. Median Household Incom | !! Margin of Error for Median household income in the pa | int  
+			-------------------------------------------------------------------------------------------------------------------
 			'''))
 		printedtable.close()
 
 
 	def test_unknown_tabletype(self):
-		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', '2015', ['B19013_001E', 'D19013_002E'])
-		self.assertRaises(ValueError, censusdata.censustable, 'acs5', '2015', 'C19013')
-		self.assertRaises(ValueError, censusdata.search, 'acs5', '2015', 'concept', 'unweighted sample', tabletype='cdetail')
+		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', 2015, ['B19013_001E', 'D19013_002E'])
+		self.assertRaises(ValueError, censusdata.censustable, 'acs5', 2015, 'C19013')
+		self.assertRaises(ValueError, censusdata.search, 'acs5', 2015, 'concept', 'unweighted sample', tabletype='cdetail')
 
 
 if __name__ == '__main__':
