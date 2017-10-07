@@ -1,4 +1,5 @@
 *.pyc
+setup.py
 MANIFEST.in
 dist/
 CensusData.egg-info/
