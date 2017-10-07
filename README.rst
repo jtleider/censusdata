@@ -13,7 +13,8 @@ This package handles the details of interacting with the Census API for you,
 so that you can focus on working with the data. It provides a class for
 representing Census geographies. It also provides functions
 for gaining further information about specific variables and tables and
-for searching for variables. 
+for searching for variables. Full documentation is available at
+https://jtleider.github.io/censusdata/.
 
 The ACS (https://www.census.gov/programs-surveys/acs/)
 started in 2005. It provides information on a wide range of social, economic,
