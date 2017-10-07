@@ -1,5 +1,5 @@
 *.pyc
-MANIFEST
+MANIFEST.in
 dist/
 CensusData.egg-info/
 .ipynb_checkpoints/
