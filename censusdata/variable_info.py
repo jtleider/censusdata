@@ -51,9 +51,10 @@ def censusvar(src, year, var):
 			print(u'JSON variable information does not include key "name"', data)
 			raise
 		try:
-			assert len(data.keys()) == 7
+			if 'predicateType' in data: assert len(data.keys()) == 6
+			else: assert len(data.keys()) == 5
 		except AssertionError:
-			print(u'JSON variable information includes unexpected number of keys ({0}, instead of 7): '.format(len(data.keys())), data)
+			print(u'JSON variable information includes unexpected number of keys ({0}, instead of 5-6): '.format(len(data.keys())), data)
 		if 'predicateType' not in data: data['predicateType'] = ''
 		try: 
 			ret[v] = [data['concept'], data['label'], data['predicateType']]
