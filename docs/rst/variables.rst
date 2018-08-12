@@ -51,6 +51,15 @@ tables are available from American FactFinder
 Unfortunately, these do not include variable names, unlike the detailed table
 shells.
 
+*Note about annotation fields.* The Census has recently updated the API for the
+ACS 1- and 5-year estimates to include separate annotation fields for each
+variable. The main data variables (e.g., B01001_001E from the detailed tables)
+will now contain numeric data exclusively, while any text annotations providing
+notes about the data will be placed in annotation fields with names ending in 'A'
+(e.g., B01001_001EA). It is important to refer to the annotation fields for
+relevant notes about the data (e.g., if data are missing due to too few sample
+observations).
+
 --------------------------------------------------------------
 American Community Survey 1-Year Supplemental Estimates
 --------------------------------------------------------------
