@@ -39,7 +39,9 @@ def censusvar(src, year, var):
 		else:
 			print(u'Unknown table type for variable {0}!'.format(v))
 			raise ValueError
-		r = requests.get('https://api.census.gov/data/{1}/{0}/{3}variables/{2}.json'.format(src, year, v, tabletype))
+		if (src == 'acs1' or src == 'acs5' or src == 'acsse') and year >= 2010: presrc = 'acs/'
+		else: presrc = ''
+		r = requests.get('https://api.census.gov/data/{year}/{presrc}{src}/{tabletype}variables/{v}.json'.format(src=src, year=year, v=v, tabletype=tabletype, presrc=presrc))
 		try:
 			data = r.json()
 		except:
@@ -50,14 +52,13 @@ def censusvar(src, year, var):
 		except AssertionError:
 			print(u'JSON variable information does not include key "name"', data)
 			raise
+		expectedKeys = ['group', 'label', 'limit', 'name',]
 		try:
-			if 'predicateType' in data: assert len(data.keys()) == 6
-			else: assert len(data.keys()) == 5
+			assert [k for k in sorted(data.keys()) if k != 'attributes' and k != 'concept' and k != 'predicateType'] == expectedKeys
 		except AssertionError:
-			print(u'JSON variable information includes unexpected number of keys ({0}, instead of 5-6): '.format(len(data.keys())), data)
-		if 'predicateType' not in data: data['predicateType'] = ''
+			print(u'JSON variable information does not include expected keys ({0} and possibly attributes, concept, predicateType) or includes extra keys: '.format(expectedKeys), data)
 		try: 
-			ret[v] = [data['concept'], data['label'], data['predicateType']]
+			ret[v] = [data.get('concept', ''), data['label'], data.get('predicateType', '')] # Concept, predicate type not provided for all years; default to empty if not provided
 		except KeyError:
 			print(u'JSON variable information does not include expected keys: ', data)
 			raise
