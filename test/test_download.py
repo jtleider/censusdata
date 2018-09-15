@@ -22,7 +22,7 @@ class TestDownload(unittest.TestCase):
 			{'NAME': ['Oakland city, California'], 'B01001_001E': ['408073'], 'state': ['06'], 'place': ['53000']})
 
 	def test_geographies_state(self):
-		for year in range(2009, 2015+1):
+		for year in range(2009, 2016+1):
 			self.assertEqual(censusdata.geographies(censusdata.censusgeo([('state', '*')]), 'acs5', year),
 				{
 				'Alaska': censusdata.censusgeo([('state', '02')]),
