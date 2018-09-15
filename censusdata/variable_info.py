@@ -23,7 +23,7 @@ def censusvar(src, year, var):
 
 	Examples::
 
-		censusvar('sf1', 2010, ['P0010001']) # Returns information on the variable P0010001 from the 2010 Census SF1.
+		censusdata.censusvar('sf1', 2010, ['P0010001']) # Returns information on the variable P0010001 from the 2010 Census SF1.
 	"""
 	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse' or src == 'sf1'
 	ret = dict()
@@ -79,7 +79,7 @@ def censustable(src, year, table):
 
 	Examples::
 
-		censustable('acs1', 2015, 'B23025') # Returns information on table B23025 (Employment Status for Population 16+ Years) from the ACS 2015 1-year estimates.
+		censusdata.censustable('acs1', 2015, 'B23025') # Returns information on table B23025 (Employment Status for Population 16+ Years) from the ACS 2015 1-year estimates.
 	"""
 	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse' or src == 'sf1'
 	if src == 'acsse' or src == 'sf1':
@@ -122,7 +122,7 @@ def printtable(table, moe=False):
 
 	Examples::
 
-		censusdata.printtable(censusdata.censustable('acs5', '2015', 'B19013'))
+		censusdata.printtable(censusdata.censustable('acs5', 2015, 'B19013'))
 	"""
 	print(u'{0:12} | {1:30.30} | {2:56} | {3:5}'.format('Variable', 'Table', 'Label', 'Type'))
 	print(u'-'*115)
@@ -152,9 +152,9 @@ def search(src, year, field, criterion, tabletype='detail'):
 	Examples::
 
 		# Search for ACS 2011-2015 5-year estimate variables where the concept includes the text 'unweighted sample'.
-		search('acs5', '2015', 'concept', 'unweighted sample') 
+		censusdata.search('acs5', 2015, 'concept', 'unweighted sample') 
 		# Search for ACS 2011-2015 5-year estimate variables where the specific variable label includes the text 'unemploy'.
-		search('acs5', '2015', 'label', 'unemploy') 
+		censusdata.search('acs5', 2015, 'label', 'unemploy') 
 	"""
 	try:
 		assert tabletype == 'detail' or tabletype == 'subject' or tabletype == 'profile' or tabletype == 'cprofile'

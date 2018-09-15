@@ -19,7 +19,7 @@ https://jtleider.github.io/censusdata/.
 The ACS (https://www.census.gov/programs-surveys/acs/)
 started in 2005. It provides information on a wide range of social, economic,
 demographic, and housing characteristics. Topics covered include
-income, employment, health insurance, the age distribution, education, among
+income, employment, health insurance, the age distribution, and education, among
 many others. The ACS replaces the old Census long form, which used to be
 distributed to a subset of households responding to the decennial Census.
 The ACS produces survey-based period estimates. For instance, the

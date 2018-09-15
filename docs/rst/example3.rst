@@ -413,7 +413,7 @@ regression model:
       <th>Date:</th>                   <td>Sat, 15 Sep 2018</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
     </tr>
     <tr>
-      <th>Time:</th>                       <td>15:37:29</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
+      <th>Time:</th>                       <td>18:48:26</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
     </tr>
     <tr>
       <th>No. Observations:</th>            <td>    51</td>            <th>  AIC:               </th> <td>   371.9</td>
