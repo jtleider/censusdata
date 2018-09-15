@@ -81,7 +81,7 @@ def download(src, year, geo, var, key=None, tabletype='detail'):
 	Examples::
 
 		# Download ACS 2011-2015 5-year estimates for Oakland city, California on population size, median age, and median household income.
-		censusdata.download('acs5', '2015', censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E'])
+		censusdata.download('acs5', 2015, censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E'])
 	"""
 	try:
 		assert tabletype == 'detail' or tabletype == 'subject' or tabletype == 'profile' or tabletype == 'cprofile'
