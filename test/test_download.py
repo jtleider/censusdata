@@ -92,6 +92,21 @@ class TestDownload(unittest.TestCase):
 			'Kauai County, Hawaii': censusdata.censusgeo([('state', '15'), ('county', '007')]),
 			'Maui County, Hawaii': censusdata.censusgeo([('state', '15'), ('county', '009')]),})
 
+	def test_download_acs5_2016(self):
+		assert_frame_equal(censusdata.download('acs5', 2016, censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
+			pd.DataFrame({'B01001_001E': 412040, 'B01002_001E': 36.2, 'B19013_001E': 57778}, [censusdata.censusgeo([('state', '06'), ('place', '53000')], 'Oakland city, California')]))
+		assert_frame_equal(censusdata.download('acs5', 2016, censusdata.censusgeo([('state', '15'), ('county', '*')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
+			pd.DataFrame({'B01001_001E': [193680, 986999, 91, 70447, 162456], 'B01002_001E': [41.8, 37.4, 56.5, 42.0, 40.5], 'B19013_001E': [53936, 77161, 65625, 68224, 68777]}, 
+				[censusdata.censusgeo([('state', '15'), ('county', '001')], 'Hawaii County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '003')], 'Honolulu County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '005')], 'Kalawao County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '007')], 'Kauai County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '009')], 'Maui County, Hawaii')]))
+		assert_frame_equal(censusdata.download('acs5', 2016, censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')]), ['B01001_001E', 'B19013_001E']),
+			pd.DataFrame({'B01001_001E': 1374, 'B19013_001E': 44044}, [censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')], 'Block Group 2, Census Tract 3501, Cook County, Illinois')]))
+		assert_frame_equal(censusdata.download('acs5', 2016, censusdata.censusgeo([('metropolitan statistical area/micropolitan statistical area', '16980')]), ['B01001_001E', 'B19013_001E']),
+			pd.DataFrame({'B01001_001E': 9528396, 'B19013_001E': 63327}, [censusdata.censusgeo([('metropolitan statistical area/micropolitan statistical area', '16980')], 'Chicago-Naperville-Elgin, IL-IN-WI Metro Area')]))
+		assert_frame_equal(censusdata.download('acs5', 2016, censusdata.censusgeo([('state', '06')]), ['DP03_0021PE'], tabletype='profile'),
+			pd.DataFrame({'DP03_0021PE': 5.2}, [censusdata.censusgeo([('state', '06')], 'California')]))
+
 	def test_download_acs5_2015(self):
 		assert_frame_equal(censusdata.download('acs5', 2015, censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
 			pd.DataFrame({'B01001_001E': 408073, 'B01002_001E': 36.3, 'B19013_001E': 54618}, [censusdata.censusgeo([('state', '06'), ('place', '53000')], 'Oakland city, California')]))
@@ -113,6 +128,10 @@ class TestDownload(unittest.TestCase):
 			assert_frame_equal(censusdata.download('acs5', year, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
 				pd.DataFrame({'B19013_001E': medhhinc[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
+	def test_download_acs1_2016(self):
+		assert_frame_equal(censusdata.download('acs1', 2016, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
+			pd.DataFrame({'B19013_001E': 60960}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
+
 	def test_download_acs1_2015(self):
 		assert_frame_equal(censusdata.download('acs1', 2015, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
 			pd.DataFrame({'B19013_001E': 59588}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
@@ -124,8 +143,8 @@ class TestDownload(unittest.TestCase):
 				pd.DataFrame({'B19013_001E': medhhinc[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
 	def test_download_acsse(self):
-		nocomputer = {2014: 731135, 2015: 658047}
-		for year in range(2014, 2015+1):
+		nocomputer = {2014: 731135, 2015: 658047, 2016: 522736}
+		for year in range(2014, 2016+1):
 			assert_frame_equal(censusdata.download('acsse', year, censusdata.censusgeo([('state', '17')]), ['K202801_006E']),
 				pd.DataFrame({'K202801_006E': nocomputer[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
