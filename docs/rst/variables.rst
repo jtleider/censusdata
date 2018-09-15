@@ -67,10 +67,8 @@ The ACS 1-year supplemental estimates supplement the 1-year estimates by
 providing estimates for all geographies with a population of 20,000+,
 as opposed to 65,000+ for the regular 1-year estimates. There are
 separate tables for the 1-year supplemental estimates. Table names begin
-with K20. Table shells are available for 2015 under
-https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/2015/Supplemental_Estimates/
-and for 2014 under
-https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/2014/Supplemental_Estimates/
+with K20. Table shells are available for 2014-2016 under
+https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/
 Unfortunately, unlike the detailed tables for the regular 1-year estimates,
 there is no single spreadsheet containing all the table shells.
 
@@ -79,7 +77,7 @@ Census 2010 Summary File 1
 --------------------------------------------------------------
 
 Extensive information on the Summary File 1 data is available under
-https://www.census.gov/2010census/news/press-kits/summary-file-1.html
+https://www.census.gov/newsroom/releases/archives/2010_census/press-kits/summary-file-1.html
 In particular, the technical documentation, currently available under
 https://www.census.gov/prod/cen2010/doc/sf1.pdf,
 provides detailed information on the tables and variables that are available.
