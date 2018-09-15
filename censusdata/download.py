@@ -18,6 +18,7 @@ def _download(src, year, params, baseurl = 'https://api.census.gov/data/'):
 		baseurl (str, optional): Base URL for download.
 	"""
 	if (src[:4] == 'acs1' or src[:4] == 'acs5' or src[:5] == 'acsse') and year >= 2010: presrc = 'acs/'
+	elif src[:3] == 'sf1': presrc = 'dec/'
 	else: presrc = ''
 	url = baseurl + str(year) + '/' + presrc + src + '?' + '&'.join('='.join(param) for param in params.items())
 	r = requests.get(url)
