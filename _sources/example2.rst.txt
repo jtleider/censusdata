@@ -16,7 +16,7 @@ checking the data we have received:
     pd.set_option('display.expand_frame_repr', False)
     pd.set_option('display.precision', 2)
     
-    county65plus = censusdata.download('acs5', '2015', censusdata.censusgeo([('county', '*')]),
+    county65plus = censusdata.download('acs5', 2015, censusdata.censusgeo([('county', '*')]),
                                        ['B01001_001E', 'B01001_020E', 'B01001_021E', 'B01001_022E', 'B01001_023E',
                                         'B01001_024E', 'B01001_025E', 'B01001_044E', 'B01001_045E', 'B01001_046E',
                                         'B01001_047E', 'B01001_048E', 'B01001_049E'])
@@ -28,17 +28,17 @@ checking the data we have received:
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
@@ -214,17 +214,17 @@ Then we keep the variables of interest, rename, and print descriptives:
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
@@ -296,17 +296,17 @@ Finally, we show the 30 U.S. counties with the highest percentage aged
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
@@ -483,7 +483,7 @@ appropriate table:
 
 .. code:: ipython3
 
-    censusdata.search('acs5', '2015', 'label', '65', tabletype='profile')[-25:]
+    censusdata.search('acs5', 2015, 'label', '65', tabletype='profile')[-25:]
 
 
 
@@ -570,7 +570,7 @@ appropriate table:
 
 .. code:: ipython3
 
-    censusdata.printtable(censusdata.censustable('acs5', '2015', 'DP05'))
+    censusdata.printtable(censusdata.censustable('acs5', 2015, 'DP05'))
 
 
 .. parsed-literal::
@@ -754,7 +754,7 @@ except now the computation is somewhat simpler:
 
 .. code:: ipython3
 
-    county65plus = censusdata.download('acs5', '2015', censusdata.censusgeo([('county', '*')]),
+    county65plus = censusdata.download('acs5', 2015, censusdata.censusgeo([('county', '*')]),
                                        ['DP05_0001E', 'DP05_0014PE', 'DP05_0015PE', 'DP05_0016PE',],
                                        tabletype='profile')
     county65plus.describe()
@@ -765,17 +765,17 @@ except now the computation is somewhat simpler:
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
@@ -865,17 +865,17 @@ except now the computation is somewhat simpler:
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
@@ -947,17 +947,17 @@ export data for all counties to CSV:
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">

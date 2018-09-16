@@ -60,7 +60,7 @@ checking the data we have received:</p>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.expand_frame_repr&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.precision&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-<span class="n">county65plus</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span>
+<span class="n">county65plus</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span>
                                    <span class="p">[</span><span class="s1">&#39;B01001_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_020E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_021E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_022E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_023E&#39;</span><span class="p">,</span>
                                     <span class="s1">&#39;B01001_024E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_025E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_044E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_045E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_046E&#39;</span><span class="p">,</span>
                                     <span class="s1">&#39;B01001_047E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_048E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01001_049E&#39;</span><span class="p">])</span>
@@ -68,17 +68,17 @@ checking the data we have received:</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -243,17 +243,17 @@ checking the data we have received:</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -314,17 +314,17 @@ checking the data we have received:</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -494,7 +494,7 @@ checking the data we have received:</p>
 <p>There is more than one way to approach this problem. Let’s see how to
 use the data profile tables for the same purpose. First, we identify the
 appropriate table:</p>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;65&#39;</span><span class="p">,</span> <span class="n">tabletype</span><span class="o">=</span><span class="s1">&#39;profile&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">25</span><span class="p">:]</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;65&#39;</span><span class="p">,</span> <span class="n">tabletype</span><span class="o">=</span><span class="s1">&#39;profile&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">25</span><span class="p">:]</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="s1">&#39;DP03_0135PM&#39;</span><span class="p">,</span>
@@ -574,7 +574,7 @@ appropriate table:</p>
   <span class="s1">&#39;SEX AND AGE!!Total population!!65 years and over!!Female&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">printtable</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;DP05&#39;</span><span class="p">))</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">printtable</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;DP05&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span>Variable     | Table                          | Label                                                    | Type
@@ -753,24 +753,24 @@ DP05_0084PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! CITIZEN, VOTING AGE POPULA
 <p>After identifying the relevant variables, we download and describe the
 data, and compute the percent 65+ similarly to how we did so before,
 except now the computation is somewhat simpler:</p>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">county65plus</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">county65plus</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span>
                                    <span class="p">[</span><span class="s1">&#39;DP05_0001E&#39;</span><span class="p">,</span> <span class="s1">&#39;DP05_0014PE&#39;</span><span class="p">,</span> <span class="s1">&#39;DP05_0015PE&#39;</span><span class="p">,</span> <span class="s1">&#39;DP05_0016PE&#39;</span><span class="p">,],</span>
                                    <span class="n">tabletype</span><span class="o">=</span><span class="s1">&#39;profile&#39;</span><span class="p">)</span>
 <span class="n">county65plus</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -850,17 +850,17 @@ except now the computation is somewhat simpler:</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -921,17 +921,17 @@ export data for all counties to CSV:</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">

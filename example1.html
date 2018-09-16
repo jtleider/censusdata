@@ -71,7 +71,7 @@ to this is output can be voluminous, as in the following searches, as
 ACS frequently provides a large number of different tabulations related
 to a given topic area. Below, we limit the output to the relevant
 variables:</p>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;unemploy&#39;</span><span class="p">)[</span><span class="mi">160</span><span class="p">:</span><span class="mi">170</span><span class="p">]</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;unemploy&#39;</span><span class="p">)[</span><span class="mi">160</span><span class="p">:</span><span class="mi">170</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="s1">&#39;B23024_023E&#39;</span><span class="p">,</span>
@@ -106,7 +106,7 @@ variables:</p>
   <span class="s1">&#39;Margin of Error for!!In labor force:!!Unemployed:!!18 to 64 years:&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;education&#39;</span><span class="p">)[</span><span class="mi">730</span><span class="p">:</span><span class="mi">790</span><span class="p">]</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;education&#39;</span><span class="p">)[</span><span class="mi">730</span><span class="p">:</span><span class="mi">790</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="s1">&#39;B15002_035E&#39;</span><span class="p">,</span>
@@ -297,7 +297,7 @@ because otherwise every time we did this we would have to download data
 for all variables.) Once we have identified a table of interest, we can
 use <code class="docutils literal"><span class="pre">censusdata.printtable</span></code> to show all variables included in the
 table:</p>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">printtable</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;B23025&#39;</span><span class="p">))</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">printtable</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;B23025&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span>Variable     | Table                          | Label                                                    | Type
@@ -312,7 +312,7 @@ B23025_007E  | B23025.  Employment Status for | Not in labor force              
 -------------------------------------------------------------------------------------------------------------------
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">printtable</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003&#39;</span><span class="p">))</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">printtable</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;B15003&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Variable</span>     <span class="o">|</span> <span class="n">Table</span>                          <span class="o">|</span> <span class="n">Label</span>                                                    <span class="o">|</span> <span class="n">Type</span>
@@ -350,7 +350,7 @@ geographies of interest. We are interested in block groups in Cook
 County, Illinois, so first we look for the geographic identifier (FIPS
 code) for Illinois, then the identifiers for all counties with Illinois
 to find Cook County:</p>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">geographies</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">)</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">geographies</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;Alabama&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;01&#39;</span><span class="p">),)),</span>
@@ -392,7 +392,6 @@ to find Cook County:</p>
  <span class="s1">&#39;Oklahoma&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;40&#39;</span><span class="p">),)),</span>
  <span class="s1">&#39;Oregon&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;41&#39;</span><span class="p">),)),</span>
  <span class="s1">&#39;Pennsylvania&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;42&#39;</span><span class="p">),)),</span>
- <span class="s1">&#39;Puerto Rico&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;72&#39;</span><span class="p">),)),</span>
  <span class="s1">&#39;Rhode Island&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;44&#39;</span><span class="p">),)),</span>
  <span class="s1">&#39;South Carolina&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;45&#39;</span><span class="p">),)),</span>
  <span class="s1">&#39;South Dakota&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;46&#39;</span><span class="p">),)),</span>
@@ -404,10 +403,11 @@ to find Cook County:</p>
  <span class="s1">&#39;Washington&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;53&#39;</span><span class="p">),)),</span>
  <span class="s1">&#39;West Virginia&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;54&#39;</span><span class="p">),)),</span>
  <span class="s1">&#39;Wisconsin&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;55&#39;</span><span class="p">),)),</span>
- <span class="s1">&#39;Wyoming&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;56&#39;</span><span class="p">),))}</span>
+ <span class="s1">&#39;Wyoming&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;56&#39;</span><span class="p">),)),</span>
+ <span class="s1">&#39;Puerto Rico&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;72&#39;</span><span class="p">),))}</span>
 </pre></div>
 </div>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">geographies</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">)</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">geographies</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span> <span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;Adams County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;001&#39;</span><span class="p">))),</span>
@@ -428,8 +428,8 @@ to find Cook County:</p>
  <span class="s1">&#39;Cook County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;031&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Crawford County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;033&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Cumberland County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;035&#39;</span><span class="p">))),</span>
- <span class="s1">&#39;De Witt County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;039&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;DeKalb County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;037&#39;</span><span class="p">))),</span>
+ <span class="s1">&#39;De Witt County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;039&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Douglas County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;041&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;DuPage County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;043&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Edgar County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;045&#39;</span><span class="p">))),</span>
@@ -458,12 +458,15 @@ to find Cook County:</p>
  <span class="s1">&#39;Kankakee County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;091&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Kendall County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;093&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Knox County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;095&#39;</span><span class="p">))),</span>
- <span class="s1">&#39;LaSalle County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;099&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Lake County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;097&#39;</span><span class="p">))),</span>
+ <span class="s1">&#39;LaSalle County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;099&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Lawrence County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;101&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Lee County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;103&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Livingston County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;105&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Logan County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;107&#39;</span><span class="p">))),</span>
+ <span class="s1">&#39;McDonough County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;109&#39;</span><span class="p">))),</span>
+ <span class="s1">&#39;McHenry County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;111&#39;</span><span class="p">))),</span>
+ <span class="s1">&#39;McLean County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;113&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Macon County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;115&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Macoupin County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;117&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Madison County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;119&#39;</span><span class="p">))),</span>
@@ -471,9 +474,6 @@ to find Cook County:</p>
  <span class="s1">&#39;Marshall County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;123&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Mason County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;125&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Massac County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;127&#39;</span><span class="p">))),</span>
- <span class="s1">&#39;McDonough County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;109&#39;</span><span class="p">))),</span>
- <span class="s1">&#39;McHenry County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;111&#39;</span><span class="p">))),</span>
- <span class="s1">&#39;McLean County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;113&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Menard County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;129&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Mercer County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;131&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Monroe County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;133&#39;</span><span class="p">))),</span>
@@ -491,12 +491,12 @@ to find Cook County:</p>
  <span class="s1">&#39;Randolph County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;157&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Richland County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;159&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Rock Island County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;161&#39;</span><span class="p">))),</span>
+ <span class="s1">&#39;St. Clair County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;163&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Saline County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;165&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Sangamon County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;167&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Schuyler County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;169&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Scott County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;171&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Shelby County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;173&#39;</span><span class="p">))),</span>
- <span class="s1">&#39;St. Clair County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;163&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Stark County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;175&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Stephenson County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;177&#39;</span><span class="p">))),</span>
  <span class="s1">&#39;Tazewell County, Illinois&#39;</span><span class="p">:</span> <span class="n">censusgeo</span><span class="p">(((</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;179&#39;</span><span class="p">))),</span>
@@ -518,7 +518,7 @@ to find Cook County:</p>
 we can download the data using <code class="docutils literal"><span class="pre">censusdata.download</span></code> and compute
 variables for the percent unemployed and the percent with no high school
 degree:</p>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">cookbg</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">cookbg</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span>
                              <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;17&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;county&#39;</span><span class="p">,</span> <span class="s1">&#39;031&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;block group&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span>
                              <span class="p">[</span><span class="s1">&#39;B23025_003E&#39;</span><span class="p">,</span> <span class="s1">&#39;B23025_005E&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003_002E&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003_003E&#39;</span><span class="p">,</span>
                               <span class="s1">&#39;B15003_004E&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003_005E&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003_006E&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003_007E&#39;</span><span class="p">,</span> <span class="s1">&#39;B15003_008E&#39;</span><span class="p">,</span>
@@ -535,17 +535,17 @@ degree:</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -606,17 +606,17 @@ block groups.</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -786,17 +786,17 @@ Cook County block groups:</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">

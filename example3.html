@@ -61,7 +61,7 @@ so we need an additional import:</p>
 </div>
 <p>We begin by downloading data on some basic socioeconomic characteristics
 for all U.S. states:</p>
-<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">statedata</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span>
+<div class="code ipython3 highlight-default"><div class="highlight"><pre><span></span><span class="n">statedata</span> <span class="o">=</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)]),</span>
                                 <span class="p">[</span><span class="s1">&#39;B01001_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B19013_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B19083_001E&#39;</span><span class="p">,</span>
                                  <span class="s1">&#39;C17002_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;C17002_002E&#39;</span><span class="p">,</span> <span class="s1">&#39;C17002_003E&#39;</span><span class="p">,</span> <span class="s1">&#39;C17002_004E&#39;</span><span class="p">,</span>
                                  <span class="s1">&#39;B03002_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B03002_003E&#39;</span><span class="p">,</span> <span class="s1">&#39;B03002_004E&#39;</span><span class="p">,</span> <span class="s1">&#39;B03002_012E&#39;</span><span class="p">,])</span>
@@ -159,17 +159,17 @@ need:</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -283,17 +283,17 @@ regression model:</p>
 </pre></div>
 </div>
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
@@ -418,10 +418,10 @@ regression model:</p>
   <th>Method:</th>                   <td>Least Squares</td>        <th>  F-statistic:       </th> <td>   13.08</td>
 </tr>
 <tr>
-  <th>Date:</th>                   <td>Sat, 07 Oct 2017</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
+  <th>Date:</th>                   <td>Sat, 15 Sep 2018</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
 </tr>
 <tr>
-  <th>Time:</th>                       <td>17:26:40</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
+  <th>Time:</th>                       <td>18:48:26</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
 </tr>
 <tr>
   <th>No. Observations:</th>            <td>    51</td>            <th>  AIC:               </th> <td>   371.9</td>
@@ -458,7 +458,7 @@ regression model:</p>
 </table>
 <table class="simpletable">
 <tr>
-  <th>Omnibus:</th>       <td> 2.104</td> <th>  Durbin-Watson:     </th> <td>   1.637</td>
+  <th>Omnibus:</th>       <td> 2.104</td> <th>  Durbin-Watson:     </th> <td>   2.420</td>
 </tr>
 <tr>
   <th>Prob(Omnibus):</th> <td> 0.349</td> <th>  Jarque-Bera (JB):  </th> <td>   1.237</td>
@@ -469,7 +469,7 @@ regression model:</p>
 <tr>
   <th>Kurtosis:</th>      <td> 3.640</td> <th>  Cond. No.          </th> <td>    647.</td>
 </tr>
-</table><p>In this simple model, the percentage voting Democratic is not
+</table><br/><br/>Warnings:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<p>In this simple model, the percentage voting Democratic is not
 significantly associated with population size or % Hispanic, at the
 p&lt;.05 level. It is significantly associated with median household income
 and the % non-Hispanic black. Every $1,000 increase in median household

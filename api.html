@@ -155,7 +155,7 @@ ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1�
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs1&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;B23025&#39;</span><span class="p">)</span> <span class="c1"># Returns information on table B23025 (Employment Status for Population 16+ Years) from the ACS 2015 1-year estimates.</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs1&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;B23025&#39;</span><span class="p">)</span> <span class="c1"># Returns information on table B23025 (Employment Status for Population 16+ Years) from the ACS 2015 1-year estimates.</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -190,7 +190,7 @@ ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1�
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censusvar</span><span class="p">(</span><span class="s1">&#39;sf1&#39;</span><span class="p">,</span> <span class="mi">2010</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;P0010001&#39;</span><span class="p">])</span> <span class="c1"># Returns information on the variable P0010001 from the 2010 Census SF1.</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">censusvar</span><span class="p">(</span><span class="s1">&#39;sf1&#39;</span><span class="p">,</span> <span class="mi">2010</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;P0010001&#39;</span><span class="p">])</span> <span class="c1"># Returns information on the variable P0010001 from the 2010 Census SF1.</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -215,7 +215,7 @@ ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1�
 </tbody>
 </table>
 <p>Examples:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">printtable</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;B19013&#39;</span><span class="p">))</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">censusdata</span><span class="o">.</span><span class="n">printtable</span><span class="p">(</span><span class="n">censusdata</span><span class="o">.</span><span class="n">censustable</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;B19013&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -249,9 +249,9 @@ ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1�
 </table>
 <p>Examples:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Search for ACS 2011-2015 5-year estimate variables where the concept includes the text &#39;unweighted sample&#39;.</span>
-<span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;unweighted sample&#39;</span><span class="p">)</span>
+<span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;concept&#39;</span><span class="p">,</span> <span class="s1">&#39;unweighted sample&#39;</span><span class="p">)</span>
 <span class="c1"># Search for ACS 2011-2015 5-year estimate variables where the specific variable label includes the text &#39;unemploy&#39;.</span>
-<span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;unemploy&#39;</span><span class="p">)</span>
+<span class="n">censusdata</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;unemploy&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -293,7 +293,7 @@ ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1�
 </table>
 <p>Examples:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Download ACS 2011-2015 5-year estimates for Oakland city, California on population size, median age, and median household income.</span>
-<span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="s1">&#39;2015&#39;</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;06&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;place&#39;</span><span class="p">,</span> <span class="s1">&#39;53000&#39;</span><span class="p">)]),</span> <span class="p">[</span><span class="s1">&#39;B01001_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01002_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B19013_001E&#39;</span><span class="p">])</span>
+<span class="n">censusdata</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;acs5&#39;</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="n">censusdata</span><span class="o">.</span><span class="n">censusgeo</span><span class="p">([(</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;06&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;place&#39;</span><span class="p">,</span> <span class="s1">&#39;53000&#39;</span><span class="p">)]),</span> <span class="p">[</span><span class="s1">&#39;B01001_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B01002_001E&#39;</span><span class="p">,</span> <span class="s1">&#39;B19013_001E&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </dd></dl>

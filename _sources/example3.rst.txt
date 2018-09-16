@@ -18,7 +18,7 @@ for all U.S. states:
 
 .. code:: ipython3
 
-    statedata = censusdata.download('acs5', '2015', censusdata.censusgeo([('state', '*')]),
+    statedata = censusdata.download('acs5', 2015, censusdata.censusgeo([('state', '*')]),
                                     ['B01001_001E', 'B19013_001E', 'B19083_001E',
                                      'C17002_001E', 'C17002_002E', 'C17002_003E', 'C17002_004E',
                                      'B03002_001E', 'B03002_003E', 'B03002_004E', 'B03002_012E',])
@@ -130,17 +130,17 @@ Finally, we reorder the variables and run simple descriptives:
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
@@ -265,17 +265,17 @@ regression model:
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
@@ -410,10 +410,10 @@ regression model:
       <th>Method:</th>                   <td>Least Squares</td>        <th>  F-statistic:       </th> <td>   13.08</td>
     </tr>
     <tr>
-      <th>Date:</th>                   <td>Sat, 07 Oct 2017</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
+      <th>Date:</th>                   <td>Sat, 15 Sep 2018</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
     </tr>
     <tr>
-      <th>Time:</th>                       <td>17:26:40</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
+      <th>Time:</th>                       <td>18:48:26</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
     </tr>
     <tr>
       <th>No. Observations:</th>            <td>    51</td>            <th>  AIC:               </th> <td>   371.9</td>
@@ -450,7 +450,7 @@ regression model:
     </table>
     <table class="simpletable">
     <tr>
-      <th>Omnibus:</th>       <td> 2.104</td> <th>  Durbin-Watson:     </th> <td>   1.637</td>
+      <th>Omnibus:</th>       <td> 2.104</td> <th>  Durbin-Watson:     </th> <td>   2.420</td>
     </tr>
     <tr>
       <th>Prob(Omnibus):</th> <td> 0.349</td> <th>  Jarque-Bera (JB):  </th> <td>   1.237</td>
@@ -461,7 +461,7 @@ regression model:
     <tr>
       <th>Kurtosis:</th>      <td> 3.640</td> <th>  Cond. No.          </th> <td>    647.</td>
     </tr>
-    </table>
+    </table><br/><br/>Warnings:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 
 
 

@@ -51,6 +51,15 @@ tables are available from American FactFinder
 Unfortunately, these do not include variable names, unlike the detailed table
 shells.
 
+*Note about annotation fields.* The Census has recently updated the API for the
+ACS 1- and 5-year estimates to include separate annotation fields for each
+variable. The main data variables (e.g., B01001_001E from the detailed tables)
+will now contain numeric data exclusively, while any text annotations providing
+notes about the data will be placed in annotation fields with names ending in 'A'
+(e.g., B01001_001EA). It is important to refer to the annotation fields for
+relevant notes about the data (e.g., if data are missing due to too few sample
+observations).
+
 --------------------------------------------------------------
 American Community Survey 1-Year Supplemental Estimates
 --------------------------------------------------------------
@@ -58,10 +67,8 @@ The ACS 1-year supplemental estimates supplement the 1-year estimates by
 providing estimates for all geographies with a population of 20,000+,
 as opposed to 65,000+ for the regular 1-year estimates. There are
 separate tables for the 1-year supplemental estimates. Table names begin
-with K20. Table shells are available for 2015 under
-https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/2015/Supplemental_Estimates/
-and for 2014 under
-https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/2014/Supplemental_Estimates/
+with K20. Table shells are available for 2014-2016 under
+https://www2.census.gov/programs-surveys/acs/tech_docs/table_shells/
 Unfortunately, unlike the detailed tables for the regular 1-year estimates,
 there is no single spreadsheet containing all the table shells.
 
@@ -70,7 +77,7 @@ Census 2010 Summary File 1
 --------------------------------------------------------------
 
 Extensive information on the Summary File 1 data is available under
-https://www.census.gov/2010census/news/press-kits/summary-file-1.html
+https://www.census.gov/newsroom/releases/archives/2010_census/press-kits/summary-file-1.html
 In particular, the technical documentation, currently available under
 https://www.census.gov/prod/cen2010/doc/sf1.pdf,
 provides detailed information on the tables and variables that are available.

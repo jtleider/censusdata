@@ -29,7 +29,7 @@ variables:
 
 .. code:: ipython3
 
-    censusdata.search('acs5', '2015', 'label', 'unemploy')[160:170]
+    censusdata.search('acs5', 2015, 'label', 'unemploy')[160:170]
 
 
 
@@ -71,7 +71,7 @@ variables:
 
 .. code:: ipython3
 
-    censusdata.search('acs5', '2015', 'concept', 'education')[730:790]
+    censusdata.search('acs5', 2015, 'concept', 'education')[730:790]
 
 
 
@@ -270,7 +270,7 @@ table:
 
 .. code:: ipython3
 
-    censusdata.printtable(censusdata.censustable('acs5', '2015', 'B23025'))
+    censusdata.printtable(censusdata.censustable('acs5', 2015, 'B23025'))
 
 
 .. parsed-literal::
@@ -289,7 +289,7 @@ table:
 
 .. code:: ipython3
 
-    censusdata.printtable(censusdata.censustable('acs5', '2015', 'B15003'))
+    censusdata.printtable(censusdata.censustable('acs5', 2015, 'B15003'))
 
 
 .. parsed-literal::
@@ -332,7 +332,7 @@ to find Cook County:
 
 .. code:: ipython3
 
-    censusdata.geographies(censusdata.censusgeo([('state', '*')]), 'acs5', '2015')
+    censusdata.geographies(censusdata.censusgeo([('state', '*')]), 'acs5', 2015)
 
 
 
@@ -378,7 +378,6 @@ to find Cook County:
      'Oklahoma': censusgeo((('state', '40'),)),
      'Oregon': censusgeo((('state', '41'),)),
      'Pennsylvania': censusgeo((('state', '42'),)),
-     'Puerto Rico': censusgeo((('state', '72'),)),
      'Rhode Island': censusgeo((('state', '44'),)),
      'South Carolina': censusgeo((('state', '45'),)),
      'South Dakota': censusgeo((('state', '46'),)),
@@ -390,13 +389,14 @@ to find Cook County:
      'Washington': censusgeo((('state', '53'),)),
      'West Virginia': censusgeo((('state', '54'),)),
      'Wisconsin': censusgeo((('state', '55'),)),
-     'Wyoming': censusgeo((('state', '56'),))}
+     'Wyoming': censusgeo((('state', '56'),)),
+     'Puerto Rico': censusgeo((('state', '72'),))}
 
 
 
 .. code:: ipython3
 
-    censusdata.geographies(censusdata.censusgeo([('state', '17'), ('county', '*')]), 'acs5', '2015')
+    censusdata.geographies(censusdata.censusgeo([('state', '17'), ('county', '*')]), 'acs5', 2015)
 
 
 
@@ -421,8 +421,8 @@ to find Cook County:
      'Cook County, Illinois': censusgeo((('state', '17'), ('county', '031'))),
      'Crawford County, Illinois': censusgeo((('state', '17'), ('county', '033'))),
      'Cumberland County, Illinois': censusgeo((('state', '17'), ('county', '035'))),
-     'De Witt County, Illinois': censusgeo((('state', '17'), ('county', '039'))),
      'DeKalb County, Illinois': censusgeo((('state', '17'), ('county', '037'))),
+     'De Witt County, Illinois': censusgeo((('state', '17'), ('county', '039'))),
      'Douglas County, Illinois': censusgeo((('state', '17'), ('county', '041'))),
      'DuPage County, Illinois': censusgeo((('state', '17'), ('county', '043'))),
      'Edgar County, Illinois': censusgeo((('state', '17'), ('county', '045'))),
@@ -451,12 +451,15 @@ to find Cook County:
      'Kankakee County, Illinois': censusgeo((('state', '17'), ('county', '091'))),
      'Kendall County, Illinois': censusgeo((('state', '17'), ('county', '093'))),
      'Knox County, Illinois': censusgeo((('state', '17'), ('county', '095'))),
-     'LaSalle County, Illinois': censusgeo((('state', '17'), ('county', '099'))),
      'Lake County, Illinois': censusgeo((('state', '17'), ('county', '097'))),
+     'LaSalle County, Illinois': censusgeo((('state', '17'), ('county', '099'))),
      'Lawrence County, Illinois': censusgeo((('state', '17'), ('county', '101'))),
      'Lee County, Illinois': censusgeo((('state', '17'), ('county', '103'))),
      'Livingston County, Illinois': censusgeo((('state', '17'), ('county', '105'))),
      'Logan County, Illinois': censusgeo((('state', '17'), ('county', '107'))),
+     'McDonough County, Illinois': censusgeo((('state', '17'), ('county', '109'))),
+     'McHenry County, Illinois': censusgeo((('state', '17'), ('county', '111'))),
+     'McLean County, Illinois': censusgeo((('state', '17'), ('county', '113'))),
      'Macon County, Illinois': censusgeo((('state', '17'), ('county', '115'))),
      'Macoupin County, Illinois': censusgeo((('state', '17'), ('county', '117'))),
      'Madison County, Illinois': censusgeo((('state', '17'), ('county', '119'))),
@@ -464,9 +467,6 @@ to find Cook County:
      'Marshall County, Illinois': censusgeo((('state', '17'), ('county', '123'))),
      'Mason County, Illinois': censusgeo((('state', '17'), ('county', '125'))),
      'Massac County, Illinois': censusgeo((('state', '17'), ('county', '127'))),
-     'McDonough County, Illinois': censusgeo((('state', '17'), ('county', '109'))),
-     'McHenry County, Illinois': censusgeo((('state', '17'), ('county', '111'))),
-     'McLean County, Illinois': censusgeo((('state', '17'), ('county', '113'))),
      'Menard County, Illinois': censusgeo((('state', '17'), ('county', '129'))),
      'Mercer County, Illinois': censusgeo((('state', '17'), ('county', '131'))),
      'Monroe County, Illinois': censusgeo((('state', '17'), ('county', '133'))),
@@ -484,12 +484,12 @@ to find Cook County:
      'Randolph County, Illinois': censusgeo((('state', '17'), ('county', '157'))),
      'Richland County, Illinois': censusgeo((('state', '17'), ('county', '159'))),
      'Rock Island County, Illinois': censusgeo((('state', '17'), ('county', '161'))),
+     'St. Clair County, Illinois': censusgeo((('state', '17'), ('county', '163'))),
      'Saline County, Illinois': censusgeo((('state', '17'), ('county', '165'))),
      'Sangamon County, Illinois': censusgeo((('state', '17'), ('county', '167'))),
      'Schuyler County, Illinois': censusgeo((('state', '17'), ('county', '169'))),
      'Scott County, Illinois': censusgeo((('state', '17'), ('county', '171'))),
      'Shelby County, Illinois': censusgeo((('state', '17'), ('county', '173'))),
-     'St. Clair County, Illinois': censusgeo((('state', '17'), ('county', '163'))),
      'Stark County, Illinois': censusgeo((('state', '17'), ('county', '175'))),
      'Stephenson County, Illinois': censusgeo((('state', '17'), ('county', '177'))),
      'Tazewell County, Illinois': censusgeo((('state', '17'), ('county', '179'))),
@@ -515,7 +515,7 @@ degree:
 
 .. code:: ipython3
 
-    cookbg = censusdata.download('acs5', '2015',
+    cookbg = censusdata.download('acs5', 2015,
                                  censusdata.censusgeo([('state', '17'), ('county', '031'), ('block group', '*')]),
                                  ['B23025_003E', 'B23025_005E', 'B15003_001E', 'B15003_002E', 'B15003_003E',
                                   'B15003_004E', 'B15003_005E', 'B15003_006E', 'B15003_007E', 'B15003_008E',
@@ -536,17 +536,17 @@ degree:
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
@@ -618,17 +618,17 @@ block groups.
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
@@ -809,17 +809,17 @@ Cook County block groups:
 .. raw:: html
 
     <div>
-    <style>
-        .dataframe thead tr:only-child th {
-            text-align: right;
-        }
-    
-        .dataframe thead th {
-            text-align: left;
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
         }
     
         .dataframe tbody tr th {
             vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
         }
     </style>
     <table border="1" class="dataframe">
