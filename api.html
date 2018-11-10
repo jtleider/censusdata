@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>API Documentation &#8212; CensusData 1.1 documentation</title>
+    <title>API Documentation &#8212; CensusData 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/style.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -30,7 +30,7 @@
   </head>
   <body>
       <div class="header" role="banner"><h1 class="heading"><a href="index.html">
-          <span>CensusData 1.1 documentation</span></a></h1>
+          <span>CensusData 1.2 documentation</span></a></h1>
         <h2 class="heading"><span>API Documentation</span></h2>
       </div>
       <div class="topnav" role="navigation" aria-label="top navigation">
@@ -262,7 +262,7 @@ ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1�
 <p>Functions for downloading data and lists of geographies from the Census API.</p>
 <dl class="function">
 <dt id="censusdata.download.download">
-<code class="descclassname">censusdata.download.</code><code class="descname">download</code><span class="sig-paren">(</span><em>src</em>, <em>year</em>, <em>geo</em>, <em>var</em>, <em>key=None</em>, <em>tabletype=’detail’</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.download.download" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">censusdata.download.</code><code class="descname">download</code><span class="sig-paren">(</span><em>src</em>, <em>year</em>, <em>geo</em>, <em>var</em>, <em>key=None</em>, <em>tabletype=’detail’</em>, <em>endpt=”</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.download.download" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download data from Census API.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -277,6 +277,8 @@ ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1�
 <li><strong>key</strong> (<em>str</em><em>, </em><em>optional</em>) – Census API key.</li>
 <li><strong>tabletype</strong> (<em>str</em><em>, </em><em>optional</em>) – Type of table from which variables are drawn (only applicable to ACS data). Options are ‘detail’ (detail tables),
 ‘subject’ (subject tables), ‘profile’ (data profile tables), ‘cprofile’ (comparison profile tables).</li>
+<li><strong>endpt</strong> (<em>str</em><em>, </em><em>optional</em>) – Allows override of whether old or new API endpoint is used. Specify
+‘old’ for old, ‘new’ for new, ” to use default.</li>
 </ul>
 </td>
 </tr>
@@ -300,7 +302,7 @@ ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1�
 
 <dl class="function">
 <dt id="censusdata.download.geographies">
-<code class="descclassname">censusdata.download.</code><code class="descname">geographies</code><span class="sig-paren">(</span><em>within</em>, <em>src</em>, <em>year</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.download.geographies" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">censusdata.download.</code><code class="descname">geographies</code><span class="sig-paren">(</span><em>within</em>, <em>src</em>, <em>year</em>, <em>key=None</em>, <em>endpt=”</em><span class="sig-paren">)</span><a class="headerlink" href="#censusdata.download.geographies" title="Permalink to this definition">¶</a></dt>
 <dd><p>List geographies within a given geography, e.g., counties within a state.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -312,6 +314,8 @@ ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1�
 ACS 3-year estimates, ‘acsse’ for ACS 1-year supplemental estimates, ‘sf1’ for SF1 data.</li>
 <li><strong>year</strong> (<em>int</em>) – Year of data.</li>
 <li><strong>key</strong> (<em>str</em><em>, </em><em>optional</em>) – Census API key.</li>
+<li><strong>endpt</strong> (<em>str</em><em>, </em><em>optional</em>) – Allows override of whether old or new API endpoint is used. Specify
+‘old’ for old, ‘new’ for new, ” to use default.</li>
 </ul>
 </td>
 </tr>
