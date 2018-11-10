@@ -7,7 +7,7 @@ import pandas as pd
 from collections import OrderedDict
 import requests
 
-def _download(src, year, params, baseurl = 'https://api.census.gov/data/'):
+def _download(src, year, params, baseurl = 'https://api.census.gov/data/', endpt = ''):
 	"""Request data from Census API. Returns data in ordered dictionary. Called by `geographies()` and `download()`.
 
 	Args:
@@ -16,9 +16,17 @@ def _download(src, year, params, baseurl = 'https://api.census.gov/data/'):
 		year (int): Year of data.
 		params (dict): Download parameters.
 		baseurl (str, optional): Base URL for download.
+		endpt (str, optional): Allows override of whether old or new API endpoint is used. Specify
+			'old' for old, 'new' for new, '' to use default. This option generally shouldn't
+			need to be specified but can be helpful if download problems are encountered.
 	"""
-	if (src[:4] == 'acs1' or src[:4] == 'acs5' or src[:5] == 'acsse') and year >= 2010: presrc = 'acs/'
-	elif src[:3] == 'sf1': presrc = 'dec/'
+	if src[:4] == 'acs1' or src[:4] == 'acs5' or src[:5] == 'acsse':
+		if endpt == 'new': presrc = 'acs/'
+		elif endpt == 'old': presrc = ''
+		elif endpt == '': presrc = 'acs/' if year >= 2010 else ''
+	elif src[:3] == 'sf1':
+		if endpt == 'new' or endpt == '': presrc = 'dec/'
+		if endpt == 'old': presrc = ''
 	else: presrc = ''
 	url = baseurl + str(year) + '/' + presrc + src + '?' + '&'.join('='.join(param) for param in params.items())
 	r = requests.get(url)
@@ -32,7 +40,7 @@ def _download(src, year, params, baseurl = 'https://api.census.gov/data/'):
 		rdata[data[0][j]] = [data[i][j] for i in range(1, len(data))]
 	return rdata
 
-def geographies(within, src, year, key=None):
+def geographies(within, src, year, key=None, endpt=''):
 	"""List geographies within a given geography, e.g., counties within a state.
 
 	Args:
@@ -41,6 +49,9 @@ def geographies(within, src, year, key=None):
 			ACS 3-year estimates, 'acsse' for ACS 1-year supplemental estimates, 'sf1' for SF1 data.
 		year (int): Year of data.
 		key (str, optional): Census API key.
+		endpt (str, optional): Allows override of whether old or new API endpoint is used. Specify
+			'old' for old, 'new' for new, '' to use default. This option generally shouldn't
+			need to be specified but can be helpful if download problems are encountered.
 
 	Returns:
 		dict: Dictionary with names as keys and `censusgeo` objects as values.
@@ -54,12 +65,12 @@ def geographies(within, src, year, key=None):
 	params = {'get': 'NAME'}
 	params.update(georequest)
 	if key is not None: params.update({'key': key})
-	geo = _download(src, year, params)
+	geo = _download(src, year, params, endpt=endpt)
 	name = geo['NAME']
 	del geo['NAME']
 	return {name[i]: censusgeo([(key, geo[key][i]) for key in geo]) for i in range(len(name))}
 
-def download(src, year, geo, var, key=None, tabletype='detail'):
+def download(src, year, geo, var, key=None, tabletype='detail', endpt=''):
 	"""Download data from Census API.
 
 	Args:
@@ -71,6 +82,9 @@ def download(src, year, geo, var, key=None, tabletype='detail'):
 		key (str, optional): Census API key.
 		tabletype (str, optional): Type of table from which variables are drawn (only applicable to ACS data). Options are 'detail' (detail tables),
 			'subject' (subject tables), 'profile' (data profile tables), 'cprofile' (comparison profile tables).
+		endpt (str, optional): Allows override of whether old or new API endpoint is used. Specify
+			'old' for old, 'new' for new, '' to use default. This option generally shouldn't
+			need to be specified but can be helpful if download problems are encountered.
 
 	Returns:
 		pandas.DataFrame: Data frame with columns corresponding to designated variables, and row index of censusgeo objects representing Census geographies.
@@ -96,16 +110,16 @@ def download(src, year, geo, var, key=None, tabletype='detail'):
 	params = {'get': ','.join(['NAME']+var)}
 	params.update(georequest)
 	if key is not None: params.update({'key': key})
-	data = _download(src + tabletype, year, params)
+	data = _download(src + tabletype, year, params, endpt=endpt)
 	geodata = data.copy()
 	for key in list(geodata.keys()):
 		if key in var:
 			del geodata[key]
 			try:
-				data[key] = [int(d) for d in data[key]]
+				data[key] = [int(d) if d is not None else None for d in data[key]]
 			except ValueError:
 				try:
-					data[key] = [float(d) for d in data[key]]
+					data[key] = [float(d) if d is not None else None for d in data[key]]
 				except ValueError:
 					data[key] = [d for d in data[key]]
 		else:

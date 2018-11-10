@@ -113,3 +113,7 @@ This package includes the `censusgeo` class for representing Census
 geographies. It also provides the `geographies` function to look
 up Census geographies.
 
+Note that the Census is in the process of changing its geography
+hierarchy. See https://www.census.gov/data/developers/updates/2018-api-changes.html
+and https://github.com/uscensusbureau/api-geoHierarchy-changes/blob/master/changes.md?eml=gd&utm_medium=email&utm_source=govdelivery.
+
