@@ -5,7 +5,7 @@ Example 2: Downloading Data for All U.S. Counties
 Using the Detail Tables
 -----------------------
 
-For this example, let's suppose we have looked up the variables we need
+For this example, let’s suppose we have looked up the variables we need
 by referring to the Table Shells. We begin by downloading the data and
 checking the data we have received:
 
@@ -477,7 +477,7 @@ Finally, we show the 30 U.S. counties with the highest percentage aged
 Using the Data Profile Tables
 -----------------------------
 
-There is more than one way to approach this problem. Let's see how to
+There is more than one way to approach this problem. Let’s see how to
 use the data profile tables for the same purpose. First, we identify the
 appropriate table:
 

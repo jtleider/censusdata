@@ -3,10 +3,10 @@ API (https://www.census.gov/developers/) in Python. It supports pulling data
 from the American Community Survey (ACS) and the Census Summary File,
 specifically:
 
-* ACS 5-year estimates (2005-2009 to 2012-2016),
-* ACS 1-year estimates (2012-2016),
+* ACS 5-year estimates (2005-2009 to 2013-2017),
+* ACS 1-year estimates (2012-2017),
 * ACS 3-year estimates (2010-2012 to 2011-2013),
-* ACS 1-year supplemental estimates (2014-2016),
+* ACS 1-year supplemental estimates (2014-2017),
 * Census 2010 Summary File 1.
 
 This package handles the details of interacting with the Census API for you,
