@@ -2,7 +2,7 @@
 Example 1: Downloading Block Group Data and Exporting to CSV
 ============================================================
 
-As a first example, let's suppose we're interested in unemployment and
+As a first example, let’s suppose we’re interested in unemployment and
 high school dropout rates for block groups in Cook County, Illinois,
 which contains Chicago, IL.
 
