@@ -20,15 +20,10 @@ class TestVariableInfo(unittest.TestCase):
 				'Median household income in the past 12 months (in 2009 inflation-adjusted dollars)', 'int']}
 		self.assertEqual(censusdata.censusvar('acs5', 2009, ['B01001_001E', 'B01002_001E', 'B19013_001E']), expected)
 		for year in range(2010, 2017+1):
-			concepts = ['', '', '']
-			if year == 2011 or year == 2015 or year == 2016 or year == 2017:
-				concepts = ['SEX BY AGE', 'MEDIAN AGE BY SEX', 'MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN {0} INFLATION-ADJUSTED DOLLARS)'.format(year)]
-			if year == 2009: types = ['int', 'int', 'int']
-			elif year == 2010: types = ['int', 'float', 'int']
-			elif year == 2011: types = ['', 'int', 'int']
-			elif year == 2012 or year == 2013 or year == 2014: types = ['int', 'float', 'int']
-			elif year == 2015 or year == 2016: types = ['', 'int', 'int']
-			elif year == 2017: types = ['', 'float', 'int']
+			concepts = ['SEX BY AGE', 'MEDIAN AGE BY SEX', 'MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN {0} INFLATION-ADJUSTED DOLLARS)'.format(year)]
+			types = ['int', 'float', 'int']
+			if year == 2016: types = ['', 'int', 'int']
+			if year == 2017: types = ['', 'float', 'int']
 			inflation = 'inflation'
 			if year == 2014 or year == 2015: inflation = 'Inflation'
 			expected = {'B01001_001E': [concepts[0], 'Estimate!!Total', types[0]],
@@ -39,12 +34,12 @@ class TestVariableInfo(unittest.TestCase):
 
 	def test_censusvar_acs1(self):
 		expected = {'S0101_C02_001E': ['AGE AND SEX', 'Male!!Estimate!!Total population', 'int'],
-			'DP03_0021PE': ['SELECTED ECONOMIC CHARACTERISTICS', 'Percent!!COMMUTING TO WORK!!Workers 16 years and over!!Public transportation (excluding taxicab)', ''],
+			'DP03_0021PE': ['SELECTED ECONOMIC CHARACTERISTICS', 'Percent!!COMMUTING TO WORK!!Workers 16 years and over!!Public transportation (excluding taxicab)', 'float'],
 			'CP02_2012_030E': ['COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES', '2012 Estimate!!MARITAL STATUS!!Females 15 years and over', 'int']}
 		self.assertEqual(censusdata.censusvar('acs1', 2015, ['S0101_C02_001E', 'DP03_0021PE', 'CP02_2012_030E']), expected)
-		expected = {'S0101_C02_001E': ['AGE AND SEX', 'Male!!Estimate!!Total population', 'int'],
-			'DP03_0021PE': ['SELECTED ECONOMIC CHARACTERISTICS', 'Percent!!COMMUTING TO WORK!!Workers 16 years and over!!Public transportation (excluding taxicab)', 'int'],
-			'CP02_2012_030E': ['COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES', '2012 Estimate!!MARITAL STATUS!!Females 15 years and over', 'int']}
+		expected = {'S0101_C02_001E': ['', 'Male!!Estimate!!Total population', 'int'],
+			'DP03_0021PE': ['', 'Percent!!COMMUTING TO WORK!!Workers 16 years and over!!Public transportation (excluding taxicab)', 'int'],
+			'CP02_2012_030E': ['', '2012 Estimate!!MARITAL STATUS!!Females 15 years and over', 'int']}
 		self.assertEqual(censusdata.censusvar('acs1', 2016, ['S0101_C02_001E', 'DP03_0021PE', 'CP02_2012_030E']), expected)
 		expected = {'S0101_C02_001E': ['AGE AND SEX', 'Percent!!Estimate!!Total population', 'int'],
 			'DP03_0021PE': ['SELECTED ECONOMIC CHARACTERISTICS', 'Percent!!COMMUTING TO WORK!!Workers 16 years and over!!Public transportation (excluding taxicab)', 'float'],
@@ -54,7 +49,6 @@ class TestVariableInfo(unittest.TestCase):
 	def test_censusvar_acsse(self):
 		for year in range(2014, 2017+1):
 			concept = 'PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD'
-			if year == 2014: concept = ''
 			expected = {'K202801_006E': [concept, 'Estimate!!Total!!No computer', 'int']}
 			self.assertEqual(censusdata.censusvar('acsse', year, ['K202801_006E']), expected)
 
@@ -65,8 +59,8 @@ class TestVariableInfo(unittest.TestCase):
 			self.assertEqual(censusdata.censusvar('acs3', year, ['B19013_001E']), expected)
 
 	def test_censusvar_sf1(self):
-		self.assertEqual(censusdata.censusvar('sf1', 2010, ['P0010001']),
-			{'P0010001': ['P1. Total Population [1]', 'Total Population', '']})
+		self.assertEqual(censusdata.censusvar('sf1', 2010, ['P001001']),
+			{'P001001': ['TOTAL POPULATION', 'Total', '']})
 
 	def test_unknownvar(self):
 		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', 2015, ['B19013_010E'])

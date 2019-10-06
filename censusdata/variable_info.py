@@ -40,6 +40,7 @@ def censusvar(src, year, var):
 			print(u'Unknown table type for variable {0}!'.format(v))
 			raise ValueError
 		if (src == 'acs1' or src == 'acs5' or src == 'acsse') and year >= 2010: presrc = 'acs/'
+		elif src == 'sf1': presrc = 'dec/'
 		else: presrc = ''
 		r = requests.get('https://api.census.gov/data/{year}/{presrc}{src}/{tabletype}variables/{v}.json'.format(src=src, year=year, v=v, tabletype=tabletype, presrc=presrc))
 		try:
