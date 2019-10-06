@@ -189,6 +189,26 @@ class TestDownload(unittest.TestCase):
 	def test_download_error_tabletype(self):
 		self.assertRaises(ValueError, censusdata.download, 'acs5', 2015, censusdata.censusgeo([('state', '06')]), ['B19013_001E'], tabletype='cdetail')
 
+	def test_download_gt50_vars(self):
+		vars = ['DP05_{:04}PE'.format(i) for i in range(1, 84+1)]
+		data = censusdata.download('acs5', 2015, censusdata.censusgeo([('state', '06')]), vars, tabletype='profile')
+		expected = pd.DataFrame({'DP05_0001PE': 38421464, 'DP05_0002PE': 49.7, 'DP05_0003PE': 50.3, 'DP05_0004PE': 6.5, 'DP05_0005PE': 6.6,
+			'DP05_0006PE': 6.6, 'DP05_0007PE': 6.9, 'DP05_0008PE': 7.6, 'DP05_0009PE': 14.6, 'DP05_0010PE': 13.5, 'DP05_0011PE': 13.7,
+			'DP05_0012PE': 6.2, 'DP05_0013PE': 5.3, 'DP05_0014PE': 7.0, 'DP05_0015PE': 3.8, 'DP05_0016PE': 1.7, 'DP05_0017PE': -888888888,
+			'DP05_0018PE': 76.1, 'DP05_0019PE': 71.7, 'DP05_0020PE': 15.5, 'DP05_0021PE': 12.5, 'DP05_0022PE': 29247121, 'DP05_0023PE': 49.2,
+			'DP05_0024PE': 50.8, 'DP05_0025PE': 4797320, 'DP05_0026PE': 44.0, 'DP05_0027PE': 56.0, 'DP05_0028PE': 38421464, 'DP05_0029PE': 95.5,
+			'DP05_0030PE': 4.5, 'DP05_0031PE': 95.5, 'DP05_0032PE': 61.8, 'DP05_0033PE': 5.9, 'DP05_0034PE': 0.7, 'DP05_0035PE': 0.1, 'DP05_0036PE': 0.0,
+			'DP05_0037PE': 0.0, 'DP05_0038PE': 0.0, 'DP05_0039PE': 13.7, 'DP05_0040PE': 1.7, 'DP05_0041PE': 3.6, 'DP05_0042PE': 3.2,
+			'DP05_0043PE': 0.7, 'DP05_0044PE': 1.2, 'DP05_0045PE': 1.6, 'DP05_0046PE': 1.6, 'DP05_0047PE': 0.4, 'DP05_0048PE': 0.1, 'DP05_0049PE': 0.1,
+			'DP05_0050PE': 0.1, 'DP05_0051PE': 0.2, 'DP05_0052PE': 12.9, 'DP05_0053PE': 4.5, 'DP05_0054PE': 0.6, 'DP05_0055PE': 0.7, 'DP05_0056PE': 1.3,
+			'DP05_0057PE': 0.1, 'DP05_0058PE': 38421464, 'DP05_0059PE': 65.5, 'DP05_0060PE': 7.1, 'DP05_0061PE': 1.9, 'DP05_0062PE': 15.6,
+			'DP05_0063PE': 0.8, 'DP05_0064PE': 14.1, 'DP05_0065PE': 38421464, 'DP05_0066PE': 38.4, 'DP05_0067PE': 31.9, 'DP05_0068PE': 0.5,
+			'DP05_0069PE': 0.2, 'DP05_0070PE': 5.7, 'DP05_0071PE': 61.6, 'DP05_0072PE': 38.7, 'DP05_0073PE': 5.6, 'DP05_0074PE': 0.4,
+			'DP05_0075PE': 13.5, 'DP05_0076PE': 0.4, 'DP05_0077PE': 0.2, 'DP05_0078PE': 2.8, 'DP05_0079PE': 0.1, 'DP05_0080PE': 2.7,
+			'DP05_0081PE': -888888888, 'DP05_0082PE': 24280349, 'DP05_0083PE': 49.0, 'DP05_0084PE': 51.0},
+			[censusdata.censusgeo([('state', '06')])])
+		assert_frame_equal(data, expected)
+
 if __name__ == '__main__':
 	unittest.main()
 

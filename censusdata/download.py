@@ -107,10 +107,13 @@ def download(src, year, geo, var, key=None, tabletype='detail', endpt=''):
 	else:
 		tabletype = '/' + tabletype
 	georequest = geo.request()
-	params = {'get': ','.join(['NAME']+var)}
-	params.update(georequest)
-	if key is not None: params.update({'key': key})
-	data = _download(src + tabletype, year, params, endpt=endpt)
+	data = OrderedDict()
+	chunk_size = 49
+	for var_chunk in [var[i:(i+chunk_size)] for i in range(0, len(var), chunk_size)]:
+		params = {'get': ','.join(['NAME']+var_chunk)}
+		params.update(georequest)
+		if key is not None: params.update({'key': key})
+		data.update(_download(src + tabletype, year, params, endpt=endpt))
 	geodata = data.copy()
 	for key in list(geodata.keys()):
 		if key in var:
