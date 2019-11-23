@@ -129,6 +129,19 @@ class censusgeo:
 		else:
 			return self.name + ': Summary level: ' + self.sumlevel() + ', ' + '> '.join([geo[0]+':'+geo[1] for geo in self.geo])
 
+	def params(self):
+		"""Geographic parameters of this object.
+
+		Returns:
+			tuple: Tuple representing the geography hierarchy. Can be used as argument in creating new censusgeo object.
+
+		Examples::
+
+			g = censusdata.censusgeo([('state', '06'), ('place', '53000')])
+			g.params() # returns (('state', '06'), ('place', '53000'))
+		"""
+		return self.geo
+
 	def hierarchy(self):
 		"""Geography hierarchy for the geographic level of this object.
 

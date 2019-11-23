@@ -36,6 +36,13 @@ class TestCensusgeo(unittest.TestCase):
 		self.assertEqual(self.blockg.sumlevel(), '150')
 		self.assertEqual(self.msa.sumlevel(), '310')
 
+	def test_params(self):
+		self.assertEqual(self.countygeo.params(), (('state', '17'), ('county', '031')))
+		self.assertEqual(self.placecountygeo.params(), (('state', '17'), ('place', '55555'), ('county', '*')))
+		self.assertEqual(self.placegeo.params(), (('state', '06'), ('place', '53000')))
+		self.assertEqual(self.blockg.params(), (('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')))
+		self.assertEqual(self.msa.params(), (('metropolitan statistical area/micropolitan statistical area', '16980'),))
+
 	def test_hierarchy(self):
 		self.assertEqual(self.countygeo.hierarchy(), 'state> county')
 		self.assertEqual(self.placecountygeo.hierarchy(), 'state> place> county')
