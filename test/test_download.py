@@ -22,7 +22,7 @@ class TestDownload(unittest.TestCase):
 			{'NAME': ['Oakland city, California'], 'B01001_001E': ['408073'], 'state': ['06'], 'place': ['53000']})
 
 	def test_geographies_state(self):
-		for year in range(2009, 2017+1):
+		for year in range(2009, 2018+1):
 			self.assertEqual(censusdata.geographies(censusdata.censusgeo([('state', '*')]), 'acs5', year),
 				{
 				'Alaska': censusdata.censusgeo([('state', '02')]),
@@ -92,6 +92,21 @@ class TestDownload(unittest.TestCase):
 			'Kauai County, Hawaii': censusdata.censusgeo([('state', '15'), ('county', '007')]),
 			'Maui County, Hawaii': censusdata.censusgeo([('state', '15'), ('county', '009')]),})
 
+	def test_download_acs5_2018(self):
+		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
+			pd.DataFrame({'B01001_001E': 421042, 'B01002_001E': 36.5, 'B19013_001E': 68442}, [censusdata.censusgeo([('state', '06'), ('place', '53000')], 'Oakland city, California')]))
+		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('state', '15'), ('county', '*')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
+			pd.DataFrame({'B01001_001E': [197658, 165281, 71377, 75, 987638], 'B01002_001E': [42.3, 41.1, 42.4, 57.1, 37.6], 'B19013_001E': [59297, 77117, 78482, 61875, 82906]}, 
+				[censusdata.censusgeo([('state', '15'), ('county', '001')], 'Hawaii County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '009')], 'Maui County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '007')], 'Kauai County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '005')], 'Kalawao County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '003')], 'Honolulu County, Hawaii'),]))
+		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')]), ['B01001_001E', 'B19013_001E']),
+			pd.DataFrame({'B01001_001E': 1433, 'B19013_001E': 33750}, [censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')], 'Block Group 2, Census Tract 3501, Cook County, Illinois')]))
+		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('metropolitan statistical area/micropolitan statistical area', '16980')]), ['B01001_001E', 'B19013_001E']),
+			pd.DataFrame({'B01001_001E': 9536428, 'B19013_001E': 68715}, [censusdata.censusgeo([('metropolitan statistical area/micropolitan statistical area', '16980')], 'Chicago-Naperville-Elgin, IL-IN-WI Metro Area')]))
+		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('state', '06')]), ['DP03_0021PE'], tabletype='profile'),
+			pd.DataFrame({'DP03_0021PE': 5.1}, [censusdata.censusgeo([('state', '06')], 'California')]))
+
 	def test_download_acs5_2017(self):
 		assert_frame_equal(censusdata.download('acs5', 2017, censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
 			pd.DataFrame({'B01001_001E': 417442, 'B01002_001E': 36.4, 'B19013_001E': 63251}, [censusdata.censusgeo([('state', '06'), ('place', '53000')], 'Oakland city, California')]))
@@ -142,6 +157,10 @@ class TestDownload(unittest.TestCase):
 		for year in range(2009, 2014+1):
 			assert_frame_equal(censusdata.download('acs5', year, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
 				pd.DataFrame({'B19013_001E': medhhinc[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
+
+	def test_download_acs1_2018(self):
+		assert_frame_equal(censusdata.download('acs1', 2018, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
+			pd.DataFrame({'B19013_001E': 65030}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
 	def test_download_acs1_2017(self):
 		assert_frame_equal(censusdata.download('acs1', 2017, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),

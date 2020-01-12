@@ -25,6 +25,9 @@ tables:
   in characteristics in particular geographies over time, including statistical
   significance testing. Table names begin with CP.
 
+(Note that this package does not support the new Selected population profile tables
+for the 1-year estimates.)
+
 The detailed tables are documented in the Summary File Table Shells, available
 from the ACS Summary File Documentation:
 https://www.census.gov/programs-surveys/acs/technical-documentation/summary-file-documentation.html
