@@ -2,7 +2,6 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name="censusdata-retry",
-    version="1.0",
+    name="censusdataretry",
     packages=find_packages(),
 )
