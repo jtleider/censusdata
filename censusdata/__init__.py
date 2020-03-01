@@ -6,5 +6,5 @@ from .download import *
 from .download import _download
 from .export import *
 
-__version__ = '1.6'
+__version__ = '1.7'
 

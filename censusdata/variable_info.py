@@ -166,5 +166,5 @@ def search(src, year, field, criterion, tabletype='detail'):
 	with open(os.path.join(topdir, 'variables', '{0}_{1}_{2}_variables.json'.format(src, year, tabletype))) as infile:
 		allvars = infile.read()
 	allvars = json.loads(allvars)['variables']
-	return [(k, allvars[k]['concept'], allvars[k]['label']) for k in sorted(allvars.keys()) if re.search(criterion, allvars[k][field], re.IGNORECASE)]
+	return [(k, allvars[k].get('concept'), allvars[k].get('label')) for k in sorted(allvars.keys()) if re.search(criterion, allvars[k].get(field, ''), re.IGNORECASE)]
 
