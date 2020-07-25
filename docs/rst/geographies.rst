@@ -17,15 +17,15 @@ state																					040
 state> county																				050
 state> county> county subdivision																	060
 state> county> county subdivision> subminor civil division														067
-state> county> county subdivision> place remainder															070
-state> county> county subdivision> place > tract															080
+state> county> county subdivision> place/remainder (or part)														070
+state> county> county subdivision> place > tract (or part)														080
 state> county> tract> block																		101
 state> county> tract																			140
 state> county> tract> block group																	150
-state> place> county																			155
+state> place> county (or part)																		155
 state> place																				160
 state> consolidated city																		170
-state> consolidated city> place																		172
+state> consolidated city> place (or part)																172
 state> alaska native regional corporation																230
 american indian area/alaska native area/hawaiian home land														250
 american indian area/alaska native area/hawaiian home land> tribal subdivision/remainder										251
@@ -36,10 +36,10 @@ american indian area/alaska native area/hawaiian home land> tribal census tract>
 american indian area/alaska native area/hawaiian home land> state													260
 american indian area/alaska native area/hawaiian home land> state> place/remainder											269
 american indian area/alaska native area/hawaiian home land> state> county												270
-state> american indian area/alaska native area/hawaiian home land													280
-state> american indian area> tribal subdivision																281
-state> american indian area/alaska native area (reservation or statistical entity only)											283
-state> american indian area (off-reservation trust land only)/hawaiian home land											286
+state> american indian area/alaska native area/hawaiian home land (or part)												280
+state> american indian area> tribal subdivision/remainder (or part)													281
+state> american indian area/alaska native area (reservation or statistical entity only)	(or part)									283
+state> american indian area (off-reservation trust land only)/hawaiian home land (or part)										286
 american indian area/alaska native area/hawaiian home land> tribal subdivision/remainder> state										290
 american indian area/alaska native area/hawaiian home land> tribal census tract (or part) within aia (reservation only)							291
 american indian area/alaska native area/hawaiian home land> tribal census tract (or part) within aia (trust land only)							292
@@ -50,10 +50,10 @@ metropolitan statistical area/micropolitan statistical area> state													3
 metropolitan statistical area/micropolitan statistical area> state> principal city											312
 metropolitan statistical area/micropolitan statistical area> metropolitan division											314
 metropolitan statistical area> metropolitan division> state														315
-state> metropolitan statistical area/micropolitan statistical area													320
+state> metropolitan statistical area/micropolitan statistical area (or part)												320
 state> metropolitan statistical area/micropolitan statistical area> principal city (or part)										321
 state> metropolitan statistical area/micropolitan statistical area> county												322
-state> metropolitan statistical area/micropolitan statistical area> metropolitan division										323
+state> metropolitan statistical area/micropolitan statistical area> metropolitan division (or part)									323
 state> metropolitan statistical area/micropolitan statistical area> metropolitan division> county									324
 combined statistical area																		330
 combined statistical area> state																	331
@@ -63,21 +63,21 @@ combined new england city and town area																	335
 combined new england city and town area> state																336
 combined new england city and town area> new england city and town area													337
 combined new england city and town area> new england city and town area> state												338
-state> combined statistical area																	340
-state> combined statistical area> metropolitan statistical area/micropolitan statistical area										341
-state> combined new england city and town area																345
-state> combined new england city and town area> new england city and town area												346
+state> combined statistical area (or part)																340
+state> combined statistical area> metropolitan statistical area/micropolitan statistical area (or part)									341
+state> combined new england city and town area (or part)														345
+state> combined new england city and town area> new england city and town area (or part)										346
 new england city and town area																		350
 new england city and town area> state																	351
 new england city and town area> state> principal city															352
 new england city and town area> necta division																355
 new england city and town area> necta division> state															356
-state> new england city and town area																	360
+state> new england city and town area (or part)																360
 state> new england city and town area> place																361
-state> new england city and town area> county																362
+state> new england city and town area> county (or part)															362
 state> new england city and town area> county> county subdivision													363
-state> new england city and town area> necta division															364
-state> new england city and town area> necta division> county														365
+state> new england city and town area> necta division (or part)														364
+state> new england city and town area> necta division> county (or part)													365
 state> new england city and town area> necta division> county> county subdivision											366
 urban area																				400
 urban area> state																			410
@@ -92,10 +92,10 @@ state> congressional district> alaska native regional corporation													56
 state> state legislative district (upper chamber)															610
 state> state legislative district (upper chamber)> county														612
 state> state legislative district (lower chamber)															620
-state> state legislative district (lower chamber)> county														622
+state> state legislative district (lower chamber)> county (or part)													622
 state> public use microdata area																	795
 zip code tabulation area																		860
-state> zip code tabulation area																		871
+state> zip code tabulation area	(or part)																871
 state> school district (elementary)																	950
 state> school district (secondary)																	960
 state> school district (unified)																	970
@@ -112,8 +112,4 @@ county FIPS code 031.
 This package includes the `censusgeo` class for representing Census
 geographies. It also provides the `geographies` function to look
 up Census geographies.
-
-Note that the Census is in the process of changing its geography
-hierarchy. See https://www.census.gov/data/developers/updates/2018-api-changes.html
-and https://github.com/uscensusbureau/api-geoHierarchy-changes/blob/master/changes.md?eml=gd&utm_medium=email&utm_source=govdelivery.
 
