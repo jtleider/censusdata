@@ -10,6 +10,7 @@ import unittest
 from collections import OrderedDict
 import io
 import textwrap
+import re
 
 class TestVariableInfo(unittest.TestCase):
 
@@ -530,6 +531,11 @@ class TestVariableInfo(unittest.TestCase):
 		s = censusdata.search('acs5', 2018, 'concept', 'SEX BY AGE')
 		self.assertEqual(len(s), 2969)
 		self.assertEqual(s[0], ('B01001A_001E', 'SEX BY AGE (WHITE ALONE)', 'Estimate!!Total'))
+		self.assertEqual(censusdata.search('acs5', 2015, 'concept',
+		lambda value: re.search('unweighted sample', value, re.IGNORECASE) and re.search('housing', value, re.IGNORECASE)), [
+		('B00002_001E', 'B00002.  Unweighted Sample Housing Units', 'Total'),
+		('B00002_001M', 'B00002.  Unweighted Sample Housing Units', 'Margin Of Error For!!Total'),
+		])
 
 	def test_printtable(self):
 		testtable = censusdata.censustable('acs5', 2015, 'B19013')

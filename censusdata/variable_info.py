@@ -143,7 +143,8 @@ def search(src, year, field, criterion, tabletype='detail'):
 			ACS 3-year estimates, 'acsse' for ACS 1-year supplemental estimates, 'sf1' for SF1 data.
 		year (int): Year of data.
 		field (str): Field in which to search.
-		criterion (str): Search criterion.
+		criterion (str or function): Search criterion. Either string to search for, or a function which will be passed the value of field and return
+			True if a match and False otherwise.
 		tabletype (str, optional): Type of table from which variables are drawn (only applicable to ACS data). Options are 'detail' (detail tables),
 			'subject' (subject tables), 'profile' (data profile tables), 'cprofile' (comparison profile tables).
 
@@ -156,7 +157,13 @@ def search(src, year, field, criterion, tabletype='detail'):
 		censusdata.search('acs5', 2015, 'concept', 'unweighted sample') 
 		# Search for ACS 2011-2015 5-year estimate variables where the specific variable label includes the text 'unemploy'.
 		censusdata.search('acs5', 2015, 'label', 'unemploy') 
+		# Search for ACS 2011-2015 5-year estimate variables where the concept includes the text 'unweighted sample' and the text 'housing'.
+		censusdata.search('acs5', 2015, 'concept', lambda value: re.search('unweighted sample', value, re.IGNORECASE) and re.search('housing', value, re.IGNORECASE))
 	"""
+
+	if hasattr(criterion, '__call__'): match = criterion
+	else: match = lambda value: re.search(criterion, value, re.IGNORECASE)
+
 	try:
 		assert tabletype == 'detail' or tabletype == 'subject' or tabletype == 'profile' or tabletype == 'cprofile'
 	except AssertionError:
@@ -166,5 +173,5 @@ def search(src, year, field, criterion, tabletype='detail'):
 	with open(os.path.join(topdir, 'variables', '{0}_{1}_{2}_variables.json'.format(src, year, tabletype))) as infile:
 		allvars = infile.read()
 	allvars = json.loads(allvars)['variables']
-	return [(k, allvars[k].get('concept'), allvars[k].get('label')) for k in sorted(allvars.keys()) if re.search(criterion, allvars[k].get(field, ''), re.IGNORECASE)]
+	return [(k, allvars[k].get('concept'), allvars[k].get('label')) for k in sorted(allvars.keys()) if match(allvars[k].get(field, ''))]
 
