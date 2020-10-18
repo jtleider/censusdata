@@ -52,11 +52,16 @@ class TestVariableInfo(unittest.TestCase):
 			'DP03_0021PE': ['SELECTED ECONOMIC CHARACTERISTICS', 'Percent Estimate!!COMMUTING TO WORK!!Workers 16 years and over!!Public transportation (excluding taxicab)', 'float'],
 			'CP02_2014_030E': ['COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES', '2014 Estimate!!MARITAL STATUS!!Females 15 years and over', 'int']}
 		self.assertEqual(censusdata.censusvar('acs1', 2018, ['S0101_C02_001E', 'DP03_0021PE', 'CP02_2014_030E']), expected)
+		expected = {'S0101_C02_001E': ['AGE AND SEX', 'Estimate!!Percent!!Total population', 'int'],
+			'DP03_0021PE': ['SELECTED ECONOMIC CHARACTERISTICS', 'Percent!!COMMUTING TO WORK!!Workers 16 years and over!!Public transportation (excluding taxicab)', 'float'],
+			'CP02_2015_030E': ['COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES', '2015 Estimate!!MARITAL STATUS!!Males 15 years and over!!Divorced', 'float']}
+		self.assertEqual(censusdata.censusvar('acs1', 2019, ['S0101_C02_001E', 'DP03_0021PE', 'CP02_2015_030E']), expected)
 
 	def test_censusvar_acsse(self):
-		for year in range(2014, 2017+1):
-			concept = 'PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD'
-			expected = {'K202801_006E': [concept, 'Estimate!!Total!!No computer', 'int']}
+		for year in range(2014, 2019+1):
+			label = 'Estimate!!Total!!No computer'
+			if year == 2019: label = 'Estimate!!Total:!!No computer'
+			expected = {'K202801_006E': ['PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD', label, 'int']}
 			self.assertEqual(censusdata.censusvar('acsse', year, ['K202801_006E']), expected)
 
 	def test_censusvar_acs3(self):
@@ -72,12 +77,12 @@ class TestVariableInfo(unittest.TestCase):
 	def test_unknownvar(self):
 		self.assertRaises(ValueError, censusdata.censusvar, 'acs5', 2015, ['B19013_010E'])
 
-	def test_censustable_acs1_201218_detail(self):
-		for year in range(2012, 2018+1):
+	def test_censustable_acs1_201219_detail(self):
+		for year in range(2012, 2019+1):
 			predicateType = 'int'
 			if year == 2012: predicateType = ''
 			concept = 'B23025.  Employment Status for the Population 16 Years and Over'
-			if year == 2016 or year == 2017 or year == 2018: concept = 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER'
+			if year == 2016 or year == 2017 or year == 2018 or year == 2019: concept = 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER'
 			variable_labels = [
 				('B23025_001E', 'Total:'),
 				('B23025_001M', 'Margin of Error for!!Total:'),
@@ -103,6 +108,16 @@ class TestVariableInfo(unittest.TestCase):
 					('B23025_005E', 'Estimate!!Total!!In labor force!!Civilian labor force!!Unemployed'),
 					('B23025_006E', 'Estimate!!Total!!In labor force!!Armed Forces'),
 					('B23025_007E', 'Estimate!!Total!!Not in labor force'),
+				]
+			if year == 2019:
+				variable_labels = [
+					('B23025_001E', 'Estimate!!Total:'),
+					('B23025_002E', 'Estimate!!Total:!!In labor force:'),
+					('B23025_003E', 'Estimate!!Total:!!In labor force:!!Civilian labor force:'),
+					('B23025_004E', 'Estimate!!Total:!!In labor force:!!Civilian labor force:!!Employed'),
+					('B23025_005E', 'Estimate!!Total:!!In labor force:!!Civilian labor force:!!Unemployed'),
+					('B23025_006E', 'Estimate!!Total:!!In labor force:!!Armed Forces'),
+					('B23025_007E', 'Estimate!!Total:!!Not in labor force'),
 				]
 			expected = OrderedDict()
 			for variable, label in variable_labels:
@@ -484,8 +499,18 @@ class TestVariableInfo(unittest.TestCase):
 		expected['K201601_006E'] = {'label': 'Estimate!!Total!!Other languages', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
 		expected['K201601_007E'] = {'label': 'Estimate!!Total!!Other languages!!Limited English speaking household', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
 		expected['K201601_008E'] = {'label': 'Estimate!!Total!!Other languages!!Not a limited English speaking household', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
-		for year in range(2016, 2017+1):
+		for year in range(2016, 2018+1):
 			self.assertEqual(censusdata.censustable('acsse', year, 'K201601'), expected)
+		expected = OrderedDict()
+		expected['K201601_001E'] = {'label': 'Estimate!!Total:', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
+		expected['K201601_002E'] = {'label': 'Estimate!!Total:!!English only', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
+		expected['K201601_003E'] = {'label': 'Estimate!!Total:!!Spanish:', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
+		expected['K201601_004E'] = {'label': 'Estimate!!Total:!!Spanish:!!Limited English speaking household', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
+		expected['K201601_005E'] = {'label': 'Estimate!!Total:!!Spanish:!!Not a limited English speaking household', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
+		expected['K201601_006E'] = {'label': 'Estimate!!Total:!!Other languages:', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
+		expected['K201601_007E'] = {'label': 'Estimate!!Total:!!Other languages:!!Limited English speaking household', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
+		expected['K201601_008E'] = {'label': 'Estimate!!Total:!!Other languages:!!Not a limited English speaking household', 'concept': 'HOUSEHOLD LANGUAGE', 'predicateType': 'int'}
+		self.assertEqual(censusdata.censustable('acsse', 2019, 'K201601'), expected)
 
 	def test_censustable_acs3(self):
 		for year in range(2012, 2013+1):

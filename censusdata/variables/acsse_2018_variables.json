@@ -1,0 +1,2865 @@
+{
+  "variables": {
+    "for": {
+      "label": "Census API FIPS 'for' clause",
+      "concept": "Census API Geography Specification",
+      "predicateType": "fips-for",
+      "group": "N/A",
+      "limit": 0,
+      "predicateOnly": true
+    },
+    "in": {
+      "label": "Census API FIPS 'in' clause",
+      "concept": "Census API Geography Specification",
+      "predicateType": "fips-in",
+      "group": "N/A",
+      "limit": 0,
+      "predicateOnly": true
+    },
+    "ucgid": {
+      "label": "Uniform Census Geography Identifier clause",
+      "concept": "Census API Geography Specification",
+      "predicateType": "ucgid",
+      "group": "N/A",
+      "limit": 0,
+      "predicateOnly": true
+    },
+    "K202101_002E": {
+      "label": "Estimate!!Total!!Veteran",
+      "concept": "VETERAN STATUS FOR THE CIVILIAN POPULATION 18 YEARS AND OVER BY AGE",
+      "predicateType": "int",
+      "group": "K202101",
+      "limit": 0,
+      "attributes": "K202101_002EA,K202101_002M,K202101_002MA"
+    },
+    "K200201_006E": {
+      "label": "Estimate!!Total!!Native Hawaiian and Other Pacific Islander alone",
+      "concept": "RACE",
+      "predicateType": "int",
+      "group": "K200201",
+      "limit": 0,
+      "attributes": "K200201_006EA,K200201_006M,K200201_006MA"
+    },
+    "K202505_006E": {
+      "label": "Estimate!!Total!!Built 1940 to 1959",
+      "concept": "YEAR STRUCTURE BUILT",
+      "predicateType": "int",
+      "group": "K202505",
+      "limit": 0,
+      "attributes": "K202505_006EA,K202505_006M,K202505_006MA"
+    },
+    "SDELM": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202101_003E": {
+      "label": "Estimate!!Total!!Veteran!!18 to 34 years",
+      "concept": "VETERAN STATUS FOR THE CIVILIAN POPULATION 18 YEARS AND OVER BY AGE",
+      "predicateType": "int",
+      "group": "K202101",
+      "limit": 0,
+      "attributes": "K202101_003EA,K202101_003M,K202101_003MA"
+    },
+    "K200201_005E": {
+      "label": "Estimate!!Total!!Asian alone",
+      "concept": "RACE",
+      "predicateType": "int",
+      "group": "K200201",
+      "limit": 0,
+      "attributes": "K200201_005EA,K200201_005M,K200201_005MA"
+    },
+    "K202505_005E": {
+      "label": "Estimate!!Total!!Built 1960 to 1979",
+      "concept": "YEAR STRUCTURE BUILT",
+      "predicateType": "int",
+      "group": "K202505",
+      "limit": 0,
+      "attributes": "K202505_005EA,K202505_005M,K202505_005MA"
+    },
+    "K200104_008E": {
+      "label": "Estimate!!Total!!65 years and over",
+      "concept": "POPULATION BY AGE",
+      "predicateType": "int",
+      "group": "K200104",
+      "limit": 0,
+      "attributes": "K200104_008EA,K200104_008M,K200104_008MA"
+    },
+    "K201802_009E": {
+      "label": "Estimate!!Total!!Did not work!!With a disability",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_009EA,K201802_009M,K201802_009MA"
+    },
+    "K200201_004E": {
+      "label": "Estimate!!Total!!American Indian and Alaska Native alone",
+      "concept": "RACE",
+      "predicateType": "int",
+      "group": "K200201",
+      "limit": 0,
+      "attributes": "K200201_004EA,K200201_004M,K200201_004MA"
+    },
+    "K201401_010E": {
+      "label": "Estimate!!Total!!Not enrolled in school",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_010EA,K201401_010M,K201401_010MA"
+    },
+    "K202505_003E": {
+      "label": "Estimate!!Total!!Built 2000 to 2009",
+      "concept": "YEAR STRUCTURE BUILT",
+      "predicateType": "int",
+      "group": "K202505",
+      "limit": 0,
+      "attributes": "K202505_003EA,K202505_003M,K202505_003MA"
+    },
+    "K202101_004E": {
+      "label": "Estimate!!Total!!Veteran!!35 to 64 years",
+      "concept": "VETERAN STATUS FOR THE CIVILIAN POPULATION 18 YEARS AND OVER BY AGE",
+      "predicateType": "int",
+      "group": "K202101",
+      "limit": 0,
+      "attributes": "K202101_004EA,K202101_004M,K202101_004MA"
+    },
+    "K202505_004E": {
+      "label": "Estimate!!Total!!Built 1980 to 1999",
+      "concept": "YEAR STRUCTURE BUILT",
+      "predicateType": "int",
+      "group": "K202505",
+      "limit": 0,
+      "attributes": "K202505_004EA,K202505_004M,K202505_004MA"
+    },
+    "K200201_003E": {
+      "label": "Estimate!!Total!!Black or African American alone",
+      "concept": "RACE",
+      "predicateType": "int",
+      "group": "K200201",
+      "limit": 0,
+      "attributes": "K200201_003EA,K200201_003M,K200201_003MA"
+    },
+    "CD": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202505_002E": {
+      "label": "Estimate!!Total!!Built 2010 or later",
+      "concept": "YEAR STRUCTURE BUILT",
+      "predicateType": "int",
+      "group": "K202505",
+      "limit": 0,
+      "attributes": "K202505_002EA,K202505_002M,K202505_002MA"
+    },
+    "K202101_005E": {
+      "label": "Estimate!!Total!!Veteran!!65 years and over",
+      "concept": "VETERAN STATUS FOR THE CIVILIAN POPULATION 18 YEARS AND OVER BY AGE",
+      "predicateType": "int",
+      "group": "K202101",
+      "limit": 0,
+      "attributes": "K202101_005EA,K202101_005M,K202101_005MA"
+    },
+    "K202403_010E": {
+      "label": "Estimate!!Total!!Professional, scientific, and management, and administrative and waste management services",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_010EA,K202403_010M,K202403_010MA"
+    },
+    "K200104_004E": {
+      "label": "Estimate!!Total!!25 to 34 years",
+      "concept": "POPULATION BY AGE",
+      "predicateType": "int",
+      "group": "K200104",
+      "limit": 0,
+      "attributes": "K200104_004EA,K200104_004M,K200104_004MA"
+    },
+    "K202101_006E": {
+      "label": "Estimate!!Total!!Nonveteran",
+      "concept": "VETERAN STATUS FOR THE CIVILIAN POPULATION 18 YEARS AND OVER BY AGE",
+      "predicateType": "int",
+      "group": "K202101",
+      "limit": 0,
+      "attributes": "K202101_006EA,K202101_006M,K202101_006MA"
+    },
+    "K202401_006E": {
+      "label": "Estimate!!Total!!Production, transportation, and material moving occupations",
+      "concept": "OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202401",
+      "limit": 0,
+      "attributes": "K202401_006EA,K202401_006M,K202401_006MA"
+    },
+    "K201802_006E": {
+      "label": "Estimate!!Total!!Worked less than full-time, year round!!With a disability",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_006EA,K201802_006M,K201802_006MA"
+    },
+    "K202403_011E": {
+      "label": "Estimate!!Total!!Educational services, and health care and social assistance",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_011EA,K202403_011M,K202403_011MA"
+    },
+    "K200104_003E": {
+      "label": "Estimate!!Total!!18 to 24 years",
+      "concept": "POPULATION BY AGE",
+      "predicateType": "int",
+      "group": "K200104",
+      "limit": 0,
+      "attributes": "K200104_003EA,K200104_003M,K200104_003MA"
+    },
+    "NECTA": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202401_005E": {
+      "label": "Estimate!!Total!!Natural resources, construction, and maintenance occupations",
+      "concept": "OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202401",
+      "limit": 0,
+      "attributes": "K202401_005EA,K202401_005M,K202401_005MA"
+    },
+    "CNECTA": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K201802_005E": {
+      "label": "Estimate!!Total!!Worked less than full-time, year round",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_005EA,K201802_005M,K201802_005MA"
+    },
+    "K202403_012E": {
+      "label": "Estimate!!Total!!Arts, entertainment, and recreation, and accommodation and food services",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_012EA,K202403_012M,K202403_012MA"
+    },
+    "K200104_006E": {
+      "label": "Estimate!!Total!!45 to 54 years",
+      "concept": "POPULATION BY AGE",
+      "predicateType": "int",
+      "group": "K200104",
+      "limit": 0,
+      "attributes": "K200104_006EA,K200104_006M,K200104_006MA"
+    },
+    "K200201_008E": {
+      "label": "Estimate!!Total!!Two or more races",
+      "concept": "RACE",
+      "predicateType": "int",
+      "group": "K200201",
+      "limit": 0,
+      "attributes": "K200201_008EA,K200201_008M,K200201_008MA"
+    },
+    "STATE": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202403_013E": {
+      "label": "Estimate!!Total!!Other services, except public administration",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_013EA,K202403_013M,K202403_013MA"
+    },
+    "K200104_007E": {
+      "label": "Estimate!!Total!!55 to 64 years",
+      "concept": "POPULATION BY AGE",
+      "predicateType": "int",
+      "group": "K200104",
+      "limit": 0,
+      "attributes": "K200104_007EA,K200104_007M,K200104_007MA"
+    },
+    "K201802_008E": {
+      "label": "Estimate!!Total!!Did not work",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_008EA,K201802_008M,K201802_008MA"
+    },
+    "K200104_005E": {
+      "label": "Estimate!!Total!!35 to 44 years",
+      "concept": "POPULATION BY AGE",
+      "predicateType": "int",
+      "group": "K200104",
+      "limit": 0,
+      "attributes": "K200104_005EA,K200104_005M,K200104_005MA"
+    },
+    "K200201_007E": {
+      "label": "Estimate!!Total!!Some other race alone",
+      "concept": "RACE",
+      "predicateType": "int",
+      "group": "K200201",
+      "limit": 0,
+      "attributes": "K200201_007EA,K200201_007M,K200201_007MA"
+    },
+    "K202505_007E": {
+      "label": "Estimate!!Total!!Built 1939 or earlier",
+      "concept": "YEAR STRUCTURE BUILT",
+      "predicateType": "int",
+      "group": "K202505",
+      "limit": 0,
+      "attributes": "K202505_007EA,K202505_007M,K202505_007MA"
+    },
+    "K202403_014E": {
+      "label": "Estimate!!Total!!Public administration",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_014EA,K202403_014M,K202403_014MA"
+    },
+    "K201802_007E": {
+      "label": "Estimate!!Total!!Worked less than full-time, year round!!No disability",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_007EA,K201802_007M,K201802_007MA"
+    },
+    "K201802_001E": {
+      "label": "Estimate!!Total",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_001EA,K201802_001M,K201802_001MA"
+    },
+    "K202302_003E": {
+      "label": "Estimate!!Total!!Male!!Worked in the past 12 months",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_003EA,K202302_003M,K202302_003MA"
+    },
+    "K202302_004E": {
+      "label": "Estimate!!Total!!Male!!Worked in the past 12 months!!Worked full-time, year-round",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_004EA,K202302_004M,K202302_004MA"
+    },
+    "K201501_001E": {
+      "label": "Estimate!!Total",
+      "concept": "EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201501",
+      "limit": 0,
+      "attributes": "K201501_001EA,K201501_001M,K201501_001MA"
+    },
+    "K202601_001E": {
+      "label": "Estimate!!Total",
+      "concept": "GROUP QUARTERS POPULATION",
+      "predicateType": "int",
+      "group": "K202601",
+      "limit": 0,
+      "attributes": "K202601_001EA,K202601_001M,K202601_001MA"
+    },
+    "K202302_005E": {
+      "label": "Estimate!!Total!!Male!!Worked in the past 12 months!!Worked less than full-time, year-round",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_005EA,K202302_005M,K202302_005MA"
+    },
+    "K201001_006E": {
+      "label": "Estimate!!Total!!Divorced",
+      "concept": "MARITAL STATUS FOR THE POPULATION 15 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201001",
+      "limit": 0,
+      "attributes": "K201001_006EA,K201001_006M,K201001_006MA"
+    },
+    "K201803_008E": {
+      "label": "Estimate!!Total!!With a disability!!With an independent living difficulty",
+      "concept": "TYPES OF DISABILITIES",
+      "predicateType": "int",
+      "group": "K201803",
+      "limit": 0,
+      "attributes": "K201803_008EA,K201803_008M,K201803_008MA"
+    },
+    "K200104_002E": {
+      "label": "Estimate!!Total!!Under 18 years",
+      "concept": "POPULATION BY AGE",
+      "predicateType": "int",
+      "group": "K200104",
+      "limit": 0,
+      "attributes": "K200104_002EA,K200104_002M,K200104_002MA"
+    },
+    "K201802_004E": {
+      "label": "Estimate!!Total!!Worked full-time, year round!!No disability",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_004EA,K201802_004M,K201802_004MA"
+    },
+    "K202302_006E": {
+      "label": "Estimate!!Total!!Male!!Did not work in the past 12 months",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_006EA,K202302_006M,K202302_006MA"
+    },
+    "K201001_005E": {
+      "label": "Estimate!!Total!!Widowed",
+      "concept": "MARITAL STATUS FOR THE POPULATION 15 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201001",
+      "limit": 0,
+      "attributes": "K201001_005EA,K201001_005M,K201001_005MA"
+    },
+    "K201803_009E": {
+      "label": "Estimate!!Total!!No disability",
+      "concept": "TYPES OF DISABILITIES",
+      "predicateType": "int",
+      "group": "K201803",
+      "limit": 0,
+      "attributes": "K201803_009EA,K201803_009M,K201803_009MA"
+    },
+    "K201802_002E": {
+      "label": "Estimate!!Total!!Worked full-time, year round",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_002EA,K201802_002M,K201802_002MA"
+    },
+    "K200104_001E": {
+      "label": "Estimate!!Total",
+      "concept": "POPULATION BY AGE",
+      "predicateType": "int",
+      "group": "K200104",
+      "limit": 0,
+      "attributes": "K200104_001EA,K200104_001M,K200104_001MA"
+    },
+    "K201802_003E": {
+      "label": "Estimate!!Total!!Worked full-time, year round!!With a disability",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_003EA,K201802_003M,K201802_003MA"
+    },
+    "K201001_004E": {
+      "label": "Estimate!!Total!!Separated",
+      "concept": "MARITAL STATUS FOR THE POPULATION 15 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201001",
+      "limit": 0,
+      "attributes": "K201001_004EA,K201001_004M,K201001_004MA"
+    },
+    "K202505_001E": {
+      "label": "Estimate!!Total",
+      "concept": "YEAR STRUCTURE BUILT",
+      "predicateType": "int",
+      "group": "K202505",
+      "limit": 0,
+      "attributes": "K202505_001EA,K202505_001M,K202505_001MA"
+    },
+    "K201501_004E": {
+      "label": "Estimate!!Total!!High school graduate (includes equivalency)",
+      "concept": "EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201501",
+      "limit": 0,
+      "attributes": "K201501_004EA,K201501_004M,K201501_004MA"
+    },
+    "K202701_010E": {
+      "label": "Estimate!!Total!!65 years and over!!No health insurance coverage",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_010EA,K202701_010M,K202701_010MA"
+    },
+    "K200102_002E": {
+      "label": "Estimate!!Total!!In households",
+      "concept": "POPULATION UNDER 18 YEARS BY AGE",
+      "predicateType": "int",
+      "group": "K200102",
+      "limit": 0,
+      "attributes": "K200102_002EA,K200102_002M,K200102_002MA"
+    },
+    "K201501_005E": {
+      "label": "Estimate!!Total!!Some college, no degree",
+      "concept": "EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201501",
+      "limit": 0,
+      "attributes": "K201501_005EA,K201501_005M,K201501_005MA"
+    },
+    "K201001_003E": {
+      "label": "Estimate!!Total!!Now married (except separated)",
+      "concept": "MARITAL STATUS FOR THE POPULATION 15 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201001",
+      "limit": 0,
+      "attributes": "K201001_003EA,K201001_003M,K201001_003MA"
+    },
+    "K200102_001E": {
+      "label": "Estimate!!Total",
+      "concept": "POPULATION UNDER 18 YEARS BY AGE",
+      "predicateType": "int",
+      "group": "K200102",
+      "limit": 0,
+      "attributes": "K200102_001EA,K200102_001M,K200102_001MA"
+    },
+    "K202302_001E": {
+      "label": "Estimate!!Total",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_001EA,K202302_001M,K202302_001MA"
+    },
+    "K201501_002E": {
+      "label": "Estimate!!Total!!Less than 9th grade",
+      "concept": "EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201501",
+      "limit": 0,
+      "attributes": "K201501_002EA,K201501_002M,K201501_002MA"
+    },
+    "K201001_002E": {
+      "label": "Estimate!!Total!!Never married",
+      "concept": "MARITAL STATUS FOR THE POPULATION 15 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201001",
+      "limit": 0,
+      "attributes": "K201001_002EA,K201001_002M,K201001_002MA"
+    },
+    "K200102_004E": {
+      "label": "Estimate!!Total!!In households!!3 to 5 years",
+      "concept": "POPULATION UNDER 18 YEARS BY AGE",
+      "predicateType": "int",
+      "group": "K200102",
+      "limit": 0,
+      "attributes": "K200102_004EA,K200102_004M,K200102_004MA"
+    },
+    "K202302_002E": {
+      "label": "Estimate!!Total!!Male",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_002EA,K202302_002M,K202302_002MA"
+    },
+    "K202101_001E": {
+      "label": "Estimate!!Total",
+      "concept": "VETERAN STATUS FOR THE CIVILIAN POPULATION 18 YEARS AND OVER BY AGE",
+      "predicateType": "int",
+      "group": "K202101",
+      "limit": 0,
+      "attributes": "K202101_001EA,K202101_001M,K202101_001MA"
+    },
+    "K201001_001E": {
+      "label": "Estimate!!Total",
+      "concept": "MARITAL STATUS FOR THE POPULATION 15 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201001",
+      "limit": 0,
+      "attributes": "K201001_001EA,K201001_001M,K201001_001MA"
+    },
+    "K201501_003E": {
+      "label": "Estimate!!Total!!9th to 12th grade, no diploma",
+      "concept": "EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201501",
+      "limit": 0,
+      "attributes": "K201501_003EA,K201501_003M,K201501_003MA"
+    },
+    "K201905_001E": {
+      "label": "Estimate!!Median nonfamily household income in the past 12 months (in 2018 inflation-adjusted dollars)",
+      "concept": "MEDIAN NONFAMILY HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201905",
+      "limit": 0,
+      "attributes": "K201905_001EA,K201905_001M,K201905_001MA"
+    },
+    "K200102_003E": {
+      "label": "Estimate!!Total!!In households!!Under 3 years",
+      "concept": "POPULATION UNDER 18 YEARS BY AGE",
+      "predicateType": "int",
+      "group": "K200102",
+      "limit": 0,
+      "attributes": "K200102_003EA,K200102_003M,K200102_003MA"
+    },
+    "K202002_003E": {
+      "label": "Estimate!!Median earnings in the past 12 months (in 2018 Inflation-adjusted dollars) --!!Male --!!Worked full-time, year-round in the past 12 months (dollars)",
+      "concept": "MEDIAN EARNINGS IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS) BY SEX BY WORK EXPERIENCE IN THE PAST 12 MONTHS FOR THE POPULATION 16 YEARS AND OVER WITH EARNINGS IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K202002",
+      "limit": 0,
+      "attributes": "K202002_003EA,K202002_003M,K202002_003MA"
+    },
+    "K202701_002E": {
+      "label": "Estimate!!Total!!Under 19 years",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_002EA,K202701_002M,K202701_002MA"
+    },
+    "K202503_003E": {
+      "label": "Estimate!!Total!!Renter occupied",
+      "concept": "TOTAL POPULATION IN OCCUPIED HOUSING UNITS BY TENURE",
+      "predicateType": "int",
+      "group": "K202503",
+      "limit": 0,
+      "attributes": "K202503_003EA,K202503_003M,K202503_003MA"
+    },
+    "K200102_006E": {
+      "label": "Estimate!!Total!!In households!!9 to 11 years",
+      "concept": "POPULATION UNDER 18 YEARS BY AGE",
+      "predicateType": "int",
+      "group": "K200102",
+      "limit": 0,
+      "attributes": "K200102_006EA,K200102_006M,K200102_006MA"
+    },
+    "K201703_009E": {
+      "label": "Estimate!!Total!!Income in the past 12 months at or above poverty level!!Other families",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_009EA,K201703_009M,K201703_009MA"
+    },
+    "K202002_002E": {
+      "label": "Estimate!!Median earnings in the past 12 months (in 2018 Inflation-adjusted dollars) --!!Male --!!Total (dollars)",
+      "concept": "MEDIAN EARNINGS IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS) BY SEX BY WORK EXPERIENCE IN THE PAST 12 MONTHS FOR THE POPULATION 16 YEARS AND OVER WITH EARNINGS IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K202002",
+      "limit": 0,
+      "attributes": "K202002_002EA,K202002_002M,K202002_002MA"
+    },
+    "K202701_003E": {
+      "label": "Estimate!!Total!!Under 19 years!!With health insurance coverage",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_003EA,K202701_003M,K202701_003MA"
+    },
+    "SUMLEVEL": {
+      "label": "Summary Level code",
+      "predicateType": "string",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202503_002E": {
+      "label": "Estimate!!Total!!Owner occupied",
+      "concept": "TOTAL POPULATION IN OCCUPIED HOUSING UNITS BY TENURE",
+      "predicateType": "int",
+      "group": "K202503",
+      "limit": 0,
+      "attributes": "K202503_002EA,K202503_002M,K202503_002MA"
+    },
+    "K200102_005E": {
+      "label": "Estimate!!Total!!In households!!6 to 8 years",
+      "concept": "POPULATION UNDER 18 YEARS BY AGE",
+      "predicateType": "int",
+      "group": "K200102",
+      "limit": 0,
+      "attributes": "K200102_005EA,K200102_005M,K200102_005MA"
+    },
+    "K201703_008E": {
+      "label": "Estimate!!Total!!Income in the past 12 months at or above poverty level!!Married-couple family",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_008EA,K201703_008M,K201703_008MA"
+    },
+    "K200102_009E": {
+      "label": "Estimate!!Total!!In group quarters",
+      "concept": "POPULATION UNDER 18 YEARS BY AGE",
+      "predicateType": "int",
+      "group": "K200102",
+      "limit": 0,
+      "attributes": "K200102_009EA,K200102_009M,K200102_009MA"
+    },
+    "K202002_001E": {
+      "label": "Estimate!!Median earnings in the past 12 months (in 2018 Inflation-adjusted dollars) --!!Total (dollars)",
+      "concept": "MEDIAN EARNINGS IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS) BY SEX BY WORK EXPERIENCE IN THE PAST 12 MONTHS FOR THE POPULATION 16 YEARS AND OVER WITH EARNINGS IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K202002",
+      "limit": 0,
+      "attributes": "K202002_001EA,K202002_001M,K202002_001MA"
+    },
+    "K201601_002E": {
+      "label": "Estimate!!Total!!English only",
+      "concept": "HOUSEHOLD LANGUAGE",
+      "predicateType": "int",
+      "group": "K201601",
+      "limit": 0,
+      "attributes": "K201601_002EA,K201601_002M,K201601_002MA"
+    },
+    "K200102_008E": {
+      "label": "Estimate!!Total!!In households!!15 to 17 years",
+      "concept": "POPULATION UNDER 18 YEARS BY AGE",
+      "predicateType": "int",
+      "group": "K200102",
+      "limit": 0,
+      "attributes": "K200102_008EA,K200102_008M,K200102_008MA"
+    },
+    "K202503_001E": {
+      "label": "Estimate!!Total",
+      "concept": "TOTAL POPULATION IN OCCUPIED HOUSING UNITS BY TENURE",
+      "predicateType": "int",
+      "group": "K202503",
+      "limit": 0,
+      "attributes": "K202503_001EA,K202503_001M,K202503_001MA"
+    },
+    "K201703_007E": {
+      "label": "Estimate!!Total!!Income in the past 12 months at or above poverty level",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_007EA,K201703_007M,K201703_007MA"
+    },
+    "K201601_001E": {
+      "label": "Estimate!!Total",
+      "concept": "HOUSEHOLD LANGUAGE",
+      "predicateType": "int",
+      "group": "K201601",
+      "limit": 0,
+      "attributes": "K201601_001EA,K201601_001M,K201601_001MA"
+    },
+    "K200501_001E": {
+      "label": "Estimate!!Total",
+      "concept": "CITIZENSHIP STATUS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200501",
+      "limit": 0,
+      "attributes": "K200501_001EA,K200501_001M,K200501_001MA"
+    },
+    "METDIV": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K200901_001E": {
+      "label": "Estimate!!Total",
+      "concept": "HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K200901",
+      "limit": 0,
+      "attributes": "K200901_001EA,K200901_001M,K200901_001MA"
+    },
+    "K202201_007E": {
+      "label": "Estimate!!Total!!Household did not receive Food Stamps/SNAP in the past 12 months!!No children under 18 years",
+      "concept": "RECEIPT OF FOOD STAMPS/SNAP IN THE PAST 12 MONTHS BY PRESENCE OF CHILDREN UNDER 18 YEARS FOR HOUSEHOLDS",
+      "predicateType": "int",
+      "group": "K202201",
+      "limit": 0,
+      "attributes": "K202201_007EA,K202201_007M,K202201_007MA"
+    },
+    "K200901_002E": {
+      "label": "Estimate!!Total!!Family households",
+      "concept": "HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K200901",
+      "limit": 0,
+      "attributes": "K200901_002EA,K200901_002M,K200901_002MA"
+    },
+    "K200501PR_001E": {
+      "label": "Estimate!!Total",
+      "concept": "CITIZENSHIP STATUS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200501PR",
+      "limit": 0,
+      "attributes": "K200501PR_001EA,K200501PR_001M,K200501PR_001MA"
+    },
+    "K202701_001E": {
+      "label": "Estimate!!Total",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_001EA,K202701_001M,K202701_001MA"
+    },
+    "K200102_007E": {
+      "label": "Estimate!!Total!!In households!!12 to 14 years",
+      "concept": "POPULATION UNDER 18 YEARS BY AGE",
+      "predicateType": "int",
+      "group": "K200102",
+      "limit": 0,
+      "attributes": "K200102_007EA,K200102_007M,K200102_007MA"
+    },
+    "K202302_007E": {
+      "label": "Estimate!!Total!!Female",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_007EA,K202302_007M,K202302_007MA"
+    },
+    "K202201_006E": {
+      "label": "Estimate!!Total!!Household did not receive Food Stamps/SNAP in the past 12 months!!With children under 18 years",
+      "concept": "RECEIPT OF FOOD STAMPS/SNAP IN THE PAST 12 MONTHS BY PRESENCE OF CHILDREN UNDER 18 YEARS FOR HOUSEHOLDS",
+      "predicateType": "int",
+      "group": "K202201",
+      "limit": 0,
+      "attributes": "K202201_006EA,K202201_006M,K202201_006MA"
+    },
+    "K200501_002E": {
+      "label": "Estimate!!Total!!U.S. citizen",
+      "concept": "CITIZENSHIP STATUS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200501",
+      "limit": 0,
+      "attributes": "K200501_002EA,K200501_002M,K200501_002MA"
+    },
+    "UA": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202701_007E": {
+      "label": "Estimate!!Total!!19 to 64 years!!No health insurance coverage",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_007EA,K202701_007M,K202701_007MA"
+    },
+    "K201101_004E": {
+      "label": "Estimate!!Total!!In other families!!Male householder, no wife present",
+      "concept": "OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE",
+      "predicateType": "int",
+      "group": "K201101",
+      "limit": 0,
+      "attributes": "K201101_004EA,K201101_004M,K201101_004MA"
+    },
+    "K201601_004E": {
+      "label": "Estimate!!Total!!Spanish!!Limited English speaking household",
+      "concept": "HOUSEHOLD LANGUAGE",
+      "predicateType": "int",
+      "group": "K201601",
+      "limit": 0,
+      "attributes": "K201601_004EA,K201601_004M,K201601_004MA"
+    },
+    "K200501PR_002E": {
+      "label": "Estimate!!Total!!U.S. citizen",
+      "concept": "CITIZENSHIP STATUS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200501PR",
+      "limit": 0,
+      "attributes": "K200501PR_002EA,K200501PR_002M,K200501PR_002MA"
+    },
+    "K202506_001E": {
+      "label": "Estimate!!Total",
+      "concept": "YEAR HOUSEHOLDER MOVED INTO UNIT",
+      "predicateType": "int",
+      "group": "K202506",
+      "limit": 0,
+      "attributes": "K202506_001EA,K202506_001M,K202506_001MA"
+    },
+    "US": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202302_008E": {
+      "label": "Estimate!!Total!!Female!!Worked in the past 12 months",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_008EA,K202302_008M,K202302_008MA"
+    },
+    "K202506_003E": {
+      "label": "Estimate!!Total!!Moved in 2000 to 2009",
+      "concept": "YEAR HOUSEHOLDER MOVED INTO UNIT",
+      "predicateType": "int",
+      "group": "K202506",
+      "limit": 0,
+      "attributes": "K202506_003EA,K202506_003M,K202506_003MA"
+    },
+    "K202201_005E": {
+      "label": "Estimate!!Total!!Household did not receive Food Stamps/SNAP in the past 12 months",
+      "concept": "RECEIPT OF FOOD STAMPS/SNAP IN THE PAST 12 MONTHS BY PRESENCE OF CHILDREN UNDER 18 YEARS FOR HOUSEHOLDS",
+      "predicateType": "int",
+      "group": "K202201",
+      "limit": 0,
+      "attributes": "K202201_005EA,K202201_005M,K202201_005MA"
+    },
+    "K200501_003E": {
+      "label": "Estimate!!Total!!Not a U.S. citizen",
+      "concept": "CITIZENSHIP STATUS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200501",
+      "limit": 0,
+      "attributes": "K200501_003EA,K200501_003M,K200501_003MA"
+    },
+    "K200001_001E": {
+      "label": "Estimate!!Total",
+      "concept": "UNWEIGHTED SAMPLE COUNT OF THE POPULATION",
+      "group": "K200001",
+      "limit": 0,
+      "attributes": "K200001_001EA"
+    },
+    "K201601_003E": {
+      "label": "Estimate!!Total!!Spanish",
+      "concept": "HOUSEHOLD LANGUAGE",
+      "predicateType": "int",
+      "group": "K201601",
+      "limit": 0,
+      "attributes": "K201601_003EA,K201601_003M,K201601_003MA"
+    },
+    "K201101_005E": {
+      "label": "Estimate!!Total!!In other families!!Female householder, no husband present",
+      "concept": "OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE",
+      "predicateType": "int",
+      "group": "K201101",
+      "limit": 0,
+      "attributes": "K201101_005EA,K201101_005M,K201101_005MA"
+    },
+    "K202701_008E": {
+      "label": "Estimate!!Total!!65 years and over",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_008EA,K202701_008M,K202701_008MA"
+    },
+    "K200501PR_003E": {
+      "label": "Estimate!!Total!!Not a U.S. citizen",
+      "concept": "CITIZENSHIP STATUS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200501PR",
+      "limit": 0,
+      "attributes": "K200501PR_003EA,K200501PR_003M,K200501PR_003MA"
+    },
+    "K202506_002E": {
+      "label": "Estimate!!Total!!Moved in 2010 or later",
+      "concept": "YEAR HOUSEHOLDER MOVED INTO UNIT",
+      "predicateType": "int",
+      "group": "K202506",
+      "limit": 0,
+      "attributes": "K202506_002EA,K202506_002M,K202506_002MA"
+    },
+    "K202302_009E": {
+      "label": "Estimate!!Total!!Female!!Worked in the past 12 months!!Worked full-time, year-round",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_009EA,K202302_009M,K202302_009MA"
+    },
+    "K201101_002E": {
+      "label": "Estimate!!Total!!In married-couple families",
+      "concept": "OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE",
+      "predicateType": "int",
+      "group": "K201101",
+      "limit": 0,
+      "attributes": "K201101_002EA,K201101_002M,K201101_002MA"
+    },
+    "K202506_004E": {
+      "label": "Estimate!!Total!!Moved in 1990 to 1999",
+      "concept": "YEAR HOUSEHOLDER MOVED INTO UNIT",
+      "predicateType": "int",
+      "group": "K202506",
+      "limit": 0,
+      "attributes": "K202506_004EA,K202506_004M,K202506_004MA"
+    },
+    "K202201_004E": {
+      "label": "Estimate!!Total!!Household received Food Stamps/SNAP in the past 12 months!!No children under 18 years",
+      "concept": "RECEIPT OF FOOD STAMPS/SNAP IN THE PAST 12 MONTHS BY PRESENCE OF CHILDREN UNDER 18 YEARS FOR HOUSEHOLDS",
+      "predicateType": "int",
+      "group": "K202201",
+      "limit": 0,
+      "attributes": "K202201_004EA,K202201_004M,K202201_004MA"
+    },
+    "K201601_007E": {
+      "label": "Estimate!!Total!!Other languages!!Limited English speaking household",
+      "concept": "HOUSEHOLD LANGUAGE",
+      "predicateType": "int",
+      "group": "K201601",
+      "limit": 0,
+      "attributes": "K201601_007EA,K201601_007M,K201601_007MA"
+    },
+    "K202701_004E": {
+      "label": "Estimate!!Total!!Under 19 years!!No health insurance coverage",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_004EA,K202701_004M,K202701_004MA"
+    },
+    "K202506_005E": {
+      "label": "Estimate!!Total!!Moved in 1989 or earlier",
+      "concept": "YEAR HOUSEHOLDER MOVED INTO UNIT",
+      "predicateType": "int",
+      "group": "K202506",
+      "limit": 0,
+      "attributes": "K202506_005EA,K202506_005M,K202506_005MA"
+    },
+    "K202201_003E": {
+      "label": "Estimate!!Total!!Household received Food Stamps/SNAP in the past 12 months!!With children under 18 years",
+      "concept": "RECEIPT OF FOOD STAMPS/SNAP IN THE PAST 12 MONTHS BY PRESENCE OF CHILDREN UNDER 18 YEARS FOR HOUSEHOLDS",
+      "predicateType": "int",
+      "group": "K202201",
+      "limit": 0,
+      "attributes": "K202201_003EA,K202201_003M,K202201_003MA"
+    },
+    "K202701_006E": {
+      "label": "Estimate!!Total!!19 to 64 years!!With health insurance coverage",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_006EA,K202701_006M,K202701_006MA"
+    },
+    "K201601_005E": {
+      "label": "Estimate!!Total!!Spanish!!Not a limited English speaking household",
+      "concept": "HOUSEHOLD LANGUAGE",
+      "predicateType": "int",
+      "group": "K201601",
+      "limit": 0,
+      "attributes": "K201601_005EA,K201601_005M,K201601_005MA"
+    },
+    "K201101_003E": {
+      "label": "Estimate!!Total!!In other families",
+      "concept": "OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE",
+      "predicateType": "int",
+      "group": "K201101",
+      "limit": 0,
+      "attributes": "K201101_003EA,K201101_003M,K201101_003MA"
+    },
+    "K201601_006E": {
+      "label": "Estimate!!Total!!Other languages",
+      "concept": "HOUSEHOLD LANGUAGE",
+      "predicateType": "int",
+      "group": "K201601",
+      "limit": 0,
+      "attributes": "K201601_006EA,K201601_006M,K201601_006MA"
+    },
+    "K202701_005E": {
+      "label": "Estimate!!Total!!19 to 64 years",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_005EA,K202701_005M,K202701_005MA"
+    },
+    "ANRC": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202502_003E": {
+      "label": "Estimate!!Total!!Renter occupied",
+      "concept": "HOUSING TENURE",
+      "predicateType": "int",
+      "group": "K202502",
+      "limit": 0,
+      "attributes": "K202502_003EA,K202502_003M,K202502_003MA"
+    },
+    "K202401_002E": {
+      "label": "Estimate!!Total!!Management, business, science, and arts occupations",
+      "concept": "OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202401",
+      "limit": 0,
+      "attributes": "K202401_002EA,K202401_002M,K202401_002MA"
+    },
+    "K201703_001E": {
+      "label": "Estimate!!Total",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_001EA,K201703_001M,K201703_001MA"
+    },
+    "K201601_008E": {
+      "label": "Estimate!!Total!!Other languages!!Not a limited English speaking household",
+      "concept": "HOUSEHOLD LANGUAGE",
+      "predicateType": "int",
+      "group": "K201601",
+      "limit": 0,
+      "attributes": "K201601_008EA,K201601_008M,K201601_008MA"
+    },
+    "K202401_001E": {
+      "label": "Estimate!!Total",
+      "concept": "OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202401",
+      "limit": 0,
+      "attributes": "K202401_001EA,K202401_001M,K202401_001MA"
+    },
+    "K202502_001E": {
+      "label": "Estimate!!Total",
+      "concept": "HOUSING TENURE",
+      "predicateType": "int",
+      "group": "K202502",
+      "limit": 0,
+      "attributes": "K202502_001EA,K202502_001M,K202502_001MA"
+    },
+    "K202509_002E": {
+      "label": "Estimate!!Total!!Less than $50,000",
+      "concept": "HOUSING VALUE",
+      "predicateType": "int",
+      "group": "K202509",
+      "limit": 0,
+      "attributes": "K202509_002EA,K202509_002M,K202509_002MA"
+    },
+    "K202701_009E": {
+      "label": "Estimate!!Total!!65 years and over!!With health insurance coverage",
+      "concept": "AGE BY HEALTH INSURANCE COVERAGE STATUS",
+      "predicateType": "int",
+      "group": "K202701",
+      "limit": 0,
+      "attributes": "K202701_009EA,K202701_009M,K202701_009MA"
+    },
+    "K202401_004E": {
+      "label": "Estimate!!Total!!Sales and office occupations",
+      "concept": "OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202401",
+      "limit": 0,
+      "attributes": "K202401_004EA,K202401_004M,K202401_004MA"
+    },
+    "K200701_005E": {
+      "label": "Estimate!!Total!!Moved from different state",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200701",
+      "limit": 0,
+      "attributes": "K200701_005EA,K200701_005M,K200701_005MA"
+    },
+    "K202502_002E": {
+      "label": "Estimate!!Total!!Owner occupied",
+      "concept": "HOUSING TENURE",
+      "predicateType": "int",
+      "group": "K202502",
+      "limit": 0,
+      "attributes": "K202502_002EA,K202502_002M,K202502_002MA"
+    },
+    "K202509_001E": {
+      "label": "Estimate!!Total",
+      "concept": "HOUSING VALUE",
+      "predicateType": "int",
+      "group": "K202509",
+      "limit": 0,
+      "attributes": "K202509_001EA,K202509_001M,K202509_001MA"
+    },
+    "K201801_006E": {
+      "label": "Estimate!!Total!!No disability",
+      "concept": "DISABILITY STATUS BY AGE",
+      "predicateType": "int",
+      "group": "K201801",
+      "limit": 0,
+      "attributes": "K201801_006EA,K201801_006M,K201801_006MA"
+    },
+    "K202401_003E": {
+      "label": "Estimate!!Total!!Service occupations",
+      "concept": "OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202401",
+      "limit": 0,
+      "attributes": "K202401_003EA,K202401_003M,K202401_003MA"
+    },
+    "K200701_006E": {
+      "label": "Estimate!!Total!!Moved from abroad",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200701",
+      "limit": 0,
+      "attributes": "K200701_006EA,K200701_006M,K200701_006MA"
+    },
+    "K200802_005E": {
+      "label": "Estimate!!Total!!60 minutes or more",
+      "concept": "TRAVEL TIME TO WORK",
+      "predicateType": "int",
+      "group": "K200802",
+      "limit": 0,
+      "attributes": "K200802_005EA,K200802_005M,K200802_005MA"
+    },
+    "K200201_002E": {
+      "label": "Estimate!!Total!!White alone",
+      "concept": "RACE",
+      "predicateType": "int",
+      "group": "K200201",
+      "limit": 0,
+      "attributes": "K200201_002EA,K200201_002M,K200201_002MA"
+    },
+    "K202509_004E": {
+      "label": "Estimate!!Total!!$100,000 to $149,999",
+      "concept": "HOUSING VALUE",
+      "predicateType": "int",
+      "group": "K202509",
+      "limit": 0,
+      "attributes": "K202509_004EA,K202509_004M,K202509_004MA"
+    },
+    "K201703_006E": {
+      "label": "Estimate!!Total!!Income in the past 12 months below poverty level!!Other families!!Female householder, no husband present",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_006EA,K201703_006M,K201703_006MA"
+    },
+    "K200103_003E": {
+      "label": "Estimate!!Median age --!!Female",
+      "concept": "MEDIAN AGE BY SEX",
+      "predicateType": "float",
+      "group": "K200103",
+      "limit": 0,
+      "attributes": "K200103_003EA,K200103_003M,K200103_003MA"
+    },
+    "K200701_002E": {
+      "label": "Estimate!!Total!!Same house 1 year ago",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200701",
+      "limit": 0,
+      "attributes": "K200701_002EA,K200701_002M,K200701_002MA"
+    },
+    "K201801_005E": {
+      "label": "Estimate!!Total!!With a disability!!65 years and over",
+      "concept": "DISABILITY STATUS BY AGE",
+      "predicateType": "int",
+      "group": "K201801",
+      "limit": 0,
+      "attributes": "K201801_005EA,K201801_005M,K201801_005MA"
+    },
+    "COUNTY": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K200201_001E": {
+      "label": "Estimate!!Total",
+      "concept": "RACE",
+      "predicateType": "int",
+      "group": "K200201",
+      "limit": 0,
+      "attributes": "K200201_001EA,K200201_001M,K200201_001MA"
+    },
+    "K202509_003E": {
+      "label": "Estimate!!Total!!$50,000 to $99,999",
+      "concept": "HOUSING VALUE",
+      "predicateType": "int",
+      "group": "K202509",
+      "limit": 0,
+      "attributes": "K202509_003EA,K202509_003M,K202509_003MA"
+    },
+    "K201703_005E": {
+      "label": "Estimate!!Total!!Income in the past 12 months below poverty level!!Other families!!Male householder, no wife present",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_005EA,K201703_005M,K201703_005MA"
+    },
+    "K200103_002E": {
+      "label": "Estimate!!Median age --!!Male",
+      "concept": "MEDIAN AGE BY SEX",
+      "predicateType": "float",
+      "group": "K200103",
+      "limit": 0,
+      "attributes": "K200103_002EA,K200103_002M,K200103_002MA"
+    },
+    "K200701_003E": {
+      "label": "Estimate!!Total!!Moved within same county",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200701",
+      "limit": 0,
+      "attributes": "K200701_003EA,K200701_003M,K200701_003MA"
+    },
+    "K201801_004E": {
+      "label": "Estimate!!Total!!With a disability!!18 to 64 years",
+      "concept": "DISABILITY STATUS BY AGE",
+      "predicateType": "int",
+      "group": "K201801",
+      "limit": 0,
+      "attributes": "K201801_004EA,K201801_004M,K201801_004MA"
+    },
+    "K201801_003E": {
+      "label": "Estimate!!Total!!With a disability!!Under 18 years",
+      "concept": "DISABILITY STATUS BY AGE",
+      "predicateType": "int",
+      "group": "K201801",
+      "limit": 0,
+      "attributes": "K201801_003EA,K201801_003M,K201801_003MA"
+    },
+    "K200701_004E": {
+      "label": "Estimate!!Total!!Moved from different county within same state",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200701",
+      "limit": 0,
+      "attributes": "K200701_004EA,K200701_004M,K200701_004MA"
+    },
+    "K202509_006E": {
+      "label": "Estimate!!Total!!$200,000 to $299,999",
+      "concept": "HOUSING VALUE",
+      "predicateType": "int",
+      "group": "K202509",
+      "limit": 0,
+      "attributes": "K202509_006EA,K202509_006M,K202509_006MA"
+    },
+    "K201703_004E": {
+      "label": "Estimate!!Total!!Income in the past 12 months below poverty level!!Other families",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_004EA,K201703_004M,K201703_004MA"
+    },
+    "K202002_005E": {
+      "label": "Estimate!!Median earnings in the past 12 months (in 2018 Inflation-adjusted dollars) --!!Worked full-time, year-round in the past 12 months (dollars)",
+      "concept": "MEDIAN EARNINGS IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS) BY SEX BY WORK EXPERIENCE IN THE PAST 12 MONTHS FOR THE POPULATION 16 YEARS AND OVER WITH EARNINGS IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K202002",
+      "limit": 0,
+      "attributes": "K202002_005EA,K202002_005M,K202002_005MA"
+    },
+    "K200103_001E": {
+      "label": "Estimate!!Median age --!!Total",
+      "concept": "MEDIAN AGE BY SEX",
+      "predicateType": "float",
+      "group": "K200103",
+      "limit": 0,
+      "attributes": "K200103_001EA,K200103_001M,K200103_001MA"
+    },
+    "K201801_002E": {
+      "label": "Estimate!!Total!!With a disability",
+      "concept": "DISABILITY STATUS BY AGE",
+      "predicateType": "int",
+      "group": "K201801",
+      "limit": 0,
+      "attributes": "K201801_002EA,K201801_002M,K201801_002MA"
+    },
+    "K202509_005E": {
+      "label": "Estimate!!Total!!$150,000 to $199,999",
+      "concept": "HOUSING VALUE",
+      "predicateType": "int",
+      "group": "K202509",
+      "limit": 0,
+      "attributes": "K202509_005EA,K202509_005M,K202509_005MA"
+    },
+    "K201703_003E": {
+      "label": "Estimate!!Total!!Income in the past 12 months below poverty level!!Married-couple family",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_003EA,K201703_003M,K201703_003MA"
+    },
+    "K202002_004E": {
+      "label": "Estimate!!Median earnings in the past 12 months (in 2018 Inflation-adjusted dollars) --!!Total (dollars)",
+      "concept": "MEDIAN EARNINGS IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS) BY SEX BY WORK EXPERIENCE IN THE PAST 12 MONTHS FOR THE POPULATION 16 YEARS AND OVER WITH EARNINGS IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K202002",
+      "limit": 0,
+      "attributes": "K202002_004EA,K202002_004M,K202002_004MA"
+    },
+    "K200701_001E": {
+      "label": "Estimate!!Total",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200701",
+      "limit": 0,
+      "attributes": "K200701_001EA,K200701_001M,K200701_001MA"
+    },
+    "K201801_001E": {
+      "label": "Estimate!!Total",
+      "concept": "DISABILITY STATUS BY AGE",
+      "predicateType": "int",
+      "group": "K201801",
+      "limit": 0,
+      "attributes": "K201801_001EA,K201801_001M,K201801_001MA"
+    },
+    "K201703_002E": {
+      "label": "Estimate!!Total!!Income in the past 12 months below poverty level",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_002EA,K201703_002M,K201703_002MA"
+    },
+    "K201902_001E": {
+      "label": "Estimate!!Median household income in the past 12 months (in 2018 inflation-adjusted dollars)",
+      "concept": "MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201902",
+      "limit": 0,
+      "attributes": "K201902_001EA,K201902_001M,K201902_001MA"
+    },
+    "K200701PR_001E": {
+      "label": "Estimate!!Total",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200701PR",
+      "limit": 0,
+      "attributes": "K200701PR_001EA,K200701PR_001M,K200701PR_001MA"
+    },
+    "K202509_008E": {
+      "label": "Estimate!!Total!!$500,000 to $999,999",
+      "concept": "HOUSING VALUE",
+      "predicateType": "int",
+      "group": "K202509",
+      "limit": 0,
+      "attributes": "K202509_008EA,K202509_008M,K202509_008MA"
+    },
+    "K201701_009E": {
+      "label": "Estimate!!Total!!Income in the past 12 months at or above poverty level!!65 years and over",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE",
+      "predicateType": "int",
+      "group": "K201701",
+      "limit": 0,
+      "attributes": "K201701_009EA,K201701_009M,K201701_009MA"
+    },
+    "K202501_002E": {
+      "label": "Estimate!!Total!!Occupied",
+      "concept": "OCCUPANCY STATUS",
+      "predicateType": "int",
+      "group": "K202501",
+      "limit": 0,
+      "attributes": "K202501_002EA,K202501_002M,K202501_002MA"
+    },
+    "K200701PR_002E": {
+      "label": "Estimate!!Total!!Same house 1 year ago",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200701PR",
+      "limit": 0,
+      "attributes": "K200701PR_002EA,K200701PR_002M,K200701PR_002MA"
+    },
+    "K202703_003E": {
+      "label": "Estimate!!Total!!No public coverage",
+      "concept": "PUBLIC HEALTH INSURANCE STATUS",
+      "predicateType": "int",
+      "group": "K202703",
+      "limit": 0,
+      "attributes": "K202703_003EA,K202703_003M,K202703_003MA"
+    },
+    "K202509_007E": {
+      "label": "Estimate!!Total!!$300,000 to $499,999",
+      "concept": "HOUSING VALUE",
+      "predicateType": "int",
+      "group": "K202509",
+      "limit": 0,
+      "attributes": "K202509_007EA,K202509_007M,K202509_007MA"
+    },
+    "K202501_003E": {
+      "label": "Estimate!!Total!!Vacant",
+      "concept": "OCCUPANCY STATUS",
+      "predicateType": "int",
+      "group": "K202501",
+      "limit": 0,
+      "attributes": "K202501_003EA,K202501_003M,K202501_003MA"
+    },
+    "K202508_001E": {
+      "label": "Estimate!!Total",
+      "concept": "MORTGAGE STATUS",
+      "predicateType": "int",
+      "group": "K202508",
+      "limit": 0,
+      "attributes": "K202508_001EA,K202508_001M,K202508_001MA"
+    },
+    "K202703_002E": {
+      "label": "Estimate!!Total!!With public coverage",
+      "concept": "PUBLIC HEALTH INSURANCE STATUS",
+      "predicateType": "int",
+      "group": "K202703",
+      "limit": 0,
+      "attributes": "K202703_002EA,K202703_002M,K202703_002MA"
+    },
+    "K200701PR_004E": {
+      "label": "Estimate!!Total!!Moved from different municipio",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200701PR",
+      "limit": 0,
+      "attributes": "K200701PR_004EA,K200701PR_004M,K200701PR_004MA"
+    },
+    "K202508_002E": {
+      "label": "Estimate!!Total!!With a mortgage",
+      "concept": "MORTGAGE STATUS",
+      "predicateType": "int",
+      "group": "K202508",
+      "limit": 0,
+      "attributes": "K202508_002EA,K202508_002M,K202508_002MA"
+    },
+    "K202302_010E": {
+      "label": "Estimate!!Total!!Female!!Worked in the past 12 months!!Worked less than full-time, year-round",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_010EA,K202302_010M,K202302_010MA"
+    },
+    "PLACE": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "SDUNI": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202509_009E": {
+      "label": "Estimate!!Total!!$1,000,000 or more",
+      "concept": "HOUSING VALUE",
+      "predicateType": "int",
+      "group": "K202509",
+      "limit": 0,
+      "attributes": "K202509_009EA,K202509_009M,K202509_009MA"
+    },
+    "K200701PR_003E": {
+      "label": "Estimate!!Total!!Moved within same municipio",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200701PR",
+      "limit": 0,
+      "attributes": "K200701PR_003EA,K200701PR_003M,K200701PR_003MA"
+    },
+    "K202508_003E": {
+      "label": "Estimate!!Total!!Not mortgaged",
+      "concept": "MORTGAGE STATUS",
+      "predicateType": "int",
+      "group": "K202508",
+      "limit": 0,
+      "attributes": "K202508_003EA,K202508_003M,K202508_003MA"
+    },
+    "K200301_002E": {
+      "label": "Estimate!!Total!!Not Hispanic or Latino",
+      "concept": "HISPANIC OR LATINO ORIGIN",
+      "predicateType": "int",
+      "group": "K200301",
+      "limit": 0,
+      "attributes": "K200301_002EA,K200301_002M,K200301_002MA"
+    },
+    "K201401_004E": {
+      "label": "Estimate!!Total!!Enrolled in school!!Enrolled in kindergarten",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_004EA,K201401_004M,K201401_004MA"
+    },
+    "K200503_004E": {
+      "label": "Estimate!!Total!!Native!!Native, born in other state in the United States",
+      "concept": "PLACE OF BIRTH IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200503",
+      "limit": 0,
+      "attributes": "K200503_004EA,K200503_004M,K200503_004MA"
+    },
+    "K200503_003E": {
+      "label": "Estimate!!Total!!Native!!Native, born in state of residence",
+      "concept": "PLACE OF BIRTH IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200503",
+      "limit": 0,
+      "attributes": "K200503_003EA,K200503_003M,K200503_003MA"
+    },
+    "K201102_004E": {
+      "label": "Estimate!!Total!!Households with one or more people 60 years and over!!Nonfamily households",
+      "concept": "HOUSEHOLDS BY PRESENCE OF PEOPLE 60 YEARS AND OVER BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201102",
+      "limit": 0,
+      "attributes": "K201102_004EA,K201102_004M,K201102_004MA"
+    },
+    "K200802_004E": {
+      "label": "Estimate!!Total!!30 to 59 minutes",
+      "concept": "TRAVEL TIME TO WORK",
+      "predicateType": "int",
+      "group": "K200802",
+      "limit": 0,
+      "attributes": "K200802_004EA,K200802_004M,K200802_004MA"
+    },
+    "K200301_003E": {
+      "label": "Estimate!!Total!!Hispanic or Latino",
+      "concept": "HISPANIC OR LATINO ORIGIN",
+      "predicateType": "int",
+      "group": "K200301",
+      "limit": 0,
+      "attributes": "K200301_003EA,K200301_003M,K200301_003MA"
+    },
+    "K201401_003E": {
+      "label": "Estimate!!Total!!Enrolled in school!!Enrolled in nursery school, preschool",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_003EA,K201401_003M,K201401_003MA"
+    },
+    "K200503_002E": {
+      "label": "Estimate!!Total!!Native",
+      "concept": "PLACE OF BIRTH IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200503",
+      "limit": 0,
+      "attributes": "K200503_002EA,K200503_002M,K200503_002MA"
+    },
+    "K201102_003E": {
+      "label": "Estimate!!Total!!Households with one or more people 60 years and over!!Family households",
+      "concept": "HOUSEHOLDS BY PRESENCE OF PEOPLE 60 YEARS AND OVER BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201102",
+      "limit": 0,
+      "attributes": "K201102_003EA,K201102_003M,K201102_003MA"
+    },
+    "K200802_003E": {
+      "label": "Estimate!!Total!!10 to 29 minutes",
+      "concept": "TRAVEL TIME TO WORK",
+      "predicateType": "int",
+      "group": "K200802",
+      "limit": 0,
+      "attributes": "K200802_003EA,K200802_003M,K200802_003MA"
+    },
+    "K200802_001E": {
+      "label": "Estimate!!Total",
+      "concept": "TRAVEL TIME TO WORK",
+      "predicateType": "int",
+      "group": "K200802",
+      "limit": 0,
+      "attributes": "K200802_001EA,K200802_001M,K200802_001MA"
+    },
+    "K202510_001E": {
+      "label": "Estimate!!Median value (dollars)",
+      "concept": "MEDIAN VALUE (DOLLARS)",
+      "predicateType": "int",
+      "group": "K202510",
+      "limit": 0,
+      "attributes": "K202510_001EA,K202510_001M,K202510_001MA"
+    },
+    "K202702_001E": {
+      "label": "Estimate!!Total",
+      "concept": "PRIVATE HEALTH INSURANCE STATUS",
+      "predicateType": "int",
+      "group": "K202702",
+      "limit": 0,
+      "attributes": "K202702_001EA,K202702_001M,K202702_001MA"
+    },
+    "DIVISION": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K201401_002E": {
+      "label": "Estimate!!Total!!Enrolled in school",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_002EA,K201401_002M,K201401_002MA"
+    },
+    "K200503_001E": {
+      "label": "Estimate!!Total",
+      "concept": "PLACE OF BIRTH IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200503",
+      "limit": 0,
+      "attributes": "K200503_001EA,K200503_001M,K200503_001MA"
+    },
+    "K201102_002E": {
+      "label": "Estimate!!Total!!Households with one or more people 60 years and over",
+      "concept": "HOUSEHOLDS BY PRESENCE OF PEOPLE 60 YEARS AND OVER BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201102",
+      "limit": 0,
+      "attributes": "K201102_002EA,K201102_002M,K201102_002MA"
+    },
+    "K202403_001E": {
+      "label": "Estimate!!Total",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_001EA,K202403_001M,K202403_001MA"
+    },
+    "K202703_001E": {
+      "label": "Estimate!!Total",
+      "concept": "PUBLIC HEALTH INSURANCE STATUS",
+      "predicateType": "int",
+      "group": "K202703",
+      "limit": 0,
+      "attributes": "K202703_001EA,K202703_001M,K202703_001MA"
+    },
+    "K200802_002E": {
+      "label": "Estimate!!Total!!Less than 10 minutes",
+      "concept": "TRAVEL TIME TO WORK",
+      "predicateType": "int",
+      "group": "K200802",
+      "limit": 0,
+      "attributes": "K200802_002EA,K200802_002M,K200802_002MA"
+    },
+    "K200301_001E": {
+      "label": "Estimate!!Total",
+      "concept": "HISPANIC OR LATINO ORIGIN",
+      "predicateType": "int",
+      "group": "K200301",
+      "limit": 0,
+      "attributes": "K200301_001EA,K200301_001M,K200301_001MA"
+    },
+    "K202702_002E": {
+      "label": "Estimate!!Total!!With private health insurance",
+      "concept": "PRIVATE HEALTH INSURANCE STATUS",
+      "predicateType": "int",
+      "group": "K202702",
+      "limit": 0,
+      "attributes": "K202702_002EA,K202702_002M,K202702_002MA"
+    },
+    "K201401_001E": {
+      "label": "Estimate!!Total",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_001EA,K201401_001M,K201401_001MA"
+    },
+    "SDSEC": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K201102_001E": {
+      "label": "Estimate!!Total",
+      "concept": "HOUSEHOLDS BY PRESENCE OF PEOPLE 60 YEARS AND OVER BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201102",
+      "limit": 0,
+      "attributes": "K201102_001EA,K201102_001M,K201102_001MA"
+    },
+    "K202501_001E": {
+      "label": "Estimate!!Total",
+      "concept": "OCCUPANCY STATUS",
+      "predicateType": "int",
+      "group": "K202501",
+      "limit": 0,
+      "attributes": "K202501_001EA,K202501_001M,K202501_001MA"
+    },
+    "K202403_002E": {
+      "label": "Estimate!!Total!!Agriculture, forestry, fishing and hunting, and mining",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_002EA,K202403_002M,K202403_002MA"
+    },
+    "K200002_001E": {
+      "label": "Estimate!!Total",
+      "concept": "UNWEIGHTED SAMPLE HOUSING UNITS",
+      "predicateType": "int",
+      "group": "K200002",
+      "limit": 0,
+      "attributes": "K200002_001EA"
+    },
+    "K201903_002E": {
+      "label": "Estimate!!Total!!Less than $20,000",
+      "concept": "FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201903",
+      "limit": 0,
+      "attributes": "K201903_002EA,K201903_002M,K201903_002MA"
+    },
+    "K202201_002E": {
+      "label": "Estimate!!Total!!Household received Food Stamps/SNAP in the past 12 months",
+      "concept": "RECEIPT OF FOOD STAMPS/SNAP IN THE PAST 12 MONTHS BY PRESENCE OF CHILDREN UNDER 18 YEARS FOR HOUSEHOLDS",
+      "predicateType": "int",
+      "group": "K202201",
+      "limit": 0,
+      "attributes": "K202201_002EA,K202201_002M,K202201_002MA"
+    },
+    "K202702_003E": {
+      "label": "Estimate!!Total!!No private health insurance",
+      "concept": "PRIVATE HEALTH INSURANCE STATUS",
+      "predicateType": "int",
+      "group": "K202702",
+      "limit": 0,
+      "attributes": "K202702_003EA,K202702_003M,K202702_003MA"
+    },
+    "K201401_009E": {
+      "label": "Estimate!!Total!!Enrolled in school!!Graduate or professional school",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_009EA,K201401_009M,K201401_009MA"
+    },
+    "K200901_007E": {
+      "label": "Estimate!!Total!!Nonfamily households",
+      "concept": "HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K200901",
+      "limit": 0,
+      "attributes": "K200901_007EA,K200901_007M,K200901_007MA"
+    },
+    "K202403_003E": {
+      "label": "Estimate!!Total!!Construction",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_003EA,K202403_003M,K202403_003MA"
+    },
+    "AIANHH": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K201101_001E": {
+      "label": "Estimate!!Total",
+      "concept": "OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE",
+      "predicateType": "int",
+      "group": "K201101",
+      "limit": 0,
+      "attributes": "K201101_001EA,K201101_001M,K201101_001MA"
+    },
+    "K201903_001E": {
+      "label": "Estimate!!Total",
+      "concept": "FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201903",
+      "limit": 0,
+      "attributes": "K201903_001EA,K201903_001M,K201903_001MA"
+    },
+    "K202201_001E": {
+      "label": "Estimate!!Total",
+      "concept": "RECEIPT OF FOOD STAMPS/SNAP IN THE PAST 12 MONTHS BY PRESENCE OF CHILDREN UNDER 18 YEARS FOR HOUSEHOLDS",
+      "predicateType": "int",
+      "group": "K202201",
+      "limit": 0,
+      "attributes": "K202201_001EA,K202201_001M,K202201_001MA"
+    },
+    "K201401_007E": {
+      "label": "Estimate!!Total!!Enrolled in school!!Enrolled in grade 9 to grade 12",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_007EA,K201401_007M,K201401_007MA"
+    },
+    "REGION": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K201401_008E": {
+      "label": "Estimate!!Total!!Enrolled in school!!Enrolled in college, undergraduate years",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_008EA,K201401_008M,K201401_008MA"
+    },
+    "K200901_008E": {
+      "label": "Estimate!!Total!!Nonfamily households!!Householder living alone",
+      "concept": "HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K200901",
+      "limit": 0,
+      "attributes": "K200901_008EA,K200901_008M,K200901_008MA"
+    },
+    "K202403_004E": {
+      "label": "Estimate!!Total!!Manufacturing",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_004EA,K202403_004M,K202403_004MA"
+    },
+    "K201102_007E": {
+      "label": "Estimate!!Total!!Households with no people 60 years and over!!Nonfamily households",
+      "concept": "HOUSEHOLDS BY PRESENCE OF PEOPLE 60 YEARS AND OVER BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201102",
+      "limit": 0,
+      "attributes": "K201102_007EA,K201102_007M,K201102_007MA"
+    },
+    "K200503PR_005E": {
+      "label": "Estimate!!Total!!Foreign born",
+      "concept": "PLACE OF BIRTH IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200503PR",
+      "limit": 0,
+      "attributes": "K200503PR_005EA,K200503PR_005M,K200503PR_005MA"
+    },
+    "K201903_004E": {
+      "label": "Estimate!!Total!!$40,000 to $59,999",
+      "concept": "FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201903",
+      "limit": 0,
+      "attributes": "K201903_004EA,K201903_004M,K201903_004MA"
+    },
+    "K201401_006E": {
+      "label": "Estimate!!Total!!Enrolled in school!!Enrolled in grade 5 to grade 8",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_006EA,K201401_006M,K201401_006MA"
+    },
+    "K200901_009E": {
+      "label": "Estimate!!Total!!Nonfamily households!!Householder not living alone",
+      "concept": "HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K200901",
+      "limit": 0,
+      "attributes": "K200901_009EA,K200901_009M,K200901_009MA"
+    },
+    "K202403_005E": {
+      "label": "Estimate!!Total!!Wholesale trade",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_005EA,K202403_005M,K202403_005MA"
+    },
+    "K201102_006E": {
+      "label": "Estimate!!Total!!Households with no people 60 years and over!!Family households",
+      "concept": "HOUSEHOLDS BY PRESENCE OF PEOPLE 60 YEARS AND OVER BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201102",
+      "limit": 0,
+      "attributes": "K201102_006EA,K201102_006M,K201102_006MA"
+    },
+    "K201903_003E": {
+      "label": "Estimate!!Total!!$20,000 to $39,999",
+      "concept": "FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201903",
+      "limit": 0,
+      "attributes": "K201903_003EA,K201903_003M,K201903_003MA"
+    },
+    "K202403_007E": {
+      "label": "Estimate!!Total!!Transportation and warehousing, and utilities",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_007EA,K202403_007M,K202403_007MA"
+    },
+    "K201401_005E": {
+      "label": "Estimate!!Total!!Enrolled in school!!Enrolled in grade 1 to grade 4",
+      "concept": "SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201401",
+      "limit": 0,
+      "attributes": "K201401_005EA,K201401_005M,K201401_005MA"
+    },
+    "K201102_005E": {
+      "label": "Estimate!!Total!!Households with no people 60 years and over",
+      "concept": "HOUSEHOLDS BY PRESENCE OF PEOPLE 60 YEARS AND OVER BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201102",
+      "limit": 0,
+      "attributes": "K201102_005EA,K201102_005M,K201102_005MA"
+    },
+    "K202403_006E": {
+      "label": "Estimate!!Total!!Retail trade",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_006EA,K202403_006M,K202403_006MA"
+    },
+    "K201903_006E": {
+      "label": "Estimate!!Total!!$100,000 to $149,999",
+      "concept": "FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201903",
+      "limit": 0,
+      "attributes": "K201903_006EA,K201903_006M,K201903_006MA"
+    },
+    "K200503PR_003E": {
+      "label": "Estimate!!Total!!Born in the United States",
+      "concept": "PLACE OF BIRTH IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200503PR",
+      "limit": 0,
+      "attributes": "K200503PR_003EA,K200503PR_003M,K200503PR_003MA"
+    },
+    "K202403_008E": {
+      "label": "Estimate!!Total!!Information",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_008EA,K202403_008M,K202403_008MA"
+    },
+    "K202302_011E": {
+      "label": "Estimate!!Total!!Female!!Did not work in the past 12 months",
+      "concept": "SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS",
+      "predicateType": "int",
+      "group": "K202302",
+      "limit": 0,
+      "attributes": "K202302_011EA,K202302_011M,K202302_011MA"
+    },
+    "K200901_003E": {
+      "label": "Estimate!!Total!!Family households!!Married-couple family",
+      "concept": "HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K200901",
+      "limit": 0,
+      "attributes": "K200901_003EA,K200901_003M,K200901_003MA"
+    },
+    "K201702_006E": {
+      "label": "Estimate!!Total!!2.00 and over",
+      "concept": "RATIO OF INCOME TO POVERTY LEVEL IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K201702",
+      "limit": 0,
+      "attributes": "K201702_006EA,K201702_006M,K201702_006MA"
+    },
+    "K201903_005E": {
+      "label": "Estimate!!Total!!$60,000 to $99,999",
+      "concept": "FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201903",
+      "limit": 0,
+      "attributes": "K201903_005EA,K201903_005M,K201903_005MA"
+    },
+    "K202403_009E": {
+      "label": "Estimate!!Total!!Finance and insurance, and real estate and rental and leasing",
+      "concept": "INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202403",
+      "limit": 0,
+      "attributes": "K202403_009EA,K202403_009M,K202403_009MA"
+    },
+    "K200503PR_004E": {
+      "label": "Estimate!!Total!!Native, born elsewhere",
+      "concept": "PLACE OF BIRTH IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200503PR",
+      "limit": 0,
+      "attributes": "K200503PR_004EA,K200503PR_004M,K200503PR_004MA"
+    },
+    "K200901_004E": {
+      "label": "Estimate!!Total!!Family households!!Other family",
+      "concept": "HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K200901",
+      "limit": 0,
+      "attributes": "K200901_004EA,K200901_004M,K200901_004MA"
+    },
+    "K201903_008E": {
+      "label": "Estimate!!Total!!$200,000 or more",
+      "concept": "FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201903",
+      "limit": 0,
+      "attributes": "K201903_008EA,K201903_008M,K201903_008MA"
+    },
+    "K201702_003E": {
+      "label": "Estimate!!Total!!.50 to .99",
+      "concept": "RATIO OF INCOME TO POVERTY LEVEL IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K201702",
+      "limit": 0,
+      "attributes": "K201702_003EA,K201702_003M,K201702_003MA"
+    },
+    "CSA": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K200901_005E": {
+      "label": "Estimate!!Total!!Family households!!Other family!!Male householder, no wife present",
+      "concept": "HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K200901",
+      "limit": 0,
+      "attributes": "K200901_005EA,K200901_005M,K200901_005MA"
+    },
+    "K201702_004E": {
+      "label": "Estimate!!Total!!1.00 to 1.49",
+      "concept": "RATIO OF INCOME TO POVERTY LEVEL IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K201702",
+      "limit": 0,
+      "attributes": "K201702_004EA,K201702_004M,K201702_004MA"
+    },
+    "K201903_007E": {
+      "label": "Estimate!!Total!!$150,000 to $199,999",
+      "concept": "FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201903",
+      "limit": 0,
+      "attributes": "K201903_007EA,K201903_007M,K201903_007MA"
+    },
+    "K201802_010E": {
+      "label": "Estimate!!Total!!Did not work!!No disability",
+      "concept": "WORK EXPERIENCE BY DISABILITY STATUS",
+      "predicateType": "int",
+      "group": "K201802",
+      "limit": 0,
+      "attributes": "K201802_010EA,K201802_010M,K201802_010MA"
+    },
+    "K200503PR_002E": {
+      "label": "Estimate!!Total!!Born in Puerto Rico",
+      "concept": "PLACE OF BIRTH IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200503PR",
+      "limit": 0,
+      "attributes": "K200503PR_002EA,K200503PR_002M,K200503PR_002MA"
+    },
+    "GEO_ID": {
+      "label": "Geography",
+      "concept": "UNWEIGHTED SAMPLE COUNT OF THE POPULATION;UNWEIGHTED SAMPLE HOUSING UNITS;POPULATION BY SEX;POPULATION UNDER 18 YEARS BY AGE;MEDIAN AGE BY SEX;POPULATION BY AGE;RACE;HISPANIC OR LATINO ORIGIN;CITIZENSHIP STATUS IN THE UNITED STATES;CITIZENSHIP STATUS IN PUERTO RICO;PLACE OF BIRTH IN THE UNITED STATES;PLACE OF BIRTH IN PUERTO RICO;GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN THE UNITED STATES;GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN PUERTO RICO;MEANS OF TRANSPORTATION TO WORK;TRAVEL TIME TO WORK;HOUSEHOLD TYPE;MARITAL STATUS FOR THE POPULATION 15 YEARS AND OVER;OWN CHILDREN UNDER 18 YEARS BY FAMILY TYPE;HOUSEHOLDS BY PRESENCE OF PEOPLE 60 YEARS AND OVER BY HOUSEHOLD TYPE;SCHOOL ENROLLMENT BY LEVEL OF SCHOOL FOR THE POPULATION 3 YEARS AND OVER;EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER;HOUSEHOLD LANGUAGE;POVERTY STATUS IN THE PAST 12 MONTHS BY AGE;RATIO OF INCOME TO POVERTY LEVEL IN THE PAST 12 MONTHS;POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE;DISABILITY STATUS BY AGE;WORK EXPERIENCE BY DISABILITY STATUS;TYPES OF DISABILITIES;HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS);MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS);FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS);MEDIAN FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS);MEDIAN NONFAMILY HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS);MEDIAN EARNINGS IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS) BY SEX BY WORK EXPERIENCE IN THE PAST 12 MONTHS FOR THE POPULATION 16 YEARS AND OVER WITH EARNINGS IN THE PAST 12 MONTHS;VETERAN STATUS FOR THE CIVILIAN POPULATION 18 YEARS AND OVER BY AGE;SERVICE-CONNECTED DISABILITY-RATING STATUS FOR CIVILIAN VETERANS 18 YEARS AND OVER;RECEIPT OF FOOD STAMPS/SNAP IN THE PAST 12 MONTHS BY PRESENCE OF CHILDREN UNDER 18 YEARS FOR HOUSEHOLDS;EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER;SEX BY FULL-TIME WORK STATUS IN THE PAST 12 MONTHS FOR THE POPULATION 16 TO 64 YEARS;OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER;CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER;INDUSTRY FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER;OCCUPANCY STATUS;HOUSING TENURE;TOTAL POPULATION IN OCCUPIED HOUSING UNITS BY TENURE;UNITS IN STRUCTURE;YEAR STRUCTURE BUILT;YEAR HOUSEHOLDER MOVED INTO UNIT;GROSS RENT;MORTGAGE STATUS;HOUSING VALUE;MEDIAN VALUE (DOLLARS);MEDIAN GROSS RENT (DOLLARS);GROUP QUARTERS POPULATION;AGE BY HEALTH INSURANCE COVERAGE STATUS;PRIVATE HEALTH INSURANCE STATUS;PUBLIC HEALTH INSURANCE STATUS;PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD",
+      "predicateType": "string",
+      "group": "K202002,K200101,K202201,K200102,K202402,K200103,K200301,K202401,K200104,K200501,K202403,K202601,K200503,K200701,K202801,K200901,K201001,K201401,K201601,K201801,K201803,K201802,K202101,K200001,K202301,K200002,K202102,K200201,K202501,K200501PR,K202302,K202503,K202701,K200503PR,K202502,K202505,K202703,K202504,K202702,K200801,K202507,K200802,K202506,K202509,K202508,K201102,K202510,K200701PR,K201101,K202511,K201501,K201702,K201701,K201902,K201703,K201901,K201904,K201903,K201905",
+      "limit": 0,
+      "attributes": "NAME"
+    },
+    "K200901_006E": {
+      "label": "Estimate!!Total!!Family households!!Other family!!Female householder, no husband present",
+      "concept": "HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K200901",
+      "limit": 0,
+      "attributes": "K200901_006EA,K200901_006M,K200901_006MA"
+    },
+    "K200503PR_001E": {
+      "label": "Estimate!!Total",
+      "concept": "PLACE OF BIRTH IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200503PR",
+      "limit": 0,
+      "attributes": "K200503PR_001EA,K200503PR_001M,K200503PR_001MA"
+    },
+    "K201702_005E": {
+      "label": "Estimate!!Total!!1.50 to 1.99",
+      "concept": "RATIO OF INCOME TO POVERTY LEVEL IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K201702",
+      "limit": 0,
+      "attributes": "K201702_005EA,K201702_005M,K201702_005MA"
+    },
+    "K202402_003E": {
+      "label": "Estimate!!Total!!Self-employed in own incorporated business workers",
+      "concept": "CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202402",
+      "limit": 0,
+      "attributes": "K202402_003EA,K202402_003M,K202402_003MA"
+    },
+    "K201803_002E": {
+      "label": "Estimate!!Total!!With a disability",
+      "concept": "TYPES OF DISABILITIES",
+      "predicateType": "int",
+      "group": "K201803",
+      "limit": 0,
+      "attributes": "K201803_002EA,K201803_002M,K201803_002MA"
+    },
+    "K201702_001E": {
+      "label": "Estimate!!Total",
+      "concept": "RATIO OF INCOME TO POVERTY LEVEL IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K201702",
+      "limit": 0,
+      "attributes": "K201702_001EA,K201702_001M,K201702_001MA"
+    },
+    "K202301_002E": {
+      "label": "Estimate!!Total!!In labor force",
+      "concept": "EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202301",
+      "limit": 0,
+      "attributes": "K202301_002EA,K202301_002M,K202301_002MA"
+    },
+    "K202507_007E": {
+      "label": "Estimate!!Total!!No cash rent",
+      "concept": "GROSS RENT",
+      "predicateType": "int",
+      "group": "K202507",
+      "limit": 0,
+      "attributes": "K202507_007EA,K202507_007M,K202507_007MA"
+    },
+    "K201803_001E": {
+      "label": "Estimate!!Total",
+      "concept": "TYPES OF DISABILITIES",
+      "predicateType": "int",
+      "group": "K201803",
+      "limit": 0,
+      "attributes": "K201803_001EA,K201803_001M,K201803_001MA"
+    },
+    "K202402_002E": {
+      "label": "Estimate!!Total!!Employee of private company workers",
+      "concept": "CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202402",
+      "limit": 0,
+      "attributes": "K202402_002EA,K202402_002M,K202402_002MA"
+    },
+    "K201803_003E": {
+      "label": "Estimate!!Total!!With a disability!!With a hearing difficulty",
+      "concept": "TYPES OF DISABILITIES",
+      "predicateType": "int",
+      "group": "K201803",
+      "limit": 0,
+      "attributes": "K201803_003EA,K201803_003M,K201803_003MA"
+    },
+    "K201702_002E": {
+      "label": "Estimate!!Total!!Under .50",
+      "concept": "RATIO OF INCOME TO POVERTY LEVEL IN THE PAST 12 MONTHS",
+      "predicateType": "int",
+      "group": "K201702",
+      "limit": 0,
+      "attributes": "K201702_002EA,K201702_002M,K201702_002MA"
+    },
+    "K202301_003E": {
+      "label": "Estimate!!Total!!In labor force!!Civilian labor force",
+      "concept": "EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202301",
+      "limit": 0,
+      "attributes": "K202301_003EA,K202301_003M,K202301_003MA"
+    },
+    "K200801_006E": {
+      "label": "Estimate!!Total!!Worked at home",
+      "concept": "MEANS OF TRANSPORTATION TO WORK",
+      "predicateType": "int",
+      "group": "K200801",
+      "limit": 0,
+      "attributes": "K200801_006EA,K200801_006M,K200801_006MA"
+    },
+    "K202402_001E": {
+      "label": "Estimate!!Total",
+      "concept": "CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202402",
+      "limit": 0,
+      "attributes": "K202402_001EA,K202402_001M,K202402_001MA"
+    },
+    "K201901_007E": {
+      "label": "Estimate!!Total!!$150,000 to $199,999",
+      "concept": "HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201901",
+      "limit": 0,
+      "attributes": "K201901_007EA,K201901_007M,K201901_007MA"
+    },
+    "K201501_006E": {
+      "label": "Estimate!!Total!!Associate's degree",
+      "concept": "EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201501",
+      "limit": 0,
+      "attributes": "K201501_006EA,K201501_006M,K201501_006MA"
+    },
+    "K201904_001E": {
+      "label": "Estimate!!Median family income in the past 12 months (in 2018 inflation-adjusted dollars)",
+      "concept": "MEDIAN FAMILY INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201904",
+      "limit": 0,
+      "attributes": "K201904_001EA,K201904_001M,K201904_001MA"
+    },
+    "K202507_005E": {
+      "label": "Estimate!!Total!!With cash rent!!$1,000 to $1,999",
+      "concept": "GROSS RENT",
+      "predicateType": "int",
+      "group": "K202507",
+      "limit": 0,
+      "attributes": "K202507_005EA,K202507_005M,K202507_005MA"
+    },
+    "K201501_007E": {
+      "label": "Estimate!!Total!!Bachelor's degree",
+      "concept": "EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201501",
+      "limit": 0,
+      "attributes": "K201501_007EA,K201501_007M,K201501_007MA"
+    },
+    "K202301_001E": {
+      "label": "Estimate!!Total",
+      "concept": "EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202301",
+      "limit": 0,
+      "attributes": "K202301_001EA,K202301_001M,K202301_001MA"
+    },
+    "K200101_001E": {
+      "label": "Estimate!!Total",
+      "concept": "POPULATION BY SEX",
+      "predicateType": "int",
+      "group": "K200101",
+      "limit": 0,
+      "attributes": "K200101_001EA,K200101_001M,K200101_001MA"
+    },
+    "K201901_008E": {
+      "label": "Estimate!!Total!!$200,000 or more",
+      "concept": "HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201901",
+      "limit": 0,
+      "attributes": "K201901_008EA,K201901_008M,K201901_008MA"
+    },
+    "K201501_008E": {
+      "label": "Estimate!!Total!!Graduate or professional degree",
+      "concept": "EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K201501",
+      "limit": 0,
+      "attributes": "K201501_008EA,K201501_008M,K201501_008MA"
+    },
+    "K202507_006E": {
+      "label": "Estimate!!Total!!With cash rent!!$2,000 or more",
+      "concept": "GROSS RENT",
+      "predicateType": "int",
+      "group": "K202507",
+      "limit": 0,
+      "attributes": "K202507_006EA,K202507_006M,K202507_006MA"
+    },
+    "PUMA": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K201803_006E": {
+      "label": "Estimate!!Total!!With a disability!!With an ambulatory difficulty",
+      "concept": "TYPES OF DISABILITIES",
+      "predicateType": "int",
+      "group": "K201803",
+      "limit": 0,
+      "attributes": "K201803_006EA,K201803_006M,K201803_006MA"
+    },
+    "K202402_007E": {
+      "label": "Estimate!!Total!!Federal government workers",
+      "concept": "CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202402",
+      "limit": 0,
+      "attributes": "K202402_007EA,K202402_007M,K202402_007MA"
+    },
+    "K200801_002E": {
+      "label": "Estimate!!Total!!Car, truck, or van - drove alone",
+      "concept": "MEANS OF TRANSPORTATION TO WORK",
+      "predicateType": "int",
+      "group": "K200801",
+      "limit": 0,
+      "attributes": "K200801_002EA,K200801_002M,K200801_002MA"
+    },
+    "K201901_005E": {
+      "label": "Estimate!!Total!!$60,000 to $99,999",
+      "concept": "HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201901",
+      "limit": 0,
+      "attributes": "K201901_005EA,K201901_005M,K201901_005MA"
+    },
+    "K202507_003E": {
+      "label": "Estimate!!Total!!With cash rent!!Less than $500",
+      "concept": "GROSS RENT",
+      "predicateType": "int",
+      "group": "K202507",
+      "limit": 0,
+      "attributes": "K202507_003EA,K202507_003M,K202507_003MA"
+    },
+    "K200801_003E": {
+      "label": "Estimate!!Total!!Car, truck, or van - carpooled",
+      "concept": "MEANS OF TRANSPORTATION TO WORK",
+      "predicateType": "int",
+      "group": "K200801",
+      "limit": 0,
+      "attributes": "K200801_003EA,K200801_003M,K200801_003MA"
+    },
+    "K202402_008E": {
+      "label": "Estimate!!Total!!Self-employed in own not incorporated business workers",
+      "concept": "CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202402",
+      "limit": 0,
+      "attributes": "K202402_008EA,K202402_008M,K202402_008MA"
+    },
+    "K201803_007E": {
+      "label": "Estimate!!Total!!With a disability!!With a self-care difficulty",
+      "concept": "TYPES OF DISABILITIES",
+      "predicateType": "int",
+      "group": "K201803",
+      "limit": 0,
+      "attributes": "K201803_007EA,K201803_007M,K201803_007MA"
+    },
+    "K202402_006E": {
+      "label": "Estimate!!Total!!State government workers",
+      "concept": "CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202402",
+      "limit": 0,
+      "attributes": "K202402_006EA,K202402_006M,K202402_006MA"
+    },
+    "K200801_001E": {
+      "label": "Estimate!!Total",
+      "concept": "MEANS OF TRANSPORTATION TO WORK",
+      "predicateType": "int",
+      "group": "K200801",
+      "limit": 0,
+      "attributes": "K200801_001EA,K200801_001M,K200801_001MA"
+    },
+    "K201901_006E": {
+      "label": "Estimate!!Total!!$100,000 to $149,999",
+      "concept": "HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201901",
+      "limit": 0,
+      "attributes": "K201901_006EA,K201901_006M,K201901_006MA"
+    },
+    "K202507_004E": {
+      "label": "Estimate!!Total!!With cash rent!!$500 to $999",
+      "concept": "GROSS RENT",
+      "predicateType": "int",
+      "group": "K202507",
+      "limit": 0,
+      "attributes": "K202507_004EA,K202507_004M,K202507_004MA"
+    },
+    "COUSUB": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202402_005E": {
+      "label": "Estimate!!Total!!Local government workers",
+      "concept": "CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202402",
+      "limit": 0,
+      "attributes": "K202402_005EA,K202402_005M,K202402_005MA"
+    },
+    "K201803_004E": {
+      "label": "Estimate!!Total!!With a disability!!With a vision difficulty",
+      "concept": "TYPES OF DISABILITIES",
+      "predicateType": "int",
+      "group": "K201803",
+      "limit": 0,
+      "attributes": "K201803_004EA,K201803_004M,K201803_004MA"
+    },
+    "K201901_003E": {
+      "label": "Estimate!!Total!!$20,000 to $39,999",
+      "concept": "HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201901",
+      "limit": 0,
+      "attributes": "K201901_003EA,K201901_003M,K201901_003MA"
+    },
+    "K202511_001E": {
+      "label": "Estimate!!Median gross rent",
+      "concept": "MEDIAN GROSS RENT (DOLLARS)",
+      "predicateType": "int",
+      "group": "K202511",
+      "limit": 0,
+      "attributes": "K202511_001EA,K202511_001M,K202511_001MA"
+    },
+    "K200801_005E": {
+      "label": "Estimate!!Total!!Taxicab, motorcycle, bicycle, walked, or other means",
+      "concept": "MEANS OF TRANSPORTATION TO WORK",
+      "predicateType": "int",
+      "group": "K200801",
+      "limit": 0,
+      "attributes": "K200801_005EA,K200801_005M,K200801_005MA"
+    },
+    "K201901_002E": {
+      "label": "Estimate!!Total!!Less than $20,000",
+      "concept": "HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201901",
+      "limit": 0,
+      "attributes": "K201901_002EA,K201901_002M,K201901_002MA"
+    },
+    "K202402_004E": {
+      "label": "Estimate!!Total!!Private not-for-profit wage and salary workers",
+      "concept": "CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202402",
+      "limit": 0,
+      "attributes": "K202402_004EA,K202402_004M,K202402_004MA"
+    },
+    "K201803_005E": {
+      "label": "Estimate!!Total!!With a disability!!With a cognitive difficulty",
+      "concept": "TYPES OF DISABILITIES",
+      "predicateType": "int",
+      "group": "K201803",
+      "limit": 0,
+      "attributes": "K201803_005EA,K201803_005M,K201803_005MA"
+    },
+    "K202507_001E": {
+      "label": "Estimate!!Total",
+      "concept": "GROSS RENT",
+      "predicateType": "int",
+      "group": "K202507",
+      "limit": 0,
+      "attributes": "K202507_001EA,K202507_001M,K202507_001MA"
+    },
+    "K201901_004E": {
+      "label": "Estimate!!Total!!$40,000 to $59,999",
+      "concept": "HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201901",
+      "limit": 0,
+      "attributes": "K201901_004EA,K201901_004M,K201901_004MA"
+    },
+    "K202507_002E": {
+      "label": "Estimate!!Total!!With cash rent",
+      "concept": "GROSS RENT",
+      "predicateType": "int",
+      "group": "K202507",
+      "limit": 0,
+      "attributes": "K202507_002EA,K202507_002M,K202507_002MA"
+    },
+    "CBSA": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K200801_004E": {
+      "label": "Estimate!!Total!!Public transportation (excluding taxicab)",
+      "concept": "MEANS OF TRANSPORTATION TO WORK",
+      "predicateType": "int",
+      "group": "K200801",
+      "limit": 0,
+      "attributes": "K200801_004EA,K200801_004M,K200801_004MA"
+    },
+    "K202102_003E": {
+      "label": "Estimate!!Total!!Has a service-connected disability rating",
+      "concept": "SERVICE-CONNECTED DISABILITY-RATING STATUS FOR CIVILIAN VETERANS 18 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202102",
+      "limit": 0,
+      "attributes": "K202102_003EA,K202102_003M,K202102_003MA"
+    },
+    "K202504_004E": {
+      "label": "Estimate!!Total!!3 or 4",
+      "concept": "UNITS IN STRUCTURE",
+      "predicateType": "int",
+      "group": "K202504",
+      "limit": 0,
+      "attributes": "K202504_004EA,K202504_004M,K202504_004MA"
+    },
+    "K202504_005E": {
+      "label": "Estimate!!Total!!5 to 9",
+      "concept": "UNITS IN STRUCTURE",
+      "predicateType": "int",
+      "group": "K202504",
+      "limit": 0,
+      "attributes": "K202504_005EA,K202504_005M,K202504_005MA"
+    },
+    "K202801_002E": {
+      "label": "Estimate!!Total!!Has a computer",
+      "concept": "PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD",
+      "predicateType": "int",
+      "group": "K202801",
+      "limit": 0,
+      "attributes": "K202801_002EA,K202801_002M,K202801_002MA"
+    },
+    "K201701_001E": {
+      "label": "Estimate!!Total",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE",
+      "predicateType": "int",
+      "group": "K201701",
+      "limit": 0,
+      "attributes": "K201701_001EA,K201701_001M,K201701_001MA"
+    },
+    "K202504_003E": {
+      "label": "Estimate!!Total!!2",
+      "concept": "UNITS IN STRUCTURE",
+      "predicateType": "int",
+      "group": "K202504",
+      "limit": 0,
+      "attributes": "K202504_003EA,K202504_003M,K202504_003MA"
+    },
+    "K201901_001E": {
+      "label": "Estimate!!Total",
+      "concept": "HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2018 INFLATION-ADJUSTED DOLLARS)",
+      "predicateType": "int",
+      "group": "K201901",
+      "limit": 0,
+      "attributes": "K201901_001EA,K201901_001M,K201901_001MA"
+    },
+    "K202801_001E": {
+      "label": "Estimate!!Total",
+      "concept": "PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD",
+      "predicateType": "int",
+      "group": "K202801",
+      "limit": 0,
+      "attributes": "K202801_001EA,K202801_001M,K202801_001MA"
+    },
+    "NECTADIV": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K202102_001E": {
+      "label": "Estimate!!Total",
+      "concept": "SERVICE-CONNECTED DISABILITY-RATING STATUS FOR CIVILIAN VETERANS 18 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202102",
+      "limit": 0,
+      "attributes": "K202102_001EA,K202102_001M,K202102_001MA"
+    },
+    "K202801_005E": {
+      "label": "Estimate!!Total!!Has a computer!!Without an Internet subscription",
+      "concept": "PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD",
+      "predicateType": "int",
+      "group": "K202801",
+      "limit": 0,
+      "attributes": "K202801_005EA,K202801_005M,K202801_005MA"
+    },
+    "K201701_002E": {
+      "label": "Estimate!!Total!!Income in the past 12 months below poverty level",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE",
+      "predicateType": "int",
+      "group": "K201701",
+      "limit": 0,
+      "attributes": "K201701_002EA,K201701_002M,K201701_002MA"
+    },
+    "K200503_006E": {
+      "label": "Estimate!!Total!!Foreign born",
+      "concept": "PLACE OF BIRTH IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200503",
+      "limit": 0,
+      "attributes": "K200503_006EA,K200503_006M,K200503_006MA"
+    },
+    "K202504_007E": {
+      "label": "Estimate!!Total!!Mobile home, boat, RV, van, etc.",
+      "concept": "UNITS IN STRUCTURE",
+      "predicateType": "int",
+      "group": "K202504",
+      "limit": 0,
+      "attributes": "K202504_007EA,K202504_007M,K202504_007MA"
+    },
+    "K202801_004E": {
+      "label": "Estimate!!Total!!Has a computer!!With a broadband Internet subscription",
+      "concept": "PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD",
+      "predicateType": "int",
+      "group": "K202801",
+      "limit": 0,
+      "attributes": "K202801_004EA,K202801_004M,K202801_004MA"
+    },
+    "K201703_011E": {
+      "label": "Estimate!!Total!!Income in the past 12 months at or above poverty level!!Other families!!Female householder, no husband present",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_011EA,K201703_011M,K201703_011MA"
+    },
+    "K202102_002E": {
+      "label": "Estimate!!Total!!Has no service-connected disability rating",
+      "concept": "SERVICE-CONNECTED DISABILITY-RATING STATUS FOR CIVILIAN VETERANS 18 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202102",
+      "limit": 0,
+      "attributes": "K202102_002EA,K202102_002M,K202102_002MA"
+    },
+    "K200503_005E": {
+      "label": "Estimate!!Total!!Native!!Native, born outside the United States",
+      "concept": "PLACE OF BIRTH IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "K200503",
+      "limit": 0,
+      "attributes": "K200503_005EA,K200503_005M,K200503_005MA"
+    },
+    "K201701_003E": {
+      "label": "Estimate!!Total!!Income in the past 12 months below poverty level!!Under 18 years",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE",
+      "predicateType": "int",
+      "group": "K201701",
+      "limit": 0,
+      "attributes": "K201701_003EA,K201701_003M,K201701_003MA"
+    },
+    "K202504_006E": {
+      "label": "Estimate!!Total!!10 or more",
+      "concept": "UNITS IN STRUCTURE",
+      "predicateType": "int",
+      "group": "K202504",
+      "limit": 0,
+      "attributes": "K202504_006EA,K202504_006M,K202504_006MA"
+    },
+    "K202801_003E": {
+      "label": "Estimate!!Total!!Has a computer!!With dial-up Internet subscription alone",
+      "concept": "PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD",
+      "predicateType": "int",
+      "group": "K202801",
+      "limit": 0,
+      "attributes": "K202801_003EA,K202801_003M,K202801_003MA"
+    },
+    "K201703_010E": {
+      "label": "Estimate!!Total!!Income in the past 12 months at or above poverty level!!Other families!!Male householder, no wife present",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS OF FAMILIES BY HOUSEHOLD TYPE",
+      "predicateType": "int",
+      "group": "K201703",
+      "limit": 0,
+      "attributes": "K201703_010EA,K201703_010M,K201703_010MA"
+    },
+    "K202402_009E": {
+      "label": "Estimate!!Total!!Unpaid family workers",
+      "concept": "CLASS OF WORKER FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202402",
+      "limit": 0,
+      "attributes": "K202402_009EA,K202402_009M,K202402_009MA"
+    },
+    "K200101_002E": {
+      "label": "Estimate!!Total!!Male",
+      "concept": "POPULATION BY SEX",
+      "predicateType": "int",
+      "group": "K200101",
+      "limit": 0,
+      "attributes": "K200101_002EA,K200101_002M,K200101_002MA"
+    },
+    "K202301_006E": {
+      "label": "Estimate!!Total!!In labor force!!Armed Forces",
+      "concept": "EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202301",
+      "limit": 0,
+      "attributes": "K202301_006EA,K202301_006M,K202301_006MA"
+    },
+    "K201701_004E": {
+      "label": "Estimate!!Total!!Income in the past 12 months below poverty level!!18 to 64 years",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE",
+      "predicateType": "int",
+      "group": "K201701",
+      "limit": 0,
+      "attributes": "K201701_004EA,K201701_004M,K201701_004MA"
+    },
+    "K201701_005E": {
+      "label": "Estimate!!Total!!Income in the past 12 months below poverty level!!65 years and over",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE",
+      "predicateType": "int",
+      "group": "K201701",
+      "limit": 0,
+      "attributes": "K201701_005EA,K201701_005M,K201701_005MA"
+    },
+    "K200701PR_006E": {
+      "label": "Estimate!!Total!!Moved from elsewhere",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200701PR",
+      "limit": 0,
+      "attributes": "K200701PR_006EA,K200701PR_006M,K200701PR_006MA"
+    },
+    "K200101_003E": {
+      "label": "Estimate!!Total!!Female",
+      "concept": "POPULATION BY SEX",
+      "predicateType": "int",
+      "group": "K200101",
+      "limit": 0,
+      "attributes": "K200101_003EA,K200101_003M,K200101_003MA"
+    },
+    "K202801_006E": {
+      "label": "Estimate!!Total!!No computer",
+      "concept": "PRESENCE OF A COMPUTER AND TYPE OF INTERNET SUBSCRIPTION IN HOUSEHOLD",
+      "predicateType": "int",
+      "group": "K202801",
+      "limit": 0,
+      "attributes": "K202801_006EA,K202801_006M,K202801_006MA"
+    },
+    "K202301_007E": {
+      "label": "Estimate!!Total!!Not in labor force",
+      "concept": "EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202301",
+      "limit": 0,
+      "attributes": "K202301_007EA,K202301_007M,K202301_007MA"
+    },
+    "K201701_006E": {
+      "label": "Estimate!!Total!!Income in the past 12 months at or above poverty level",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE",
+      "predicateType": "int",
+      "group": "K201701",
+      "limit": 0,
+      "attributes": "K201701_006EA,K201701_006M,K201701_006MA"
+    },
+    "K200701PR_005E": {
+      "label": "Estimate!!Total!!Moved from the United States",
+      "concept": "GEOGRAPHICAL MOBILITY IN THE PAST YEAR IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "K200701PR",
+      "limit": 0,
+      "attributes": "K200701PR_005EA,K200701PR_005M,K200701PR_005MA"
+    },
+    "K202301_004E": {
+      "label": "Estimate!!Total!!In labor force!!Civilian labor force!!Employed",
+      "concept": "EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202301",
+      "limit": 0,
+      "attributes": "K202301_004EA,K202301_004M,K202301_004MA"
+    },
+    "K202504_002E": {
+      "label": "Estimate!!Total!!1, detached and attached",
+      "concept": "UNITS IN STRUCTURE",
+      "predicateType": "int",
+      "group": "K202504",
+      "limit": 0,
+      "attributes": "K202504_002EA,K202504_002M,K202504_002MA"
+    },
+    "GEOCOMP": {
+      "label": "GEO_ID Component",
+      "required": "default displayed",
+      "predicateType": "string",
+      "group": "N/A",
+      "limit": 0
+    },
+    "K201701_007E": {
+      "label": "Estimate!!Total!!Income in the past 12 months at or above poverty level!!Under 18 years",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE",
+      "predicateType": "int",
+      "group": "K201701",
+      "limit": 0,
+      "attributes": "K201701_007EA,K201701_007M,K201701_007MA"
+    },
+    "K202301_005E": {
+      "label": "Estimate!!Total!!In labor force!!Civilian labor force!!Unemployed",
+      "concept": "EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER",
+      "predicateType": "int",
+      "group": "K202301",
+      "limit": 0,
+      "attributes": "K202301_005EA,K202301_005M,K202301_005MA"
+    },
+    "K202504_001E": {
+      "label": "Estimate!!Total",
+      "concept": "UNITS IN STRUCTURE",
+      "predicateType": "int",
+      "group": "K202504",
+      "limit": 0,
+      "attributes": "K202504_001EA,K202504_001M,K202504_001MA"
+    },
+    "K201701_008E": {
+      "label": "Estimate!!Total!!Income in the past 12 months at or above poverty level!!18 to 64 years",
+      "concept": "POVERTY STATUS IN THE PAST 12 MONTHS BY AGE",
+      "predicateType": "int",
+      "group": "K201701",
+      "limit": 0,
+      "attributes": "K201701_008EA,K201701_008M,K201701_008MA"
+    }
+  }
+}

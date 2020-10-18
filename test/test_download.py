@@ -158,6 +158,10 @@ class TestDownload(unittest.TestCase):
 			assert_frame_equal(censusdata.download('acs5', year, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
 				pd.DataFrame({'B19013_001E': medhhinc[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
+	def test_download_acs1_2019(self):
+		assert_frame_equal(censusdata.download('acs1', 2019, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
+			pd.DataFrame({'B19013_001E': 69187}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
+
 	def test_download_acs1_2018(self):
 		assert_frame_equal(censusdata.download('acs1', 2018, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
 			pd.DataFrame({'B19013_001E': 65030}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
@@ -181,8 +185,8 @@ class TestDownload(unittest.TestCase):
 				pd.DataFrame({'B19013_001E': medhhinc[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
 	def test_download_acsse(self):
-		nocomputer = {2014: 731135, 2015: 658047, 2016: 522736, 2017: 464053}
-		for year in range(2014, 2017+1):
+		nocomputer = {2014: 731135, 2015: 658047, 2016: 522736, 2017: 464053, 2018: 414688, 2019: 378926}
+		for year in range(2014, 2019+1):
 			assert_frame_equal(censusdata.download('acsse', year, censusdata.censusgeo([('state', '17')]), ['K202801_006E']),
 				pd.DataFrame({'K202801_006E': nocomputer[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
