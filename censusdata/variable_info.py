@@ -36,6 +36,8 @@ def censusvar(src, year, var):
 			tabletype = 'profile/'
 		elif v[:2] == 'CP':
 			tabletype = 'cprofile/'
+		elif v[0] == 'C':
+			tabletype = ''
 		else:
 			print(u'Unknown table type for variable {0}!'.format(v))
 			raise ValueError
@@ -93,6 +95,8 @@ def censustable(src, year, table):
 		tabletype = 'profile_'
 	elif table[:2] == 'CP':
 		tabletype = 'cprofile_'
+	elif table[0] == 'C':
+		tabletype = 'detail_'
 	else:
 		print(u'Unknown table type for table {0}!'.format(table))
 		raise ValueError

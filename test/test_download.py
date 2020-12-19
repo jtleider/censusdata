@@ -106,6 +106,8 @@ class TestDownload(unittest.TestCase):
 			pd.DataFrame({'B01001_001E': 9536428, 'B19013_001E': 68715}, [censusdata.censusgeo([('metropolitan statistical area/micropolitan statistical area', '16980')], 'Chicago-Naperville-Elgin, IL-IN-WI Metro Area')]))
 		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('state', '06')]), ['DP03_0021PE'], tabletype='profile'),
 			pd.DataFrame({'DP03_0021PE': 5.1}, [censusdata.censusgeo([('state', '06')], 'California')]))
+		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('state', '06')]), ['C24010_001E'], tabletype='detail'),
+			pd.DataFrame({'C24010_001E': 18309012}, [censusdata.censusgeo([('state', '06')], 'California')]))
 
 	def test_download_acs5_2017(self):
 		assert_frame_equal(censusdata.download('acs5', 2017, censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),

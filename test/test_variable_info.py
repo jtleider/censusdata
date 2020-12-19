@@ -34,6 +34,9 @@ class TestVariableInfo(unittest.TestCase):
 				'B19013_001E': [concepts[2],
 					'Estimate!!Median household income in the past 12 months (in {0} {1}-adjusted dollars)'.format(year, inflation), types[2]]}
 			self.assertEqual(censusdata.censusvar('acs5', year, ['B01001_001E', 'B01002_001E', 'B19013_001E']), expected)
+		expected = {'C24010_001E': ['SEX BY OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER',
+				'Estimate!!Total', 'int']}
+		self.assertEqual(censusdata.censusvar('acs5', 2018, ['C24010_001E']), expected)
 
 	def test_censusvar_acs1(self):
 		expected = {'S0101_C02_001E': ['AGE AND SEX', 'Male!!Estimate!!Total population', 'int'],
@@ -174,6 +177,14 @@ class TestVariableInfo(unittest.TestCase):
 		expected['B23025_006E'] = {'label': 'Estimate!!Total!!In labor force!!Armed Forces', 'concept': 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER', 'predicateType': 'int'}
 		expected['B23025_007E'] = {'label': 'Estimate!!Total!!Not in labor force', 'concept': 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER', 'predicateType': 'int'}
 		self.assertEqual(censusdata.censustable('acs5', 2018, 'B23025'), expected)
+		expected = OrderedDict()
+		expected['C15010_001E'] = {'label': 'Estimate!!Total', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_002E'] = {'label': 'Estimate!!Total!!Science and Engineering', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_003E'] = {'label': 'Estimate!!Total!!Science and Engineering Related Fields', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_004E'] = {'label': 'Estimate!!Total!!Business', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_005E'] = {'label': 'Estimate!!Total!!Education', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_006E'] = {'label': 'Estimate!!Total!!Arts, Humanities and Other', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		self.assertEqual(censusdata.censustable('acs5', 2018, 'C15010'), expected)
 
 	def test_censustable_acs5_2015_subject(self):
 		expected = OrderedDict()
