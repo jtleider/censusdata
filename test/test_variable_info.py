@@ -20,7 +20,7 @@ class TestVariableInfo(unittest.TestCase):
 			'B19013_001E': ['B19013.  Median Household Income',
 				'Median household income in the past 12 months (in 2009 inflation-adjusted dollars)', 'int']}
 		self.assertEqual(censusdata.censusvar('acs5', 2009, ['B01001_001E', 'B01002_001E', 'B19013_001E']), expected)
-		for year in range(2010, 2018+1):
+		for year in range(2010, 2019+1):
 			concepts = ['SEX BY AGE', 'MEDIAN AGE BY SEX', 'MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN {0} INFLATION-ADJUSTED DOLLARS)'.format(year)]
 			types = ['int', 'float', 'int']
 			if year == 2016: types = ['', 'int', 'int']
@@ -29,7 +29,10 @@ class TestVariableInfo(unittest.TestCase):
 			if year == 2014 or year == 2015: inflation = 'Inflation'
 			median_age_label = 'Estimate!!Median age!!Total'
 			if year == 2018: median_age_label = 'Estimate!!Median age --!!Total'
-			expected = {'B01001_001E': [concepts[0], 'Estimate!!Total', types[0]],
+			if year == 2019: median_age_label = 'Estimate!!Median age --!!Total:'
+			total_label = 'Estimate!!Total'
+			if year == 2019: total_label = 'Estimate!!Total:'
+			expected = {'B01001_001E': [concepts[0], total_label, types[0]],
 				'B01002_001E': [concepts[1], median_age_label, types[1]],
 				'B19013_001E': [concepts[2],
 					'Estimate!!Median household income in the past 12 months (in {0} {1}-adjusted dollars)'.format(year, inflation), types[2]]}
@@ -37,6 +40,9 @@ class TestVariableInfo(unittest.TestCase):
 		expected = {'C24010_001E': ['SEX BY OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER',
 				'Estimate!!Total', 'int']}
 		self.assertEqual(censusdata.censusvar('acs5', 2018, ['C24010_001E']), expected)
+		expected = {'C24010_001E': ['SEX BY OCCUPATION FOR THE CIVILIAN EMPLOYED POPULATION 16 YEARS AND OVER',
+				'Estimate!!Total:', 'int']}
+		self.assertEqual(censusdata.censusvar('acs5', 2019, ['C24010_001E']), expected)
 
 	def test_censusvar_acs1(self):
 		expected = {'S0101_C02_001E': ['AGE AND SEX', 'Male!!Estimate!!Total population', 'int'],
@@ -185,6 +191,25 @@ class TestVariableInfo(unittest.TestCase):
 		expected['C15010_005E'] = {'label': 'Estimate!!Total!!Education', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
 		expected['C15010_006E'] = {'label': 'Estimate!!Total!!Arts, Humanities and Other', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
 		self.assertEqual(censusdata.censustable('acs5', 2018, 'C15010'), expected)
+
+	def test_censustable_acs5_2019_detail(self):
+		expected = OrderedDict()
+		expected['B23025_001E'] = {'label': 'Estimate!!Total:', 'concept': 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER', 'predicateType': 'int'}
+		expected['B23025_002E'] = {'label': 'Estimate!!Total:!!In labor force:', 'concept': 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER', 'predicateType': 'int'}
+		expected['B23025_003E'] = {'label': 'Estimate!!Total:!!In labor force:!!Civilian labor force:', 'concept': 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER', 'predicateType': 'int'}
+		expected['B23025_004E'] = {'label': 'Estimate!!Total:!!In labor force:!!Civilian labor force:!!Employed', 'concept': 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER', 'predicateType': 'int'}
+		expected['B23025_005E'] = {'label': 'Estimate!!Total:!!In labor force:!!Civilian labor force:!!Unemployed', 'concept': 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER', 'predicateType': 'int'}
+		expected['B23025_006E'] = {'label': 'Estimate!!Total:!!In labor force:!!Armed Forces', 'concept': 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER', 'predicateType': 'int'}
+		expected['B23025_007E'] = {'label': 'Estimate!!Total:!!Not in labor force', 'concept': 'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER', 'predicateType': 'int'}
+		self.assertEqual(censusdata.censustable('acs5', 2019, 'B23025'), expected)
+		expected = OrderedDict()
+		expected['C15010_001E'] = {'label': 'Estimate!!Total:', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_002E'] = {'label': 'Estimate!!Total:!!Science and Engineering', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_003E'] = {'label': 'Estimate!!Total:!!Science and Engineering Related Fields', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_004E'] = {'label': 'Estimate!!Total:!!Business', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_005E'] = {'label': 'Estimate!!Total:!!Education', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		expected['C15010_006E'] = {'label': 'Estimate!!Total:!!Arts, Humanities and Other', 'concept': "FIELD OF BACHELOR'S DEGREE FOR FIRST MAJOR FOR THE POPULATION 25 YEARS AND OVER", 'predicateType': 'int'}
+		self.assertEqual(censusdata.censustable('acs5', 2019, 'C15010'), expected)
 
 	def test_censustable_acs5_2015_subject(self):
 		expected = OrderedDict()
@@ -457,6 +482,48 @@ class TestVariableInfo(unittest.TestCase):
 		expected['S0101_C02_037E'] = {'label': 'Estimate!!Percent!!PERCENT ALLOCATED!!Sex', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
 		expected['S0101_C02_038E'] = {'label': 'Estimate!!Percent!!PERCENT ALLOCATED!!Age', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
 		self.assertEqual(censusdata.censustable('acs5', 2018, 'S0101_C02'), expected)
+
+	def test_censustable_acs5_2019_subject(self):
+		expected = OrderedDict()
+		expected['S0101_C02_001E'] = {'label': 'Estimate!!Percent!!Total population', 'concept': 'AGE AND SEX', 'predicateType': 'int'}
+		expected['S0101_C02_002E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!Under 5 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_003E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!5 to 9 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_004E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!10 to 14 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_005E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!15 to 19 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_006E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!20 to 24 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_007E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!25 to 29 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_008E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!30 to 34 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_009E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!35 to 39 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_010E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!40 to 44 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_011E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!45 to 49 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_012E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!50 to 54 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_013E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!55 to 59 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_014E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!60 to 64 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_015E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!65 to 69 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_016E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!70 to 74 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_017E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!75 to 79 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_018E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!80 to 84 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_019E'] = {'label': 'Estimate!!Percent!!Total population!!AGE!!85 years and over', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_020E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!5 to 14 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_021E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!15 to 17 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_022E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!Under 18 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_023E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!18 to 24 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_024E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!15 to 44 years', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_025E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!16 years and over', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_026E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!18 years and over', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_027E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!21 years and over', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_028E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!60 years and over', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_029E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!62 years and over', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_030E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!65 years and over', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_031E'] = {'label': 'Estimate!!Percent!!Total population!!SELECTED AGE CATEGORIES!!75 years and over', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_032E'] = {'label': 'Estimate!!Percent!!Total population!!SUMMARY INDICATORS!!Median age (years)', 'concept': 'AGE AND SEX', 'predicateType': 'int'}
+		expected['S0101_C02_033E'] = {'label': 'Estimate!!Percent!!Total population!!SUMMARY INDICATORS!!Sex ratio (males per 100 females)', 'concept': 'AGE AND SEX', 'predicateType': 'int'}
+		expected['S0101_C02_034E'] = {'label': 'Estimate!!Percent!!Total population!!SUMMARY INDICATORS!!Age dependency ratio', 'concept': 'AGE AND SEX', 'predicateType': 'int'}
+		expected['S0101_C02_035E'] = {'label': 'Estimate!!Percent!!Total population!!SUMMARY INDICATORS!!Old-age dependency ratio', 'concept': 'AGE AND SEX', 'predicateType': 'int'}
+		expected['S0101_C02_036E'] = {'label': 'Estimate!!Percent!!Total population!!SUMMARY INDICATORS!!Child dependency ratio', 'concept': 'AGE AND SEX', 'predicateType': 'int'}
+		expected['S0101_C02_037E'] = {'label': 'Estimate!!Percent!!Total population!!PERCENT ALLOCATED!!Sex', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		expected['S0101_C02_038E'] = {'label': 'Estimate!!Percent!!Total population!!PERCENT ALLOCATED!!Age', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
+		self.assertEqual(censusdata.censustable('acs5', 2019, 'S0101_C02'), expected)
 
 	def test_censustable_acsse(self):
 		expected = OrderedDict()
