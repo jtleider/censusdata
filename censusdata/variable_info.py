@@ -39,8 +39,7 @@ def censusvar(src, year, var):
 		elif v[0] == 'C':
 			tabletype = ''
 		else:
-			print(u'Unknown table type for variable {0}!'.format(v))
-			raise ValueError
+			raise ValueError(u'Unknown table type for variable {0}!'.format(v))
 		if (src == 'acs1' or src == 'acs5' or src == 'acsse') and year >= 2010: presrc = 'acs/'
 		elif src == 'sf1': presrc = 'dec/'
 		else: presrc = ''
@@ -48,13 +47,11 @@ def censusvar(src, year, var):
 		try:
 			data = r.json()
 		except:
-			print(u'Unexpected response (URL: {0.url}): {0.text} '.format(r))
-			raise ValueError
+			raise ValueError(u'Unexpected response (URL: {0.url}): {0.text} '.format(r))
 		try:
 			assert data['name'] == v
 		except AssertionError:
-			print(u'JSON variable information does not include key "name"', data)
-			raise
+			raise ValueError(u'JSON variable information does not include key "name"', data)
 		expectedKeys = ['group', 'label', 'limit', 'name',]
 		try:
 			assert [k for k in sorted(data.keys()) if k != 'attributes' and k != 'concept' and k != 'predicateType'] == expectedKeys
@@ -62,9 +59,8 @@ def censusvar(src, year, var):
 			print(u'JSON variable information does not include expected keys ({0} and possibly attributes, concept, predicateType) or includes extra keys: '.format(expectedKeys), data)
 		try: 
 			ret[v] = [data.get('concept', ''), data['label'], data.get('predicateType', '')] # Concept, predicate type not provided for all years; default to empty if not provided
-		except KeyError:
-			print(u'JSON variable information does not include expected keys: ', data)
-			raise
+		except KeyError as e:
+			raise ValueError(u'JSON variable information does not include expected keys: ', data)
 	return ret
 
 def censustable(src, year, table):
@@ -98,8 +94,7 @@ def censustable(src, year, table):
 	elif table[0] == 'C':
 		tabletype = 'detail_'
 	else:
-		print(u'Unknown table type for table {0}!'.format(table))
-		raise ValueError
+		raise ValueError(u'Unknown table type for table {0}!'.format(table))
 	topdir, filename = os.path.split(__file__)
 	with open(os.path.join(topdir, 'variables', '{0}_{1}_{2}variables.json'.format(src, year, tabletype))) as infile:
 		allvars = infile.read()
@@ -111,8 +106,7 @@ def censustable(src, year, table):
 			if 'predicateType' not in allvars[k]: allvars[k]['predicateType'] = ''
 			ret[k] = {'label': allvars[k]['label'], 'concept': allvars[k]['concept'], 'predicateType': allvars[k]['predicateType']}
 	if len(ret) == 0:
-		print(u'Table not found!')
-		raise ValueError
+		raise ValueError(f"Table '{table}' not found!")
 	return ret
 
 def printtable(table, moe=False):
@@ -171,8 +165,7 @@ def search(src, year, field, criterion, tabletype='detail'):
 	try:
 		assert tabletype == 'detail' or tabletype == 'subject' or tabletype == 'profile' or tabletype == 'cprofile'
 	except AssertionError:
-		print(u'Unknown table type {0}!'.format(tabletype))
-		raise ValueError
+		raise ValueError(u"Unknown table type '{0}'!".format(tabletype))
 	topdir, filename = os.path.split(__file__)
 	with open(os.path.join(topdir, 'variables', '{0}_{1}_{2}_variables.json'.format(src, year, tabletype))) as infile:
 		allvars = infile.read()
