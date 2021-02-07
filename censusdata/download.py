@@ -33,8 +33,7 @@ def _download(src, year, params, baseurl = 'https://api.census.gov/data/', endpt
 	try:
 		data = r.json()
 	except:
-		print('Unexpected response (URL: {0.url}): {0.text} '.format(r))
-		raise ValueError
+		raise ValueError('Unexpected response (URL: {0.url}): {0.text} '.format(r))
 	rdata = OrderedDict()
 	for j in range(len(data[0])):
 		rdata[data[0][j]] = [data[i][j] for i in range(1, len(data))]
@@ -100,8 +99,7 @@ def download(src, year, geo, var, key=None, tabletype='detail', endpt=''):
 	try:
 		assert tabletype == 'detail' or tabletype == 'subject' or tabletype == 'profile' or tabletype == 'cprofile'
 	except AssertionError:
-		print('Unknown table type {0}!'.format(tabletype))
-		raise ValueError
+		raise ValueError('Unknown table type {0}!'.format(tabletype))
 	if tabletype == 'detail':
 		tabletype = ''
 	else:

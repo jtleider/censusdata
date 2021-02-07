@@ -180,6 +180,9 @@ class TestDownload(unittest.TestCase):
 			assert_frame_equal(censusdata.download('acs5', year, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
 				pd.DataFrame({'B19013_001E': medhhinc[year]}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))
 
+	def test_download_acs5_zcta(self):
+		str(censusdata.download('acs5', 2019, censusdata.censusgeo([('zip code tabulation area','*')]), ['B19013_001E']))
+
 	def test_download_acs1_2019(self):
 		assert_frame_equal(censusdata.download('acs1', 2019, censusdata.censusgeo([('state', '17')]), ['B19013_001E']),
 			pd.DataFrame({'B19013_001E': 69187}, [censusdata.censusgeo([('state', '17')], 'Illinois')]))

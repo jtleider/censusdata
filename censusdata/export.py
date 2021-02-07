@@ -17,8 +17,7 @@ def exportcsv(file, data):
 			assert gc not in data
 		assert 'NAME' not in data
 	except AssertionError:
-		print('Name conflict between one of geographic components and existing variable')
-		raise ValueError
+		raise ValueError('Name conflict between one of geographic components and existing variable')
 	for gc in geocomponent:
 		data[gc] = [g[1] for i in data.index for g in i.geo if g[0] == gc]
 	data['NAME'] = [i.name for i in data.index]

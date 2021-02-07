@@ -154,7 +154,7 @@ class censusgeo:
 
 		Returns:
 			str: String representing the summary level code for this object's geographic level, e.g., '050' for 'state> county'."""
-		return self.sumleveldict[self.hierarchy()]
+		return self.sumleveldict.get(self.hierarchy(), 'unknown')
 
 	def request(self):
 		"""Generate geographic parameters for Census API request.
