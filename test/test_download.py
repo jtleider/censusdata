@@ -116,10 +116,12 @@ class TestDownload(unittest.TestCase):
 		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
 			pd.DataFrame({'B01001_001E': 421042, 'B01002_001E': 36.5, 'B19013_001E': 68442}, [censusdata.censusgeo([('state', '06'), ('place', '53000')], 'Oakland city, California')]))
 		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('state', '15'), ('county', '*')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
-			pd.DataFrame({'B01001_001E': [197658, 165281, 71377, 75, 987638], 'B01002_001E': [42.3, 41.1, 42.4, 57.1, 37.6], 'B19013_001E': [59297, 77117, 78482, 61875, 82906]}, 
-				[censusdata.censusgeo([('state', '15'), ('county', '001')], 'Hawaii County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '009')], 'Maui County, Hawaii'),
-				censusdata.censusgeo([('state', '15'), ('county', '007')], 'Kauai County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '005')], 'Kalawao County, Hawaii'),
-				censusdata.censusgeo([('state', '15'), ('county', '003')], 'Honolulu County, Hawaii'),]))
+			pd.DataFrame({'B01001_001E': [197658, 987638, 71377, 75, 165281], 'B01002_001E': [42.3, 37.6, 42.4, 57.1, 41.1], 'B19013_001E': [59297, 82906, 78482, 61875, 77117]}, 
+				[censusdata.censusgeo([('state', '15'), ('county', '001')], 'Hawaii County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '003')], 'Honolulu County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '007')], 'Kauai County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '005')], 'Kalawao County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '009')], 'Maui County, Hawaii'),]))
 		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')]), ['B01001_001E', 'B19013_001E']),
 			pd.DataFrame({'B01001_001E': 1433, 'B19013_001E': 33750}, [censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')], 'Block Group 2, Census Tract 3501, Cook County, Illinois')]))
 		assert_frame_equal(censusdata.download('acs5', 2018, censusdata.censusgeo([('metropolitan statistical area/micropolitan statistical area', '16980')]), ['B01001_001E', 'B19013_001E']),
@@ -148,10 +150,14 @@ class TestDownload(unittest.TestCase):
 		assert_frame_equal(censusdata.download('acs5', 2016, censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
 			pd.DataFrame({'B01001_001E': 412040, 'B01002_001E': 36.2, 'B19013_001E': 57778}, [censusdata.censusgeo([('state', '06'), ('place', '53000')], 'Oakland city, California')]))
 		assert_frame_equal(censusdata.download('acs5', 2016, censusdata.censusgeo([('state', '15'), ('county', '*')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
-			pd.DataFrame({'B01001_001E': [193680, 986999, 91, 70447, 162456], 'B01002_001E': [41.8, 37.4, 56.5, 42.0, 40.5], 'B19013_001E': [53936, 77161, 65625, 68224, 68777]}, 
-				[censusdata.censusgeo([('state', '15'), ('county', '001')], 'Hawaii County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '003')], 'Honolulu County, Hawaii'),
+			pd.DataFrame({'B01001_001E': [986999, 162456, 91, 193680, 70447], 'B01002_001E': [37.4, 40.5, 56.5, 41.8, 42.0], 'B19013_001E': [77161, 68777, 65625, 53936, 68224]}, 
+				[
+				censusdata.censusgeo([('state', '15'), ('county', '003')], 'Honolulu County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '009')], 'Maui County, Hawaii'),
 				censusdata.censusgeo([('state', '15'), ('county', '005')], 'Kalawao County, Hawaii'),
-				censusdata.censusgeo([('state', '15'), ('county', '007')], 'Kauai County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '009')], 'Maui County, Hawaii')]))
+				censusdata.censusgeo([('state', '15'), ('county', '001')], 'Hawaii County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '007')], 'Kauai County, Hawaii'),
+				]))
 		assert_frame_equal(censusdata.download('acs5', 2016, censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')]), ['B01001_001E', 'B19013_001E']),
 			pd.DataFrame({'B01001_001E': 1374, 'B19013_001E': 44044}, [censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')], 'Block Group 2, Census Tract 3501, Cook County, Illinois')]))
 		assert_frame_equal(censusdata.download('acs5', 2016, censusdata.censusgeo([('metropolitan statistical area/micropolitan statistical area', '16980')]), ['B01001_001E', 'B19013_001E']),
@@ -163,10 +169,12 @@ class TestDownload(unittest.TestCase):
 		assert_frame_equal(censusdata.download('acs5', 2015, censusdata.censusgeo([('state', '06'), ('place', '53000')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
 			pd.DataFrame({'B01001_001E': 408073, 'B01002_001E': 36.3, 'B19013_001E': 54618}, [censusdata.censusgeo([('state', '06'), ('place', '53000')], 'Oakland city, California')]))
 		assert_frame_equal(censusdata.download('acs5', 2015, censusdata.censusgeo([('state', '15'), ('county', '*')]), ['B01001_001E', 'B01002_001E', 'B19013_001E']),
-			pd.DataFrame({'B01001_001E': [191482, 984178, 85, 69691, 160863], 'B01002_001E': [41.1, 36.9, 51.9, 41.6, 40], 'B19013_001E': [52108, 74460, 66250, 65101, 66476]}, 
-				[censusdata.censusgeo([('state', '15'), ('county', '001')], 'Hawaii County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '003')], 'Honolulu County, Hawaii'),
-				censusdata.censusgeo([('state', '15'), ('county', '005')], 'Kalawao County, Hawaii'),
-				censusdata.censusgeo([('state', '15'), ('county', '007')], 'Kauai County, Hawaii'), censusdata.censusgeo([('state', '15'), ('county', '009')], 'Maui County, Hawaii')]))
+			pd.DataFrame({'B01001_001E': [191482, 69691, 984178, 160863, 85], 'B01002_001E': [41.1, 41.6, 36.9, 40, 51.9], 'B19013_001E': [52108, 65101, 74460, 66476, 66250]}, 
+				[censusdata.censusgeo([('state', '15'), ('county', '001')], 'Hawaii County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '007')], 'Kauai County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '003')], 'Honolulu County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '009')], 'Maui County, Hawaii'),
+				censusdata.censusgeo([('state', '15'), ('county', '005')], 'Kalawao County, Hawaii'),]))
 		assert_frame_equal(censusdata.download('acs5', 2015, censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')]), ['B01001_001E', 'B19013_001E']),
 			pd.DataFrame({'B01001_001E': 1293, 'B19013_001E': 49375}, [censusdata.censusgeo([('state', '17'), ('county', '031'), ('tract', '350100'), ('block group', '2')], 'Block Group 2, Census Tract 3501, Cook County, Illinois')]))
 		assert_frame_equal(censusdata.download('acs5', 2015, censusdata.censusgeo([('metropolitan statistical area/micropolitan statistical area', '16980')]), ['B01001_001E', 'B19013_001E']),

@@ -24,6 +24,8 @@ def _download(src, year, params, baseurl = 'https://api.census.gov/data/', endpt
 		if endpt == 'new': presrc = 'acs/'
 		elif endpt == 'old': presrc = ''
 		elif endpt == '': presrc = 'acs/' if year >= 2010 else ''
+	elif src[:4] == 'acs3':
+		presrc = 'acs/'
 	elif src[:3] == 'sf1':
 		if endpt == 'new' or endpt == '': presrc = 'dec/'
 		if endpt == 'old': presrc = ''

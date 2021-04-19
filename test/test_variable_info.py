@@ -23,11 +23,10 @@ class TestVariableInfo(unittest.TestCase):
 		for year in range(2010, 2019+1):
 			concepts = ['SEX BY AGE', 'MEDIAN AGE BY SEX', 'MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN {0} INFLATION-ADJUSTED DOLLARS)'.format(year)]
 			types = ['int', 'float', 'int']
-			if year == 2016: types = ['', 'int', 'int']
-			if year == 2017: types = ['', 'float', 'int']
 			inflation = 'inflation'
 			if year == 2014 or year == 2015: inflation = 'Inflation'
 			median_age_label = 'Estimate!!Median age!!Total'
+			if year == 2017: median_age_label = 'Estimate!!Median age --!!Total'
 			if year == 2018: median_age_label = 'Estimate!!Median age --!!Total'
 			if year == 2019: median_age_label = 'Estimate!!Median age --!!Total:'
 			total_label = 'Estimate!!Total'
@@ -75,8 +74,8 @@ class TestVariableInfo(unittest.TestCase):
 
 	def test_censusvar_acs3(self):
 		for year in range(2013, 2013+1):
-			expected = {'B19013_001E': ['B19013.  Median Household Income'.format(year),
-				'Median household income in the past 12 months (in {0} inflation-adjusted dollars)'.format(year), 'int']}
+			expected = {'B19013_001E': ['MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN {0} INFLATION-ADJUSTED DOLLARS)'.format(year),
+				'Estimate!!Median household income in the past 12 months (in {0} inflation-adjusted dollars)'.format(year), 'int']}
 			self.assertEqual(censusdata.censusvar('acs3', year, ['B19013_001E']), expected)
 
 	def test_censusvar_sf1(self):
