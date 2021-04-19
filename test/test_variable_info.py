@@ -612,12 +612,12 @@ class TestVariableInfo(unittest.TestCase):
 
 	def test_censustable_sf1(self):
 		expected = OrderedDict()
-		expected['P0020001'] = {'label': 'Total Population', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
-		expected['P0020002'] = {'label': 'Urban:', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
-		expected['P0020003'] = {'label': 'Urban: !! Inside urbanized areas', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
-		expected['P0020004'] = {'label': 'Urban: !! Inside urban clusters', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
-		expected['P0020005'] = {'label': 'Rural !! Inside urban clusters', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
-		expected['P0020006'] = {'label': 'Not defined for this file !! Inside urban clusters', 'concept': 'P2. Urban And Rural [6]', 'predicateType': ''}
+		expected['P002001'] = {'label': 'Total', 'concept': 'URBAN AND RURAL', 'predicateType': 'int'}
+		expected['P002002'] = {'label': 'Total!!Urban', 'concept': 'URBAN AND RURAL', 'predicateType': 'int'}
+		expected['P002003'] = {'label': 'Total!!Urban!!Inside urbanized areas', 'concept': 'URBAN AND RURAL', 'predicateType': 'int'}
+		expected['P002004'] = {'label': 'Total!!Urban!!Inside urban clusters', 'concept': 'URBAN AND RURAL', 'predicateType': 'int'}
+		expected['P002005'] = {'label': 'Total!!Rural', 'concept': 'URBAN AND RURAL', 'predicateType': 'int'}
+		expected['P002006'] = {'label': 'Total!!Not defined for this file', 'concept': 'URBAN AND RURAL', 'predicateType': 'int'}
 		self.assertEqual(censusdata.censustable('sf1', 2010, 'P002'), expected)
 
 	def test_unknowntable(self):
