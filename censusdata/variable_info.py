@@ -23,7 +23,7 @@ def censusvar(src, year, var):
 
 	Examples::
 
-		censusdata.censusvar('sf1', 2010, ['P0010001']) # Returns information on the variable P0010001 from the 2010 Census SF1.
+		censusdata.censusvar('sf1', 2010, ['P001001']) # Returns information on the variable P001001 from the 2010 Census SF1.
 	"""
 	assert src == 'acs1' or src == 'acs3' or src == 'acs5' or src == 'acsse' or src == 'sf1'
 	ret = dict()
