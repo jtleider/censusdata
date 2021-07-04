@@ -296,14 +296,6 @@
       "limit": 0,
       "attributes": "CP04_2014_085EA,CP04_2018to2014_085SS"
     },
-    "CP02PR_2014_010E": {
-      "label": "2014 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2014_010EA,CP02PR_2018to2014_010SS"
-    },
     "CP02PR_2014_143E": {
       "label": "2014 Estimate!!ANCESTRY!!Total population!!Slovak",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -311,6 +303,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2014_143EA,CP02PR_2018to2014_143SS"
+    },
+    "CP02PR_2014_010E": {
+      "label": "2014 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2014_010EA,CP02PR_2018to2014_010SS"
     },
     "CP02PR_2016_063E": {
       "label": "2016 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Associate's degree",
@@ -616,14 +616,6 @@
       "limit": 0,
       "attributes": "CP02PR_2016_055EA,CP02PR_2018to2016_055SS"
     },
-    "CP03_2018_090E": {
-      "label": "2018 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Nonfamily households!!Median nonfamily income (dollars)",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2018_090EA,CP03_2018to2017_090SS"
-    },
     "CP03_2017_103E": {
       "label": "2017 Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!Civilian noninstitutionalized population 19 to 64 years!!In labor force",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -631,6 +623,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2017_103EA,CP03_2018to2017_103SS"
+    },
+    "CP03_2018_090E": {
+      "label": "2018 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Nonfamily households!!Median nonfamily income (dollars)",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2018_090EA,CP03_2018to2017_090SS"
     },
     "CP02_2014_078E": {
       "label": "2014 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over",
@@ -840,14 +840,6 @@
       "limit": 0,
       "attributes": "CP02PR_2017_123EA,CP02PR_2018to2017_123SS"
     },
-    "CP02_2017_050E": {
-      "label": "2017 Estimate!!GRANDPARENTS!!Number of grandparents responsible for own grandchildren under 18 years!!Who are female",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2017_050EA,CP02_2018to2017_050SS"
-    },
     "CP02_2014_076E": {
       "label": "2014 Estimate!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
@@ -855,6 +847,14 @@
       "group": "CP02",
       "limit": 0,
       "attributes": "CP02_2014_076EA,CP02_2018to2014_076SS"
+    },
+    "CP02_2017_050E": {
+      "label": "2017 Estimate!!GRANDPARENTS!!Number of grandparents responsible for own grandchildren under 18 years!!Who are female",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2017_050EA,CP02_2018to2017_050SS"
     },
     "CP02PR_2016_057E": {
       "label": "2016 Estimate!!SCHOOL ENROLLMENT!!Population 3 years and over enrolled in school!!College or graduate school",
@@ -1088,14 +1088,6 @@
       "limit": 0,
       "attributes": "CP03_2015_092EA,CP03_2018to2015_092SS"
     },
-    "CP03_2014_129E": {
-      "label": "2014 Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!All people!!Under 18 years",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2014_129EA,CP03_2018to2014_129SS"
-    },
     "CP04_2018_140E": {
       "label": "2018 Estimate!!GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME (GRAPI)!!Occupied units paying rent (excluding units where GRAPI cannot be computed)!!25.0 to 29.9 percent",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -1103,6 +1095,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2018_140EA,CP04_2018to2017_140SS"
+    },
+    "CP03_2014_129E": {
+      "label": "2014 Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!All people!!Under 18 years",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2014_129EA,CP03_2018to2014_129SS"
     },
     "CP02_2017_052E": {
       "label": "2017 Estimate!!SCHOOL ENROLLMENT!!Population 3 years and over enrolled in school",
@@ -1416,14 +1416,6 @@
       "limit": 0,
       "attributes": "CP03_2018_097EA,CP03_2018to2017_097SS"
     },
-    "CP03_2014_126E": {
-      "label": "2014 Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!Families with female householder, no husband present!!With related children of the householder under 18 years",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2014_126EA,CP03_2018to2014_126SS"
-    },
     "CP05_2016_040E": {
       "label": "2016 Estimate!!RACE!!Total population!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -1431,6 +1423,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2016_040EA,CP05_2018to2016_040SS"
+    },
+    "CP03_2014_126E": {
+      "label": "2014 Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!Families with female householder, no husband present!!With related children of the householder under 18 years",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2014_126EA,CP03_2018to2014_126SS"
     },
     "CP02_2017_058E": {
       "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over",
@@ -1808,14 +1808,6 @@
       "limit": 0,
       "attributes": "CP02_2018_118EA,CP02_2018to2017_118SS"
     },
-    "CP02_2014_082E": {
-      "label": "2014 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Different house in the U.S.!!Different county",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2014_082EA,CP02_2018to2014_082SS"
-    },
     "CP02PR_2014_026E": {
       "label": "2014 Estimate!!MARITAL STATUS!!Males 15 years and over!!Now married, except separated",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -1823,6 +1815,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2014_026EA,CP02PR_2018to2014_026SS"
+    },
+    "CP02_2014_082E": {
+      "label": "2014 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Different house in the U.S.!!Different county",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2014_082EA,CP02_2018to2014_082SS"
     },
     "CP02_2015_152E": {
       "label": "2015 Estimate!!COMPUTERS AND INTERNET USE!!Total households!!With a broadband Internet subscription",
@@ -3500,14 +3500,6 @@
       "limit": 0,
       "attributes": "CP03_2018_068EA,CP03_2018to2017_068SS"
     },
-    "CP02_2014_094E": {
-      "label": "2014 Estimate!!U.S. CITIZENSHIP STATUS!!Foreign-born population!!Naturalized U.S. citizen",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2014_094EA,CP02_2018to2014_094SS"
-    },
     "CP02PR_2014_123E": {
       "label": "2014 Estimate!!ANCESTRY!!Total population!!American",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -3515,6 +3507,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2014_123EA,CP02PR_2018to2014_123SS"
+    },
+    "CP02_2014_094E": {
+      "label": "2014 Estimate!!U.S. CITIZENSHIP STATUS!!Foreign-born population!!Naturalized U.S. citizen",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2014_094EA,CP02_2018to2014_094SS"
     },
     "CP02_2015_031E": {
       "label": "2015 Estimate!!MARITAL STATUS!!Females 15 years and over!!Never married",
@@ -3940,14 +3940,6 @@
       "limit": 0,
       "attributes": "CP04_2017_043EA,CP04_2018to2017_043SS"
     },
-    "CP02_2018_015E": {
-      "label": "2018 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Average household size",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2018_015EA,CP02_2018to2017_015SS"
-    },
     "CP02_2018_148E": {
       "label": "2018 Estimate!!ANCESTRY!!Total population!!Welsh",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
@@ -3955,6 +3947,14 @@
       "group": "CP02",
       "limit": 0,
       "attributes": "CP02_2018_148EA,CP02_2018to2017_148SS"
+    },
+    "CP02_2018_015E": {
+      "label": "2018 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Average household size",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2018_015EA,CP02_2018to2017_015SS"
     },
     "CP02PR_2017_107E": {
       "label": "2017 Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea!!Oceania",
@@ -3988,14 +3988,6 @@
       "limit": 0,
       "attributes": "CP02PR_2016_041EA,CP02PR_2018to2016_041SS"
     },
-    "CP02_2017_082E": {
-      "label": "2017 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Different house in the U.S.!!Different county",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2017_082EA,CP02_2018to2017_082SS"
-    },
     "CP02_2016_103E": {
       "label": "2016 Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
@@ -4003,6 +3995,14 @@
       "group": "CP02",
       "limit": 0,
       "attributes": "CP02_2016_103EA,CP02_2018to2016_103SS"
+    },
+    "CP02_2017_082E": {
+      "label": "2017 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Different house in the U.S.!!Different county",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2017_082EA,CP02_2018to2017_082SS"
     },
     "CP04_2017_040E": {
       "label": "2017 Estimate!!BEDROOMS!!Total housing units!!1 bedroom",
@@ -4044,14 +4044,6 @@
       "limit": 0,
       "attributes": "CP02PR_2014_120EA,CP02PR_2018to2014_120SS"
     },
-    "CP02_2017_083E": {
-      "label": "2017 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Different house in the U.S.!!Different county!!Same state",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2017_083EA,CP02_2018to2017_083SS"
-    },
     "CP04_2015_131E": {
       "label": "2015 Estimate!!GROSS RENT!!Occupied units paying rent!!$2,000 to $2,499",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -4059,6 +4051,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2015_131EA,CP04_2018to2015_131SS"
+    },
+    "CP02_2017_083E": {
+      "label": "2017 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Different house in the U.S.!!Different county!!Same state",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2017_083EA,CP02_2018to2017_083SS"
     },
     "CP02PR_2016_042E": {
       "label": "2016 Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Per 1,000 women 35 to 50 years old",
@@ -4284,14 +4284,6 @@
       "limit": 0,
       "attributes": "CP04_2018_037EA,CP04_2018to2017_037SS"
     },
-    "CP02PR_2017_103E": {
-      "label": "2017 Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2017_103EA,CP02PR_2018to2017_103SS"
-    },
     "CP02PR_2014_119E": {
       "label": "2014 Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over!!Asian and Pacific Islander languages!!Speak English less than \"very well\"",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -4300,13 +4292,21 @@
       "limit": 0,
       "attributes": "CP02PR_2014_119EA,CP02PR_2018to2014_119SS"
     },
-    "CP02_2018_011E": {
-      "label": "2018 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone",
+    "CP02PR_2017_103E": {
+      "label": "2017 Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2017_103EA,CP02PR_2018to2017_103SS"
+    },
+    "CP02_2018_144E": {
+      "label": "2018 Estimate!!ANCESTRY!!Total population!!Subsaharan African",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
       "predicateType": "float",
       "group": "CP02",
       "limit": 0,
-      "attributes": "CP02_2018_011EA,CP02_2018to2017_011SS"
+      "attributes": "CP02_2018_144EA,CP02_2018to2017_144SS"
     },
     "CP02_2015_027E": {
       "label": "2015 Estimate!!MARITAL STATUS!!Males 15 years and over!!Separated",
@@ -4316,13 +4316,13 @@
       "limit": 0,
       "attributes": "CP02_2015_027EA,CP02_2018to2015_027SS"
     },
-    "CP02_2018_144E": {
-      "label": "2018 Estimate!!ANCESTRY!!Total population!!Subsaharan African",
+    "CP02_2018_011E": {
+      "label": "2018 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
       "predicateType": "float",
       "group": "CP02",
       "limit": 0,
-      "attributes": "CP02_2018_144EA,CP02_2018to2017_144SS"
+      "attributes": "CP02_2018_011EA,CP02_2018to2017_011SS"
     },
     "CP02_2018_140E": {
       "label": "2018 Estimate!!ANCESTRY!!Total population!!Russian",
@@ -4444,14 +4444,6 @@
       "limit": 0,
       "attributes": "CP04_2015_135EA,CP04_2018to2015_135SS"
     },
-    "CP02_2017_075E": {
-      "label": "2017 Estimate!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!18 to 64 years!!With a disability",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2017_075EA,CP02_2018to2017_075SS"
-    },
     "CP02_2014_099E": {
       "label": "2014 Estimate!!YEAR OF ENTRY!!Population born outside the United States!!Native!!Entered before 2010",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
@@ -4459,6 +4451,14 @@
       "group": "CP02",
       "limit": 0,
       "attributes": "CP02_2014_099EA,CP02_2018to2014_099SS"
+    },
+    "CP02_2017_075E": {
+      "label": "2017 Estimate!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!18 to 64 years!!With a disability",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2017_075EA,CP02_2018to2017_075SS"
     },
     "CP02_2016_108E": {
       "label": "2016 Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea!!Latin America",
@@ -4508,14 +4508,6 @@
       "limit": 0,
       "attributes": "CP02_2015_023EA,CP02_2018to2015_023SS"
     },
-    "CP03_2016_025E": {
-      "label": "2016 Estimate!!COMMUTING TO WORK!!Workers 16 years and over!!Mean travel time to work (minutes)",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2016_025EA,CP03_2018to2016_025SS"
-    },
     "CP05_2017_016E": {
       "label": "2017 Estimate!!SEX AND AGE!!Total population!!75 to 84 years",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -4523,6 +4515,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2017_016EA,CP05_2018to2017_016SS"
+    },
+    "CP03_2016_025E": {
+      "label": "2016 Estimate!!COMMUTING TO WORK!!Workers 16 years and over!!Mean travel time to work (minutes)",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2016_025EA,CP03_2018to2016_025SS"
     },
     "CP02PR_2014_115E": {
       "label": "2014 Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over!!Spanish!!Speak English less than \"very well\"",
@@ -4622,14 +4622,6 @@
       "limit": 0,
       "attributes": "CP02PR_2014_114EA,CP02PR_2018to2014_114SS"
     },
-    "CP02_2014_097E": {
-      "label": "2014 Estimate!!YEAR OF ENTRY!!Population born outside the United States!!Native",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "int",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2014_097EA,CP02_2018to2014_097SS"
-    },
     "CP04_2018_032E": {
       "label": "2018 Estimate!!ROOMS!!Total housing units!!5 rooms",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -4637,6 +4629,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2018_032EA,CP04_2018to2017_032SS"
+    },
+    "CP02_2014_097E": {
+      "label": "2014 Estimate!!YEAR OF ENTRY!!Population born outside the United States!!Native",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2014_097EA,CP02_2018to2014_097SS"
     },
     "CP02_2017_077E": {
       "label": "2017 Estimate!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability",
@@ -4678,14 +4678,6 @@
       "limit": 0,
       "attributes": "CP02_2017_078EA,CP02_2018to2017_078SS"
     },
-    "CP03_2016_023E": {
-      "label": "2016 Estimate!!COMMUTING TO WORK!!Workers 16 years and over!!Other means",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2016_023EA,CP03_2018to2016_023SS"
-    },
     "CP05_2017_014E": {
       "label": "2017 Estimate!!SEX AND AGE!!Total population!!60 to 64 years",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -4693,6 +4685,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2017_014EA,CP05_2018to2017_014SS"
+    },
+    "CP03_2016_023E": {
+      "label": "2016 Estimate!!COMMUTING TO WORK!!Workers 16 years and over!!Other means",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2016_023EA,CP03_2018to2016_023SS"
     },
     "CP04_2014_051E": {
       "label": "2014 Estimate!!YEAR HOUSEHOLDER MOVED INTO UNIT!!Occupied housing units!!Moved in 2017 or later",
@@ -4718,14 +4718,6 @@
       "limit": 0,
       "attributes": "CP05_2017_018EA,CP05_2018to2017_018SS"
     },
-    "CP02_2014_096E": {
-      "label": "2014 Estimate!!YEAR OF ENTRY!!Population born outside the United States",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "int",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2014_096EA,CP02_2018to2014_096SS"
-    },
     "CP04_2018_033E": {
       "label": "2018 Estimate!!ROOMS!!Total housing units!!6 rooms",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -4733,6 +4725,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2018_033EA,CP04_2018to2017_033SS"
+    },
+    "CP02_2014_096E": {
+      "label": "2014 Estimate!!YEAR OF ENTRY!!Population born outside the United States",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2014_096EA,CP02_2018to2014_096SS"
     },
     "CP03_2014_018E": {
       "label": "2014 Estimate!!COMMUTING TO WORK!!Workers 16 years and over",
@@ -5683,6 +5683,7 @@
     "CP02_2018_001E": {
       "label": "2018 Estimate!!HOUSEHOLDS BY TYPE!!Total households",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
       "group": "CP02",
       "limit": 0,
       "attributes": "CP02_2018_001EA,CP02_2018to2017_001SS"
@@ -5735,14 +5736,6 @@
       "limit": 0,
       "attributes": "CP02PR_2015_094EA,CP02PR_2018to2015_094SS"
     },
-    "CP02PR_2016_152E": {
-      "label": "2016 Estimate!!COMPUTERS AND INTERNET USE!!Total households!!With a broadband Internet subscription",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2016_152EA,CP02PR_2018to2016_152SS"
-    },
     "CP04_2014_068E": {
       "label": "2014 Estimate!!HOUSE HEATING FUEL!!Occupied housing units!!Wood",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -5750,6 +5743,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2014_068EA,CP04_2018to2014_068SS"
+    },
+    "CP02PR_2016_152E": {
+      "label": "2016 Estimate!!COMPUTERS AND INTERNET USE!!Total households!!With a broadband Internet subscription",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2016_152EA,CP02PR_2018to2016_152SS"
     },
     "CP04_2018_048E": {
       "label": "2018 Estimate!!HOUSING TENURE!!Occupied housing units!!Average household size of owner-occupied unit",
@@ -5847,14 +5848,6 @@
       "limit": 0,
       "attributes": "CP04_2018_049EA,CP04_2018to2017_049SS"
     },
-    "CP02_2015_039E": {
-      "label": "2015 Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Per 1,000 women 15 to 50 years old",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "int",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2015_039EA,CP02_2018to2015_039SS"
-    },
     "CP02_2018_132E": {
       "label": "2018 Estimate!!ANCESTRY!!Total population!!Greek",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
@@ -5862,6 +5855,14 @@
       "group": "CP02",
       "limit": 0,
       "attributes": "CP02_2018_132EA,CP02_2018to2017_132SS"
+    },
+    "CP02_2015_039E": {
+      "label": "2015 Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Per 1,000 women 15 to 50 years old",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2015_039EA,CP02_2018to2015_039SS"
     },
     "CP03_2016_031E": {
       "label": "2016 Estimate!!OCCUPATION!!Civilian employed population 16 years and over!!Production, transportation, and material moving occupations",
@@ -6023,14 +6024,6 @@
       "limit": 0,
       "attributes": "CP05_2017_004EA,CP05_2018to2017_004SS"
     },
-    "CP04_2018_043E": {
-      "label": "2018 Estimate!!BEDROOMS!!Total housing units!!4 bedrooms",
-      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP04",
-      "limit": 0,
-      "attributes": "CP04_2018_043EA,CP04_2018to2017_043SS"
-    },
     "CP04_2016_094E": {
       "label": "2016 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!Housing units with a mortgage!!Less than $500",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -6038,6 +6031,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2016_094EA,CP04_2018to2016_094SS"
+    },
+    "CP04_2018_043E": {
+      "label": "2018 Estimate!!BEDROOMS!!Total housing units!!4 bedrooms",
+      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP04",
+      "limit": 0,
+      "attributes": "CP04_2018_043EA,CP04_2018to2017_043SS"
     },
     "CP02PR_2016_023E": {
       "label": "2016 Estimate!!RELATIONSHIP!!Population in households!!Nonrelatives!!Unmarried partner",
@@ -6047,14 +6048,6 @@
       "limit": 0,
       "attributes": "CP02PR_2016_023EA,CP02PR_2018to2016_023SS"
     },
-    "CP02_2017_064E": {
-      "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Bachelor's degree",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2017_064EA,CP02_2018to2017_064SS"
-    },
     "CP03_2014_008E": {
       "label": "2014 Estimate!!EMPLOYMENT STATUS!!Civilian labor force",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -6062,6 +6055,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2014_008EA,CP03_2018to2014_008SS"
+    },
+    "CP02_2017_064E": {
+      "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Bachelor's degree",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2017_064EA,CP02_2018to2017_064SS"
     },
     "CP04_2014_064E": {
       "label": "2014 Estimate!!HOUSE HEATING FUEL!!Occupied housing units!!Bottled, tank, or LP gas",
@@ -6127,14 +6128,6 @@
       "limit": 0,
       "attributes": "CP02PR_2014_126EA,CP02PR_2018to2014_126SS"
     },
-    "CP03_2014_009E": {
-      "label": "2014 Estimate!!EMPLOYMENT STATUS!!Civilian labor force!!Unemployment Rate",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2014_009EA,CP03_2018to2014_009SS"
-    },
     "CP04_2016_093E": {
       "label": "2016 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!Housing units with a mortgage",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -6142,6 +6135,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2016_093EA,CP04_2018to2016_093SS"
+    },
+    "CP03_2014_009E": {
+      "label": "2014 Estimate!!EMPLOYMENT STATUS!!Civilian labor force!!Unemployment Rate",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2014_009EA,CP03_2018to2014_009SS"
     },
     "CP04_2018_044E": {
       "label": "2018 Estimate!!BEDROOMS!!Total housing units!!5 or more bedrooms",
@@ -6239,14 +6240,6 @@
       "limit": 0,
       "attributes": "CP04_2018_045EA,CP04_2018to2017_045SS"
     },
-    "CP02_2017_066E": {
-      "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Percent high school graduate or higher",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2017_066EA,CP02_2018to2017_066SS"
-    },
     "CP03_2014_006E": {
       "label": "2014 Estimate!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force!!Armed Forces",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -6254,6 +6247,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2014_006EA,CP03_2018to2014_006SS"
+    },
+    "CP02_2017_066E": {
+      "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Percent high school graduate or higher",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2017_066EA,CP02_2018to2017_066SS"
     },
     "CP02PR_2016_025E": {
       "label": "2016 Estimate!!MARITAL STATUS!!Males 15 years and over!!Never married",
@@ -6487,14 +6488,6 @@
       "limit": 0,
       "attributes": "CP03_2014_003EA,CP03_2018to2014_003SS"
     },
-    "CP03_2018_061E": {
-      "label": "2018 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!$200,000 or more",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2018_061EA,CP03_2018to2017_061SS"
-    },
     "CP05_2016_076E": {
       "label": "2016 Estimate!!HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -6502,6 +6495,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2016_076EA,CP05_2018to2016_076SS"
+    },
+    "CP03_2018_061E": {
+      "label": "2018 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!$200,000 or more",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2018_061EA,CP03_2018to2017_061SS"
     },
     "CP04_2016_097E": {
       "label": "2016 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!Housing units with a mortgage!!$1,500 to $1,999",
@@ -7660,14 +7661,6 @@
       "limit": 0,
       "attributes": "CP03_2016_133EA,CP03_2018to2016_133SS"
     },
-    "CP02_2018_030E": {
-      "label": "2018 Estimate!!MARITAL STATUS!!Females 15 years and over",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "int",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2018_030EA,CP02_2018to2017_030SS"
-    },
     "CP02_2015_046E": {
       "label": "2015 Estimate!!GRANDPARENTS!!Number of grandparents living with own grandchildren under 18 years!!Years responsible for grandchildren!!1 or 2 years",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
@@ -7675,6 +7668,14 @@
       "group": "CP02",
       "limit": 0,
       "attributes": "CP02_2015_046EA,CP02_2018to2015_046SS"
+    },
+    "CP02_2018_030E": {
+      "label": "2018 Estimate!!MARITAL STATUS!!Females 15 years and over",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2018_030EA,CP02_2018to2017_030SS"
     },
     "CP05_2017_039E": {
       "label": "2017 Estimate!!RACE!!Total population!!One race!!American Indian and Alaska Native",
@@ -8734,14 +8735,6 @@
       "limit": 0,
       "attributes": "CP02_2017_094EA,CP02_2018to2017_094SS"
     },
-    "CP02_2016_115E": {
-      "label": "2016 Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over!!Spanish!!Speak English less than \"very well\"",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2016_115EA,CP02_2018to2016_115SS"
-    },
     "CP04_2015_059E": {
       "label": "2015 Estimate!!VEHICLES AVAILABLE!!Occupied housing units!!1 vehicle available",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -8749,6 +8742,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2015_059EA,CP04_2018to2015_059SS"
+    },
+    "CP02_2016_115E": {
+      "label": "2016 Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over!!Spanish!!Speak English less than \"very well\"",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2016_115EA,CP02_2018to2016_115SS"
     },
     "CP04_2018_103E": {
       "label": "2018 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!Housing units without a mortgage!!Less than $250",
@@ -9676,7 +9677,7 @@
       "predicateType": "float",
       "group": "CP05",
       "limit": 0,
-      "attributes": "CP05_2018to2015_005SS,CP05_2015_005EA"
+      "attributes": "CP05_2015_005EA,CP05_2018to2015_005SS"
     },
     "CP03_2017_082E": {
       "label": "2017 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Families!!$75,000 to $99,999",
@@ -10662,14 +10663,6 @@
       "limit": 0,
       "attributes": "CP04_2017_083EA,CP04_2018to2017_083SS"
     },
-    "CP02PR_2016_121E": {
-      "label": "2016 Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over!!Other languages!!Speak English less than \"very well\"",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2016_121EA,CP02PR_2018to2016_121SS"
-    },
     "CP04_2014_099E": {
       "label": "2014 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!Housing units with a mortgage!!$2,500 to $2,999",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -10677,6 +10670,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2014_099EA,CP04_2018to2014_099SS"
+    },
+    "CP02PR_2016_121E": {
+      "label": "2016 Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over!!Other languages!!Speak English less than \"very well\"",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2016_121EA,CP02PR_2018to2016_121SS"
     },
     "CP02PR_2015_063E": {
       "label": "2015 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Associate's degree",
@@ -12187,14 +12188,6 @@
       "limit": 0,
       "attributes": "CP04_2017_077EA,CP04_2018to2017_077SS"
     },
-    "CP04_2016_109E": {
-      "label": "2016 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!Housing units without a mortgage!!Median (dollars)",
-      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "CP04",
-      "limit": 0,
-      "attributes": "CP04_2016_109EA,CP04_2018to2016_109SS"
-    },
     "CP05_2017_044E": {
       "label": "2017 Estimate!!RACE!!Total population!!One race!!Asian",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -12202,6 +12195,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2017_044EA,CP05_2018to2017_044SS"
+    },
+    "CP04_2016_109E": {
+      "label": "2016 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!Housing units without a mortgage!!Median (dollars)",
+      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "CP04",
+      "limit": 0,
+      "attributes": "CP04_2016_109EA,CP04_2018to2016_109SS"
     },
     "CP02_2018_049E": {
       "label": "2018 Estimate!!GRANDPARENTS!!Number of grandparents responsible for own grandchildren under 18 years",
@@ -12715,14 +12716,6 @@
       "limit": 0,
       "attributes": "CP02PR_2015_059EA,CP02PR_2018to2015_059SS"
     },
-    "CP02PR_2018_019E": {
-      "label": "2018 Estimate!!RELATIONSHIP!!Population in households!!Spouse",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2018_019EA,CP02PR_2018to2017_019SS"
-    },
     "CP02PR_2017_086E": {
       "label": "2017 Estimate!!PLACE OF BIRTH!!Total population",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -12730,6 +12723,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2017_086EA,CP02PR_2018to2017_086SS"
+    },
+    "CP02PR_2018_019E": {
+      "label": "2018 Estimate!!RELATIONSHIP!!Population in households!!Spouse",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2018_019EA,CP02PR_2018to2017_019SS"
     },
     "CP02PR_2016_119E": {
       "label": "2016 Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over!!Asian and Pacific Islander languages!!Speak English less than \"very well\"",
@@ -12802,14 +12803,6 @@
       "limit": 0,
       "attributes": "CP04_2018_091EA,CP04_2018to2017_091SS"
     },
-    "CP02_2015_095E": {
-      "label": "2015 Estimate!!U.S. CITIZENSHIP STATUS!!Foreign-born population!!Not a U.S. citizen",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2015_095EA,CP02_2018to2015_095SS"
-    },
     "CP03_2018_131E": {
       "label": "2018 Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!All people!!Under 18 years!!Related children of the householder under 18 years!!Related children of the householder under 5 years",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -12817,6 +12810,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2018_131EA,CP03_2018to2017_131SS"
+    },
+    "CP02_2015_095E": {
+      "label": "2015 Estimate!!U.S. CITIZENSHIP STATUS!!Foreign-born population!!Not a U.S. citizen",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2015_095EA,CP02_2018to2015_095SS"
     },
     "CP02PR_2015_039E": {
       "label": "2015 Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Per 1,000 women 15 to 50 years old",
@@ -12994,14 +12995,6 @@
       "limit": 0,
       "attributes": "CP03_2017_060EA,CP03_2018to2017_060SS"
     },
-    "CP02PR_2018_152E": {
-      "label": "2018 Estimate!!COMPUTERS AND INTERNET USE!!Total households!!With a broadband Internet subscription",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2018_152EA,CP02PR_2018to2017_152SS"
-    },
     "CP03_2015_018E": {
       "label": "2015 Estimate!!COMMUTING TO WORK!!Workers 16 years and over",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -13009,6 +13002,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2015_018EA,CP03_2018to2015_018SS"
+    },
+    "CP02PR_2018_152E": {
+      "label": "2018 Estimate!!COMPUTERS AND INTERNET USE!!Total households!!With a broadband Internet subscription",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2018_152EA,CP02PR_2018to2017_152SS"
     },
     "CP05_2017_074E": {
       "label": "2017 Estimate!!HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban",
@@ -13415,14 +13416,6 @@
       "limit": 0,
       "attributes": "CP02_2015_090EA,CP02_2018to2015_090SS"
     },
-    "CP04_2017_113E": {
-      "label": "2017 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!25.0 to 29.9 percent",
-      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP04",
-      "limit": 0,
-      "attributes": "CP04_2017_113EA,CP04_2018to2017_113SS"
-    },
     "CP04_2014_129E": {
       "label": "2014 Estimate!!GROSS RENT!!Occupied units paying rent!!$1,000 to $1,499",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -13430,6 +13423,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2014_129EA,CP04_2018to2014_129SS"
+    },
+    "CP04_2017_113E": {
+      "label": "2017 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!25.0 to 29.9 percent",
+      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP04",
+      "limit": 0,
+      "attributes": "CP04_2017_113EA,CP04_2018to2017_113SS"
     },
     "CP02_2016_037E": {
       "label": "2016 Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Unmarried women (widowed, divorced, and never married)",
@@ -14191,14 +14192,6 @@
       "limit": 0,
       "attributes": "CP04_2018_099EA,CP04_2018to2017_099SS"
     },
-    "CP02_2014_123E": {
-      "label": "2014 Estimate!!ANCESTRY!!Total population!!American",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2014_123EA,CP02_2018to2014_123SS"
-    },
     "CP02PR_2014_094E": {
       "label": "2014 Estimate!!U.S. CITIZENSHIP STATUS!!Foreign-born population!!Naturalized U.S. citizen",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -14206,6 +14199,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2014_094EA,CP02PR_2018to2014_094SS"
+    },
+    "CP02_2014_123E": {
+      "label": "2014 Estimate!!ANCESTRY!!Total population!!American",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2014_123EA,CP02_2018to2014_123SS"
     },
     "CP02PR_2016_100E": {
       "label": "2016 Estimate!!YEAR OF ENTRY!!Population born outside Puerto Rico!!Foreign born",
@@ -14351,14 +14352,6 @@
       "limit": 0,
       "attributes": "CP02PR_2016_103EA,CP02PR_2018to2016_103SS"
     },
-    "CP02PR_2016_102E": {
-      "label": "2016 Estimate!!YEAR OF ENTRY!!Population born outside Puerto Rico!!Foreign born!!Entered before 2010",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2016_102EA,CP02PR_2018to2016_102SS"
-    },
     "CP05_2017_081E": {
       "label": "2017 Estimate!!HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Native Hawaiian and Other Pacific Islander alone",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -14366,6 +14359,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2017_081EA,CP05_2018to2017_081SS"
+    },
+    "CP02PR_2016_102E": {
+      "label": "2016 Estimate!!YEAR OF ENTRY!!Population born outside Puerto Rico!!Foreign born!!Entered before 2010",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2016_102EA,CP02PR_2018to2016_102SS"
     },
     "CP02PR_2015_040E": {
       "label": "2015 Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Per 1,000 women 15 to 19 years old",
@@ -14383,14 +14384,6 @@
       "limit": 0,
       "attributes": "CP02_2018_072EA,CP02_2018to2017_072SS"
     },
-    "CP02PR_2018_026E": {
-      "label": "2018 Estimate!!MARITAL STATUS!!Males 15 years and over!!Now married, except separated",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2018_026EA,CP02PR_2018to2017_026SS"
-    },
     "CP02PR_2017_079E": {
       "label": "2017 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Same house",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -14398,6 +14391,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2017_079EA,CP02PR_2018to2017_079SS"
+    },
+    "CP02PR_2018_026E": {
+      "label": "2018 Estimate!!MARITAL STATUS!!Males 15 years and over!!Now married, except separated",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2018_026EA,CP02PR_2018to2017_026SS"
     },
     "CP04_2014_127E": {
       "label": "2014 Estimate!!GROSS RENT!!Occupied units paying rent!!Less than $500",
@@ -14983,14 +14984,6 @@
       "limit": 0,
       "attributes": "CP04_2017_101EA,CP04_2018to2017_101SS"
     },
-    "CP03_2014_065E": {
-      "label": "2014 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!With earnings!!Mean earnings (dollars)",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2014_065EA,CP03_2018to2014_065SS"
-    },
     "CP03_2017_071E": {
       "label": "2017 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!With Supplemental Security Income!!Mean Supplemental Security Income (dollars)",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -14998,6 +14991,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2017_071EA,CP03_2018to2017_071SS"
+    },
+    "CP03_2014_065E": {
+      "label": "2014 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!With earnings!!Mean earnings (dollars)",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2014_065EA,CP03_2018to2014_065SS"
     },
     "CP02PR_2015_024E": {
       "label": "2015 Estimate!!MARITAL STATUS!!Males 15 years and over",
@@ -15300,14 +15301,6 @@
       "limit": 0,
       "attributes": "CP03_2014_064EA,CP03_2018to2014_064SS"
     },
-    "CP04_2016_038E": {
-      "label": "2016 Estimate!!BEDROOMS!!Total housing units",
-      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "CP04",
-      "limit": 0,
-      "attributes": "CP04_2016_038EA,CP04_2018to2016_038SS"
-    },
     "CP05_2014_078E": {
       "label": "2014 Estimate!!HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Black or African American alone",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -15315,6 +15308,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2014_078EA,CP05_2018to2014_078SS"
+    },
+    "CP04_2016_038E": {
+      "label": "2016 Estimate!!BEDROOMS!!Total housing units",
+      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "CP04",
+      "limit": 0,
+      "attributes": "CP04_2016_038EA,CP04_2018to2016_038SS"
     },
     "CP02PR_2018_035E": {
       "label": "2018 Estimate!!MARITAL STATUS!!Females 15 years and over!!Divorced",
@@ -15497,14 +15498,6 @@
       "limit": 0,
       "attributes": "CP02PR_2018_033EA,CP02PR_2018to2017_033SS"
     },
-    "CP03_2015_004E": {
-      "label": "2015 Estimate!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force!!Civilian labor force!!Employed",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2015_004EA,CP03_2018to2015_004SS"
-    },
     "CP03_2015_137E": {
       "label": "2015 Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!Unrelated individuals 15 years and over",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -15512,6 +15505,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2015_137EA,CP03_2018to2015_137SS"
+    },
+    "CP03_2015_004E": {
+      "label": "2015 Estimate!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force!!Civilian labor force!!Employed",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2015_004EA,CP03_2018to2015_004SS"
     },
     "CP03_2014_062E": {
       "label": "2014 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!Median household income (dollars)",
@@ -15953,11 +15954,6 @@
       "limit": 0,
       "attributes": "CP02_2018_063EA,CP02_2018to2017_063SS"
     },
-    "TRIBALSUB": {
-      "label": "Geography",
-      "group": "N/A",
-      "limit": 0
-    },
     "CP05_2015_040E": {
       "label": "2015 Estimate!!RACE!!Total population!!One race!!American Indian and Alaska Native!!Cherokee tribal grouping",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -16030,14 +16026,6 @@
       "limit": 0,
       "attributes": "CP02_2014_136EA,CP02_2018to2014_136SS"
     },
-    "CP04_2014_004E": {
-      "label": "2014 Estimate!!HOUSING OCCUPANCY!!Total housing units!!Homeowner vacancy rate",
-      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP04",
-      "limit": 0,
-      "attributes": "CP04_2014_004EA,CP04_2018to2014_004SS"
-    },
     "CP04_2014_137E": {
       "label": "2014 Estimate!!GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME (GRAPI)!!Occupied units paying rent (excluding units where GRAPI cannot be computed)!!Less than 15.0 percent",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -16045,6 +16033,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2014_137EA,CP04_2018to2014_137SS"
+    },
+    "CP04_2014_004E": {
+      "label": "2014 Estimate!!HOUSING OCCUPANCY!!Total housing units!!Homeowner vacancy rate",
+      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP04",
+      "limit": 0,
+      "attributes": "CP04_2014_004EA,CP04_2018to2014_004SS"
     },
     "CP02PR_2017_069E": {
       "label": "2017 Estimate!!VETERAN STATUS!!Civilian population 18 years and over!!Civilian veterans",
@@ -16150,14 +16146,6 @@
       "limit": 0,
       "attributes": "CP02_2018_060EA,CP02_2018to2017_060SS"
     },
-    "CP02PR_2018_038E": {
-      "label": "2018 Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Unmarried women (widowed, divorced, and never married)!!Per 1,000 unmarried women",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2018_038EA,CP02PR_2018to2017_038SS"
-    },
     "CP02PR_2017_067E": {
       "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Percent bachelor's degree or higher",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -16165,6 +16153,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2017_067EA,CP02PR_2018to2017_067SS"
+    },
+    "CP02PR_2018_038E": {
+      "label": "2018 Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Unmarried women (widowed, divorced, and never married)!!Per 1,000 unmarried women",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2018_038EA,CP02PR_2018to2017_038SS"
     },
     "CP04_2014_006E": {
       "label": "2014 Estimate!!UNITS IN STRUCTURE!!Total housing units",
@@ -16382,14 +16378,6 @@
       "limit": 0,
       "attributes": "CP02PR_2015_148EA,CP02PR_2018to2015_148SS"
     },
-    "CP02PR_2017_060E": {
-      "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!9th to 12th grade, no diploma",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2017_060EA,CP02PR_2018to2017_060SS"
-    },
     "CP04_2015_085E": {
       "label": "2015 Estimate!!VALUE!!Owner-occupied units!!$200,000 to $299,999",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -16397,6 +16385,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2015_085EA,CP04_2018to2015_085SS"
+    },
+    "CP02PR_2017_060E": {
+      "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!9th to 12th grade, no diploma",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2017_060EA,CP02PR_2018to2017_060SS"
     },
     "CP05_2018_037E": {
       "label": "2018 Estimate!!RACE!!Total population!!One race!!White",
@@ -16454,14 +16450,6 @@
       "limit": 0,
       "attributes": "CP02PR_2015_147EA,CP02PR_2018to2015_147SS"
     },
-    "CP02PR_2017_061E": {
-      "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!High school graduate (includes equivalency)",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2017_061EA,CP02PR_2018to2017_061SS"
-    },
     "CP02PR_2014_077E": {
       "label": "2014 Estimate!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -16469,6 +16457,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2014_077EA,CP02PR_2018to2014_077SS"
+    },
+    "CP02PR_2017_061E": {
+      "label": "2017 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!High school graduate (includes equivalency)",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2017_061EA,CP02PR_2018to2017_061SS"
     },
     "CP04_2015_084E": {
       "label": "2015 Estimate!!VALUE!!Owner-occupied units!!$150,000 to $199,999",
@@ -16486,14 +16482,6 @@
       "limit": 0,
       "attributes": "CP04_2016_021EA,CP04_2018to2016_021SS"
     },
-    "CP02PR_2015_016E": {
-      "label": "2015 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Average family size",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2015_016EA,CP02PR_2018to2015_016SS"
-    },
     "CP02PR_2015_149E": {
       "label": "2015 Estimate!!ANCESTRY!!Total population!!West Indian (excluding Hispanic origin groups)",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -16501,6 +16489,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2015_149EA,CP02PR_2018to2015_149SS"
+    },
+    "CP02PR_2015_016E": {
+      "label": "2015 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Average family size",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2015_016EA,CP02PR_2018to2015_016SS"
     },
     "CP02_2016_057E": {
       "label": "2016 Estimate!!SCHOOL ENROLLMENT!!Population 3 years and over enrolled in school!!College or graduate school",
@@ -16614,14 +16610,6 @@
       "limit": 0,
       "attributes": "CP02_2014_009EA,CP02_2018to2014_009SS"
     },
-    "CP02PR_2015_012E": {
-      "label": "2015 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2015_012EA,CP02PR_2018to2015_012SS"
-    },
     "CP02PR_2015_145E": {
       "label": "2015 Estimate!!ANCESTRY!!Total population!!Swedish",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -16629,6 +16617,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2015_145EA,CP02PR_2018to2015_145SS"
+    },
+    "CP02PR_2015_012E": {
+      "label": "2015 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2015_012EA,CP02PR_2018to2015_012SS"
     },
     "CP02PR_2018_042E": {
       "label": "2018 Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Per 1,000 women 35 to 50 years old",
@@ -17126,14 +17122,6 @@
       "limit": 0,
       "attributes": "CP03_2017_046EA,CP03_2018to2017_046SS"
     },
-    "CP03_2017_045E": {
-      "label": "2017 Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Public administration",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2017_045EA,CP03_2018to2017_045SS"
-    },
     "CP05_2014_061E": {
       "label": "2014 Estimate!!RACE!!Total population!!Two or more races!!White and Asian",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -17141,6 +17129,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2014_061EA,CP05_2018to2014_061SS"
+    },
+    "CP03_2017_045E": {
+      "label": "2017 Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Public administration",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2017_045EA,CP03_2018to2017_045SS"
     },
     "CP05_2015_046E": {
       "label": "2015 Estimate!!RACE!!Total population!!One race!!Asian!!Chinese",
@@ -17174,14 +17170,6 @@
       "limit": 0,
       "attributes": "CP03_2015_033EA,CP03_2018to2015_033SS"
     },
-    "CP03_2017_044E": {
-      "label": "2017 Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Other services, except public administration",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2017_044EA,CP03_2018to2017_044SS"
-    },
     "CP05_2014_062E": {
       "label": "2014 Estimate!!RACE!!Total population!!Two or more races!!Black or African American and American Indian and Alaska Native",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -17189,6 +17177,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2014_062EA,CP05_2018to2014_062SS"
+    },
+    "CP03_2017_044E": {
+      "label": "2017 Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Other services, except public administration",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2017_044EA,CP03_2018to2017_044SS"
     },
     "CP05_2015_047E": {
       "label": "2015 Estimate!!RACE!!Total population!!One race!!Asian!!Filipino",
@@ -17222,14 +17218,6 @@
       "limit": 0,
       "attributes": "CP03_2015_034EA,CP03_2018to2015_034SS"
     },
-    "CP03_2017_043E": {
-      "label": "2017 Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Arts, entertainment, and recreation, and accommodation and food services",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2017_043EA,CP03_2018to2017_043SS"
-    },
     "CP05_2014_063E": {
       "label": "2014 Estimate!!Race alone or in combination with one or more other races!!Total population",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -17237,6 +17225,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2014_063EA,CP05_2018to2014_063SS"
+    },
+    "CP03_2017_043E": {
+      "label": "2017 Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Arts, entertainment, and recreation, and accommodation and food services",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2017_043EA,CP03_2018to2017_043SS"
     },
     "CP05_2015_044E": {
       "label": "2015 Estimate!!RACE!!Total population!!One race!!Asian",
@@ -17270,14 +17266,6 @@
       "limit": 0,
       "attributes": "CP03_2015_035EA,CP03_2018to2015_035SS"
     },
-    "CP03_2017_042E": {
-      "label": "2017 Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Educational services, and health care and social assistance",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2017_042EA,CP03_2018to2017_042SS"
-    },
     "CP05_2014_064E": {
       "label": "2014 Estimate!!Race alone or in combination with one or more other races!!Total population!!White",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -17285,6 +17273,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2014_064EA,CP05_2018to2014_064SS"
+    },
+    "CP03_2017_042E": {
+      "label": "2017 Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Educational services, and health care and social assistance",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2017_042EA,CP03_2018to2017_042SS"
     },
     "CP05_2015_045E": {
       "label": "2015 Estimate!!RACE!!Total population!!One race!!Asian!!Asian Indian",
@@ -18030,14 +18026,6 @@
       "limit": 0,
       "attributes": "CP02PR_2017_051EA,CP02PR_2018to2017_051SS"
     },
-    "CP02_2018_092E": {
-      "label": "2018 Estimate!!PLACE OF BIRTH!!Total population!!Foreign born",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2018_092EA,CP02_2018to2017_092SS"
-    },
     "CP04_2015_090E": {
       "label": "2015 Estimate!!MORTGAGE STATUS!!Owner-occupied units",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -18045,6 +18033,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2015_090EA,CP04_2018to2015_090SS"
+    },
+    "CP02_2018_092E": {
+      "label": "2018 Estimate!!PLACE OF BIRTH!!Total population!!Foreign born",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2018_092EA,CP02_2018to2017_092SS"
     },
     "CP02_2014_140E": {
       "label": "2014 Estimate!!ANCESTRY!!Total population!!Russian",
@@ -18190,14 +18186,6 @@
       "limit": 0,
       "attributes": "CP05_2014_057EA,CP05_2018to2014_057SS"
     },
-    "CP02PR_2014_089E": {
-      "label": "2014 Estimate!!PLACE OF BIRTH!!Total population!!Native!!Born in Puerto Rico or the United States!!In Puerto Rico",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2014_089EA,CP02PR_2018to2014_089SS"
-    },
     "CP04_2015_072E": {
       "label": "2015 Estimate!!SELECTED CHARACTERISTICS!!Occupied housing units",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -18205,6 +18193,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2015_072EA,CP04_2018to2015_072SS"
+    },
+    "CP02PR_2014_089E": {
+      "label": "2014 Estimate!!PLACE OF BIRTH!!Total population!!Native!!Born in Puerto Rico or the United States!!In Puerto Rico",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2014_089EA,CP02PR_2018to2014_089SS"
     },
     "CP02PR_2015_137E": {
       "label": "2015 Estimate!!ANCESTRY!!Total population!!Norwegian",
@@ -18598,14 +18594,6 @@
       "limit": 0,
       "attributes": "CP02_2016_049EA,CP02_2018to2016_049SS"
     },
-    "CP02PR_2014_085E": {
-      "label": "2014 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Elsewhere",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2014_085EA,CP02PR_2018to2014_085SS"
-    },
     "CP04_2015_076E": {
       "label": "2015 Estimate!!OCCUPANTS PER ROOM!!Occupied housing units",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -18613,6 +18601,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2015_076EA,CP04_2018to2015_076SS"
+    },
+    "CP02PR_2014_085E": {
+      "label": "2014 Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Elsewhere",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2014_085EA,CP02PR_2018to2014_085SS"
     },
     "CP02_2014_018E": {
       "label": "2014 Estimate!!RELATIONSHIP!!Population in households!!Householder",
@@ -18934,14 +18930,6 @@
       "limit": 0,
       "attributes": "CP05_2015_058EA,CP05_2018to2015_058SS"
     },
-    "CP03_2014_083E": {
-      "label": "2014 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Families!!$100,000 to $149,999",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2014_083EA,CP03_2018to2014_083SS"
-    },
     "CP04_2016_019E": {
       "label": "2016 Estimate!!YEAR STRUCTURE BUILT!!Total housing units!!Built 2000 to 2009",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -18949,6 +18937,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2016_019EA,CP04_2018to2016_019SS"
+    },
+    "CP03_2014_083E": {
+      "label": "2014 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Families!!$100,000 to $149,999",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2014_083EA,CP03_2018to2014_083SS"
     },
     "CP03_2018_104E": {
       "label": "2018 Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!Civilian noninstitutionalized population 19 to 64 years!!In labor force!!Employed",
@@ -18974,14 +18970,6 @@
       "limit": 0,
       "attributes": "CP03_2017_057EA,CP03_2018to2017_057SS"
     },
-    "CP03_2017_056E": {
-      "label": "2017 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!$35,000 to $49,999",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2017_056EA,CP03_2018to2017_056SS"
-    },
     "CP05_2014_050E": {
       "label": "2014 Estimate!!RACE!!Total population!!One race!!Asian!!Vietnamese",
       "concept": "COMPARATIVE DEMOGRAPHIC ESTIMATES",
@@ -18989,6 +18977,14 @@
       "group": "CP05",
       "limit": 0,
       "attributes": "CP05_2014_050EA,CP05_2018to2014_050SS"
+    },
+    "CP03_2017_056E": {
+      "label": "2017 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!$35,000 to $49,999",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2017_056EA,CP03_2018to2017_056SS"
     },
     "CP05_2015_059E": {
       "label": "2015 Estimate!!RACE!!Total population!!Two or more races!!White and Black or African American",
@@ -20816,14 +20812,6 @@
       "limit": 0,
       "attributes": "CP04_2016_084EA,CP04_2018to2016_084SS"
     },
-    "CP03_2017_011E": {
-      "label": "2017 Estimate!!EMPLOYMENT STATUS!!Females 16 years and over!!In labor force",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2017_011EA,CP03_2018to2017_011SS"
-    },
     "CP04_2015_117E": {
       "label": "2015 Estimate!!SELECTED MONTHLY OWNER COSTS (SMOC)!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!Housing unit without a mortgage (excluding units where SMOCAPI cannot be computed)",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -20831,6 +20819,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2015_117EA,CP04_2018to2015_117SS"
+    },
+    "CP03_2017_011E": {
+      "label": "2017 Estimate!!EMPLOYMENT STATUS!!Females 16 years and over!!In labor force",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2017_011EA,CP03_2018to2017_011SS"
     },
     "CP04_2018_058E": {
       "label": "2018 Estimate!!VEHICLES AVAILABLE!!Occupied housing units!!No vehicles available",
@@ -23298,14 +23294,6 @@
       "limit": 0,
       "attributes": "CP05_2018_042EA,CP05_2018to2017_042SS"
     },
-    "CP04_2017_009E": {
-      "label": "2017 Estimate!!UNITS IN STRUCTURE!!Total housing units!!2 units",
-      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP04",
-      "limit": 0,
-      "attributes": "CP04_2017_009EA,CP04_2018to2017_009SS"
-    },
     "CP04_2018_061E": {
       "label": "2018 Estimate!!VEHICLES AVAILABLE!!Occupied housing units!!3 or more vehicles available",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -23313,6 +23301,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2018_061EA,CP04_2018to2017_061SS"
+    },
+    "CP04_2017_009E": {
+      "label": "2017 Estimate!!UNITS IN STRUCTURE!!Total housing units!!2 units",
+      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP04",
+      "limit": 0,
+      "attributes": "CP04_2017_009EA,CP04_2018to2017_009SS"
     },
     "CP02_2014_044E": {
       "label": "2014 Estimate!!GRANDPARENTS!!Number of grandparents living with own grandchildren under 18 years!!Grandparents responsible for grandchildren",
@@ -23450,14 +23446,6 @@
       "limit": 0,
       "attributes": "CP03_2014_022EA,CP03_2018to2014_022SS"
     },
-    "CP02_2017_004E": {
-      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Family households (families)!!Married-couple family",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2017_004EA,CP02_2018to2017_004SS"
-    },
     "CP02_2017_137E": {
       "label": "2017 Estimate!!ANCESTRY!!Total population!!Norwegian",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
@@ -23465,6 +23453,14 @@
       "group": "CP02",
       "limit": 0,
       "attributes": "CP02_2017_137EA,CP02_2018to2017_137SS"
+    },
+    "CP02_2017_004E": {
+      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Family households (families)!!Married-couple family",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2017_004EA,CP02_2018to2017_004SS"
     },
     "CP02_2015_106E": {
       "label": "2015 Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea!!Africa",
@@ -23490,14 +23486,6 @@
       "limit": 0,
       "attributes": "CP05_2015_081EA,CP05_2018to2015_081SS"
     },
-    "CP02PR_2014_030E": {
-      "label": "2014 Estimate!!MARITAL STATUS!!Females 15 years and over",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2014_030EA,CP02PR_2018to2014_030SS"
-    },
     "CP04_2017_007E": {
       "label": "2017 Estimate!!UNITS IN STRUCTURE!!Total housing units!!1-unit, detached",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -23505,6 +23493,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2017_007EA,CP04_2018to2017_007SS"
+    },
+    "CP02PR_2014_030E": {
+      "label": "2014 Estimate!!MARITAL STATUS!!Females 15 years and over",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2014_030EA,CP02PR_2018to2014_030SS"
     },
     "CP03_2014_055E": {
       "label": "2014 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!$25,000 to $34,999",
@@ -23602,14 +23598,6 @@
       "limit": 0,
       "attributes": "CP04_2017_138EA,CP04_2018to2017_138SS"
     },
-    "CP02_2018_109E": {
-      "label": "2018 Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea!!Northern America",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2018_109EA,CP02_2018to2017_109SS"
-    },
     "CP03_2014_053E": {
       "label": "2014 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!$10,000 to $14,999",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -23617,6 +23605,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2014_053EA,CP03_2018to2014_053SS"
+    },
+    "CP02_2018_109E": {
+      "label": "2018 Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea!!Northern America",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2018_109EA,CP02_2018to2017_109SS"
     },
     "CP03_2015_128E": {
       "label": "2015 Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!All people",
@@ -24354,14 +24350,6 @@
       "limit": 0,
       "attributes": "CP03_2016_067EA,CP03_2018to2016_067SS"
     },
-    "CP02PR_2017_018E": {
-      "label": "2017 Estimate!!RELATIONSHIP!!Population in households!!Householder",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2017_018EA,CP02PR_2018to2017_018SS"
-    },
     "CP04_2014_140E": {
       "label": "2014 Estimate!!GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME (GRAPI)!!Occupied units paying rent (excluding units where GRAPI cannot be computed)!!25.0 to 29.9 percent",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -24369,6 +24357,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2014_140EA,CP04_2018to2014_140SS"
+    },
+    "CP02PR_2017_018E": {
+      "label": "2017 Estimate!!RELATIONSHIP!!Population in households!!Householder",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2017_018EA,CP02PR_2018to2017_018SS"
     },
     "CP05_2016_025E": {
       "label": "2016 Estimate!!SEX AND AGE!!Total population!!18 years and over",
@@ -24466,14 +24462,6 @@
       "limit": 0,
       "attributes": "CP04_2014_142EA,CP04_2018to2014_142SS"
     },
-    "CP02PR_2017_016E": {
-      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Average family size",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2017_016EA,CP02PR_2018to2017_016SS"
-    },
     "CP02PR_2017_149E": {
       "label": "2017 Estimate!!ANCESTRY!!Total population!!West Indian (excluding Hispanic origin groups)",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -24481,6 +24469,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2017_149EA,CP02PR_2018to2017_149SS"
+    },
+    "CP02PR_2017_016E": {
+      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Average family size",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2017_016EA,CP02PR_2018to2017_016SS"
     },
     "CP05_2016_027E": {
       "label": "2016 Estimate!!SEX AND AGE!!Total population!!18 years and over!!Female",
@@ -24506,14 +24502,6 @@
       "limit": 0,
       "attributes": "CP02_2014_050EA,CP02_2018to2014_050SS"
     },
-    "CP02PR_2017_012E": {
-      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2017_012EA,CP02PR_2018to2017_012SS"
-    },
     "CP02PR_2017_145E": {
       "label": "2017 Estimate!!ANCESTRY!!Total population!!Swedish",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -24521,6 +24509,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2017_145EA,CP02PR_2018to2017_145SS"
+    },
+    "CP02PR_2017_012E": {
+      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2017_012EA,CP02PR_2018to2017_012SS"
     },
     "CP05_2018_072E": {
       "label": "2018 Estimate!!HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Mexican",
@@ -24610,14 +24606,6 @@
       "limit": 0,
       "attributes": "CP05_2016_029EA,CP05_2018to2016_029SS"
     },
-    "CP02PR_2017_014E": {
-      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2017_014EA,CP02PR_2018to2017_014SS"
-    },
     "CP02PR_2017_147E": {
       "label": "2017 Estimate!!ANCESTRY!!Total population!!Ukrainian",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -24625,6 +24613,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2017_147EA,CP02PR_2018to2017_147SS"
+    },
+    "CP02PR_2017_014E": {
+      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people 65 years and over",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2017_014EA,CP02PR_2018to2017_014SS"
     },
     "CP02_2015_110E": {
       "label": "2015 Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over",
@@ -24871,14 +24867,6 @@
       "limit": 0,
       "attributes": "CP04_2016_064EA,CP04_2018to2016_064SS"
     },
-    "CP04_2014_019E": {
-      "label": "2014 Estimate!!YEAR STRUCTURE BUILT!!Total housing units!!Built 2000 to 2009",
-      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP04",
-      "limit": 0,
-      "attributes": "CP04_2014_019EA,CP04_2018to2014_019SS"
-    },
     "CP04_2018_077E": {
       "label": "2018 Estimate!!OCCUPANTS PER ROOM!!Occupied housing units!!1.00 or less",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -24886,6 +24874,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2018_077EA,CP04_2018to2017_077SS"
+    },
+    "CP04_2014_019E": {
+      "label": "2014 Estimate!!YEAR STRUCTURE BUILT!!Total housing units!!Built 2000 to 2009",
+      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP04",
+      "limit": 0,
+      "attributes": "CP04_2014_019EA,CP04_2018to2014_019SS"
     },
     "CP05_2018_074E": {
       "label": "2018 Estimate!!HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Cuban",
@@ -24999,14 +24995,6 @@
       "limit": 0,
       "attributes": "CP04_2018_071EA,CP04_2018to2017_071SS"
     },
-    "CP02_2014_059E": {
-      "label": "2014 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Less than 9th grade",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2014_059EA,CP02_2018to2014_059SS"
-    },
     "CP04_2014_012E": {
       "label": "2014 Estimate!!UNITS IN STRUCTURE!!Total housing units!!10 to 19 units",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -25014,6 +25002,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2014_012EA,CP04_2018to2014_012SS"
+    },
+    "CP02_2014_059E": {
+      "label": "2014 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Less than 9th grade",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2014_059EA,CP02_2018to2014_059SS"
     },
     "CP03_2014_059E": {
       "label": "2014 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!$100,000 to $149,999",
@@ -25079,14 +25075,6 @@
       "limit": 0,
       "attributes": "CP04_2016_065EA,CP04_2018to2016_065SS"
     },
-    "CP02_2014_057E": {
-      "label": "2014 Estimate!!SCHOOL ENROLLMENT!!Population 3 years and over enrolled in school!!College or graduate school",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2014_057EA,CP02_2018to2014_057SS"
-    },
     "CP04_2018_072E": {
       "label": "2018 Estimate!!SELECTED CHARACTERISTICS!!Occupied housing units",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -25094,6 +25082,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2018_072EA,CP04_2018to2017_072SS"
+    },
+    "CP02_2014_057E": {
+      "label": "2014 Estimate!!SCHOOL ENROLLMENT!!Population 3 years and over enrolled in school!!College or graduate school",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2014_057EA,CP02_2018to2014_057SS"
     },
     "CP05_2018_079E": {
       "label": "2018 Estimate!!HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!American Indian and Alaska Native alone",
@@ -25279,14 +25275,6 @@
       "limit": 0,
       "attributes": "CP05_2018_077EA,CP05_2018to2017_077SS"
     },
-    "CP02_2014_055E": {
-      "label": "2014 Estimate!!SCHOOL ENROLLMENT!!Population 3 years and over enrolled in school!!Elementary school (grades 1-8)",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "CP02",
-      "limit": 0,
-      "attributes": "CP02_2014_055EA,CP02_2018to2014_055SS"
-    },
     "CP04_2018_074E": {
       "label": "2018 Estimate!!SELECTED CHARACTERISTICS!!Occupied housing units!!Lacking complete kitchen facilities",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -25294,6 +25282,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2018_074EA,CP04_2018to2017_074SS"
+    },
+    "CP02_2014_055E": {
+      "label": "2014 Estimate!!SCHOOL ENROLLMENT!!Population 3 years and over enrolled in school!!Elementary school (grades 1-8)",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "CP02",
+      "limit": 0,
+      "attributes": "CP02_2014_055EA,CP02_2018to2014_055SS"
     },
     "CP03_2014_058E": {
       "label": "2014 Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!$75,000 to $99,999",
@@ -25903,14 +25899,6 @@
       "limit": 0,
       "attributes": "CP04_2014_020EA,CP04_2018to2014_020SS"
     },
-    "CP02PR_2017_005E": {
-      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Family households (families)!!Married-couple family!!With own children of the householder under 18 years",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2017_005EA,CP02PR_2018to2017_005SS"
-    },
     "CP02PR_2017_138E": {
       "label": "2017 Estimate!!ANCESTRY!!Total population!!Polish",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -25918,6 +25906,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2017_138EA,CP02PR_2018to2017_138SS"
+    },
+    "CP02PR_2017_005E": {
+      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Family households (families)!!Married-couple family!!With own children of the householder under 18 years",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2017_005EA,CP02PR_2018to2017_005SS"
     },
     "CP02_2015_125E": {
       "label": "2015 Estimate!!ANCESTRY!!Total population!!Czech",
@@ -26023,14 +26019,6 @@
       "limit": 0,
       "attributes": "CP02_2014_064EA,CP02_2018to2014_064SS"
     },
-    "CP03_2017_004E": {
-      "label": "2017 Estimate!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force!!Civilian labor force!!Employed",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2017_004EA,CP03_2018to2017_004SS"
-    },
     "CP03_2017_137E": {
       "label": "2017 Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!Unrelated individuals 15 years and over",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -26038,6 +26026,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2017_137EA,CP03_2018to2017_137SS"
+    },
+    "CP03_2017_004E": {
+      "label": "2017 Estimate!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force!!Civilian labor force!!Employed",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2017_004EA,CP03_2018to2017_004SS"
     },
     "CP02PR_2016_069E": {
       "label": "2016 Estimate!!VETERAN STATUS!!Civilian population 18 years and over!!Civilian veterans",
@@ -26063,14 +26059,6 @@
       "limit": 0,
       "attributes": "CP05_2016_038EA,CP05_2018to2016_038SS"
     },
-    "CP02PR_2017_003E": {
-      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Family households (families)!!With own children of the householder under 18 years",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "CP02PR",
-      "limit": 0,
-      "attributes": "CP02PR_2017_003EA,CP02PR_2018to2017_003SS"
-    },
     "CP02PR_2017_136E": {
       "label": "2017 Estimate!!ANCESTRY!!Total population!!Lithuanian",
       "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -26078,6 +26066,14 @@
       "group": "CP02PR",
       "limit": 0,
       "attributes": "CP02PR_2017_136EA,CP02PR_2018to2017_136SS"
+    },
+    "CP02PR_2017_003E": {
+      "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Family households (families)!!With own children of the householder under 18 years",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "CP02PR",
+      "limit": 0,
+      "attributes": "CP02PR_2017_003EA,CP02PR_2018to2017_003SS"
     },
     "CP02_2015_127E": {
       "label": "2015 Estimate!!ANCESTRY!!Total population!!Dutch",
@@ -26183,14 +26179,6 @@
       "limit": 0,
       "attributes": "CP02_2014_062EA,CP02_2018to2014_062SS"
     },
-    "CP03_2017_002E": {
-      "label": "2017 Estimate!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force",
-      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP03",
-      "limit": 0,
-      "attributes": "CP03_2017_002EA,CP03_2018to2017_002SS"
-    },
     "CP03_2017_135E": {
       "label": "2017 Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!All people!!18 years and over!!65 years and over",
       "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
@@ -26198,6 +26186,14 @@
       "group": "CP03",
       "limit": 0,
       "attributes": "CP03_2017_135EA,CP03_2018to2017_135SS"
+    },
+    "CP03_2017_002E": {
+      "label": "2017 Estimate!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force",
+      "concept": "COMPARATIVE ECONOMIC CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP03",
+      "limit": 0,
+      "attributes": "CP03_2017_002EA,CP03_2018to2017_002SS"
     },
     "CP03_2017_001E": {
       "label": "2017 Estimate!!EMPLOYMENT STATUS!!Population 16 years and over",
@@ -26215,13 +26211,13 @@
       "limit": 0,
       "attributes": "CP02_2016_091EA,CP02_2018to2016_091SS"
     },
-    "CP02_2014_061E": {
-      "label": "2014 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!High school graduate (includes equivalency)",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+    "CP02PR_2017_134E": {
+      "label": "2017 Estimate!!ANCESTRY!!Total population!!Irish",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
       "predicateType": "float",
-      "group": "CP02",
+      "group": "CP02PR",
       "limit": 0,
-      "attributes": "CP02_2014_061EA,CP02_2018to2014_061SS"
+      "attributes": "CP02PR_2017_134EA,CP02PR_2018to2017_134SS"
     },
     "CP02PR_2017_001E": {
       "label": "2017 Estimate!!HOUSEHOLDS BY TYPE!!Total households",
@@ -26231,13 +26227,13 @@
       "limit": 0,
       "attributes": "CP02PR_2017_001EA,CP02PR_2018to2017_001SS"
     },
-    "CP02PR_2017_134E": {
-      "label": "2017 Estimate!!ANCESTRY!!Total population!!Irish",
-      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN PUERTO RICO",
+    "CP02_2014_061E": {
+      "label": "2014 Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!High school graduate (includes equivalency)",
+      "concept": "COMPARATIVE SOCIAL CHARACTERISTICS IN THE UNITED STATES",
       "predicateType": "float",
-      "group": "CP02PR",
+      "group": "CP02",
       "limit": 0,
-      "attributes": "CP02PR_2017_134EA,CP02PR_2018to2017_134SS"
+      "attributes": "CP02_2014_061EA,CP02_2018to2014_061SS"
     },
     "CP02_2017_150E": {
       "label": "2017 Estimate!!COMPUTERS AND INTERNET USE!!Total households",
@@ -26359,14 +26355,6 @@
       "limit": 0,
       "attributes": "CP02_2016_090EA,CP02_2018to2016_090SS"
     },
-    "CP04_2014_029E": {
-      "label": "2014 Estimate!!ROOMS!!Total housing units!!2 rooms",
-      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
-      "predicateType": "float",
-      "group": "CP04",
-      "limit": 0,
-      "attributes": "CP04_2014_029EA,CP04_2018to2014_029SS"
-    },
     "CP04_2018_087E": {
       "label": "2018 Estimate!!VALUE!!Owner-occupied units!!$500,000 to $999,999",
       "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
@@ -26374,6 +26362,14 @@
       "group": "CP04",
       "limit": 0,
       "attributes": "CP04_2018_087EA,CP04_2018to2017_087SS"
+    },
+    "CP04_2014_029E": {
+      "label": "2014 Estimate!!ROOMS!!Total housing units!!2 rooms",
+      "concept": "COMPARATIVE HOUSING CHARACTERISTICS",
+      "predicateType": "float",
+      "group": "CP04",
+      "limit": 0,
+      "attributes": "CP04_2014_029EA,CP04_2018to2014_029SS"
     },
     "CP04_2016_050E": {
       "label": "2016 Estimate!!YEAR HOUSEHOLDER MOVED INTO UNIT!!Occupied housing units",

@@ -589,14 +589,6 @@
       "limit": 0,
       "attributes": "DP02_0098PEA,DP02_0098PM,DP02_0098PMA"
     },
-    "DP02_0128E": {
-      "label": "Estimate!!ANCESTRY!!Total population!!English",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "int",
-      "group": "DP02",
-      "limit": 0,
-      "attributes": "DP02_0128EA,DP02_0128M,DP02_0128MA"
-    },
     "DP03_0101E": {
       "label": "Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!Civilian noninstitutionalized population under 19 years!!No health insurance coverage",
       "concept": "SELECTED ECONOMIC CHARACTERISTICS",
@@ -604,6 +596,14 @@
       "group": "DP03",
       "limit": 0,
       "attributes": "DP03_0101EA,DP03_0101M,DP03_0101MA"
+    },
+    "DP02_0128E": {
+      "label": "Estimate!!ANCESTRY!!Total population!!English",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "DP02",
+      "limit": 0,
+      "attributes": "DP02_0128EA,DP02_0128M,DP02_0128MA"
     },
     "DP02PR_0081E": {
       "label": "Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over!!Different house in Puerto Rico or the U.S.!!In Puerto Rico",
@@ -733,14 +733,6 @@
       "limit": 0,
       "attributes": "DP05_0021EA,DP05_0021M,DP05_0021MA"
     },
-    "DP02PR_0078E": {
-      "label": "Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
-      "group": "DP02PR",
-      "limit": 0,
-      "attributes": "DP02PR_0078EA,DP02PR_0078M,DP02PR_0078MA"
-    },
     "DP04_0141PE": {
       "label": "Percent Estimate!!GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME (GRAPI)!!Occupied units paying rent (excluding units where GRAPI cannot be computed)!!30.0 to 34.9 percent",
       "concept": "SELECTED HOUSING CHARACTERISTICS",
@@ -748,6 +740,14 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0141PEA,DP04_0141PM,DP04_0141PMA"
+    },
+    "DP02PR_0078E": {
+      "label": "Estimate!!RESIDENCE 1 YEAR AGO!!Population 1 year and over",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "DP02PR",
+      "limit": 0,
+      "attributes": "DP02PR_0078EA,DP02PR_0078M,DP02PR_0078MA"
     },
     "DP02_0126PE": {
       "label": "Percent Estimate!!ANCESTRY!!Total population!!Danish",
@@ -981,14 +981,6 @@
       "limit": 0,
       "attributes": "DP03_0084PEA,DP03_0084PM,DP03_0084PMA"
     },
-    "DP02PR_0066PE": {
-      "label": "Percent Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!High school graduate or higher",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "DP02PR",
-      "limit": 0,
-      "attributes": "DP02PR_0066PEA,DP02PR_0066PM,DP02PR_0066PMA"
-    },
     "DP03_0069E": {
       "label": "Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Total households!!With retirement income!!Mean retirement income (dollars)",
       "concept": "SELECTED ECONOMIC CHARACTERISTICS",
@@ -997,13 +989,13 @@
       "limit": 0,
       "attributes": "DP03_0069EA,DP03_0069M,DP03_0069MA"
     },
-    "DP02PR_0076E": {
-      "label": "Estimate!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over",
+    "DP02PR_0066PE": {
+      "label": "Percent Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!High school graduate or higher",
       "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
+      "predicateType": "float",
       "group": "DP02PR",
       "limit": 0,
-      "attributes": "DP02PR_0076EA,DP02PR_0076M,DP02PR_0076MA"
+      "attributes": "DP02PR_0066PEA,DP02PR_0066PM,DP02PR_0066PMA"
     },
     "DP03_0107PE": {
       "label": "Percent Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!Civilian noninstitutionalized population 19 to 64 years!!In labor force!!Employed!!With health insurance coverage!!With public coverage",
@@ -1012,6 +1004,14 @@
       "group": "DP03",
       "limit": 0,
       "attributes": "DP03_0107PEA,DP03_0107PM,DP03_0107PMA"
+    },
+    "DP02PR_0076E": {
+      "label": "Estimate!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "DP02PR",
+      "limit": 0,
+      "attributes": "DP02PR_0076EA,DP02PR_0076M,DP02PR_0076MA"
     },
     "DP05_0033PE": {
       "label": "Percent Estimate!!RACE!!Total population",
@@ -2180,14 +2180,6 @@
       "limit": 0,
       "attributes": "DP02_0091PEA,DP02_0091PM,DP02_0091PMA"
     },
-    "DP02PR_0130E": {
-      "label": "Estimate!!ANCESTRY!!Total population!!French Canadian",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
-      "group": "DP02PR",
-      "limit": 0,
-      "attributes": "DP02PR_0130EA,DP02PR_0130M,DP02PR_0130MA"
-    },
     "DP03_0121E": {
       "label": "Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!All families!!With related children of the householder under 18 years!!With related children of the householder under 5 years only",
       "concept": "SELECTED ECONOMIC CHARACTERISTICS",
@@ -2195,6 +2187,14 @@
       "group": "DP03",
       "limit": 0,
       "attributes": "DP03_0121EA,DP03_0121M,DP03_0121MA"
+    },
+    "DP02PR_0130E": {
+      "label": "Estimate!!ANCESTRY!!Total population!!French Canadian",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "DP02PR",
+      "limit": 0,
+      "attributes": "DP02PR_0130EA,DP02PR_0130M,DP02PR_0130MA"
     },
     "DP05_0034E": {
       "label": "Estimate!!RACE!!Total population!!One race",
@@ -2363,11 +2363,6 @@
       "group": "DP02PR",
       "limit": 0,
       "attributes": "DP02PR_0089EA,DP02PR_0089M,DP02PR_0089MA"
-    },
-    "TRIBALSUB": {
-      "label": "Geography",
-      "group": "N/A",
-      "limit": 0
     },
     "DP05_0021PE": {
       "label": "Percent Estimate!!SEX AND AGE!!Total population!!18 years and over",
@@ -3424,14 +3419,6 @@
       "limit": 0,
       "attributes": "DP03_0128EA,DP03_0128M,DP03_0128MA"
     },
-    "DP02_0104E": {
-      "label": "Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea!!Europe",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "int",
-      "group": "DP02",
-      "limit": 0,
-      "attributes": "DP02_0104EA,DP02_0104M,DP02_0104MA"
-    },
     "DP03_0125E": {
       "label": "Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!Families with female householder, no husband present",
       "concept": "SELECTED ECONOMIC CHARACTERISTICS",
@@ -3439,6 +3426,14 @@
       "group": "DP03",
       "limit": 0,
       "attributes": "DP03_0125EA,DP03_0125M,DP03_0125MA"
+    },
+    "DP02_0104E": {
+      "label": "Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea!!Europe",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "DP02",
+      "limit": 0,
+      "attributes": "DP02_0104EA,DP02_0104M,DP02_0104MA"
     },
     "DP04_0114E": {
       "label": "Estimate!!SELECTED MONTHLY OWNER COSTS AS A PERCENTAGE OF HOUSEHOLD INCOME (SMOCAPI)!!Housing units with a mortgage (excluding units where SMOCAPI cannot be computed)!!30.0 to 34.9 percent",
@@ -3544,14 +3539,6 @@
       "limit": 0,
       "attributes": "DP02_0092PEA,DP02_0092PM,DP02_0092PMA"
     },
-    "DP02PR_0011PE": {
-      "label": "Percent Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "DP02PR",
-      "limit": 0,
-      "attributes": "DP02PR_0011PEA,DP02PR_0011PM,DP02PR_0011PMA"
-    },
     "DP02PR_0140E": {
       "label": "Estimate!!ANCESTRY!!Total population!!Russian",
       "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -3559,6 +3546,14 @@
       "group": "DP02PR",
       "limit": 0,
       "attributes": "DP02PR_0140EA,DP02PR_0140M,DP02PR_0140MA"
+    },
+    "DP02PR_0011PE": {
+      "label": "Percent Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "DP02PR",
+      "limit": 0,
+      "attributes": "DP02PR_0011PEA,DP02PR_0011PM,DP02PR_0011PMA"
     },
     "DP03_0118PE": {
       "label": "Percent Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!Civilian noninstitutionalized population 19 to 64 years!!Not in labor force!!No health insurance coverage",
@@ -3781,11 +3776,6 @@
       "limit": 0,
       "attributes": "DP04_0041PEA,DP04_0041PM,DP04_0041PMA"
     },
-    "US": {
-      "label": "Geography",
-      "group": "N/A",
-      "limit": 0
-    },
     "DP03_0132E": {
       "label": "Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!All people!!Under 18 years!!Related children of the householder under 18 years!!Related children of the householder 5 to 17 years",
       "concept": "SELECTED ECONOMIC CHARACTERISTICS",
@@ -3930,14 +3920,6 @@
       "limit": 0,
       "attributes": "DP02PR_0113PEA,DP02PR_0113PM,DP02PR_0113PMA"
     },
-    "DP02_0069E": {
-      "label": "Estimate!!VETERAN STATUS!!Civilian population 18 years and over!!Civilian veterans",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "int",
-      "group": "DP02",
-      "limit": 0,
-      "attributes": "DP02_0069EA,DP02_0069M,DP02_0069MA"
-    },
     "DP04_0085PE": {
       "label": "Percent Estimate!!VALUE!!Owner-occupied units!!$200,000 to $299,999",
       "concept": "SELECTED HOUSING CHARACTERISTICS",
@@ -3945,6 +3927,14 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0085PEA,DP04_0085PM,DP04_0085PMA"
+    },
+    "DP02_0069E": {
+      "label": "Estimate!!VETERAN STATUS!!Civilian population 18 years and over!!Civilian veterans",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "DP02",
+      "limit": 0,
+      "attributes": "DP02_0069EA,DP02_0069M,DP02_0069MA"
     },
     "DP04_0062E": {
       "label": "Estimate!!HOUSE HEATING FUEL!!Occupied housing units",
@@ -4018,14 +4008,6 @@
       "limit": 0,
       "attributes": "DP04_0065EA,DP04_0065M,DP04_0065MA"
     },
-    "DP02PR_0017E": {
-      "label": "Estimate!!RELATIONSHIP!!Population in households",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
-      "group": "DP02PR",
-      "limit": 0,
-      "attributes": "DP02PR_0017EA,DP02PR_0017M,DP02PR_0017MA"
-    },
     "DP03_0136PE": {
       "label": "Percent Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!People in families",
       "concept": "SELECTED ECONOMIC CHARACTERISTICS",
@@ -4033,6 +4015,14 @@
       "group": "DP03",
       "limit": 0,
       "attributes": "DP03_0136PEA,DP03_0136PM,DP03_0136PMA"
+    },
+    "DP02PR_0017E": {
+      "label": "Estimate!!RELATIONSHIP!!Population in households",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "DP02PR",
+      "limit": 0,
+      "attributes": "DP02PR_0017EA,DP02PR_0017M,DP02PR_0017MA"
     },
     "DP03_0029PE": {
       "label": "Percent Estimate!!OCCUPATION!!Civilian employed population 16 years and over!!Sales and office occupations",
@@ -4185,6 +4175,11 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0139PEA,DP04_0139PM,DP04_0139PMA"
+    },
+    "NATION": {
+      "label": "Geography",
+      "group": "N/A",
+      "limit": 0
     },
     "DP02_0065E": {
       "label": "Estimate!!EDUCATIONAL ATTAINMENT!!Population 25 years and over!!Graduate or professional degree",
@@ -4386,14 +4381,6 @@
       "limit": 0,
       "attributes": "DP04_0019PEA,DP04_0019PM,DP04_0019PMA"
     },
-    "DP03_0016PE": {
-      "label": "Percent Estimate!!EMPLOYMENT STATUS!!Own children of the householder 6 to 17 years",
-      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "DP03",
-      "limit": 0,
-      "attributes": "DP03_0016PEA,DP03_0016PM,DP03_0016PMA"
-    },
     "DP05_0075PE": {
       "label": "Percent Estimate!!HISPANIC OR LATINO AND RACE!!Total population!!Hispanic or Latino (of any race)!!Other Hispanic or Latino",
       "concept": "ACS DEMOGRAPHIC AND HOUSING ESTIMATES",
@@ -4401,6 +4388,14 @@
       "group": "DP05",
       "limit": 0,
       "attributes": "DP05_0075PEA,DP05_0075PM,DP05_0075PMA"
+    },
+    "DP03_0016PE": {
+      "label": "Percent Estimate!!EMPLOYMENT STATUS!!Own children of the householder 6 to 17 years",
+      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "DP03",
+      "limit": 0,
+      "attributes": "DP03_0016PEA,DP03_0016PM,DP03_0016PMA"
     },
     "DP02_0013PE": {
       "label": "Percent Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Households with one or more people under 18 years",
@@ -4466,14 +4461,6 @@
       "limit": 0,
       "attributes": "DP02PR_0084PEA,DP02PR_0084PM,DP02PR_0084PMA"
     },
-    "DP03_0095E": {
-      "label": "Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population",
-      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "DP03",
-      "limit": 0,
-      "attributes": "DP03_0095EA,DP03_0095M,DP03_0095MA"
-    },
     "DP04_0058E": {
       "label": "Estimate!!VEHICLES AVAILABLE!!Occupied housing units!!No vehicles available",
       "concept": "SELECTED HOUSING CHARACTERISTICS",
@@ -4481,6 +4468,14 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0058EA,DP04_0058M,DP04_0058MA"
+    },
+    "DP03_0095E": {
+      "label": "Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population",
+      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "DP03",
+      "limit": 0,
+      "attributes": "DP03_0095EA,DP03_0095M,DP03_0095MA"
     },
     "DP04_0126PE": {
       "label": "Percent Estimate!!GROSS RENT!!Occupied units paying rent",
@@ -4903,14 +4898,6 @@
       "limit": 0,
       "attributes": "DP04_0100EA,DP04_0100M,DP04_0100MA"
     },
-    "DP03_0006E": {
-      "label": "Estimate!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force!!Armed Forces",
-      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "DP03",
-      "limit": 0,
-      "attributes": "DP03_0006EA,DP03_0006M,DP03_0006MA"
-    },
     "DP04_0068PE": {
       "label": "Percent Estimate!!HOUSE HEATING FUEL!!Occupied housing units!!Wood",
       "concept": "SELECTED HOUSING CHARACTERISTICS",
@@ -4918,6 +4905,14 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0068PEA,DP04_0068PM,DP04_0068PMA"
+    },
+    "DP03_0006E": {
+      "label": "Estimate!!EMPLOYMENT STATUS!!Population 16 years and over!!In labor force!!Armed Forces",
+      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "DP03",
+      "limit": 0,
+      "attributes": "DP03_0006EA,DP03_0006M,DP03_0006MA"
     },
     "DP02PR_0040PE": {
       "label": "Percent Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Per 1,000 women 15 to 19 years old",
@@ -5409,14 +5404,6 @@
       "limit": 0,
       "attributes": "DP02_0058PEA,DP02_0058PM,DP02_0058PMA"
     },
-    "DP02PR_0125PE": {
-      "label": "Percent Estimate!!ANCESTRY!!Total population!!Czech",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "float",
-      "group": "DP02PR",
-      "limit": 0,
-      "attributes": "DP02PR_0125PEA,DP02PR_0125PM,DP02PR_0125PMA"
-    },
     "DP05_0032PE": {
       "label": "Percent Estimate!!SEX AND AGE!!Total population!!65 years and over!!Sex ratio (males per 100 females)",
       "concept": "ACS DEMOGRAPHIC AND HOUSING ESTIMATES",
@@ -5424,6 +5411,14 @@
       "group": "DP05",
       "limit": 0,
       "attributes": "DP05_0032PEA,DP05_0032PM,DP05_0032PMA"
+    },
+    "DP02PR_0125PE": {
+      "label": "Percent Estimate!!ANCESTRY!!Total population!!Czech",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "float",
+      "group": "DP02PR",
+      "limit": 0,
+      "attributes": "DP02PR_0125PEA,DP02PR_0125PM,DP02PR_0125PMA"
     },
     "DP04_0073PE": {
       "label": "Percent Estimate!!SELECTED CHARACTERISTICS!!Occupied housing units!!Lacking complete plumbing facilities",
@@ -5681,14 +5676,6 @@
       "limit": 0,
       "attributes": "DP03_0004PEA,DP03_0004PM,DP03_0004PMA"
     },
-    "DP03_0097E": {
-      "label": "Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!With health insurance coverage!!With private health insurance",
-      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "DP03",
-      "limit": 0,
-      "attributes": "DP03_0097EA,DP03_0097M,DP03_0097MA"
-    },
     "DP04_0060PE": {
       "label": "Percent Estimate!!VEHICLES AVAILABLE!!Occupied housing units!!2 vehicles available",
       "concept": "SELECTED HOUSING CHARACTERISTICS",
@@ -5696,6 +5683,14 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0060PEA,DP04_0060PM,DP04_0060PMA"
+    },
+    "DP03_0097E": {
+      "label": "Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!With health insurance coverage!!With private health insurance",
+      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "DP03",
+      "limit": 0,
+      "attributes": "DP03_0097EA,DP03_0097M,DP03_0097MA"
     },
     "DP02PR_0024E": {
       "label": "Estimate!!MARITAL STATUS!!Males 15 years and over",
@@ -6110,14 +6105,6 @@
       "limit": 0,
       "attributes": "DP02PR_0074PEA,DP02PR_0074PM,DP02PR_0074PMA"
     },
-    "DP04_0003E": {
-      "label": "Estimate!!HOUSING OCCUPANCY!!Total housing units!!Vacant housing units",
-      "concept": "SELECTED HOUSING CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "DP04",
-      "limit": 0,
-      "attributes": "DP04_0003EA,DP04_0003M,DP04_0003MA"
-    },
     "DP04_0136E": {
       "label": "Estimate!!GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME (GRAPI)!!Occupied units paying rent (excluding units where GRAPI cannot be computed)",
       "concept": "SELECTED HOUSING CHARACTERISTICS",
@@ -6125,6 +6112,14 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0136EA,DP04_0136M,DP04_0136MA"
+    },
+    "DP04_0003E": {
+      "label": "Estimate!!HOUSING OCCUPANCY!!Total housing units!!Vacant housing units",
+      "concept": "SELECTED HOUSING CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "DP04",
+      "limit": 0,
+      "attributes": "DP04_0003EA,DP04_0003M,DP04_0003MA"
     },
     "DP03_0018E": {
       "label": "Estimate!!COMMUTING TO WORK!!Workers 16 years and over",
@@ -6150,14 +6145,6 @@
       "limit": 0,
       "attributes": "DP04_0002EA,DP04_0002M,DP04_0002MA"
     },
-    "DP03_0019E": {
-      "label": "Estimate!!COMMUTING TO WORK!!Workers 16 years and over!!Car, truck, or van -- drove alone",
-      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "DP03",
-      "limit": 0,
-      "attributes": "DP03_0019EA,DP03_0019M,DP03_0019MA"
-    },
     "DP04_0056PE": {
       "label": "Percent Estimate!!YEAR HOUSEHOLDER MOVED INTO UNIT!!Occupied housing units!!Moved in 1989 and earlier",
       "concept": "SELECTED HOUSING CHARACTERISTICS",
@@ -6165,6 +6152,14 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0056PEA,DP04_0056PM,DP04_0056PMA"
+    },
+    "DP03_0019E": {
+      "label": "Estimate!!COMMUTING TO WORK!!Workers 16 years and over!!Car, truck, or van -- drove alone",
+      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "DP03",
+      "limit": 0,
+      "attributes": "DP03_0019EA,DP03_0019M,DP03_0019MA"
     },
     "DP03_0016E": {
       "label": "Estimate!!EMPLOYMENT STATUS!!Own children of the householder 6 to 17 years",
@@ -6603,14 +6598,6 @@
       "limit": 0,
       "attributes": "DP05_0060EA,DP05_0060M,DP05_0060MA"
     },
-    "DP02PR_0039E": {
-      "label": "Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Per 1,000 women 15 to 50 years old",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
-      "group": "DP02PR",
-      "limit": 0,
-      "attributes": "DP02PR_0039EA,DP02PR_0039M,DP02PR_0039MA"
-    },
     "DP04_0087E": {
       "label": "Estimate!!VALUE!!Owner-occupied units!!$500,000 to $999,999",
       "concept": "SELECTED HOUSING CHARACTERISTICS",
@@ -6618,6 +6605,14 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0087EA,DP04_0087M,DP04_0087MA"
+    },
+    "DP02PR_0039E": {
+      "label": "Estimate!!FERTILITY!!Number of women 15 to 50 years old who had a birth in the past 12 months!!Per 1,000 women 15 to 50 years old",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "DP02PR",
+      "limit": 0,
+      "attributes": "DP02PR_0039EA,DP02PR_0039M,DP02PR_0039MA"
     },
     "DP02_0045E": {
       "label": "Estimate!!GRANDPARENTS!!Number of grandparents living with own grandchildren under 18 years!!Years responsible for grandchildren!!Less than 1 year",
@@ -6675,14 +6670,6 @@
       "limit": 0,
       "attributes": "DP02PR_0038EA,DP02PR_0038M,DP02PR_0038MA"
     },
-    "DP02_0044E": {
-      "label": "Estimate!!GRANDPARENTS!!Number of grandparents living with own grandchildren under 18 years!!Grandparents responsible for grandchildren",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "int",
-      "group": "DP02",
-      "limit": 0,
-      "attributes": "DP02_0044EA,DP02_0044M,DP02_0044MA"
-    },
     "DP05_0055PE": {
       "label": "Percent Estimate!!RACE!!Total population!!One race!!Native Hawaiian and Other Pacific Islander!!Samoan",
       "concept": "ACS DEMOGRAPHIC AND HOUSING ESTIMATES",
@@ -6690,6 +6677,14 @@
       "group": "DP05",
       "limit": 0,
       "attributes": "DP05_0055PEA,DP05_0055PM,DP05_0055PMA"
+    },
+    "DP02_0044E": {
+      "label": "Estimate!!GRANDPARENTS!!Number of grandparents living with own grandchildren under 18 years!!Grandparents responsible for grandchildren",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "DP02",
+      "limit": 0,
+      "attributes": "DP02_0044EA,DP02_0044M,DP02_0044MA"
     },
     "DP03_0093PE": {
       "label": "Percent Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)!!Median earnings for male full-time, year-round workers (dollars)",
@@ -7530,14 +7525,6 @@
       "limit": 0,
       "attributes": "DP04_0031PEA,DP04_0031PM,DP04_0031PMA"
     },
-    "DP02_0016PE": {
-      "label": "Percent Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Average family size",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "int",
-      "group": "DP02",
-      "limit": 0,
-      "attributes": "DP02_0016PEA,DP02_0016PM,DP02_0016PMA"
-    },
     "DP03_0039E": {
       "label": "Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Information",
       "concept": "SELECTED ECONOMIC CHARACTERISTICS",
@@ -7545,6 +7532,14 @@
       "group": "DP03",
       "limit": 0,
       "attributes": "DP03_0039EA,DP03_0039M,DP03_0039MA"
+    },
+    "DP02_0016PE": {
+      "label": "Percent Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Average family size",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
+      "group": "DP02",
+      "limit": 0,
+      "attributes": "DP02_0016PEA,DP02_0016PM,DP02_0016PMA"
     },
     "DP03_0036E": {
       "label": "Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Wholesale trade",
@@ -8143,14 +8138,6 @@
       "limit": 0,
       "attributes": "DP04_0129PEA,DP04_0129PM,DP04_0129PMA"
     },
-    "DP02_0123PE": {
-      "label": "Percent Estimate!!ANCESTRY!!Total population!!American",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
-      "predicateType": "float",
-      "group": "DP02",
-      "limit": 0,
-      "attributes": "DP02_0123PEA,DP02_0123PM,DP02_0123PMA"
-    },
     "DP02PR_0048E": {
       "label": "Estimate!!GRANDPARENTS!!Number of grandparents living with own grandchildren under 18 years!!Years responsible for grandchildren!!5 or more years",
       "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
@@ -8158,6 +8145,14 @@
       "group": "DP02PR",
       "limit": 0,
       "attributes": "DP02PR_0048EA,DP02PR_0048M,DP02PR_0048MA"
+    },
+    "DP02_0123PE": {
+      "label": "Percent Estimate!!ANCESTRY!!Total population!!American",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "float",
+      "group": "DP02",
+      "limit": 0,
+      "attributes": "DP02_0123PEA,DP02_0123PM,DP02_0123PMA"
     },
     "DP02PR_0145PE": {
       "label": "Percent Estimate!!ANCESTRY!!Total population!!Swedish",
@@ -8391,14 +8386,6 @@
       "limit": 0,
       "attributes": "DP02_0013EA,DP02_0013M,DP02_0013MA"
     },
-    "DP03_0100PE": {
-      "label": "Percent Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!Civilian noninstitutionalized population under 19 years",
-      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
-      "predicateType": "int",
-      "group": "DP03",
-      "limit": 0,
-      "attributes": "DP03_0100PEA,DP03_0100PM,DP03_0100PMA"
-    },
     "DP05_0083PE": {
       "label": "Percent Estimate!!HISPANIC OR LATINO AND RACE!!Total population!!Not Hispanic or Latino!!Two or more races",
       "concept": "ACS DEMOGRAPHIC AND HOUSING ESTIMATES",
@@ -8406,6 +8393,14 @@
       "group": "DP05",
       "limit": 0,
       "attributes": "DP05_0083PEA,DP05_0083PM,DP05_0083PMA"
+    },
+    "DP03_0100PE": {
+      "label": "Percent Estimate!!HEALTH INSURANCE COVERAGE!!Civilian noninstitutionalized population!!Civilian noninstitutionalized population under 19 years",
+      "concept": "SELECTED ECONOMIC CHARACTERISTICS",
+      "predicateType": "int",
+      "group": "DP03",
+      "limit": 0,
+      "attributes": "DP03_0100PEA,DP03_0100PM,DP03_0100PMA"
     },
     "DP02PR_0104PE": {
       "label": "Percent Estimate!!WORLD REGION OF BIRTH OF FOREIGN BORN!!Foreign-born population, excluding population born at sea!!Europe",
@@ -9047,14 +9042,6 @@
       "limit": 0,
       "attributes": "DP05_0042EA,DP05_0042M,DP05_0042MA"
     },
-    "DP02PR_0053E": {
-      "label": "Estimate!!SCHOOL ENROLLMENT!!Population 3 years and over enrolled in school!!Nursery school, preschool",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
-      "group": "DP02PR",
-      "limit": 0,
-      "attributes": "DP02PR_0053EA,DP02PR_0053M,DP02PR_0053MA"
-    },
     "DP03_0044E": {
       "label": "Estimate!!INDUSTRY!!Civilian employed population 16 years and over!!Other services, except public administration",
       "concept": "SELECTED ECONOMIC CHARACTERISTICS",
@@ -9062,6 +9049,14 @@
       "group": "DP03",
       "limit": 0,
       "attributes": "DP03_0044EA,DP03_0044M,DP03_0044MA"
+    },
+    "DP02PR_0053E": {
+      "label": "Estimate!!SCHOOL ENROLLMENT!!Population 3 years and over enrolled in school!!Nursery school, preschool",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "DP02PR",
+      "limit": 0,
+      "attributes": "DP02PR_0053EA,DP02PR_0053M,DP02PR_0053MA"
     },
     "DP02PR_0020PE": {
       "label": "Percent Estimate!!RELATIONSHIP!!Population in households!!Child",
@@ -9663,6 +9658,7 @@
     "DP02_0001E": {
       "label": "Estimate!!HOUSEHOLDS BY TYPE!!Total households",
       "concept": "SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES",
+      "predicateType": "int",
       "group": "DP02",
       "limit": 0,
       "attributes": "DP02_0001EA,DP02_0001M,DP02_0001MA"
@@ -9763,14 +9759,6 @@
       "limit": 0,
       "attributes": "DP02PR_0103PEA,DP02PR_0103PM,DP02PR_0103PMA"
     },
-    "DP02PR_0117E": {
-      "label": "Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over!!Other Indo-European languages!!Speak English less than \"very well\"",
-      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
-      "predicateType": "int",
-      "group": "DP02PR",
-      "limit": 0,
-      "attributes": "DP02PR_0117EA,DP02PR_0117M,DP02PR_0117MA"
-    },
     "DP04_0015PE": {
       "label": "Percent Estimate!!UNITS IN STRUCTURE!!Total housing units!!Boat, RV, van, etc.",
       "concept": "SELECTED HOUSING CHARACTERISTICS",
@@ -9778,6 +9766,14 @@
       "group": "DP04",
       "limit": 0,
       "attributes": "DP04_0015PEA,DP04_0015PM,DP04_0015PMA"
+    },
+    "DP02PR_0117E": {
+      "label": "Estimate!!LANGUAGE SPOKEN AT HOME!!Population 5 years and over!!Other Indo-European languages!!Speak English less than \"very well\"",
+      "concept": "SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO",
+      "predicateType": "int",
+      "group": "DP02PR",
+      "limit": 0,
+      "attributes": "DP02PR_0117EA,DP02PR_0117M,DP02PR_0117MA"
     },
     "DP05_0018PE": {
       "label": "Percent Estimate!!SEX AND AGE!!Total population!!Median age (years)",

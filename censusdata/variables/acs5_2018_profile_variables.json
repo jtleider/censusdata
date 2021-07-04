@@ -2389,11 +2389,6 @@
       "limit": 0,
       "attributes": "DP02PR_0089M,DP02PR_0089MA,DP02PR_0089EA"
     },
-    "TRIBALSUB": {
-      "label": "Geography",
-      "group": "N/A",
-      "limit": 0
-    },
     "DP05_0021PE": {
       "label": "Percent Estimate!!SEX AND AGE!!Total population!!18 years and over",
       "concept": "ACS DEMOGRAPHIC AND HOUSING ESTIMATES",
