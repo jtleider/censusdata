@@ -490,81 +490,81 @@ appropriate table:
 
 .. parsed-literal::
 
-    [('DP03_0135PM',
+    [('DP02PR_0077PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN PUERTO RICO',
+      'Percent!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP02_0012E',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'Estimate!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02_0012PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'Percent!!HOUSEHOLDS BY TYPE!!Total households!!Nonfamily households!!Householder living alone!!65 years and over'),
+     ('DP02_0014E',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'Estimate!!HOUSEHOLDS BY TYPE!!Households with one or more people 65 years and over'),
+     ('DP02_0014PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'Percent!!HOUSEHOLDS BY TYPE!!Households with one or more people 65 years and over'),
+     ('DP02_0076E',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'Estimate!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02_0076PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'Percent!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over'),
+     ('DP02_0077E',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'Estimate!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP02_0077PE',
+      'SELECTED SOCIAL CHARACTERISTICS IN THE UNITED STATES',
+      'Percent!!DISABILITY STATUS OF THE CIVILIAN NONINSTITUTIONALIZED POPULATION!!65 years and over!!With a disability'),
+     ('DP03_0135E',
       'SELECTED ECONOMIC CHARACTERISTICS',
-      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'),
+      'Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'),
+     ('DP03_0135PE',
+      'SELECTED ECONOMIC CHARACTERISTICS',
+      'Percent!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over'),
      ('DP03_0136E',
       'SELECTED ECONOMIC CHARACTERISTICS',
-      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!People in families'),
-     ('DP03_0136M',
+      'Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!People in families'),
+     ('DP03_0136PE',
       'SELECTED ECONOMIC CHARACTERISTICS',
-      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!People in families'),
+      'Percent!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!People in families'),
      ('DP03_0137E',
       'SELECTED ECONOMIC CHARACTERISTICS',
-      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!Unrelated individuals 15 years and over'),
-     ('DP03_0137M',
+      'Estimate!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!Unrelated individuals 15 years and over'),
+     ('DP03_0137PE',
       'SELECTED ECONOMIC CHARACTERISTICS',
-      'PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!Unrelated individuals 15 years and over'),
+      'Percent!!PERCENTAGE OF FAMILIES AND PEOPLE WHOSE INCOME IN THE PAST 12 MONTHS IS BELOW THE POVERTY LEVEL!!65 years and over!!Unrelated individuals 15 years and over'),
      ('DP05_0014E',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 to 74 years'),
-     ('DP05_0014M',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 to 74 years'),
+      'Estimate!!SEX AND AGE!!65 to 74 years'),
      ('DP05_0014PE',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 to 74 years'),
-     ('DP05_0014PM',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 to 74 years'),
+      'Percent!!SEX AND AGE!!65 to 74 years'),
      ('DP05_0021E',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over'),
-     ('DP05_0021M',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over'),
+      'Estimate!!SEX AND AGE!!65 years and over'),
      ('DP05_0021PE',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over'),
-     ('DP05_0021PM',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over'),
+      'Percent!!SEX AND AGE!!65 years and over'),
      ('DP05_0025E',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over'),
-     ('DP05_0025M',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over'),
+      'Estimate!!SEX AND AGE!!65 years and over'),
      ('DP05_0025PE',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over'),
-     ('DP05_0025PM',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over'),
+      'Percent!!SEX AND AGE!!65 years and over'),
      ('DP05_0026E',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over!!Male'),
-     ('DP05_0026M',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over!!Male'),
+      'Estimate!!SEX AND AGE!!65 years and over!!Male'),
      ('DP05_0026PE',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over!!Male'),
-     ('DP05_0026PM',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over!!Male'),
+      'Percent!!SEX AND AGE!!65 years and over!!Male'),
      ('DP05_0027E',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over!!Female'),
-     ('DP05_0027M',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over!!Female'),
+      'Estimate!!SEX AND AGE!!65 years and over!!Female'),
      ('DP05_0027PE',
       'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over!!Female'),
-     ('DP05_0027PM',
-      'ACS DEMOGRAPHIC AND HOUSING ESTIMATES',
-      'SEX AND AGE!!Total population!!65 years and over!!Female')]
+      'Percent!!SEX AND AGE!!65 years and over!!Female')]
 
 
 
@@ -577,174 +577,174 @@ appropriate table:
 
     Variable     | Table                          | Label                                                    | Type 
     -------------------------------------------------------------------------------------------------------------------
-    DP05_0001E   | ACS DEMOGRAPHIC AND HOUSING ES | !! SEX AND AGE Total population                          | int  
-    DP05_0001PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! SEX AND AGE Total population                          | int  
-    DP05_0002E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population Male                  | int  
-    DP05_0002PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population Male                  | int  
-    DP05_0003E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population Female                | int  
-    DP05_0003PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population Female                | int  
-    DP05_0004E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population Under 5 years         | int  
-    DP05_0004PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population Under 5 years         | int  
-    DP05_0005E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 5 to 9 years          | int  
-    DP05_0005PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 5 to 9 years          | int  
-    DP05_0006E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 10 to 14 years        | int  
-    DP05_0006PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 10 to 14 years        | int  
-    DP05_0007E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 15 to 19 years        | int  
-    DP05_0007PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 15 to 19 years        | int  
-    DP05_0008E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 20 to 24 years        | int  
-    DP05_0008PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 20 to 24 years        | int  
-    DP05_0009E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 25 to 34 years        | int  
-    DP05_0009PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 25 to 34 years        | int  
-    DP05_0010E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 35 to 44 years        | int  
-    DP05_0010PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 35 to 44 years        | int  
-    DP05_0011E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 45 to 54 years        | int  
-    DP05_0011PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 45 to 54 years        | int  
-    DP05_0012E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 55 to 59 years        | int  
-    DP05_0012PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 55 to 59 years        | int  
-    DP05_0013E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 60 to 64 years        | int  
-    DP05_0013PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 60 to 64 years        | int  
-    DP05_0014E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 65 to 74 years        | int  
-    DP05_0014PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 65 to 74 years        | int  
-    DP05_0015E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 75 to 84 years        | int  
-    DP05_0015PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 75 to 84 years        | int  
-    DP05_0016E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 85 years and over     | int  
-    DP05_0016PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 85 years and over     | int  
-    DP05_0017E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population Median age (years)    | int  
-    DP05_0017PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population Median age (years)    | int  
-    DP05_0018E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 18 years and over     | int  
-    DP05_0018PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 18 years and over     | int  
-    DP05_0019E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 21 years and over     | int  
-    DP05_0019PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 21 years and over     | int  
-    DP05_0020E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 62 years and over     | int  
-    DP05_0020PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 62 years and over     | int  
-    DP05_0021E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 65 years and over     | int  
-    DP05_0021PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 65 years and over     | int  
-    DP05_0022E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 18 years and over     | int  
-    DP05_0022PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 18 years and over     | int  
-    DP05_0023E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! SEX AND AGE Total population 18 years and over  | int  
-    DP05_0023PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! SEX AND AGE Total population 18 years and over  | int  
-    DP05_0024E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! SEX AND AGE Total population 18 years and over  | int  
-    DP05_0024PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! SEX AND AGE Total population 18 years and over  | int  
-    DP05_0025E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 65 years and over     | int  
-    DP05_0025PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! SEX AND AGE Total population 65 years and over     | int  
-    DP05_0026E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! SEX AND AGE Total population 65 years and over  | int  
-    DP05_0026PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! SEX AND AGE Total population 65 years and over  | int  
-    DP05_0027E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! SEX AND AGE Total population 65 years and over  | int  
-    DP05_0027PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! SEX AND AGE Total population 65 years and over  | int  
-    DP05_0028E   | ACS DEMOGRAPHIC AND HOUSING ES | !! RACE Total population                                 | int  
-    DP05_0028PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! RACE Total population                                 | int  
-    DP05_0029E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Total population One race                     | int  
-    DP05_0029PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Total population One race                     | int  
-    DP05_0030E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Total population Two or more races            | int  
-    DP05_0030PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Total population Two or more races            | int  
-    DP05_0031E   | ACS DEMOGRAPHIC AND HOUSING ES | !! RACE One race                                         | int  
-    DP05_0031PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! RACE One race                                         | int  
-    DP05_0032E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race White                                | int  
-    DP05_0032PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race White                                | int  
-    DP05_0033E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race Black or African American            | int  
-    DP05_0033PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race Black or African American            | int  
-    DP05_0034E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race American Indian and Alaska Native    | int  
-    DP05_0034PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race American Indian and Alaska Native    | int  
-    DP05_0035E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race American Indian and Alaska Native | int  
-    DP05_0035PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race American Indian and Alaska Native | int  
-    DP05_0036E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race American Indian and Alaska Native | int  
-    DP05_0036PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race American Indian and Alaska Native | int  
-    DP05_0037E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race American Indian and Alaska Native | int  
-    DP05_0037PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race American Indian and Alaska Native | int  
-    DP05_0038E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race American Indian and Alaska Native | int  
-    DP05_0038PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race American Indian and Alaska Native | int  
-    DP05_0039E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race Asian                                | int  
-    DP05_0039PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race Asian                                | int  
-    DP05_0040E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Asian Indian                | int  
-    DP05_0040PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Asian Indian                | int  
-    DP05_0041E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Chinese                     | int  
-    DP05_0041PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Chinese                     | int  
-    DP05_0042E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Filipino                    | int  
-    DP05_0042PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Filipino                    | int  
-    DP05_0043E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Japanese                    | int  
-    DP05_0043PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Japanese                    | int  
-    DP05_0044E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Korean                      | int  
-    DP05_0044PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Korean                      | int  
-    DP05_0045E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Vietnamese                  | int  
-    DP05_0045PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Vietnamese                  | int  
-    DP05_0046E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Other Asian                 | int  
-    DP05_0046PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Asian Other Asian                 | int  
-    DP05_0047E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race Native Hawaiian and Other Pacific Is | int  
-    DP05_0047PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race Native Hawaiian and Other Pacific Is | int  
-    DP05_0048E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Native Hawaiian and Other Pacific | int  
-    DP05_0048PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Native Hawaiian and Other Pacific | int  
-    DP05_0049E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Native Hawaiian and Other Pacific | int  
-    DP05_0049PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Native Hawaiian and Other Pacific | int  
-    DP05_0050E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Native Hawaiian and Other Pacific | int  
-    DP05_0050PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Native Hawaiian and Other Pacific | int  
-    DP05_0051E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Native Hawaiian and Other Pacific | int  
-    DP05_0051PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! RACE One race Native Hawaiian and Other Pacific | int  
-    DP05_0052E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race Some other race                      | int  
-    DP05_0052PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE One race Some other race                      | int  
-    DP05_0053E   | ACS DEMOGRAPHIC AND HOUSING ES | !! RACE Two or more races                                | int  
-    DP05_0053PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! RACE Two or more races                                | int  
-    DP05_0054E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Two or more races White and Black or African  | int  
-    DP05_0054PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Two or more races White and Black or African  | int  
-    DP05_0055E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Two or more races White and American Indian a | int  
-    DP05_0055PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Two or more races White and American Indian a | int  
-    DP05_0056E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Two or more races White and Asian             | int  
-    DP05_0056PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Two or more races White and Asian             | int  
-    DP05_0057E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Two or more races Black or African American a | int  
-    DP05_0057PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! RACE Two or more races Black or African American a | int  
-    DP05_0058E   | ACS DEMOGRAPHIC AND HOUSING ES | !! Race alone or in combination with one or more other r | int  
-    DP05_0058PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! Race alone or in combination with one or more other r | int  
-    DP05_0059E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0059PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0060E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0060PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0061E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0061PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0062E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0062PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0063E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0063PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0064E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0064PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Race alone or in combination with one or more othe | int  
-    DP05_0065E   | ACS DEMOGRAPHIC AND HOUSING ES | !! HISPANIC OR LATINO AND RACE Total population          | int  
-    DP05_0065PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! HISPANIC OR LATINO AND RACE Total population          | int  
-    DP05_0066E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! HISPANIC OR LATINO AND RACE Total population Hispa | int  
-    DP05_0066PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! HISPANIC OR LATINO AND RACE Total population Hispa | int  
-    DP05_0067E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population Hi | int  
-    DP05_0067PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population Hi | int  
-    DP05_0068E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population Hi | int  
-    DP05_0068PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population Hi | int  
-    DP05_0069E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population Hi | int  
-    DP05_0069PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population Hi | int  
-    DP05_0070E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population Hi | int  
-    DP05_0070PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population Hi | int  
-    DP05_0071E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! HISPANIC OR LATINO AND RACE Total population Not H | int  
-    DP05_0071PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! HISPANIC OR LATINO AND RACE Total population Not H | int  
-    DP05_0072E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0072PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0073E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0073PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0074E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0074PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0075E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0075PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0076E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0076PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0077E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0077PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0078E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0078PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! HISPANIC OR LATINO AND RACE Total population No | int  
-    DP05_0079E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! HISPANIC OR LATINO AND RACE Total population | int  
-    DP05_0079PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! HISPANIC OR LATINO AND RACE Total population | int  
-    DP05_0080E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! HISPANIC OR LATINO AND RACE Total population | int  
-    DP05_0080PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! HISPANIC OR LATINO AND RACE Total population | int  
-    DP05_0081E   | ACS DEMOGRAPHIC AND HOUSING ES | Total housing units                                      | int  
-    DP05_0081PE  | ACS DEMOGRAPHIC AND HOUSING ES | Total housing units                                      | int  
-    DP05_0082E   | ACS DEMOGRAPHIC AND HOUSING ES | !! CITIZEN, VOTING AGE POPULATION Citizen, 18 and over p | int  
-    DP05_0082PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! CITIZEN, VOTING AGE POPULATION Citizen, 18 and over p | int  
-    DP05_0083E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! CITIZEN, VOTING AGE POPULATION Citizen, 18 and ove | int  
-    DP05_0083PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! CITIZEN, VOTING AGE POPULATION Citizen, 18 and ove | int  
-    DP05_0084E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! CITIZEN, VOTING AGE POPULATION Citizen, 18 and ove | int  
-    DP05_0084PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! CITIZEN, VOTING AGE POPULATION Citizen, 18 and ove | int  
+    DP05_0001E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE Total population              | int  
+    DP05_0001PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE Total population               | int  
+    DP05_0002E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate SEX AND AGE Total population Male      | int  
+    DP05_0002PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent SEX AND AGE Total population Male       | float
+    DP05_0003E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate SEX AND AGE Total population Female    | int  
+    DP05_0003PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent SEX AND AGE Total population Female     | float
+    DP05_0004E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE Under 5 years                 | int  
+    DP05_0004PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE Under 5 years                  | float
+    DP05_0005E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 5 to 9 years                  | int  
+    DP05_0005PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 5 to 9 years                   | float
+    DP05_0006E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 10 to 14 years                | int  
+    DP05_0006PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 10 to 14 years                 | float
+    DP05_0007E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 15 to 19 years                | int  
+    DP05_0007PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 15 to 19 years                 | float
+    DP05_0008E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 20 to 24 years                | int  
+    DP05_0008PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 20 to 24 years                 | float
+    DP05_0009E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 25 to 34 years                | int  
+    DP05_0009PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 25 to 34 years                 | float
+    DP05_0010E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 35 to 44 years                | int  
+    DP05_0010PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 35 to 44 years                 | float
+    DP05_0011E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 45 to 54 years                | int  
+    DP05_0011PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 45 to 54 years                 | float
+    DP05_0012E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 55 to 59 years                | int  
+    DP05_0012PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 55 to 59 years                 | float
+    DP05_0013E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 60 to 64 years                | int  
+    DP05_0013PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 60 to 64 years                 | float
+    DP05_0014E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 65 to 74 years                | int  
+    DP05_0014PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 65 to 74 years                 | float
+    DP05_0015E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 75 to 84 years                | int  
+    DP05_0015PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 75 to 84 years                 | float
+    DP05_0016E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 85 years and over             | int  
+    DP05_0016PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 85 years and over              | float
+    DP05_0017E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE Median age (years)            | float
+    DP05_0017PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE Median age (years)             | int  
+    DP05_0018E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 18 years and over             | int  
+    DP05_0018PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 18 years and over              | float
+    DP05_0019E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 21 years and over             | int  
+    DP05_0019PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 21 years and over              | float
+    DP05_0020E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 62 years and over             | int  
+    DP05_0020PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 62 years and over              | float
+    DP05_0021E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 65 years and over             | int  
+    DP05_0021PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 65 years and over              | float
+    DP05_0022E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 18 years and over             | int  
+    DP05_0022PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 18 years and over              | int  
+    DP05_0023E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate SEX AND AGE 18 years and over Male     | int  
+    DP05_0023PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent SEX AND AGE 18 years and over Male      | float
+    DP05_0024E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate SEX AND AGE 18 years and over Female   | int  
+    DP05_0024PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent SEX AND AGE 18 years and over Female    | float
+    DP05_0025E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate SEX AND AGE 65 years and over             | int  
+    DP05_0025PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent SEX AND AGE 65 years and over              | int  
+    DP05_0026E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate SEX AND AGE 65 years and over Male     | int  
+    DP05_0026PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent SEX AND AGE 65 years and over Male      | float
+    DP05_0027E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate SEX AND AGE 65 years and over Female   | int  
+    DP05_0027PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent SEX AND AGE 65 years and over Female    | float
+    DP05_0028E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate RACE Total population                     | int  
+    DP05_0028PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent RACE Total population                      | int  
+    DP05_0029E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE Total population One race         | int  
+    DP05_0029PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE Total population One race          | float
+    DP05_0030E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE Total population Two or more race | int  
+    DP05_0030PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE Total population Two or more races | float
+    DP05_0031E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate RACE One race                             | int  
+    DP05_0031PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent RACE One race                              | float
+    DP05_0032E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE One race White                    | int  
+    DP05_0032PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE One race White                     | float
+    DP05_0033E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE One race Black or African America | int  
+    DP05_0033PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE One race Black or African American | float
+    DP05_0034E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE One race American Indian and Alas | int  
+    DP05_0034PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE One race American Indian and Alask | float
+    DP05_0035E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race American Indian and A | int  
+    DP05_0035PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race American Indian and Al | float
+    DP05_0036E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race American Indian and A | int  
+    DP05_0036PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race American Indian and Al | float
+    DP05_0037E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race American Indian and A | int  
+    DP05_0037PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race American Indian and Al | float
+    DP05_0038E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race American Indian and A | int  
+    DP05_0038PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race American Indian and Al | float
+    DP05_0039E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE One race Asian                    | int  
+    DP05_0039PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE One race Asian                     | float
+    DP05_0040E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Asian Asian Indian    | int  
+    DP05_0040PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Asian Asian Indian     | float
+    DP05_0041E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Asian Chinese         | int  
+    DP05_0041PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Asian Chinese          | float
+    DP05_0042E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Asian Filipino        | int  
+    DP05_0042PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Asian Filipino         | float
+    DP05_0043E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Asian Japanese        | int  
+    DP05_0043PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Asian Japanese         | float
+    DP05_0044E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Asian Korean          | int  
+    DP05_0044PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Asian Korean           | float
+    DP05_0045E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Asian Vietnamese      | int  
+    DP05_0045PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Asian Vietnamese       | float
+    DP05_0046E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Asian Other Asian     | int  
+    DP05_0046PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Asian Other Asian      | float
+    DP05_0047E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE One race Native Hawaiian and Othe | int  
+    DP05_0047PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE One race Native Hawaiian and Other | float
+    DP05_0048E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Native Hawaiian and O | int  
+    DP05_0048PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Native Hawaiian and Ot | float
+    DP05_0049E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Native Hawaiian and O | int  
+    DP05_0049PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Native Hawaiian and Ot | float
+    DP05_0050E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Native Hawaiian and O | int  
+    DP05_0050PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Native Hawaiian and Ot | float
+    DP05_0051E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE One race Native Hawaiian and O | int  
+    DP05_0051PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE One race Native Hawaiian and Ot | float
+    DP05_0052E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE One race Some other race          | int  
+    DP05_0052PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE One race Some other race           | float
+    DP05_0053E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate RACE Two or more races                    | int  
+    DP05_0053PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent RACE Two or more races                     | float
+    DP05_0054E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE Two or more races White and Black | int  
+    DP05_0054PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE Two or more races White and Black  | float
+    DP05_0055E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE Two or more races White and Ameri | int  
+    DP05_0055PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE Two or more races White and Americ | float
+    DP05_0056E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE Two or more races White and Asian | int  
+    DP05_0056PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE Two or more races White and Asian  | float
+    DP05_0057E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE Two or more races Black or Africa | int  
+    DP05_0057PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE Two or more races Black or African | float
+    DP05_0058E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate RACE Race alone or in combination with | int  
+    DP05_0058PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent RACE Race alone or in combination with  | int  
+    DP05_0059E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE Race alone or in combination w | int  
+    DP05_0059PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE Race alone or in combination wi | float
+    DP05_0060E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE Race alone or in combination w | int  
+    DP05_0060PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE Race alone or in combination wi | float
+    DP05_0061E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE Race alone or in combination w | int  
+    DP05_0061PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE Race alone or in combination wi | float
+    DP05_0062E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE Race alone or in combination w | int  
+    DP05_0062PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE Race alone or in combination wi | float
+    DP05_0063E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE Race alone or in combination w | int  
+    DP05_0063PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE Race alone or in combination wi | float
+    DP05_0064E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate RACE Race alone or in combination w | int  
+    DP05_0064PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent RACE Race alone or in combination wi | float
+    DP05_0065E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate HISPANIC OR LATINO AND RACE Total populat | int  
+    DP05_0065PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent HISPANIC OR LATINO AND RACE Total populati | int  
+    DP05_0066E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate HISPANIC OR LATINO AND RACE Total popu | int  
+    DP05_0066PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent HISPANIC OR LATINO AND RACE Total popul | float
+    DP05_0067E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0067PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0068E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0068PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0069E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0069PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0070E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0070PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0071E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate HISPANIC OR LATINO AND RACE Total popu | int  
+    DP05_0071PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent HISPANIC OR LATINO AND RACE Total popul | float
+    DP05_0072E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0072PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0073E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0073PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0074E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0074PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0075E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0075PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0076E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0076PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0077E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0077PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0078E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Total p | int  
+    DP05_0078PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total po | float
+    DP05_0079E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Tota | int  
+    DP05_0079PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total | float
+    DP05_0080E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! !! Estimate HISPANIC OR LATINO AND RACE Tota | int  
+    DP05_0080PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! !! !! Percent HISPANIC OR LATINO AND RACE Total | float
+    DP05_0081E   | ACS DEMOGRAPHIC AND HOUSING ES | !! Estimate Total housing units                          | int  
+    DP05_0081PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! Percent Total housing units                           | int  
+    DP05_0082E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Estimate CITIZEN, VOTING AGE POPULATION Citizen, 1 | int  
+    DP05_0082PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! Percent CITIZEN, VOTING AGE POPULATION Citizen, 18 | int  
+    DP05_0083E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate CITIZEN, VOTING AGE POPULATION Citizen | int  
+    DP05_0083PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent CITIZEN, VOTING AGE POPULATION Citizen, | float
+    DP05_0084E   | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Estimate CITIZEN, VOTING AGE POPULATION Citizen | int  
+    DP05_0084PE  | ACS DEMOGRAPHIC AND HOUSING ES | !! !! !! Percent CITIZEN, VOTING AGE POPULATION Citizen, | float
     -------------------------------------------------------------------------------------------------------------------
 
 
@@ -1005,6 +1005,11 @@ export data for all counties to CSV:
           <td>34.3</td>
         </tr>
         <tr>
+          <th>Real County, Texas: Summary level: 050, state:48&gt; county:385</th>
+          <td>3356</td>
+          <td>34.0</td>
+        </tr>
+        <tr>
           <th>Highland County, Virginia: Summary level: 050, state:51&gt; county:091</th>
           <td>2244</td>
           <td>34.0</td>
@@ -1015,18 +1020,13 @@ export data for all counties to CSV:
           <td>34.0</td>
         </tr>
         <tr>
-          <th>Real County, Texas: Summary level: 050, state:48&gt; county:385</th>
-          <td>3356</td>
-          <td>34.0</td>
+          <th>Sierra County, New Mexico: Summary level: 050, state:35&gt; county:051</th>
+          <td>11615</td>
+          <td>33.9</td>
         </tr>
         <tr>
           <th>Lancaster County, Virginia: Summary level: 050, state:51&gt; county:103</th>
           <td>11129</td>
-          <td>33.9</td>
-        </tr>
-        <tr>
-          <th>Sierra County, New Mexico: Summary level: 050, state:35&gt; county:051</th>
-          <td>11615</td>
           <td>33.9</td>
         </tr>
         <tr>
@@ -1040,8 +1040,8 @@ export data for all counties to CSV:
           <td>33.3</td>
         </tr>
         <tr>
-          <th>Sarasota County, Florida: Summary level: 050, state:12&gt; county:115</th>
-          <td>392038</td>
+          <th>McIntosh County, North Dakota: Summary level: 050, state:38&gt; county:051</th>
+          <td>2759</td>
           <td>33.1</td>
         </tr>
         <tr>
@@ -1050,8 +1050,8 @@ export data for all counties to CSV:
           <td>33.1</td>
         </tr>
         <tr>
-          <th>McIntosh County, North Dakota: Summary level: 050, state:38&gt; county:051</th>
-          <td>2759</td>
+          <th>Sarasota County, Florida: Summary level: 050, state:12&gt; county:115</th>
+          <td>392038</td>
           <td>33.1</td>
         </tr>
         <tr>

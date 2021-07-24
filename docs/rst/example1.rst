@@ -36,36 +36,7 @@ variables:
 
 .. parsed-literal::
 
-    [('B23024_023E',
-      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
-      'Income in the past 12 months at or above poverty level:!!With a disability:!!In labor force:!!Civilian:!!Unemployed'),
-     ('B23024_023M',
-      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
-      'Margin of Error for!!Income in the past 12 months at or above poverty level:!!With a disability:!!In labor force:!!Civilian:!!Unemployed'),
-     ('B23024_030E',
-      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
-      'Income in the past 12 months at or above poverty level:!!No disability:!!In labor force:!!Civilian:!!Unemployed'),
-     ('B23024_030M',
-      'B23024.  Poverty Status in the Past 12 Months by Disability Status by Employment Status for the Population 20 to 64 Years',
-      'Margin of Error for!!Income in the past 12 months at or above poverty level:!!No disability:!!In labor force:!!Civilian:!!Unemployed'),
-     ('B23025_005E',
-      'B23025.  Employment Status for the Population 16 Years and Over',
-      'In labor force:!!Civilian labor force:!!Unemployed'),
-     ('B23025_005M',
-      'B23025.  Employment Status for the Population 16 Years and Over',
-      'Margin Of Error For!!In labor force:!!Civilian labor force:!!Unemployed'),
-     ('B27011_014E',
-      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
-      'In labor force:!!Unemployed:'),
-     ('B27011_014M',
-      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
-      'Margin of Error for!!In labor force:!!Unemployed:'),
-     ('B27011_015E',
-      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
-      'In labor force:!!Unemployed:!!18 to 64 years:'),
-     ('B27011_015M',
-      'B27011.  Health Insurance Coverage Status and Type by Employment Status by Age',
-      'Margin of Error for!!In labor force:!!Unemployed:!!18 to 64 years:')]
+    []
 
 
 
@@ -78,186 +49,7 @@ variables:
 
 .. parsed-literal::
 
-    [('B15002_035E',
-      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
-      'Female:!!Doctorate degree'),
-     ('B15002_035M',
-      'B15002.  Sex by Educational Attainment for the Population 25 Years and over',
-      'Margin of Error for!!Female:!!Doctorate degree'),
-     ('B15003_001E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Total:'),
-     ('B15003_001M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!Total:'),
-     ('B15003_002E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'No schooling completed'),
-     ('B15003_002M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!No schooling completed'),
-     ('B15003_003E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Nursery school'),
-     ('B15003_003M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!Nursery school'),
-     ('B15003_004E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Kindergarten'),
-     ('B15003_004M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!Kindergarten'),
-     ('B15003_005E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '1st grade'),
-     ('B15003_005M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!1st grade'),
-     ('B15003_006E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '2nd grade'),
-     ('B15003_006M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!2nd grade'),
-     ('B15003_007E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '3rd grade'),
-     ('B15003_007M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!3rd grade'),
-     ('B15003_008E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '4th grade'),
-     ('B15003_008M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!4th grade'),
-     ('B15003_009E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '5th grade'),
-     ('B15003_009M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!5th grade'),
-     ('B15003_010E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '6th grade'),
-     ('B15003_010M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!6th grade'),
-     ('B15003_011E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '7th grade'),
-     ('B15003_011M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!7th grade'),
-     ('B15003_012E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '8th grade'),
-     ('B15003_012M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!8th grade'),
-     ('B15003_013E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '9th grade'),
-     ('B15003_013M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!9th grade'),
-     ('B15003_014E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '10th grade'),
-     ('B15003_014M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!10th grade'),
-     ('B15003_015E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '11th grade'),
-     ('B15003_015M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!11th grade'),
-     ('B15003_016E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      '12th grade, no diploma'),
-     ('B15003_016M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!12th grade, no diploma'),
-     ('B15003_017E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Regular high school diploma'),
-     ('B15003_017M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!Regular high school diploma'),
-     ('B15003_018E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'GED or alternative credential'),
-     ('B15003_018M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!GED or alternative credential'),
-     ('B15003_019E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Some college, less than 1 year'),
-     ('B15003_019M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!Some college, less than 1 year'),
-     ('B15003_020E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Some college, 1 or more years, no degree'),
-     ('B15003_020M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!Some college, 1 or more years, no degree'),
-     ('B15003_021E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      "Associate's degree"),
-     ('B15003_021M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      "Margin of Error for!!Associate's degree"),
-     ('B15003_022E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      "Bachelor's degree"),
-     ('B15003_022M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      "Margin of Error for!!Bachelor's degree"),
-     ('B15003_023E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      "Master's degree"),
-     ('B15003_023M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      "Margin of Error for!!Master's degree"),
-     ('B15003_024E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Professional school degree'),
-     ('B15003_024M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!Professional school degree'),
-     ('B15003_025E',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Doctorate degree'),
-     ('B15003_025M',
-      'B15003.  Educational Attainment for the Population 25 Years and Over',
-      'Margin of Error for!!Doctorate degree'),
-     ('B16010_001E',
-      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
-      'Total:'),
-     ('B16010_001M',
-      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
-      'Margin Of Error For!!Total:'),
-     ('B16010_002E',
-      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
-      'Less than high school graduate:'),
-     ('B16010_002M',
-      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
-      'Margin Of Error For!!Less than high school graduate:'),
-     ('B16010_003E',
-      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
-      'Less than high school graduate:!!In labor force:'),
-     ('B16010_003M',
-      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
-      'Margin Of Error For!!Less than high school graduate:!!In labor force:'),
-     ('B16010_004E',
-      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
-      'Less than high school graduate:!!In labor force:!!Speak only English'),
-     ('B16010_004M',
-      'B16010.  EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
-      'Margin Of Error For!!Less than high school graduate:!!In labor force:!!Speak only English')]
+    []
 
 
 
@@ -277,13 +69,13 @@ table:
 
     Variable     | Table                          | Label                                                    | Type 
     -------------------------------------------------------------------------------------------------------------------
-    B23025_001E  | B23025.  Employment Status for | Total:                                                   | int  
-    B23025_002E  | B23025.  Employment Status for | In labor force:                                          | int  
-    B23025_003E  | B23025.  Employment Status for | !! In labor force: Civilian labor force:                 | int  
-    B23025_004E  | B23025.  Employment Status for | !! !! In labor force: Civilian labor force: Employed     | int  
-    B23025_005E  | B23025.  Employment Status for | !! !! In labor force: Civilian labor force: Unemployed   | int  
-    B23025_006E  | B23025.  Employment Status for | !! In labor force: Armed Forces                          | int  
-    B23025_007E  | B23025.  Employment Status for | Not in labor force                                       | int  
+    B23025_001E  | EMPLOYMENT STATUS FOR THE POPU | !! Estimate Total                                        | int  
+    B23025_002E  | EMPLOYMENT STATUS FOR THE POPU | !! !! Estimate Total In labor force                      | int  
+    B23025_003E  | EMPLOYMENT STATUS FOR THE POPU | !! !! !! Estimate Total In labor force Civilian labor fo | int  
+    B23025_004E  | EMPLOYMENT STATUS FOR THE POPU | !! !! !! !! Estimate Total In labor force Civilian labor | int  
+    B23025_005E  | EMPLOYMENT STATUS FOR THE POPU | !! !! !! !! Estimate Total In labor force Civilian labor | int  
+    B23025_006E  | EMPLOYMENT STATUS FOR THE POPU | !! !! !! Estimate Total In labor force Armed Forces      | int  
+    B23025_007E  | EMPLOYMENT STATUS FOR THE POPU | !! !! Estimate Total Not in labor force                  | int  
     -------------------------------------------------------------------------------------------------------------------
 
 
@@ -296,31 +88,31 @@ table:
 
     Variable     | Table                          | Label                                                    | Type 
     -------------------------------------------------------------------------------------------------------------------
-    B15003_001E  | B15003.  Educational Attainmen | Total:                                                   | int  
-    B15003_002E  | B15003.  Educational Attainmen | No schooling completed                                   | int  
-    B15003_003E  | B15003.  Educational Attainmen | Nursery school                                           | int  
-    B15003_004E  | B15003.  Educational Attainmen | Kindergarten                                             | int  
-    B15003_005E  | B15003.  Educational Attainmen | 1st grade                                                | int  
-    B15003_006E  | B15003.  Educational Attainmen | 2nd grade                                                | int  
-    B15003_007E  | B15003.  Educational Attainmen | 3rd grade                                                | int  
-    B15003_008E  | B15003.  Educational Attainmen | 4th grade                                                | int  
-    B15003_009E  | B15003.  Educational Attainmen | 5th grade                                                | int  
-    B15003_010E  | B15003.  Educational Attainmen | 6th grade                                                | int  
-    B15003_011E  | B15003.  Educational Attainmen | 7th grade                                                | int  
-    B15003_012E  | B15003.  Educational Attainmen | 8th grade                                                | int  
-    B15003_013E  | B15003.  Educational Attainmen | 9th grade                                                | int  
-    B15003_014E  | B15003.  Educational Attainmen | 10th grade                                               | int  
-    B15003_015E  | B15003.  Educational Attainmen | 11th grade                                               | int  
-    B15003_016E  | B15003.  Educational Attainmen | 12th grade, no diploma                                   | int  
-    B15003_017E  | B15003.  Educational Attainmen | Regular high school diploma                              | int  
-    B15003_018E  | B15003.  Educational Attainmen | GED or alternative credential                            | int  
-    B15003_019E  | B15003.  Educational Attainmen | Some college, less than 1 year                           | int  
-    B15003_020E  | B15003.  Educational Attainmen | Some college, 1 or more years, no degree                 | int  
-    B15003_021E  | B15003.  Educational Attainmen | Associate's degree                                       | int  
-    B15003_022E  | B15003.  Educational Attainmen | Bachelor's degree                                        | int  
-    B15003_023E  | B15003.  Educational Attainmen | Master's degree                                          | int  
-    B15003_024E  | B15003.  Educational Attainmen | Professional school degree                               | int  
-    B15003_025E  | B15003.  Educational Attainmen | Doctorate degree                                         | int  
+    B15003_001E  | EDUCATIONAL ATTAINMENT FOR THE | !! Estimate Total                                        | int  
+    B15003_002E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total No schooling completed              | int  
+    B15003_003E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Nursery school                      | int  
+    B15003_004E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Kindergarten                        | int  
+    B15003_005E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 1st grade                           | int  
+    B15003_006E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 2nd grade                           | int  
+    B15003_007E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 3rd grade                           | int  
+    B15003_008E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 4th grade                           | int  
+    B15003_009E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 5th grade                           | int  
+    B15003_010E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 6th grade                           | int  
+    B15003_011E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 7th grade                           | int  
+    B15003_012E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 8th grade                           | int  
+    B15003_013E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 9th grade                           | int  
+    B15003_014E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 10th grade                          | int  
+    B15003_015E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 11th grade                          | int  
+    B15003_016E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total 12th grade, no diploma              | int  
+    B15003_017E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Regular high school diploma         | int  
+    B15003_018E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total GED or alternative credential       | int  
+    B15003_019E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Some college, less than 1 year      | int  
+    B15003_020E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Some college, 1 or more years, no d | int  
+    B15003_021E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Associate's degree                  | int  
+    B15003_022E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Bachelor's degree                   | int  
+    B15003_023E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Master's degree                     | int  
+    B15003_024E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Professional school degree          | int  
+    B15003_025E  | EDUCATIONAL ATTAINMENT FOR THE | !! !! Estimate Total Doctorate degree                    | int  
     -------------------------------------------------------------------------------------------------------------------
 
 
@@ -339,31 +131,7 @@ to find Cook County:
 
 .. parsed-literal::
 
-    {'Alabama': censusgeo((('state', '01'),)),
-     'Alaska': censusgeo((('state', '02'),)),
-     'Arizona': censusgeo((('state', '04'),)),
-     'Arkansas': censusgeo((('state', '05'),)),
-     'California': censusgeo((('state', '06'),)),
-     'Colorado': censusgeo((('state', '08'),)),
-     'Connecticut': censusgeo((('state', '09'),)),
-     'Delaware': censusgeo((('state', '10'),)),
-     'District of Columbia': censusgeo((('state', '11'),)),
-     'Florida': censusgeo((('state', '12'),)),
-     'Georgia': censusgeo((('state', '13'),)),
-     'Hawaii': censusgeo((('state', '15'),)),
-     'Idaho': censusgeo((('state', '16'),)),
-     'Illinois': censusgeo((('state', '17'),)),
-     'Indiana': censusgeo((('state', '18'),)),
-     'Iowa': censusgeo((('state', '19'),)),
-     'Kansas': censusgeo((('state', '20'),)),
-     'Kentucky': censusgeo((('state', '21'),)),
-     'Louisiana': censusgeo((('state', '22'),)),
-     'Maine': censusgeo((('state', '23'),)),
-     'Maryland': censusgeo((('state', '24'),)),
-     'Massachusetts': censusgeo((('state', '25'),)),
-     'Michigan': censusgeo((('state', '26'),)),
-     'Minnesota': censusgeo((('state', '27'),)),
-     'Mississippi': censusgeo((('state', '28'),)),
+    {'Mississippi': censusgeo((('state', '28'),)),
      'Missouri': censusgeo((('state', '29'),)),
      'Montana': censusgeo((('state', '30'),)),
      'Nebraska': censusgeo((('state', '31'),)),
@@ -383,14 +151,38 @@ to find Cook County:
      'South Dakota': censusgeo((('state', '46'),)),
      'Tennessee': censusgeo((('state', '47'),)),
      'Texas': censusgeo((('state', '48'),)),
-     'Utah': censusgeo((('state', '49'),)),
      'Vermont': censusgeo((('state', '50'),)),
+     'Utah': censusgeo((('state', '49'),)),
      'Virginia': censusgeo((('state', '51'),)),
      'Washington': censusgeo((('state', '53'),)),
      'West Virginia': censusgeo((('state', '54'),)),
      'Wisconsin': censusgeo((('state', '55'),)),
      'Wyoming': censusgeo((('state', '56'),)),
-     'Puerto Rico': censusgeo((('state', '72'),))}
+     'Puerto Rico': censusgeo((('state', '72'),)),
+     'Alabama': censusgeo((('state', '01'),)),
+     'Alaska': censusgeo((('state', '02'),)),
+     'Arizona': censusgeo((('state', '04'),)),
+     'Arkansas': censusgeo((('state', '05'),)),
+     'California': censusgeo((('state', '06'),)),
+     'Colorado': censusgeo((('state', '08'),)),
+     'Delaware': censusgeo((('state', '10'),)),
+     'District of Columbia': censusgeo((('state', '11'),)),
+     'Connecticut': censusgeo((('state', '09'),)),
+     'Florida': censusgeo((('state', '12'),)),
+     'Georgia': censusgeo((('state', '13'),)),
+     'Idaho': censusgeo((('state', '16'),)),
+     'Hawaii': censusgeo((('state', '15'),)),
+     'Illinois': censusgeo((('state', '17'),)),
+     'Indiana': censusgeo((('state', '18'),)),
+     'Iowa': censusgeo((('state', '19'),)),
+     'Kansas': censusgeo((('state', '20'),)),
+     'Kentucky': censusgeo((('state', '21'),)),
+     'Louisiana': censusgeo((('state', '22'),)),
+     'Maine': censusgeo((('state', '23'),)),
+     'Maryland': censusgeo((('state', '24'),)),
+     'Massachusetts': censusgeo((('state', '25'),)),
+     'Michigan': censusgeo((('state', '26'),)),
+     'Minnesota': censusgeo((('state', '27'),))}
 
 
 
@@ -403,108 +195,108 @@ to find Cook County:
 
 .. parsed-literal::
 
-    {'Adams County, Illinois': censusgeo((('state', '17'), ('county', '001'))),
-     'Alexander County, Illinois': censusgeo((('state', '17'), ('county', '003'))),
+    {'Winnebago County, Illinois': censusgeo((('state', '17'), ('county', '201'))),
+     'Piatt County, Illinois': censusgeo((('state', '17'), ('county', '147'))),
+     'Pulaski County, Illinois': censusgeo((('state', '17'), ('county', '153'))),
+     'Schuyler County, Illinois': censusgeo((('state', '17'), ('county', '169'))),
+     'Stark County, Illinois': censusgeo((('state', '17'), ('county', '175'))),
+     'Edgar County, Illinois': censusgeo((('state', '17'), ('county', '045'))),
      'Bond County, Illinois': censusgeo((('state', '17'), ('county', '005'))),
      'Boone County, Illinois': censusgeo((('state', '17'), ('county', '007'))),
-     'Brown County, Illinois': censusgeo((('state', '17'), ('county', '009'))),
      'Bureau County, Illinois': censusgeo((('state', '17'), ('county', '011'))),
-     'Calhoun County, Illinois': censusgeo((('state', '17'), ('county', '013'))),
      'Carroll County, Illinois': censusgeo((('state', '17'), ('county', '015'))),
-     'Cass County, Illinois': censusgeo((('state', '17'), ('county', '017'))),
-     'Champaign County, Illinois': censusgeo((('state', '17'), ('county', '019'))),
-     'Christian County, Illinois': censusgeo((('state', '17'), ('county', '021'))),
-     'Clark County, Illinois': censusgeo((('state', '17'), ('county', '023'))),
-     'Clay County, Illinois': censusgeo((('state', '17'), ('county', '025'))),
-     'Clinton County, Illinois': censusgeo((('state', '17'), ('county', '027'))),
      'Coles County, Illinois': censusgeo((('state', '17'), ('county', '029'))),
-     'Cook County, Illinois': censusgeo((('state', '17'), ('county', '031'))),
      'Crawford County, Illinois': censusgeo((('state', '17'), ('county', '033'))),
-     'Cumberland County, Illinois': censusgeo((('state', '17'), ('county', '035'))),
-     'DeKalb County, Illinois': censusgeo((('state', '17'), ('county', '037'))),
-     'De Witt County, Illinois': censusgeo((('state', '17'), ('county', '039'))),
-     'Douglas County, Illinois': censusgeo((('state', '17'), ('county', '041'))),
-     'DuPage County, Illinois': censusgeo((('state', '17'), ('county', '043'))),
-     'Edgar County, Illinois': censusgeo((('state', '17'), ('county', '045'))),
-     'Edwards County, Illinois': censusgeo((('state', '17'), ('county', '047'))),
-     'Effingham County, Illinois': censusgeo((('state', '17'), ('county', '049'))),
-     'Fayette County, Illinois': censusgeo((('state', '17'), ('county', '051'))),
-     'Ford County, Illinois': censusgeo((('state', '17'), ('county', '053'))),
-     'Franklin County, Illinois': censusgeo((('state', '17'), ('county', '055'))),
-     'Fulton County, Illinois': censusgeo((('state', '17'), ('county', '057'))),
-     'Gallatin County, Illinois': censusgeo((('state', '17'), ('county', '059'))),
-     'Greene County, Illinois': censusgeo((('state', '17'), ('county', '061'))),
-     'Grundy County, Illinois': censusgeo((('state', '17'), ('county', '063'))),
-     'Hamilton County, Illinois': censusgeo((('state', '17'), ('county', '065'))),
-     'Hancock County, Illinois': censusgeo((('state', '17'), ('county', '067'))),
-     'Hardin County, Illinois': censusgeo((('state', '17'), ('county', '069'))),
-     'Henderson County, Illinois': censusgeo((('state', '17'), ('county', '071'))),
-     'Henry County, Illinois': censusgeo((('state', '17'), ('county', '073'))),
-     'Iroquois County, Illinois': censusgeo((('state', '17'), ('county', '075'))),
-     'Jackson County, Illinois': censusgeo((('state', '17'), ('county', '077'))),
-     'Jasper County, Illinois': censusgeo((('state', '17'), ('county', '079'))),
-     'Jefferson County, Illinois': censusgeo((('state', '17'), ('county', '081'))),
      'Jersey County, Illinois': censusgeo((('state', '17'), ('county', '083'))),
-     'Jo Daviess County, Illinois': censusgeo((('state', '17'), ('county', '085'))),
-     'Johnson County, Illinois': censusgeo((('state', '17'), ('county', '087'))),
-     'Kane County, Illinois': censusgeo((('state', '17'), ('county', '089'))),
-     'Kankakee County, Illinois': censusgeo((('state', '17'), ('county', '091'))),
-     'Kendall County, Illinois': censusgeo((('state', '17'), ('county', '093'))),
-     'Knox County, Illinois': censusgeo((('state', '17'), ('county', '095'))),
-     'Lake County, Illinois': censusgeo((('state', '17'), ('county', '097'))),
-     'LaSalle County, Illinois': censusgeo((('state', '17'), ('county', '099'))),
-     'Lawrence County, Illinois': censusgeo((('state', '17'), ('county', '101'))),
+     'Putnam County, Illinois': censusgeo((('state', '17'), ('county', '155'))),
+     'De Witt County, Illinois': censusgeo((('state', '17'), ('county', '039'))),
+     'Fayette County, Illinois': censusgeo((('state', '17'), ('county', '051'))),
      'Lee County, Illinois': censusgeo((('state', '17'), ('county', '103'))),
-     'Livingston County, Illinois': censusgeo((('state', '17'), ('county', '105'))),
      'Logan County, Illinois': censusgeo((('state', '17'), ('county', '107'))),
+     'Macoupin County, Illinois': censusgeo((('state', '17'), ('county', '117'))),
+     'Richland County, Illinois': censusgeo((('state', '17'), ('county', '159'))),
+     'Washington County, Illinois': censusgeo((('state', '17'), ('county', '189'))),
+     'Montgomery County, Illinois': censusgeo((('state', '17'), ('county', '135'))),
+     'Adams County, Illinois': censusgeo((('state', '17'), ('county', '001'))),
+     'Clinton County, Illinois': censusgeo((('state', '17'), ('county', '027'))),
+     'Edwards County, Illinois': censusgeo((('state', '17'), ('county', '047'))),
+     'Jefferson County, Illinois': censusgeo((('state', '17'), ('county', '081'))),
+     'Vermilion County, Illinois': censusgeo((('state', '17'), ('county', '183'))),
+     'Williamson County, Illinois': censusgeo((('state', '17'), ('county', '199'))),
+     'Clark County, Illinois': censusgeo((('state', '17'), ('county', '023'))),
+     'Effingham County, Illinois': censusgeo((('state', '17'), ('county', '049'))),
+     'Fulton County, Illinois': censusgeo((('state', '17'), ('county', '057'))),
+     'Hamilton County, Illinois': censusgeo((('state', '17'), ('county', '065'))),
+     'Henry County, Illinois': censusgeo((('state', '17'), ('county', '073'))),
+     'Johnson County, Illinois': censusgeo((('state', '17'), ('county', '087'))),
+     'Lake County, Illinois': censusgeo((('state', '17'), ('county', '097'))),
+     'Livingston County, Illinois': censusgeo((('state', '17'), ('county', '105'))),
+     'Scott County, Illinois': censusgeo((('state', '17'), ('county', '171'))),
+     'Cass County, Illinois': censusgeo((('state', '17'), ('county', '017'))),
+     'Warren County, Illinois': censusgeo((('state', '17'), ('county', '187'))),
+     'Madison County, Illinois': censusgeo((('state', '17'), ('county', '119'))),
+     'Mercer County, Illinois': censusgeo((('state', '17'), ('county', '131'))),
+     'Sangamon County, Illinois': censusgeo((('state', '17'), ('county', '167'))),
+     'Randolph County, Illinois': censusgeo((('state', '17'), ('county', '157'))),
+     'Ogle County, Illinois': censusgeo((('state', '17'), ('county', '141'))),
+     'Stephenson County, Illinois': censusgeo((('state', '17'), ('county', '177'))),
+     'White County, Illinois': censusgeo((('state', '17'), ('county', '193'))),
+     'Henderson County, Illinois': censusgeo((('state', '17'), ('county', '071'))),
+     'McLean County, Illinois': censusgeo((('state', '17'), ('county', '113'))),
+     'Pike County, Illinois': censusgeo((('state', '17'), ('county', '149'))),
+     'Rock Island County, Illinois': censusgeo((('state', '17'), ('county', '161'))),
+     'Wabash County, Illinois': censusgeo((('state', '17'), ('county', '185'))),
+     'Cumberland County, Illinois': censusgeo((('state', '17'), ('county', '035'))),
+     'Kane County, Illinois': censusgeo((('state', '17'), ('county', '089'))),
+     'Brown County, Illinois': censusgeo((('state', '17'), ('county', '009'))),
+     'Marshall County, Illinois': censusgeo((('state', '17'), ('county', '123'))),
+     'Christian County, Illinois': censusgeo((('state', '17'), ('county', '021'))),
+     'Jackson County, Illinois': censusgeo((('state', '17'), ('county', '077'))),
+     'Union County, Illinois': censusgeo((('state', '17'), ('county', '181'))),
+     'Saline County, Illinois': censusgeo((('state', '17'), ('county', '165'))),
+     'Whiteside County, Illinois': censusgeo((('state', '17'), ('county', '195'))),
+     'DeKalb County, Illinois': censusgeo((('state', '17'), ('county', '037'))),
+     'Jasper County, Illinois': censusgeo((('state', '17'), ('county', '079'))),
+     'Will County, Illinois': censusgeo((('state', '17'), ('county', '197'))),
+     'Douglas County, Illinois': censusgeo((('state', '17'), ('county', '041'))),
+     'Greene County, Illinois': censusgeo((('state', '17'), ('county', '061'))),
+     'Hardin County, Illinois': censusgeo((('state', '17'), ('county', '069'))),
+     'Knox County, Illinois': censusgeo((('state', '17'), ('county', '095'))),
+     'Massac County, Illinois': censusgeo((('state', '17'), ('county', '127'))),
+     'Tazewell County, Illinois': censusgeo((('state', '17'), ('county', '179'))),
+     'Hancock County, Illinois': censusgeo((('state', '17'), ('county', '067'))),
+     'Grundy County, Illinois': censusgeo((('state', '17'), ('county', '063'))),
+     'Kankakee County, Illinois': censusgeo((('state', '17'), ('county', '091'))),
+     'DuPage County, Illinois': censusgeo((('state', '17'), ('county', '043'))),
+     'Alexander County, Illinois': censusgeo((('state', '17'), ('county', '003'))),
+     'Menard County, Illinois': censusgeo((('state', '17'), ('county', '129'))),
+     'LaSalle County, Illinois': censusgeo((('state', '17'), ('county', '099'))),
+     'Cook County, Illinois': censusgeo((('state', '17'), ('county', '031'))),
+     'Macon County, Illinois': censusgeo((('state', '17'), ('county', '115'))),
+     'Morgan County, Illinois': censusgeo((('state', '17'), ('county', '137'))),
+     'Wayne County, Illinois': censusgeo((('state', '17'), ('county', '191'))),
+     'Woodford County, Illinois': censusgeo((('state', '17'), ('county', '203'))),
+     'Franklin County, Illinois': censusgeo((('state', '17'), ('county', '055'))),
      'McDonough County, Illinois': censusgeo((('state', '17'), ('county', '109'))),
      'McHenry County, Illinois': censusgeo((('state', '17'), ('county', '111'))),
-     'McLean County, Illinois': censusgeo((('state', '17'), ('county', '113'))),
-     'Macon County, Illinois': censusgeo((('state', '17'), ('county', '115'))),
-     'Macoupin County, Illinois': censusgeo((('state', '17'), ('county', '117'))),
-     'Madison County, Illinois': censusgeo((('state', '17'), ('county', '119'))),
-     'Marion County, Illinois': censusgeo((('state', '17'), ('county', '121'))),
-     'Marshall County, Illinois': censusgeo((('state', '17'), ('county', '123'))),
-     'Mason County, Illinois': censusgeo((('state', '17'), ('county', '125'))),
-     'Massac County, Illinois': censusgeo((('state', '17'), ('county', '127'))),
-     'Menard County, Illinois': censusgeo((('state', '17'), ('county', '129'))),
-     'Mercer County, Illinois': censusgeo((('state', '17'), ('county', '131'))),
-     'Monroe County, Illinois': censusgeo((('state', '17'), ('county', '133'))),
-     'Montgomery County, Illinois': censusgeo((('state', '17'), ('county', '135'))),
-     'Morgan County, Illinois': censusgeo((('state', '17'), ('county', '137'))),
      'Moultrie County, Illinois': censusgeo((('state', '17'), ('county', '139'))),
-     'Ogle County, Illinois': censusgeo((('state', '17'), ('county', '141'))),
-     'Peoria County, Illinois': censusgeo((('state', '17'), ('county', '143'))),
      'Perry County, Illinois': censusgeo((('state', '17'), ('county', '145'))),
-     'Piatt County, Illinois': censusgeo((('state', '17'), ('county', '147'))),
-     'Pike County, Illinois': censusgeo((('state', '17'), ('county', '149'))),
      'Pope County, Illinois': censusgeo((('state', '17'), ('county', '151'))),
-     'Pulaski County, Illinois': censusgeo((('state', '17'), ('county', '153'))),
-     'Putnam County, Illinois': censusgeo((('state', '17'), ('county', '155'))),
-     'Randolph County, Illinois': censusgeo((('state', '17'), ('county', '157'))),
-     'Richland County, Illinois': censusgeo((('state', '17'), ('county', '159'))),
-     'Rock Island County, Illinois': censusgeo((('state', '17'), ('county', '161'))),
      'St. Clair County, Illinois': censusgeo((('state', '17'), ('county', '163'))),
-     'Saline County, Illinois': censusgeo((('state', '17'), ('county', '165'))),
-     'Sangamon County, Illinois': censusgeo((('state', '17'), ('county', '167'))),
-     'Schuyler County, Illinois': censusgeo((('state', '17'), ('county', '169'))),
-     'Scott County, Illinois': censusgeo((('state', '17'), ('county', '171'))),
      'Shelby County, Illinois': censusgeo((('state', '17'), ('county', '173'))),
-     'Stark County, Illinois': censusgeo((('state', '17'), ('county', '175'))),
-     'Stephenson County, Illinois': censusgeo((('state', '17'), ('county', '177'))),
-     'Tazewell County, Illinois': censusgeo((('state', '17'), ('county', '179'))),
-     'Union County, Illinois': censusgeo((('state', '17'), ('county', '181'))),
-     'Vermilion County, Illinois': censusgeo((('state', '17'), ('county', '183'))),
-     'Wabash County, Illinois': censusgeo((('state', '17'), ('county', '185'))),
-     'Warren County, Illinois': censusgeo((('state', '17'), ('county', '187'))),
-     'Washington County, Illinois': censusgeo((('state', '17'), ('county', '189'))),
-     'Wayne County, Illinois': censusgeo((('state', '17'), ('county', '191'))),
-     'White County, Illinois': censusgeo((('state', '17'), ('county', '193'))),
-     'Whiteside County, Illinois': censusgeo((('state', '17'), ('county', '195'))),
-     'Will County, Illinois': censusgeo((('state', '17'), ('county', '197'))),
-     'Williamson County, Illinois': censusgeo((('state', '17'), ('county', '199'))),
-     'Winnebago County, Illinois': censusgeo((('state', '17'), ('county', '201'))),
-     'Woodford County, Illinois': censusgeo((('state', '17'), ('county', '203')))}
+     'Champaign County, Illinois': censusgeo((('state', '17'), ('county', '019'))),
+     'Calhoun County, Illinois': censusgeo((('state', '17'), ('county', '013'))),
+     'Ford County, Illinois': censusgeo((('state', '17'), ('county', '053'))),
+     'Jo Daviess County, Illinois': censusgeo((('state', '17'), ('county', '085'))),
+     'Kendall County, Illinois': censusgeo((('state', '17'), ('county', '093'))),
+     'Lawrence County, Illinois': censusgeo((('state', '17'), ('county', '101'))),
+     'Marion County, Illinois': censusgeo((('state', '17'), ('county', '121'))),
+     'Mason County, Illinois': censusgeo((('state', '17'), ('county', '125'))),
+     'Iroquois County, Illinois': censusgeo((('state', '17'), ('county', '075'))),
+     'Clay County, Illinois': censusgeo((('state', '17'), ('county', '025'))),
+     'Gallatin County, Illinois': censusgeo((('state', '17'), ('county', '059'))),
+     'Monroe County, Illinois': censusgeo((('state', '17'), ('county', '133'))),
+     'Peoria County, Illinois': censusgeo((('state', '17'), ('county', '143')))}
 
 
 
