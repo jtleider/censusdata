@@ -168,7 +168,9 @@ def search(src, year, field, criterion, tabletype='detail'):
 	except AssertionError:
 		raise ValueError(u'Unknown table type {0}!'.format(tabletype))
 	topdir, filename = os.path.split(__file__)
-	with open(os.path.join(topdir, 'variables', '{0}_{1}_{2}_variables.json'.format(src, year, tabletype))) as infile:
+	variable_filename = '{0}_{1}_{2}_variables.json'.format(src, year, tabletype)
+	if src == 'sf1' or src == 'acsse': variable_filename = '{0}_{1}_variables.json'.format(src, year)
+	with open(os.path.join(topdir, 'variables', variable_filename)) as infile:
 		allvars = infile.read()
 	allvars = json.loads(allvars)['variables']
 	return [(k, allvars[k].get('concept'), allvars[k].get('label')) for k in sorted(allvars.keys()) if match(allvars[k].get(field, ''))]
