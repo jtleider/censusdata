@@ -410,10 +410,10 @@ regression model:
       <th>Method:</th>                   <td>Least Squares</td>        <th>  F-statistic:       </th> <td>   13.08</td>
     </tr>
     <tr>
-      <th>Date:</th>                   <td>Sat, 15 Sep 2018</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
+      <th>Date:</th>                   <td>Sat, 24 Jul 2021</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
     </tr>
     <tr>
-      <th>Time:</th>                       <td>18:48:26</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
+      <th>Time:</th>                       <td>13:29:47</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
     </tr>
     <tr>
       <th>No. Observations:</th>            <td>    51</td>            <th>  AIC:               </th> <td>   371.9</td>
@@ -450,7 +450,7 @@ regression model:
     </table>
     <table class="simpletable">
     <tr>
-      <th>Omnibus:</th>       <td> 2.104</td> <th>  Durbin-Watson:     </th> <td>   2.420</td>
+      <th>Omnibus:</th>       <td> 2.104</td> <th>  Durbin-Watson:     </th> <td>   2.514</td>
     </tr>
     <tr>
       <th>Prob(Omnibus):</th> <td> 0.349</td> <th>  Jarque-Bera (JB):  </th> <td>   1.237</td>
@@ -461,7 +461,7 @@ regression model:
     <tr>
       <th>Kurtosis:</th>      <td> 3.640</td> <th>  Cond. No.          </th> <td>    647.</td>
     </tr>
-    </table><br/><br/>Warnings:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+    </table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 
 
 
