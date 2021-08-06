@@ -102,8 +102,8 @@ def censustable(src, year, table):
 	allvars = json.loads(allvars)['variables']
 	ret = OrderedDict()
 	for k in sorted(allvars.keys()):
-		if ((src != 'sf1' and '_'.join(k.split('_')[:-1]) == table)
-			or (src == 'sf1' and k[:len(table)] == table)): # SF1 variables do not include underscores after table names
+		if ((src != 'sf1' and table in '_'.join(k.split('_')[:-1]))
+			or (src == 'sf1' and table in k[:len(table)])): # SF1 variables do not include underscores after table names
 			if 'predicateType' not in allvars[k]: allvars[k]['predicateType'] = ''
 			ret[k] = {'label': allvars[k]['label'], 'concept': allvars[k]['concept'], 'predicateType': allvars[k]['predicateType']}
 	if len(ret) == 0:
