@@ -269,6 +269,9 @@ class TestVariableInfo(unittest.TestCase):
 		expected['S0101_C02_038E'] = {'label': 'Estimate!!Percent!!Total population!!PERCENT ALLOCATED!!Age', 'concept': 'AGE AND SEX', 'predicateType': 'float'}
 		self.assertEqual(censusdata.censustable('acs5', 2019, 'S0101_C02'), expected)
 
+	def test_censustable_acs_subject_full(self):
+		censusdata.censustable('acs5', 2018, 'S1810')
+
 	def test_censustable_acsse(self):
 		for year in range(2014, 2015+1):
 			censusdata.censustable('acsse', year, 'K201601')
