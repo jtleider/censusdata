@@ -29,27 +29,205 @@ variables:
 
 .. code:: ipython3
 
-    censusdata.search('acs5', 2015, 'label', 'unemploy')[160:170]
+    censusdata.search('acs5', 2015, 'label', 'unemploy')[80:90]
 
 
 
 
 .. parsed-literal::
 
-    []
+    [('B23024_023E',
+      'POVERTY STATUS IN THE PAST 12 MONTHS BY DISABILITY STATUS BY EMPLOYMENT STATUS FOR THE POPULATION 20 TO 64 YEARS',
+      'Estimate!!Total!!Income in the past 12 months at or above poverty level!!With a disability!!In labor force!!Civilian!!Unemployed'),
+     ('B23024_030E',
+      'POVERTY STATUS IN THE PAST 12 MONTHS BY DISABILITY STATUS BY EMPLOYMENT STATUS FOR THE POPULATION 20 TO 64 YEARS',
+      'Estimate!!Total!!Income in the past 12 months at or above poverty level!!No disability!!In labor force!!Civilian!!Unemployed'),
+     ('B23025_005E',
+      'EMPLOYMENT STATUS FOR THE POPULATION 16 YEARS AND OVER',
+      'Estimate!!Total!!In labor force!!Civilian labor force!!Unemployed'),
+     ('B27011_014E',
+      'HEALTH INSURANCE COVERAGE STATUS AND TYPE BY EMPLOYMENT STATUS BY AGE',
+      'Estimate!!Total!!In labor force!!Unemployed'),
+     ('B27011_015E',
+      'HEALTH INSURANCE COVERAGE STATUS AND TYPE BY EMPLOYMENT STATUS BY AGE',
+      'Estimate!!Total!!In labor force!!Unemployed!!18 to 64 years'),
+     ('B27011_016E',
+      'HEALTH INSURANCE COVERAGE STATUS AND TYPE BY EMPLOYMENT STATUS BY AGE',
+      'Estimate!!Total!!In labor force!!Unemployed!!18 to 64 years!!With health insurance coverage'),
+     ('B27011_017E',
+      'HEALTH INSURANCE COVERAGE STATUS AND TYPE BY EMPLOYMENT STATUS BY AGE',
+      'Estimate!!Total!!In labor force!!Unemployed!!18 to 64 years!!With health insurance coverage!!With private health insurance'),
+     ('B27011_018E',
+      'HEALTH INSURANCE COVERAGE STATUS AND TYPE BY EMPLOYMENT STATUS BY AGE',
+      'Estimate!!Total!!In labor force!!Unemployed!!18 to 64 years!!With health insurance coverage!!With public coverage'),
+     ('B27011_019E',
+      'HEALTH INSURANCE COVERAGE STATUS AND TYPE BY EMPLOYMENT STATUS BY AGE',
+      'Estimate!!Total!!In labor force!!Unemployed!!18 to 64 years!!No health insurance coverage'),
+     ('B27011_020E',
+      'HEALTH INSURANCE COVERAGE STATUS AND TYPE BY EMPLOYMENT STATUS BY AGE',
+      'Estimate!!Total!!In labor force!!Unemployed!!65 years and over')]
 
 
 
 .. code:: ipython3
 
-    censusdata.search('acs5', 2015, 'concept', 'education')[730:790]
+    censusdata.search('acs5', 2015, 'concept', 'education')[350:400]
 
 
 
 
 .. parsed-literal::
 
-    []
+    [('B15002_020E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!No schooling completed'),
+     ('B15002_021E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!Nursery to 4th grade'),
+     ('B15002_022E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!5th and 6th grade'),
+     ('B15002_023E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!7th and 8th grade'),
+     ('B15002_024E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!9th grade'),
+     ('B15002_025E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!10th grade'),
+     ('B15002_026E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!11th grade'),
+     ('B15002_027E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!12th grade, no diploma'),
+     ('B15002_028E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!High school graduate (includes equivalency)'),
+     ('B15002_029E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!Some college, less than 1 year'),
+     ('B15002_030E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!Some college, 1 or more years, no degree'),
+     ('B15002_031E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      "Estimate!!Total!!Female!!Associate's degree"),
+     ('B15002_032E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      "Estimate!!Total!!Female!!Bachelor's degree"),
+     ('B15002_033E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      "Estimate!!Total!!Female!!Master's degree"),
+     ('B15002_034E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!Professional school degree'),
+     ('B15002_035E',
+      'SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Female!!Doctorate degree'),
+     ('B15003_001E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total'),
+     ('B15003_002E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!No schooling completed'),
+     ('B15003_003E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Nursery school'),
+     ('B15003_004E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Kindergarten'),
+     ('B15003_005E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!1st grade'),
+     ('B15003_006E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!2nd grade'),
+     ('B15003_007E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!3rd grade'),
+     ('B15003_008E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!4th grade'),
+     ('B15003_009E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!5th grade'),
+     ('B15003_010E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!6th grade'),
+     ('B15003_011E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!7th grade'),
+     ('B15003_012E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!8th grade'),
+     ('B15003_013E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!9th grade'),
+     ('B15003_014E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!10th grade'),
+     ('B15003_015E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!11th grade'),
+     ('B15003_016E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!12th grade, no diploma'),
+     ('B15003_017E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Regular high school diploma'),
+     ('B15003_018E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!GED or alternative credential'),
+     ('B15003_019E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Some college, less than 1 year'),
+     ('B15003_020E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Some college, 1 or more years, no degree'),
+     ('B15003_021E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      "Estimate!!Total!!Associate's degree"),
+     ('B15003_022E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      "Estimate!!Total!!Bachelor's degree"),
+     ('B15003_023E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      "Estimate!!Total!!Master's degree"),
+     ('B15003_024E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Professional school degree'),
+     ('B15003_025E',
+      'EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Doctorate degree'),
+     ('B16010_001E',
+      'EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total'),
+     ('B16010_002E',
+      'EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Less than high school graduate'),
+     ('B16010_003E',
+      'EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Less than high school graduate!!In labor force'),
+     ('B16010_004E',
+      'EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Less than high school graduate!!In labor force!!Speak only English'),
+     ('B16010_005E',
+      'EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Less than high school graduate!!In labor force!!Speak Spanish'),
+     ('B16010_006E',
+      'EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Less than high school graduate!!In labor force!!Speak other Indo-European languages'),
+     ('B16010_007E',
+      'EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Less than high school graduate!!In labor force!!Speak Asian and Pacific Island languages'),
+     ('B16010_008E',
+      'EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Less than high school graduate!!In labor force!!Speak other languages'),
+     ('B16010_009E',
+      'EDUCATIONAL ATTAINMENT AND EMPLOYMENT STATUS BY LANGUAGE SPOKEN AT HOME FOR THE POPULATION 25 YEARS AND OVER',
+      'Estimate!!Total!!Less than high school graduate!!Not in labor force')]
 
 
 
@@ -523,14 +701,14 @@ block groups.
           <td>24.38</td>
         </tr>
         <tr>
-          <th>Block Group 5, Census Tract 6811, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:681100&gt; block group:5</th>
-          <td>50.00</td>
-          <td>31.95</td>
-        </tr>
-        <tr>
           <th>Block Group 6, Census Tract 7104, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:710400&gt; block group:6</th>
           <td>50.00</td>
           <td>9.34</td>
+        </tr>
+        <tr>
+          <th>Block Group 5, Census Tract 6811, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:681100&gt; block group:5</th>
+          <td>50.00</td>
+          <td>31.95</td>
         </tr>
         <tr>
           <th>Block Group 2, Census Tract 6812, Cook County, Illinois: Summary level: 150, state:17&gt; county:031&gt; tract:681200&gt; block group:2</th>

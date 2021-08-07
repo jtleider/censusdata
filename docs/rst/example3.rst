@@ -410,10 +410,10 @@ regression model:
       <th>Method:</th>                   <td>Least Squares</td>        <th>  F-statistic:       </th> <td>   13.08</td>
     </tr>
     <tr>
-      <th>Date:</th>                   <td>Sat, 24 Jul 2021</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
+      <th>Date:</th>                   <td>Sat, 07 Aug 2021</td>       <th>  Prob (F-statistic):</th> <td>3.42e-07</td>
     </tr>
     <tr>
-      <th>Time:</th>                       <td>11:23:07</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
+      <th>Time:</th>                       <td>12:27:40</td>           <th>  Log-Likelihood:    </th> <td> -180.94</td>
     </tr>
     <tr>
       <th>No. Observations:</th>            <td>    51</td>            <th>  AIC:               </th> <td>   371.9</td>
