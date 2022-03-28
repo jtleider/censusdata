@@ -1,3 +1,9 @@
+*NOTE: as of March 28, 2022, I am unable to continue providing updates to this package.
+While it should still work for the release years it was originally written for,
+I cannot guarantee that. The code is freely available for modification as needed
+for the years the package was written for, or to add support for more recent years
+of data.*
+
 This package is designed to provide easy access to the U.S. Census Bureau's
 API (https://www.census.gov/developers/) in Python. It supports pulling data
 from the American Community Survey (ACS) and the Census Summary File,
